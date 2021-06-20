@@ -17,10 +17,12 @@ const config = {
 
     // tell webpack where to put the generate file
     output: {
-        filename: 'bundle.js',
+        filename: 'server.js',
         // current folder, destiny folder name -> build
-        path: path.resolve(__dirname, 'build')
-    }
+        path: path.resolve(__dirname, './public_html/server'),
+        pathinfo: false
+    },
+   
 };
 
 module.exports = merge(baseConfig, config);

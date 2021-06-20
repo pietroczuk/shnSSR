@@ -1,0 +1,88 @@
+.contener {
+    text-align   : center;
+    width        : 40px;
+    height       : 40px;
+    border-radius: 50%;
+    overflow     : hidden;
+    margin       : 0px 5px;
+    position     : relative;
+    cursor       : pointer;
+    transform    : translateZ(0) scale(.6);
+    -webkit-transition: transform 0.2s;
+    -moz-transition   : transform 0.2s;
+    -o-transition     : transform 0.2s;
+    transition        : transform 0.2s;
+
+    &.active {
+        transform: translateZ(0) scale(1);
+
+        .shadow {
+            box-shadow: inset -1px -1px 0px 0px rgb(0 0 0 / 10%);
+        }
+    }
+
+    .shadow {
+        position     : absolute;
+        width        : 100%;
+        height       : 100%;
+        left         : 0px;
+        top          : 0px;
+        z-index      : 2;
+        box-shadow   : inset -1px -1px 0px 0px rgb(0 0 0 / 20%);
+        border-radius: 50%;
+    }
+
+    .color {
+
+
+
+        // box-shadow      : inset -1px -1px 0px 0px rgb(0 0 0 / 10%);
+
+
+        display  : flex;
+        width    : 300%;
+        height   : 100%;
+        transform: rotate(45deg) translate(-49%, 0);
+
+        // transition: transform 0.7s, filter 0.7s;
+        -webkit-transition: transform 0.7s, filter 0.7s;
+        -moz-transition   : transform 0.7s, filter 0.7s;
+        -o-transition     : transform 0.7s, filter 0.7s;
+        transition        : transform 0.7s, filter 0.7s;
+        
+        z-index   : 1;
+
+
+        // background-color: #caac74;
+
+        .bg {
+
+            width      : 100%;
+            height     : 200%;
+            // position: absolute;
+            // left    : 0px;
+            // top     : 0px;
+
+            // background: -moz-linear-gradient(linear-gradient(140deg, rgba(255, 255, 255, 0) 0%, rgb(254 244 183) 58%, rgb(249 230 163) 100%);
+            // background: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.62) 66%, rgba(255, 255, 255, 0) 100%);
+            // background: linear-gradient(140deg, rgba(255, 255, 255, 0) 0%, rgb(254 244 183) 58%, rgb(249 230 163) 100%);
+            // filter    : progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ffffff', endColorstr='#00ffffff', GradientType=1);
+            background:
+                linear-gradient(to right, #4646462e 0%, #ffffff5c 62%, rgb(128 128 128 / 19%) 100%),
+                linear-gradient(to right, #ffffff2e 0%, #ffffff 62%, rgba(255, 255, 255, 0.19) 100%);
+
+            background-blend-mode   : luminosity, overlay;
+            // 
+            // border-radius        : 50%;
+
+
+        }
+    }
+
+    &:hover .color {
+        transform: rotate(45deg) translate(5px, 0);
+        filter   : brightness(1.03);
+    }
+
+
+}

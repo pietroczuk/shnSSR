@@ -1,0 +1,22 @@
+.featureRootContainer {
+    display: block;
+    float  : right;
+    margin : 20px;
+    width  : 400px;
+
+    .featureContainer {
+        display: flex;
+        margin: 20px;
+
+        // &.featureColor {
+        //     color: inherit
+        // } 
+
+        // &.featureText {
+        //     color: inherit;       
+        // }
+        // &.featureList {
+        //     color: inherit
+        // }   
+    }
+}

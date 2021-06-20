@@ -1,0 +1,22 @@
+.topbar {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    
+    span {
+        font-size: 12px;
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &.whiteTopbar {
+        background-color: #f3f3f3;
+        color: #000;
+    }
+}

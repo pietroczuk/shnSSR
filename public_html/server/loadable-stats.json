@@ -1,0 +1,119 @@
+{
+  "hash": "6e931351a56656bdf811",
+  "version": "5.22.0",
+  "publicPath": "/",
+  "outputPath": "/Users/dareyoustudio/Documents/shn/shn2021/public_html/public",
+  "assetsByChunkName": {
+    "main": [
+      "client.6e931351a56656bdf811.js"
+    ]
+  },
+  "assets": [
+    {
+      "type": "asset",
+      "name": "client.6e931351a56656bdf811.js",
+      "size": 2027957,
+      "emitted": false,
+      "comparedForEmit": false,
+      "cached": true,
+      "info": {
+        "immutable": true,
+        "fullhash": "6e931351a56656bdf811",
+        "javascriptModule": false,
+        "minimized": true
+      },
+      "chunkNames": [
+        "main"
+      ],
+      "chunkIdHints": [],
+      "auxiliaryChunkNames": [],
+      "auxiliaryChunkIdHints": [],
+      "related": {},
+      "chunks": [
+        "main"
+      ],
+      "auxiliaryChunks": [],
+      "isOverSizeLimit": false
+    }
+  ],
+  "chunks": [
+    {
+      "rendered": true,
+      "initial": true,
+      "entry": true,
+      "recorded": false,
+      "size": 1737529,
+      "sizes": {
+        "javascript": 1736024,
+        "runtime": 1505
+      },
+      "names": [
+        "main"
+      ],
+      "idHints": [],
+      "runtime": [
+        "main"
+      ],
+      "files": [
+        "client.6e931351a56656bdf811.js"
+      ],
+      "auxiliaryFiles": [],
+      "hash": "2f3e1d79fefec2824596",
+      "childrenByOrder": {},
+      "id": "main",
+      "siblings": [],
+      "parents": [],
+      "children": [],
+      "modules": [],
+      "origins": []
+    }
+  ],
+  "entrypoints": {
+    "main": {
+      "name": "main",
+      "chunks": [
+        "main"
+      ],
+      "assets": [
+        {
+          "name": "client.6e931351a56656bdf811.js"
+        }
+      ],
+      "filteredAssets": 0,
+      "assetsSize": null,
+      "auxiliaryAssets": [],
+      "filteredAuxiliaryAssets": 0,
+      "auxiliaryAssetsSize": 0,
+      "children": {},
+      "childAssets": {},
+      "isOverSizeLimit": false
+    }
+  },
+  "namedChunkGroups": {
+    "main": {
+      "name": "main",
+      "chunks": [
+        "main"
+      ],
+      "assets": [
+        {
+          "name": "client.6e931351a56656bdf811.js"
+        }
+      ],
+      "filteredAssets": 0,
+      "assetsSize": null,
+      "auxiliaryAssets": [],
+      "filteredAuxiliaryAssets": 0,
+      "auxiliaryAssetsSize": 0,
+      "children": {},
+      "childAssets": {},
+      "isOverSizeLimit": false
+    }
+  },
+  "errors": [],
+  "errorsCount": 0,
+  "warnings": [],
+  "warningsCount": 0,
+  "children": [],
+  "generator": "loadable-components"
+}

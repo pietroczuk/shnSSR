@@ -1,0 +1,57 @@
+{
+  "name": "Shineposter",
+  "short_name": "SHN",
+  "icons": [
+    {
+      "src": "/images/shineposters_favicon_dark_black.png",
+      "type": "image/png",
+      "sizes": "48x48",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/shineposters_favicon_dark_black.png",
+      "type": "image/png",
+      "sizes": "96x96",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/shineposters_favicon_dark_black.png",
+      "type": "image/png",
+      "sizes": "144x144",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/shineposters_favicon_dark_black.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/shineposters_favicon_dark_black.png",
+      "type": "image/png",
+      "sizes": "256x256",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/shineposters_favicon_dark_black.png",
+      "type": "image/png",
+      "sizes": "384x384",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/shineposters_favicon_dark_black.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/pl",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#fff",
+  "theme_color": "#000",
+  "description": "ShinePosters",
+  "dir": "ltr",
+  "lang": "pl-PL"
+}

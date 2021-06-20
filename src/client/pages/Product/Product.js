@@ -1,0 +1,83 @@
+import React, { useEffect } from 'react';
+import withStyles from 'isomorphic-style-loader/withStyles';
+import styles from './product.module.scss';
+
+import { connect } from 'react-redux';
+import { get_page, clear_page } from '../../redux/actions/all_actions';
+import { pageTypes, metatags, prepareSearchCode } from '../../utils/utilsFrondend';
+
+import Placeholder from '../../components/placeholder/Placeholder';
+import FixedBar from '../../components/header/fixedbar/FixedBar';
+
+import AllFeaturesDisplay from '../../components/features/AllFeaturesDisplay';
+
+
+const Product = (props) => {
+    // from redux
+    const { seo, product, api, images_url, all_config_currencies, user_currency_code } = props;
+    const seo_title = product ? product.seo_title : null;
+    const seo_description = product ? product.seo_description : null;
+    const current_variation_id = product ? product.current_variation_id : null;
+    // redux function
+    const { get_page, clear_page } = props;
+    // from props
+    const { url, lang } = props.match.params;
+    const { location } = props;
+
+    // console.log(product.variations[current_variation_id].variation_price[user_currency_code], user_currency_code);
+    useEffect(() => {
+        if (!product) get_page(api, pageTypes.productPage, lang, url, prepareSearchCode(location.search));
+        return clear_page;
+    }, [])
+    
+    // const get_currency_price = (price)
+    
+    return (
+        <div>
+            { metatags(seo_title, seo_description, seo, url, lang)}
+            Product page
+            <FixedBar />
+            { product ?
+                <h1>{product.product_title}</h1> : <h1><Placeholder /></h1>
+            }
+            { current_variation_id && product.variations[current_variation_id].name}
+            <br />
+            { current_variation_id && <p>
+                {product.variations[current_variation_id].variation_price[user_currency_code]} {all_config_currencies[user_currency_code].sign}
+            </p>}
+            <br />
+            { current_variation_id}
+            <br />
+            { current_variation_id && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[current_variation_id].variation_image.poster + images_url.medium} />}
+            { current_variation_id && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[current_variation_id].variation_image.wall + images_url.medium} />}
+
+            {product && <AllFeaturesDisplay currentVariationCode={product.variations[current_variation_id].variation_code} allProductVariation={product.variations} />}
+        </div>
+    )
+}
+const mapStateToProps = state => ({
+    seo: state.global.config.seo,
+    product: state.page.product,
+    api: state.config.api,
+    images_url: state.config.images,
+    all_config_currencies: state.config.currency,
+    user_currency_code: state.user.currency
+
+});
+const loadDataOnInit = (server_store, api_config, language, url, query) => {
+    const my_promise = server_store.dispatch(
+        get_page(api_config.api, pageTypes.productPage, language, url, query)
+    );
+    return my_promise;
+}
+
+export default {
+    loadDataOnInit: loadDataOnInit,
+    component:
+        connect(mapStateToProps, {
+            get_page,
+            clear_page,
+            // set_product_curr_var_id
+        })
+            (withStyles(styles)(Product))
+}

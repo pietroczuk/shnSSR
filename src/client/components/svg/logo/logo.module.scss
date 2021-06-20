@@ -1,0 +1,35 @@
+.logoContener {
+    overflow       : hidden;
+    display        : flex;
+    flex-direction : column;
+    justify-content: center;
+    position: relative;
+
+    .assitiveText {
+        height  : 1px;
+        width   : 1px;
+        position: absolute;
+        overflow: hidden;
+        top     : -10px;
+    }
+
+    .logo {
+        display        : flex;
+        flex-direction : column;
+        justify-content: center;
+
+        svg {
+            width: 100%;
+
+            path {
+                fill: #000;
+            }
+        }
+
+        &.whiteLogo {
+            svg path {
+                fill: #fff;
+            }
+        }
+    }
+}
