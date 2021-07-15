@@ -37,6 +37,7 @@ const HomePage = props => {
             <Link to='/pl/about'>about</Link><br />
             <Link to='/fr/about'>about2</Link><br />
             <Link to='/de/about2'>about3</Link><br />
+            <Link to='/pl/s/regulamin-sklepu'>regulamin</Link><br />
             <Link to='/pl/p/plakat-when-something-is-important-enought-elon-musk?5c7f93ea80acee0ad6dffa48'>produkt</Link>
             
         </React.Fragment>

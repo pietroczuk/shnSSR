@@ -14,7 +14,7 @@ import AllFeaturesDisplay from '../../components/features/AllFeaturesDisplay';
 
 const Product = (props) => {
     // from redux
-    const { seo, product, api, images_url, all_config_currencies, user_currency_code } = props;
+    const { seo, product, api, url_prefix, images_url, all_config_currencies, user_currency_code } = props;
     const seo_title = product ? product.seo_title : null;
     const seo_description = product ? product.seo_description : null;
     const current_variation_id = product ? product.current_variation_id : null;
@@ -34,7 +34,7 @@ const Product = (props) => {
     
     return (
         <div>
-            { metatags(seo_title, seo_description, seo, url, lang)}
+            { metatags(seo_title, seo_description, seo, url, lang, url_prefix)}
             Product page
             <FixedBar />
             { product ?
@@ -59,6 +59,7 @@ const mapStateToProps = state => ({
     seo: state.global.config.seo,
     product: state.page.product,
     api: state.config.api,
+    url_prefix: state.config.urls[pageTypes.productPage],
     images_url: state.config.images,
     all_config_currencies: state.config.currency,
     user_currency_code: state.user.currency

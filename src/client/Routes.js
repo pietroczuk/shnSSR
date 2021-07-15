@@ -36,7 +36,7 @@ export default
                     path: '/:url',
                     multilang: true,
                     server_change: false,
-                    type: 'static'
+                    type: 'staticpage'
                 },
                 {
                     ...Product,

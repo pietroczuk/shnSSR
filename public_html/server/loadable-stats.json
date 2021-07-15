@@ -1,24 +1,24 @@
 {
-  "hash": "c652577bdb2121103612",
+  "hash": "3654d32ae5cc0b3fa0cc",
   "version": "5.22.0",
   "publicPath": "/",
   "outputPath": "/Users/dareyoustudio/Documents/shn/shn2021/public_html/public",
   "assetsByChunkName": {
     "main": [
-      "client.c652577bdb2121103612.js"
+      "client.3654d32ae5cc0b3fa0cc.js"
     ]
   },
   "assets": [
     {
       "type": "asset",
-      "name": "client.c652577bdb2121103612.js",
-      "size": 2027006,
+      "name": "client.3654d32ae5cc0b3fa0cc.js",
+      "size": 2032326,
       "emitted": false,
       "comparedForEmit": false,
       "cached": true,
       "info": {
         "immutable": true,
-        "fullhash": "c652577bdb2121103612",
+        "fullhash": "3654d32ae5cc0b3fa0cc",
         "javascriptModule": false,
         "minimized": true
       },
@@ -42,9 +42,9 @@
       "initial": true,
       "entry": true,
       "recorded": false,
-      "size": 1736615,
+      "size": 1740288,
       "sizes": {
-        "javascript": 1735110,
+        "javascript": 1738783,
         "runtime": 1505
       },
       "names": [
@@ -55,10 +55,10 @@
         "main"
       ],
       "files": [
-        "client.c652577bdb2121103612.js"
+        "client.3654d32ae5cc0b3fa0cc.js"
       ],
       "auxiliaryFiles": [],
-      "hash": "26e2e1cf73dc763324e0",
+      "hash": "686d96e3eb8f70a47eee",
       "childrenByOrder": {},
       "id": "main",
       "siblings": [],
@@ -76,7 +76,7 @@
       ],
       "assets": [
         {
-          "name": "client.c652577bdb2121103612.js"
+          "name": "client.3654d32ae5cc0b3fa0cc.js"
         }
       ],
       "filteredAssets": 0,
@@ -97,7 +97,7 @@
       ],
       "assets": [
         {
-          "name": "client.c652577bdb2121103612.js"
+          "name": "client.3654d32ae5cc0b3fa0cc.js"
         }
       ],
       "filteredAssets": 0,

@@ -41,6 +41,9 @@ export const get_page = (api, type, lang, url, query) => dispatch => {
     case pageTypes.productPage:
       axios_endpoint = api.product + page_url;
       break;
+    case pageTypes.staticPage:
+      axios_endpoint = api.page + page_url;
+      break;
   }
   if (axios_endpoint) {
     return axios.get(api.url + '/' + axios_endpoint)
@@ -52,7 +55,7 @@ export const get_page = (api, type, lang, url, query) => dispatch => {
         })
       )
       .catch(err => {
-        console.error('❌ Error get product', err);
+        console.error('❌ Error get data from DB', err);
       });
   }
 }
@@ -63,7 +66,7 @@ export const clear_page = () => dispatch => {
 }
 
 export const set_product_curr_var_id = (product_variant_id, variations) => dispatch => {
-  if(product_variant_id && variations[product_variant_id]) {
+  if (product_variant_id && variations[product_variant_id]) {
     // console.log('ok zmeniam curr', product_variant_id);
     dispatch({
       type: action_types.SET_PRODUCT_CURR_VAR_ID,
@@ -132,7 +135,7 @@ export const get_global_variables = (api, lang) => dispatch => {
  */
 
 export const set_global_currency = (currency_code, all_currencies) => dispatch => {
-  if(all_currencies[currency_code]) {
+  if (all_currencies[currency_code]) {
     dispatch({
       type: action_types.SET_GLOBAL_CURRENCY,
       payload: currency_code
