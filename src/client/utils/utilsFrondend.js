@@ -111,3 +111,53 @@ export const prepareSearchCode = search => {
 
 
 // ----------- static page html
+
+export const renderHtmlFromJson = json => {
+    return json ? json.map((text_object, index) => {
+        const textAlign = text_object.align === 'left' ||
+            text_object.align === 'right' ||
+            text_object.align === 'center'
+            ? text_object.align : 'left';
+
+        const color = /^#[0-9A-F]{6}$/i.test(text_object.color) ? text_object.color : 'inherit';
+
+        const fontWeight = text_object.weight === 100 || text_object.weight === 200 || text_object.weight === 300 ||
+            text_object.weight === 400 || text_object.weight === 500 || text_object.weight === 600 ||
+            text_object.weight === 700 || text_object.weight === 800 || text_object.weight === 900 ||
+            text_object.weight === 'normal' || text_object.weight === 'bold'
+            ? text_object.weight : 'normal';
+
+        const fontStyle = text_object.style === 'italic' || text_object.style === 'normal'
+            ? text_object.style : 'inherit';
+
+        const textDecoration = text_object.decoration === 'line-through' || text_object.decoration === 'underline' ? text_object.decoration : 'inherit';
+
+        const href = text_object.href ? text_object.href : '#';
+        const target = text_object.target === "_blank" ? text_object.target : "_self";
+        const title = text_object.title ? text_object.title : "";
+
+        const styleObject = {
+            textAlign: textAlign,
+            color: color,
+            fontWeight: fontWeight,
+            fontStyle: fontStyle,
+            textDecoration: textDecoration,
+        }
+        const childText = Array.isArray(text_object.text) ? renderHtmlFromJson(text_object.text, true) : text_object.text;
+        switch (text_object.tag) {
+            case 'p': return <p key={index} style={styleObject}>{childText}</p>;
+            case 'span': return <span key={index} style={styleObject}>{childText}</span>;
+            case 'h1': return <h1 key={index} style={styleObject}>{childText}</h1>;
+            case 'h2': return <h2 key={index} style={styleObject}>{childText}</h2>;
+            case 'h3': return <h3 key={index} style={styleObject}>{childText}</h3>;
+            case 'h4': return <h4 key={index} style={styleObject}>{childText}</h4>;
+            case 'h5': return <h5 key={index} style={styleObject}>{childText}</h5>;
+            case 'h6': return <h6 key={index} style={styleObject}>{childText}</h6>;
+            case 'ul': return <ul key={index} style={styleObject}>{childText}</ul>;
+            case 'li': return <li key={index} style={styleObject}>{childText}</li>;
+            case 'a': return <a href={href} target={target} title={title} key={index} style={styleObject}>{childText}</a>;
+            default:
+                return <span key={index} style={styleObject}>{childText}</span>;
+        }
+    }) : '';
+}

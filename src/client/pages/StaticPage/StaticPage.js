@@ -4,7 +4,7 @@ import styles from './staticpage.module.scss';
 
 import { connect } from 'react-redux';
 import { get_page, clear_page } from '../../redux/actions/all_actions';
-import { pageTypes, metatags, prepareSearchCode } from '../../utils/utilsFrondend';
+import { pageTypes, metatags, prepareSearchCode, renderHtmlFromJson } from '../../utils/utilsFrondend';
 
 
 const StaticPage = props => {
@@ -29,7 +29,7 @@ const StaticPage = props => {
             {metatags(seo_title, seo_description, seo, url, lang, url_prefix)}
             <h1>static page</h1>
             <div>
-                {staticpage && staticpage.page_body.h2.text}
+                {staticpage && renderHtmlFromJson(staticpage.page_body)}
             </div>
         </div>
     )
@@ -38,6 +38,7 @@ const mapStateToProps = state => ({
     seo: state.global.config.seo,
     staticpage: state.page.page,
     url_prefix: state.config.urls[pageTypes.staticPage],
+    api: state.config.api
 });
 
 const loadDataOnInit = (server_store, api_config, language, url, query) => {
