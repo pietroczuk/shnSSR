@@ -17,7 +17,7 @@ const StaticPage = props => {
     // pathToExport = '/' + props.language[0].code;
     // console.log(pathToExport);
     return (
-        <div>siemka</div>
+        <div>static page</div>
     )
 }
 const mapStateToProps = state => ({

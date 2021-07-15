@@ -24,29 +24,26 @@ export default
             ...RootApp,
             routes: [
                 {
-                    path: '/',
-                    // old_path: '/',
                     ...HomePage,
+                    path: '/',
                     exact: true,
                     multilang: true,
-                    // server_change: false,
+                    server_change: false,
                     type: 'homepage'
                 },
                 {
                     ...StaticPage,
-                    path: '/about',
-                    // old_path: '/about',
+                    path: '/:url',
                     multilang: true,
-                    // server_change: false,
+                    server_change: false,
                     type: 'static'
                 },
                 {
                     ...Product,
-                    path: '/p/:url',
-                    // old_path: '/about',
+                    path: '/:url',
                     multilang: true,
-                    // server_change: false,
-                    // type: 'static'
+                    server_change: false,
+                    type: 'product'
                 },
                 {
                     ...NotFoundPage

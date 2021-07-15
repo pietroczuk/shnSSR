@@ -82,9 +82,12 @@ app.get('*', (req, res) => {
                 // console.log('server', user_language);
 
                 const server_store = createServerInitStore(user_language, user_currency);
-                const new_routes_config = api_config.language;
+                const new_routes_config = {
+                    language: api_config.language,
+                    urls: api_config.urls
+                }
                 // console.log(Routes);
-                const new_Routes = prepare_routes_config(new_routes_config, true);
+                const new_Routes = prepare_routes_config(new_routes_config);
                 // console.log(new_Routes[0].routes);
                 const load_data_promises = matchRoutes(new_Routes, req.path).map(({ route }) => {
                     // console.log(req);

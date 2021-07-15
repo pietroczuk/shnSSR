@@ -42,7 +42,7 @@ export default (req, server_store, context, new_routes_config) => {
         <StaticRouter location={req.path} context={context}>
           {/* <Routes /> */}
           <React.Fragment>
-            {renderRoutes(prepare_routes_config(new_routes_config, true))}
+            {renderRoutes(prepare_routes_config(new_routes_config))}
           </React.Fragment>
         </StaticRouter>
       </StyleContext.Provider>
