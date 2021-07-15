@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet';
 export const pageTypes = {
     productPage: 'product',
     homePage: 'homepage',
-    staticPage: 'static'
+    staticPage: 'staticpage'
 }
 // ---------- end get page
 
@@ -31,11 +31,12 @@ export const getCookie = type => {
 // -------- end coockies
 
 // --------- SEO
-export const metatags = (page_title, page_description, seo, url, lang) => {
+export const metatags = (page_title, page_description, seo, url, lang, url_prefix) => {
     const title = page_title ? page_title : seo.title;
     const description = page_description ? page_description : seo.description;
     const { og } = seo;
-    const link = og.url + '/' + lang + '/' + url;
+    const url_char = url_prefix ? url_prefix + '/' : '';
+    const link = og.url + '/' + lang + '/' + url_char + url;
 
     return (
         <Helmet
@@ -107,3 +108,6 @@ export const prepareSearchCode = search => {
 //     return targetVariant;
 // }
 // -------- end variantcode in url / ?serach attribute 
+
+
+// ----------- static page html
