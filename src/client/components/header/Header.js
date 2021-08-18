@@ -12,8 +12,9 @@ import SearchIcon from '../InteractiveIcon/icons/SearchIcon';
 import LanguageSwitcher from '../languageSwitcher/LanguageSwitcher';
 import CurrencySwitcher from '../currencySwitcher/CurrencySwitcher';
 
+import MenuTop from '../menuTop/MenuTop';
 
-const Header = ({ white, whiteTopbar, language }) => {
+const Header = ({ white, whiteTopbar, language, location }) => {
     const [topbarOpen, setTopbarOpen] = useState(true);
 
     const setTopbarOpenHandler = () => {
@@ -26,7 +27,8 @@ const Header = ({ white, whiteTopbar, language }) => {
             {topbarOpen && <Topbar closeHandler={setTopbarOpenHandler} white={whiteTopbar} />}
             <div className={styles.headerContent}>
                 <Logo white={!white} miniLogo={false} link={language} />
-                <div onClick={setTopbarOpenHandler}>moj header</div>
+                {/* <div onClick={setTopbarOpenHandler}>moj header</div> */}
+                <MenuTop language={language} location={location}/>
                 <div className={styles.headerRight}>
                     <LanguageSwitcher />
                     <CurrencySwitcher />

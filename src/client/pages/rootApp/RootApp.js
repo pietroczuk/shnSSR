@@ -18,14 +18,14 @@ import Header from '../../components/header/Header';
 //     });
 
 
-const RootApp = ({ route, language , currency}) => {
+const RootApp = ({ route, language , currency, location}) => {
     useEffect(()=> {
         !getCookie('language') && language && setCookie('language', language);
         !getCookie('currency') && currency && setCookie('currency', currency);
     },[])
     return (
         <React.Fragment>
-            <Header white={true} whiteTopbar={true} language={language} />
+            <Header white={true} whiteTopbar={true} language={language} location={location} />
             {renderRoutes(route.routes)}
         </React.Fragment>
     );

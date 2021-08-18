@@ -153,3 +153,9 @@ export const renderHtmlFromJson = json => {
         }
     }) : '';
 }
+
+// ----------- prepare url links in menu based on array slug from config
+
+export const prepUrlFromConfigSlug = (language, slug_urls, url_type, url) => {
+    return '/' + language + '/' + slug_urls[url_type] + '/' + url;
+}

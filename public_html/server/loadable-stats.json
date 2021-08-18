@@ -1,24 +1,24 @@
 {
-  "hash": "fabb2b829f1697827d10",
+  "hash": "aefc553d024cdd192f4e",
   "version": "5.22.0",
   "publicPath": "/",
   "outputPath": "/Users/dareyoustudio/Documents/shn/shn2021/public_html/public",
   "assetsByChunkName": {
     "main": [
-      "client.fabb2b829f1697827d10.js"
+      "client.aefc553d024cdd192f4e.js"
     ]
   },
   "assets": [
     {
       "type": "asset",
-      "name": "client.fabb2b829f1697827d10.js",
-      "size": 2036552,
+      "name": "client.aefc553d024cdd192f4e.js",
+      "size": 2053696,
       "emitted": false,
       "comparedForEmit": false,
       "cached": true,
       "info": {
         "immutable": true,
-        "fullhash": "fabb2b829f1697827d10",
+        "fullhash": "aefc553d024cdd192f4e",
         "javascriptModule": false,
         "minimized": true
       },
@@ -42,9 +42,9 @@
       "initial": true,
       "entry": true,
       "recorded": false,
-      "size": 1743712,
+      "size": 1756103,
       "sizes": {
-        "javascript": 1742207,
+        "javascript": 1754598,
         "runtime": 1505
       },
       "names": [
@@ -55,10 +55,10 @@
         "main"
       ],
       "files": [
-        "client.fabb2b829f1697827d10.js"
+        "client.aefc553d024cdd192f4e.js"
       ],
       "auxiliaryFiles": [],
-      "hash": "2ca29eb9d294c41fd5e8",
+      "hash": "393c34dee6b41419e877",
       "childrenByOrder": {},
       "id": "main",
       "siblings": [],
@@ -76,7 +76,7 @@
       ],
       "assets": [
         {
-          "name": "client.fabb2b829f1697827d10.js"
+          "name": "client.aefc553d024cdd192f4e.js"
         }
       ],
       "filteredAssets": 0,
@@ -97,7 +97,7 @@
       ],
       "assets": [
         {
-          "name": "client.fabb2b829f1697827d10.js"
+          "name": "client.aefc553d024cdd192f4e.js"
         }
       ],
       "filteredAssets": 0,

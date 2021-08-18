@@ -7,7 +7,7 @@ const Logo = ({ white, miniLogo, customWidth, link }) => {
     const svgWidth = customWidth ? customWidth : 250;
     const logoWidth = miniLogo ? 54 : svgWidth;
     return (
-        <div className={styles.logoContener} style={{ width: logoWidth + 'px' }}>
+        <div className={styles.logoContener} style={{ width: logoWidth + 'px', minWidth: (logoWidth+50) + 'px' }}>
             <Link to={'/' + link}>
                 <span className={styles.assitiveText}>Homepage</span>
                 <div className={`${styles.logo} ${white ? styles.whiteLogo : ''}`}
