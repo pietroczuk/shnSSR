@@ -1,7 +1,7 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
 const baseConfig = require('./webpack.base.js');
-const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+// const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const LoadablePlugin = require('@loadable/webpack-plugin');
 
 const config = {

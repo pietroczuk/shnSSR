@@ -32,10 +32,14 @@ module.exports = {
                     {
                         loader: "css-loader",
                         options: {
-                            modules: true,
+                            // modules: true, // default true
                             esModule: false,
-
-                            /*modules: {
+                            // for normal names
+                            modules: {
+                                // localIdentName: '[local]_[hash:base64:5]' 
+                                localIdentName: '[local]' 
+                            }
+                           /* modules: {
                                 compileType: "module",
                                 mode: "local",
                                 auto: true,
