@@ -44,6 +44,9 @@ export const get_page = (api, type, lang, url, query) => dispatch => {
     case pageTypes.staticPage:
       axios_endpoint = api.page + page_url;
       break;
+    case pageTypes.categoryPage:
+      axios_endpoint = api.category + page_url;
+      break;
   }
   if (axios_endpoint) {
     return axios.get(api.url + '/' + axios_endpoint)

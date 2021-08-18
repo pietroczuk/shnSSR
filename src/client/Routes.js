@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage/HomePage';
 import NotFoundPage from './pages/404/NotFoundPage';
 import StaticPage from './pages/StaticPage/StaticPage';
 import Product from './pages/Product/Product';
+import Category from './pages/Category/Category';
 
 
 // import loadable from '@loadable/component';
@@ -44,6 +45,13 @@ export default
                     multilang: true,
                     server_change: false,
                     type: 'product'
+                },
+                {
+                    ...Category,
+                    path: '/:url',
+                    multilang: true,
+                    server_change: false,
+                    type: 'category'
                 },
                 {
                     ...NotFoundPage

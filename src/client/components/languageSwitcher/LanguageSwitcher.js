@@ -11,15 +11,16 @@ const LanguageSwitcher = (props) => {
     const { all_config_languages, urls, page } = props;
     const { search } = useLocation();
 
-    let page_ulrs = null;
-    switch (page.type) {
-        case 'product':
-            page_ulrs = page.product.product_url;
-            break;
-        case 'staticpage':
-            page_ulrs = page.page.page_url;
-            break;
-    }
+    // let page_ulrs = null;
+    // switch (page.type) {
+    //     case 'product':
+    //         page_ulrs = page.data.url;
+    //         break;
+    //     case 'staticpage':
+    //         page_ulrs = page.data.url;
+    //         break;
+    // }
+    const page_ulrs = page.data ? page.data.url : null;
     // const page_ulrs = page.type == 'product' ? page.product.product_url : page.type == 'page' ? page.page.page_url : null;
 
     useEffect(() => {

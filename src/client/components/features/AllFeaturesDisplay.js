@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './allFeaturesDisplay.modules.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
@@ -9,6 +9,9 @@ import SingleFeature from './atributes/singleFeature/SingleFeature';
 
 import { connect } from 'react-redux';
 // import { set_variant_code } from '../../redux/actions/all_actions';
+
+// import { getSearchParams } from '../../utils/utilsFrondend';
+
 
 const AllFeaturesDisplay = props => {
     // from redux
@@ -24,6 +27,10 @@ const AllFeaturesDisplay = props => {
     //     }
     // );
     // console.log('all', currentVariationCode);
+    // useEffect(() => {
+    //     getSearchParams();
+    // }, []);
+
     return (
         <div className={styles.featureRootContainer}>
             {Object.entries(features).map(([featureKey, feature]) =>
@@ -36,7 +43,7 @@ const AllFeaturesDisplay = props => {
                         atributes={feature.atributes}
                         displayType={feature.feature_display}
                         featureKey={featureKey}
-                        currentVariationCode = {currentVariationCode}
+                        currentVariationCode={currentVariationCode}
                         allProductVariation={allProductVariation}
                     />
                 </div>

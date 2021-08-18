@@ -9,7 +9,8 @@ import { Helmet } from 'react-helmet';
 export const pageTypes = {
     productPage: 'product',
     homePage: 'homepage',
-    staticPage: 'staticpage'
+    staticPage: 'staticpage',
+    categoryPage: 'category'
 }
 // ---------- end get page
 
@@ -159,3 +160,13 @@ export const renderHtmlFromJson = json => {
 export const prepUrlFromConfigSlug = (language, slug_urls, url_type, url) => {
     return '/' + language + '/' + slug_urls[url_type] + '/' + url;
 }
+
+// get search params from url
+
+// export const getSearchParams = () => {
+//     const params = [];
+//     if (window !== undefined) {
+//         console.log(window.location.search);
+//     }
+//     return params;
+// }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './product.module.scss';
 
@@ -14,7 +14,7 @@ import AllFeaturesDisplay from '../../components/features/AllFeaturesDisplay';
 
 const Product = (props) => {
     // from redux
-    const { seo, product, api, url_prefix, images_url, all_config_currencies, user_currency_code } = props;
+    const { seo, product, api, url_prefix, images_url, all_config_currencies, user_currency_code, type } = props;
     const seo_title = product ? product.seo_title : null;
     const seo_description = product ? product.seo_description : null;
     const current_variation_id = product ? product.current_variation_id : null;
@@ -25,31 +25,41 @@ const Product = (props) => {
     const { location } = props;
 
     // console.log(product.variations[current_variation_id].variation_price[user_currency_code], user_currency_code);
+
+    const [currentLocation, setCurrentLocation] = useState(location.pathname)
+
+    const setCurrentLocationHandler = loc => {
+        if (currentLocation !== loc) {
+            setCurrentLocation(loc);
+        }
+    }
+
     useEffect(() => {
-        if (!product) get_page(api, pageTypes.productPage, lang, url, prepareSearchCode(location.search));
+        if (!product || currentLocation !== location.pathname || type !== pageTypes.productPage) {
+            get_page(api, pageTypes.productPage, lang, url, prepareSearchCode(location.search));
+            setCurrentLocationHandler(location.pathname);
+        }
         return clear_page;
-    }, [])
-    
-    // const get_currency_price = (price)
-    
+    }, [location.pathname])
+
     return (
         <div>
-            { metatags(seo_title, seo_description, seo, url, lang, url_prefix)}
+            {metatags(seo_title, seo_description, seo, url, lang, url_prefix)}
             Product page
-            <FixedBar />
-            { product ?
-                <h1>{product.product_title}</h1> : <h1><Placeholder /></h1>
+            {/* <FixedBar /> */}
+            {product ?
+                <h1>{product.title}</h1> : <h1><Placeholder /></h1>
             }
-            { current_variation_id && product.variations[current_variation_id].name}
+            {current_variation_id && product.variations[current_variation_id].name}
             <br />
-            { current_variation_id && <p>
+            {current_variation_id && <p>
                 {product.variations[current_variation_id].variation_price[user_currency_code]} {all_config_currencies[user_currency_code].sign}
             </p>}
             <br />
-            { current_variation_id}
+            {current_variation_id}
             <br />
-            { current_variation_id && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[current_variation_id].variation_image.poster + images_url.medium} />}
-            { current_variation_id && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[current_variation_id].variation_image.wall + images_url.medium} />}
+            {current_variation_id && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[current_variation_id].variation_image.poster + images_url.medium} />}
+            {current_variation_id && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[current_variation_id].variation_image.wall + images_url.medium} />}
 
             {product && <AllFeaturesDisplay currentVariationCode={product.variations[current_variation_id].variation_code} allProductVariation={product.variations} />}
         </div>
@@ -57,7 +67,8 @@ const Product = (props) => {
 }
 const mapStateToProps = state => ({
     seo: state.global.config.seo,
-    product: state.page.product,
+    product: state.page.data,
+    type: state.page.type,
     api: state.config.api,
     url_prefix: state.config.urls[pageTypes.productPage],
     images_url: state.config.images,

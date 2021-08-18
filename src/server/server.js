@@ -103,6 +103,7 @@ app.get('*', (req, res) => {
                             query = req.url.substr(i + 1);
                         }
                     }
+                    // console.log('server q: ', query);
                     return route.loadDataOnInit ? route.loadDataOnInit(server_store, api_config, user_language, real_path, query) : null;
                 }).map(promise => {
                     // for fail promises, continue fetch data and resolve promises

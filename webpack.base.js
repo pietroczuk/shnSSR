@@ -36,8 +36,8 @@ module.exports = {
                             esModule: false,
                             // for normal names
                             modules: {
-                                // localIdentName: '[local]_[hash:base64:5]' 
-                                localIdentName: '[local]' 
+                                localIdentName: '[local]_[hash:base64:5]' 
+                                // localIdentName: '[local]' 
                             }
                            /* modules: {
                                 compileType: "module",

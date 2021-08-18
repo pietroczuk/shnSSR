@@ -39,7 +39,7 @@ const Text = props => {
 }
 
 const mapStateToProps = state => ({
-    variations: state.page.product.variations
+    variations: state.page.data.variations
 });
 export default
     connect(mapStateToProps, { set_product_curr_var_id })
