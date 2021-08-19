@@ -5,7 +5,7 @@ import stylesGlobal from '../../components/contentCointainer/contentCointainer.m
 
 import { connect } from 'react-redux';
 import { get_page, clear_page } from '../../redux/actions/all_actions';
-import { pageTypes, metatags, prepareSearchCode, renderHtmlFromJson } from '../../utils/utilsFrondend';
+import { pageTypes, metatags, prepareSearchCode, renderHtmlFromJson, scrollToTop } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
 import ContentCointainer from '../../components/contentCointainer/ContentCointainer';
@@ -40,6 +40,7 @@ const Category = props => {
         if (!category || currentLocation !== location.pathname || type !== pageTypes.categoryPage) {
             get_page(api, pageTypes.categoryPage, lang, url, prepareSearchCode(location.search));
             setCurrentLocationHandler(location.pathname);
+            scrollToTop(window);
         }
         return clear_page;
     }, [location.pathname]);

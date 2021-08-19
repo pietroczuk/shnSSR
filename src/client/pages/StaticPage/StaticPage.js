@@ -4,7 +4,7 @@ import styles from './staticpage.module.scss';
 
 import { connect } from 'react-redux';
 import { get_page, clear_page } from '../../redux/actions/all_actions';
-import { pageTypes, metatags, prepareSearchCode, renderHtmlFromJson } from '../../utils/utilsFrondend';
+import { pageTypes, metatags, prepareSearchCode, renderHtmlFromJson, scrollToTop } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
 
@@ -29,10 +29,10 @@ const StaticPage = props => {
     }
 
     useEffect(() => {
-        // console.log('jestem', staticpage);
         if (!staticpage || currentLocation !== location.pathname || type !== pageTypes.staticPage) {
             get_page(api, pageTypes.staticPage, lang, url, prepareSearchCode(location.search));
             setCurrentLocationHandler(location.pathname);
+            scrollToTop(window);
         }
         return clear_page;
     }, [location.pathname]);

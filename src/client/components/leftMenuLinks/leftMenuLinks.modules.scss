@@ -7,6 +7,10 @@
         margin-top    : 0.5em;
         border-bottom : 1px solid #f3f3f3;
         padding-bottom: 0.5em;
+
+        &:last-child {
+            border-bottom: none;
+        }
     }
 
     .side_link_container {
@@ -25,6 +29,7 @@
         &:hover {
             color: #999;
         }
+
         &.bolder {
             font-weight: 600;
         }
@@ -41,7 +46,33 @@
                 display         : block;
                 content         : "";
                 position        : absolute;
+                bottom          : -4px;
             }
+        }
+    }
+
+    .label_with_icon {
+        display        : flex;
+        justify-content: space-between;
+        cursor         : pointer;
+
+        .icon {
+            width             : 1em;
+            display           : flex;
+            flex-direction    : column;
+            justify-content   : center;
+            -webkit-transition: transform 0.2s;
+            -moz-transition   : transform 0.2s;
+            -o-transition     : transform 0.2s;
+            transition        : transform 0.2s;
+
+            &.rotate {
+                transform: rotate(180deg);
+            }
+        }
+
+        &:hover .side_label {
+            color: #999;
         }
     }
 

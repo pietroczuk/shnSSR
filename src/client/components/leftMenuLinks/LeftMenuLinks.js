@@ -45,7 +45,7 @@ const LeftMenuLinks = (props) => {
 
     return <nav>
         <ul className={styles.side_list}>
-            {menu_items.map((elem, index) =>
+            {menu_items && menu_items.map((elem, index) =>
                 <li key={index}>
                     {prepareMenuLink(elem)}
                 </li>

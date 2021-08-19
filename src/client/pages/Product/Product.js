@@ -4,7 +4,7 @@ import styles from './product.module.scss';
 
 import { connect } from 'react-redux';
 import { get_page, clear_page } from '../../redux/actions/all_actions';
-import { pageTypes, metatags, prepareSearchCode } from '../../utils/utilsFrondend';
+import { pageTypes, metatags, prepareSearchCode, scrollToTop } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
 import FixedBar from '../../components/header/fixedbar/FixedBar';
@@ -38,6 +38,7 @@ const Product = (props) => {
         if (!product || currentLocation !== location.pathname || type !== pageTypes.productPage) {
             get_page(api, pageTypes.productPage, lang, url, prepareSearchCode(location.search));
             setCurrentLocationHandler(location.pathname);
+            scrollToTop(window);
         }
         return clear_page;
     }, [location.pathname])

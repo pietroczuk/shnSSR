@@ -161,6 +161,14 @@ export const prepUrlFromConfigSlug = (language, slug_urls, url_type, url) => {
     return '/' + language + '/' + slug_urls[url_type] + '/' + url;
 }
 
+// scroll to top
+
+export const scrollToTop = window => {
+    if (window !== undefined) {
+        window.scrollTo(0, 0);
+    }
+}
+
 // get search params from url
 
 // export const getSearchParams = () => {

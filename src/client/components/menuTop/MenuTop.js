@@ -35,7 +35,7 @@ const MenuTop = (props) => {
     }
     return <nav className={styles.main_menu}>
         <ul className={styles.list}>
-            {menu_items.map((elem, index) =>
+            {menu_items && menu_items.map((elem, index) =>
                 <li key={index} className={styles.list_li}>
                     {prepareMenuLink(elem)}
                 </li>

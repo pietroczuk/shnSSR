@@ -4,6 +4,8 @@ import styles from '../leftMenuLinks.modules.scss';
 
 import { prepUrlFromConfigSlug } from '../../../utils/utilsFrondend';
 
+import ArrowDown from '../../InteractiveIcon/icons/ArrowDown';
+
 const LeftMenuSubmenu = props => {
     const { elem, prepareLabelMenu, prepareMenuLink, pathname, language, slug_urls } = props;
     const { items, label, color } = elem;
@@ -17,23 +19,26 @@ const LeftMenuSubmenu = props => {
         setOpenSubmenu(open);
     }
     useEffect(() => {
-        // console.log('sprawdzam', label);
         const foudmatch = items.some(item => {
-            if(item.url && pathname === prepUrlFromConfigSlug(language, slug_urls, item.type, item.url)){
-                return openSubmenuHandler(true);
+            if (item.url && pathname === prepUrlFromConfigSlug(language, slug_urls, item.type, item.url)) {
+                openSubmenuHandler(true);
+                return true;
             }
         });
-        if(!foudmatch && openSubmenu) {
+        if (!foudmatch && openSubmenu) {
             openSubmenuHandler(false);
         }
-    },[pathname])
+    }, [pathname])
 
     return (
-        <div onClick={toogleSubmenuHandler}>
-            {prepareLabelMenu(label, color, true, openSubmenu)}
+        <div>
+            <div onClick={toogleSubmenuHandler} className={styles.label_with_icon}>
+                {prepareLabelMenu(label, color, true, openSubmenu)}
+                <div className={`${styles.icon} ${openSubmenu ? styles.rotate : ''}`}><ArrowDown /></div>
+            </div>
             <div className={`${styles.submenu + ' ' + (openSubmenu ? styles.open_submenu : '')}`}>
                 <ul>
-                    {                   
+                    {
                         items.map((it, index) =>
                             <li key={index}>
                                 {prepareMenuLink(it)}
