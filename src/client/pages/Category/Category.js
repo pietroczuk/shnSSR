@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './category.modules.scss';
+import stylesGlobal from '../../components/contentCointainer/contentCointainer.modules.scss';
 
 import { connect } from 'react-redux';
 import { get_page, clear_page } from '../../redux/actions/all_actions';
 import { pageTypes, metatags, prepareSearchCode, renderHtmlFromJson } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
+import ContentCointainer from '../../components/contentCointainer/ContentCointainer';
+import LeftMenuLinks from '../../components/leftMenuLinks/LeftMenuLinks';
 
 const Category = props => {
 
@@ -19,33 +22,59 @@ const Category = props => {
     // from props
     const { url, lang } = props.match.params;
     const { location } = props;
-    
+    // multirow
+
+    const multirow = true;
+
+    // dev - images
+    const { images_url } = props;
+
     const [currentLocation, setCurrentLocation] = useState(location.pathname)
 
     const setCurrentLocationHandler = loc => {
-        if(currentLocation !== loc) {
+        if (currentLocation !== loc) {
             setCurrentLocation(loc);
         }
     }
     useEffect(() => {
-        if (!category || currentLocation!==location.pathname || type !== pageTypes.categoryPage) {
+        if (!category || currentLocation !== location.pathname || type !== pageTypes.categoryPage) {
             get_page(api, pageTypes.categoryPage, lang, url, prepareSearchCode(location.search));
             setCurrentLocationHandler(location.pathname);
-        }   
+        }
         return clear_page;
     }, [location.pathname]);
 
+    const show_products = products => {
+        // console.log('prod: ', products);
+        if (products) {
+            return products.map(p =>
+                <li key={p.id}>
+                    {p.title}
+                    <img width="300px" height="400px" alt={p.title} src={images_url.url + '/' + p.variations[Object.keys(p.variations)[0]].variation_image.poster + images_url.medium} />
+                </li>
+            )
+        }
+        return <li>loading...</li>
+    }
 
     return (
-        <div>
+        <ContentCointainer miltirow={multirow}>
             {metatags(seo_title, seo_description, seo, url, lang, url_prefix)}
-            { category ? <h1>{category.title}</h1> : <h1><Placeholder /></h1>}
-            <div>
-            { category ? <div>{category.description}</div> : <div><Placeholder /></div>}
-                {/* {staticpage && renderHtmlFromJson(staticpage.page_body)} */}
-                siemka
+            {
+                multirow && <div className={stylesGlobal.left_column}>
+                    <LeftMenuLinks location={location}/>
+                </div>
+            }
+            <div className={stylesGlobal.right_column}>
+                {category ? <h1>{category.title}</h1> : <h1><Placeholder /></h1>}
+                <div>
+                    {category ? <div>{category.description}</div> : <div><Placeholder /></div>}
+
+                    {category && <ul>{show_products(category.products)}</ul>}
+                    {/* {staticpage && renderHtmlFromJson(staticpage.page_body)} */}
+                </div>
             </div>
-        </div>
+        </ContentCointainer>
     )
 }
 const mapStateToProps = state => ({
@@ -53,7 +82,9 @@ const mapStateToProps = state => ({
     category: state.page.data,
     type: state.page.type,
     url_prefix: state.config.urls[pageTypes.categoryPage],
-    api: state.config.api
+    api: state.config.api,
+    // dev
+    images_url: state.config.images,
 });
 
 const loadDataOnInit = (server_store, api_config, language, url, query) => {

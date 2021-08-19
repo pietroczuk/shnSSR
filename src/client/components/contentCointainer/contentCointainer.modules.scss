@@ -1,0 +1,17 @@
+.page_container {
+    padding: 30px;
+
+    &.multirow {
+        display: flex;
+
+        .left_column {
+            width: 15%;
+        }
+
+        .right_column {
+            width: 85%;
+        }
+    }
+
+
+}
