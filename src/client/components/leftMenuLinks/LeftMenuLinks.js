@@ -13,8 +13,15 @@ const LeftMenuLinks = (props) => {
     const { menu_items, slug_urls, language, location } = props;
     const pathname = location !== undefined ? location.pathname : '';
 
-    const prepareSubmenu = elem => {
-        return <LeftMenuSubmenu elem={elem} prepareLabelMenu={prepareLabelMenu} prepareMenuLink={prepareMenuLink} />
+    const prepareSubmenu = (elem) => {
+        return <LeftMenuSubmenu
+            elem={elem}
+            pathname={pathname}
+            slug_urls={slug_urls}
+            language={language}
+            prepareLabelMenu={prepareLabelMenu}
+            prepareMenuLink={prepareMenuLink}
+        />
     }
     const prepareMenuLink = (elem, clickHandler = null) => {
         const { type, url, label, items, color } = elem;
@@ -31,9 +38,9 @@ const LeftMenuLinks = (props) => {
             return items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color);
         }
     }
-    const prepareLabelMenu = (label, color = null) => {
+    const prepareLabelMenu = (label, color = null, expand = false, bolder = false) => {
         const customColor = !color ? color : { color: color };
-        return <div style={customColor} className={styles.side_label}>{label}</div>
+        return <div style={customColor} className={`${styles.side_label} ${expand ? styles.side_link_container : ''} ${bolder ? styles.bolder : ''}`}>{label}</div>
     }
 
     return <nav>

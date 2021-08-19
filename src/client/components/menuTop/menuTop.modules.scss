@@ -32,6 +32,13 @@
                     color: #999;
                 }
 
+                .label {
+                    -webkit-transition: color 0.2s;
+                    -moz-transition   : color 0.2s;
+                    -o-transition     : color 0.2s;
+                    transition        : color 0.2s;
+                }
+
                 // &:hover .submenu {
                 // display: flex;
                 // }
@@ -72,9 +79,9 @@
 
                         .link_container {
                             // color      : #101010;
-                            padding    : 10px;
-                            display    : block;
-                            font-weight: 400;
+                            padding      : 10px;
+                            display      : block;
+                            font-weight  : 400;
                             margin-bottom: 5px;
 
                             .label {
