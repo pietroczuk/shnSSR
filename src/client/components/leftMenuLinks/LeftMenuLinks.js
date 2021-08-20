@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './leftMenuLinks.modules.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
@@ -13,7 +13,11 @@ const LeftMenuLinks = (props) => {
     const { menu_items, slug_urls, language, location, main_ref } = props;
     const pathname = location !== undefined ? location.pathname : '';
 
-    // const [menuStyle, setMenuStyle]
+    const [forcePosition, setForcePosition] = useState(true);
+
+    const setForcePositionHandler = force => {
+        setForcePosition(force);
+    }
 
     const prepareSubmenu = (elem) => {
         return <LeftMenuSubmenu
@@ -103,7 +107,6 @@ const LeftMenuLinks = (props) => {
             bottom: 0
         }
         let newStyles = null;
-
         if (forceStatic || safetyBottomTrigger) {
             if (safetyBottomTrigger) {
                 newStyles = absoluteStyle;
@@ -180,6 +183,7 @@ const LeftMenuLinks = (props) => {
                 scrollingIntervalId = setTimeout(setPosition, wait);
             }
         }
+        setPosition();
         window.addEventListener('scroll', handleScroll);
         return () => {
             if (!scrollingIntervalId) {
@@ -189,7 +193,10 @@ const LeftMenuLinks = (props) => {
         }
     }, []);
     useEffect(() => {
-        setPosition(true);
+        setPosition(!forcePosition);
+        if(forcePosition) {
+            setForcePositionHandler(false);
+        }
     }, [location.pathname]);
 
     return <nav ref={menu_ref} className={styles.container}>
