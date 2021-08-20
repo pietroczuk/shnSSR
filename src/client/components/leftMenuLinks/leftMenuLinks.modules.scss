@@ -1,96 +1,105 @@
-.side_list {
-    list-style: none;
-    margin    : 0;
-    padding   : 0;
+$hoverLinkColor   : #999;
+$linkMarginPadding: 0.5em;
+$transitionTime   : 0.2s;
 
-    >li {
-        margin-top    : 0.5em;
-        border-bottom : 1px solid #f3f3f3;
-        padding-bottom: 0.5em;
+.container {
+    width: inherit;
+    .side_list {
+        list-style    : none;
+        margin        : 0;
+        padding       : 0;
+        display       : flex;
+        flex-direction: column;
 
-        &:last-child {
-            border-bottom: none;
-        }
-    }
+        >li {
+            margin-top    : $linkMarginPadding;
+            border-bottom : 1px solid #f3f3f3;
+            padding-bottom: $linkMarginPadding;
 
-    .side_link_container {
-        display: flex;
-        padding: 10px 0px;
-    }
-
-    .side_label {
-        position          : relative;
-        cursor            : pointer;
-        -webkit-transition: color 0.2s;
-        -moz-transition   : color 0.2s;
-        -o-transition     : color 0.2s;
-        transition        : color 0.2s;
-
-        &:hover {
-            color: #999;
+            &:last-child {
+                border-bottom: none;
+            }
         }
 
-        &.bolder {
-            font-weight: 600;
+        .side_link_container {
+            display: flex;
+            padding: 10px 0px;
         }
-    }
 
-    .active {
         .side_label {
-            font-weight: 700;
+            position          : relative;
+            cursor            : pointer;
+            -webkit-transition: color $transitionTime;
+            -moz-transition   : color $transitionTime;
+            -o-transition     : color $transitionTime;
+            transition        : color $transitionTime;
 
-            &::after {
-                width           : 100% !important;
-                background-color: #f00;
-                height          : 2px;
-                display         : block;
-                content         : "";
-                position        : absolute;
-                bottom          : -4px;
+            &:hover {
+                color: $hoverLinkColor;
             }
-        }
-    }
 
-    .label_with_icon {
-        display        : flex;
-        justify-content: space-between;
-        cursor         : pointer;
-
-        .icon {
-            width             : 1em;
-            display           : flex;
-            flex-direction    : column;
-            justify-content   : center;
-            -webkit-transition: transform 0.2s;
-            -moz-transition   : transform 0.2s;
-            -o-transition     : transform 0.2s;
-            transition        : transform 0.2s;
-
-            &.rotate {
-                transform: rotate(180deg);
+            &.bolder {
+                font-weight: 600;
             }
         }
 
-        &:hover .side_label {
-            color: #999;
+        .active {
+            .side_label {
+                font-weight: 700;
+
+                &::after {
+                    width           : 100% !important;
+                    background-color: #f00;
+                    height          : 2px;
+                    display         : block;
+                    content         : "";
+                    position        : absolute;
+                    bottom          : -4px;
+                }
+            }
         }
-    }
 
-    .submenu {
-        display   : none;
-        margin-top: 1em;
+        .label_with_icon {
+            display        : flex;
+            justify-content: space-between;
+            cursor         : pointer;
 
-        &.open_submenu {
-            display: block;
+            .icon {
+                width             : 1em;
+                display           : flex;
+                flex-direction    : column;
+                justify-content   : center;
+                -webkit-transition: transform $transitionTime;
+                -moz-transition   : transform $transitionTime;
+                -o-transition     : transform $transitionTime;
+                transition        : transform $transitionTime;
+
+                &.rotate {
+                    transform: rotate(180deg);
+                }
+            }
+
+            &:hover .side_label {
+                color: $hoverLinkColor;
+            }
         }
 
-        ul {
-            list-style  : none;
-            padding-left: 1em;
+        .submenu {
+            display   : none;
+            margin-top: 1em;
 
-            li {
-                margin-top    : 0.5em;
-                padding-bottom: 0.5em;
+            &.open_submenu {
+                display: block;
+            }
+
+            ul {
+                list-style  : none;
+                padding-left: 1em;
+
+                li {
+                    margin-top    : $linkMarginPadding;
+                    padding-bottom: $linkMarginPadding;
+                }
             }
         }
     }

@@ -5,12 +5,13 @@
         display: flex;
 
         .left_column {
-            width: 15%;
-            padding-right: 2em;
+            width       : 200px;
+            min-width   : 200px;
+            margin-right: 2em;
         }
 
         .right_column {
-            width: 85%;
+            width: 100%;
         }
     }
 

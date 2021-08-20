@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from './leftMenuLinks.modules.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
@@ -12,6 +12,8 @@ import LeftMenuSubmenu from './leftMenuSubmenu/LeftMenuSubmenu';
 const LeftMenuLinks = (props) => {
     const { menu_items, slug_urls, language, location } = props;
     const pathname = location !== undefined ? location.pathname : '';
+
+    // const [menuStyle, setMenuStyle]
 
     const prepareSubmenu = (elem) => {
         return <LeftMenuSubmenu
@@ -43,7 +45,95 @@ const LeftMenuLinks = (props) => {
         return <div style={customColor} className={`${styles.side_label} ${expand ? styles.side_link_container : ''} ${bolder ? styles.bolder : ''}`}>{label}</div>
     }
 
-    return <nav>
+    const menu_ref = useRef();
+
+    let scrollingIntervalId = null;
+    let wait = 100;
+    let prev_window_scroll = 0;
+    let stickyBottom = false;
+
+    const setPosition = () => {
+        // init scroll direction
+        const window_scroll = window.pageYOffset;
+        const scroll_offset = window_scroll - prev_window_scroll;
+        prev_window_scroll = window_scroll;
+        // init containers
+        const container = menu_ref.current;
+        const cointanerViewport = container.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        // isRoomForScrolling for tells is room to scroll
+        const isRoomForScrolling = cointanerViewport.height + cointanerViewport.y <= windowHeight ? false : true;
+        // stores current y position in window
+        const currentAbsoluteStickyPossition = window_scroll + cointanerViewport.y;
+        // is menu bigger
+        const containerIsBiggerThanWindow = cointanerViewport.height < windowHeight ? false : true;
+        const goingUp = scroll_offset < 0 ? true : false;
+        const goingDown = !goingUp;
+        // styles
+        const stickyStyle = {
+            position: 'sticky',
+            top: 0,
+            bottom: null
+        }
+        const absoluteStyle = {
+            position: 'absolute',
+            top: currentAbsoluteStickyPossition + 'px',
+            bottom: null
+        }
+        const fixedBottomStyle = {
+            position: 'fixed',
+            top: null,
+            bottom: 0
+        }
+        let newStyles = null;
+        if (goingDown) { 
+            if (containerIsBiggerThanWindow) {
+                if (isRoomForScrolling) {
+                    newStyles = absoluteStyle;
+                    stickyBottom = false;
+                } else {
+                    newStyles = fixedBottomStyle;
+                    stickyBottom = true;
+                }
+            } else {
+                newStyles = stickyStyle;
+                stickyBottom = false;
+            }
+            // console.log(cointanerViewport.height + cointanerViewport.y, isRoomForScrolling, windowHeight)
+        }
+        if (goingUp) {
+            // console.log('down', isRoomForScrolling, stickyBottom);
+            // console.log(cointanerViewport.height + cointanerViewport.y, isRoomForScrolling, windowHeight)
+            if (cointanerViewport.y >= 0) {
+                newStyles = stickyStyle;
+                stickyBottom = false;
+            } else {
+                if (isRoomForScrolling || stickyBottom) {
+                    newStyles = absoluteStyle;
+                    stickyBottom = false;
+                }
+            }
+        }
+        if (newStyles) {
+            container.style.position = newStyles.position;
+            container.style.top = newStyles.top;
+            container.style.bottom = newStyles.bottom;
+        }
+        scrollingIntervalId = null;
+    }
+    useEffect(() => {
+        const handleScroll = () => {
+            if (scrollingIntervalId === null) {
+                scrollingIntervalId = setTimeout(setPosition, wait);
+            }
+        }
+        setPosition();
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
+
+    return <nav ref={menu_ref} className={styles.container}>
+        {console.log('render')}
         <ul className={styles.side_list}>
             {menu_items && menu_items.map((elem, index) =>
                 <li key={index}>
