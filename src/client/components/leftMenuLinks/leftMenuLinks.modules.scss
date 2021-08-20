@@ -4,6 +4,7 @@ $transitionTime   : 0.2s;
 
 .container {
     width: inherit;
+    will-change: position, top, bottom;
     .side_list {
         list-style    : none;
         margin        : 0;

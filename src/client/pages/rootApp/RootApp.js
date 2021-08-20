@@ -8,6 +8,7 @@ import styles from './rootapp.module.scss';
 import { setCookie, getCookie } from '../../utils/utilsFrondend';
 // components
 import Header from '../../components/header/Header';
+import Footer from '../../components/footer/Footer';
 
 // import loadable from '@loadable/component';
 
@@ -27,7 +28,7 @@ const RootApp = ({ route, language , currency, location}) => {
         <React.Fragment>
             <Header white={true} whiteTopbar={true} language={language} location={location} />
             {renderRoutes(route.routes)}
-            <div>stopka</div>
+            <Footer />
         </React.Fragment>
     );
 };

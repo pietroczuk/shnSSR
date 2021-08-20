@@ -48,11 +48,11 @@ const LeftMenuLinks = (props) => {
     const menu_ref = useRef();
 
     let scrollingIntervalId = null;
-    let wait = 100;
+    let wait = 150;
     let prev_window_scroll = 0;
     let stickyBottom = false;
 
-    const setPosition = () => {
+    const setPosition = (forceStatic = false) => {
         // init scroll direction
         const window_scroll = window.pageYOffset;
         const scroll_offset = window_scroll - prev_window_scroll;
@@ -61,14 +61,24 @@ const LeftMenuLinks = (props) => {
         const container = menu_ref.current;
         const cointanerViewport = container.getBoundingClientRect();
         const windowHeight = window.innerHeight;
+        const main_height = main_ref ? main_ref.current.getBoundingClientRect().height : 0;
+        const topHeadline = main_ref ? main_ref.current.offsetTop : 0;
+        const bottomHeadline = main_height + topHeadline;
+        const maxScroll = bottomHeadline - windowHeight;
         // isRoomForScrolling for tells is room to scroll
         const isRoomForScrolling = cointanerViewport.height + cointanerViewport.y <= windowHeight ? false : true;
         // stores current y position in window
-        const currentAbsoluteStickyPossition = window_scroll + cointanerViewport.y;
+        const userScroll = window_scroll + cointanerViewport.y;
+        const maxUserScroll = bottomHeadline - cointanerViewport.height;
+        // safety feature - too much scroll bottom
+        const safetyBottomTrigger = userScroll <= maxUserScroll ? false : true
+        const currentAbsoluteStickyPossition = safetyBottomTrigger ? maxUserScroll : userScroll;
         // is menu bigger than window ?
         const containerIsBiggerThanWindow = cointanerViewport.height < windowHeight ? false : true;
         // is menu bigger than main content ?
-        const containerIsBiggerThanMain = main_ref ? cointanerViewport.height > main_ref.current.getBoundingClientRect().height ? true : false : false;
+        const containerIsBiggerThanMain = cointanerViewport.height > main_height ? true : false;
+        // is the same height ? 
+        const containerIsSameHeightAsMain = cointanerViewport.height === main_height ? true : false;
         const goingUp = scroll_offset < 0 && window_scroll > 0 ? true : false;
         const goingDown = scroll_offset > 0 && window_scroll > 0 ? true : false;
         // styles
@@ -93,38 +103,69 @@ const LeftMenuLinks = (props) => {
             bottom: 0
         }
         let newStyles = null;
-        if (!containerIsBiggerThanMain) {
-            if (goingDown) {
-                if (containerIsBiggerThanWindow) {
-                    if (isRoomForScrolling) {
+
+        if (forceStatic || safetyBottomTrigger) {
+            if (safetyBottomTrigger) {
+                newStyles = absoluteStyle;
+            } else {
+                newStyles = staticStyle;
+            }
+            stickyBottom = false;
+        } else {
+            if (!containerIsSameHeightAsMain && !containerIsBiggerThanMain) {
+                if (goingDown) {
+                    if (containerIsBiggerThanWindow) {
+                        if (isRoomForScrolling) {
+                            if (window_scroll > topHeadline && cointanerViewport.y <= 0) {
+                                newStyles = absoluteStyle;
+                                stickyBottom = false;
+                            } else {
+                                newStyles = staticStyle;
+                                stickyBottom = false;
+                            }
+                        } else {
+                            if (window_scroll < maxScroll) {
+                                newStyles = fixedBottomStyle;
+                                stickyBottom = true;
+                            } else {
+                                newStyles = absoluteStyle;
+                                stickyBottom = false;
+                            }
+                        }
+                    } else {
+                        newStyles = stickyStyle;
+                        stickyBottom = false;
+                    }
+
+                }
+                if (goingUp) {
+                    if (stickyBottom) {
                         newStyles = absoluteStyle;
                         stickyBottom = false;
                     } else {
-                        newStyles = fixedBottomStyle;
-                        stickyBottom = true;
-                    }
-                } else {
-                    newStyles = stickyStyle;
-                    stickyBottom = false;
-                }
-            }
-            if (goingUp) {
-                if (cointanerViewport.y >= 0) {
-                    newStyles = stickyStyle;
-                    stickyBottom = false;
-                } else {
-                    if (isRoomForScrolling || stickyBottom) {
-                        newStyles = absoluteStyle;
-                        stickyBottom = false;
+                        if (cointanerViewport.y >= 0 && window_scroll > topHeadline) {
+                            newStyles = stickyStyle;
+                            stickyBottom = false;
+                        } else {
+                            if (window_scroll <= topHeadline) {
+                                newStyles = staticStyle;
+                                stickyBottom = false;
+                            }
+                        }
                     }
                 }
+            } else {
+                if (containerIsSameHeightAsMain) {
+                    newStyles = staticStyle;
+                } else {
+                    newStyles = stickyStyle;
+                }
+                stickyBottom = false;
             }
-        }
-        if (!goingUp && !goingDown && window_scroll === 0 && containerIsBiggerThanMain) {
-            newStyles = stickyStyle;
-            newStyles = staticStyle;
-            stickyBottom = false;
-            
+            if (!goingUp && !goingDown && window_scroll === 0) {
+                newStyles = staticStyle;
+                stickyBottom = false;
+            }
         }
         if (newStyles) {
             container.style.position = newStyles.position;
@@ -139,7 +180,6 @@ const LeftMenuLinks = (props) => {
                 scrollingIntervalId = setTimeout(setPosition, wait);
             }
         }
-        // setPosition();
         window.addEventListener('scroll', handleScroll);
         return () => {
             if (!scrollingIntervalId) {
@@ -149,7 +189,7 @@ const LeftMenuLinks = (props) => {
         }
     }, []);
     useEffect(() => {
-        setPosition();
+        setPosition(true);
     }, [location.pathname]);
 
     return <nav ref={menu_ref} className={styles.container}>
