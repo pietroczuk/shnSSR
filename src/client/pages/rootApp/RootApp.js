@@ -27,6 +27,7 @@ const RootApp = ({ route, language , currency, location}) => {
         <React.Fragment>
             <Header white={true} whiteTopbar={true} language={language} location={location} />
             {renderRoutes(route.routes)}
+            <div>stopka</div>
         </React.Fragment>
     );
 };
