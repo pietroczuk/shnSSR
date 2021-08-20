@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './category.modules.scss';
 import stylesGlobal from '../../components/contentCointainer/contentCointainer.modules.scss';
@@ -22,6 +22,10 @@ const Category = props => {
     // from props
     const { url, lang } = props.match.params;
     const { location } = props;
+    // ref for main content
+    const main_ref = useRef();
+
+
     // multirow
 
     const multirow = true;
@@ -63,10 +67,10 @@ const Category = props => {
             {metatags(seo_title, seo_description, seo, url, lang, url_prefix)}
             {
                 multirow && <div className={stylesGlobal.left_column}>
-                    <LeftMenuLinks location={location}/>
+                    <LeftMenuLinks location={location} main_ref={main_ref}/>
                 </div>
             }
-            <div className={stylesGlobal.right_column}>
+            <div className={stylesGlobal.main_column} ref={main_ref}>
                 {category ? <h1>{category.title}</h1> : <h1><Placeholder /></h1>}
                 <div>
                     {category ? <div>{category.description}</div> : <div><Placeholder /></div>}

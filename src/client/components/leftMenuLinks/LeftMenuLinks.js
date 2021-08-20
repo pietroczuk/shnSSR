@@ -10,7 +10,7 @@ import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 import LeftMenuSubmenu from './leftMenuSubmenu/LeftMenuSubmenu';
 
 const LeftMenuLinks = (props) => {
-    const { menu_items, slug_urls, language, location } = props;
+    const { menu_items, slug_urls, language, location, main_ref } = props;
     const pathname = location !== undefined ? location.pathname : '';
 
     // const [menuStyle, setMenuStyle]
@@ -65,11 +65,18 @@ const LeftMenuLinks = (props) => {
         const isRoomForScrolling = cointanerViewport.height + cointanerViewport.y <= windowHeight ? false : true;
         // stores current y position in window
         const currentAbsoluteStickyPossition = window_scroll + cointanerViewport.y;
-        // is menu bigger
+        // is menu bigger than window ?
         const containerIsBiggerThanWindow = cointanerViewport.height < windowHeight ? false : true;
-        const goingUp = scroll_offset < 0 ? true : false;
-        const goingDown = !goingUp;
+        // is menu bigger than main content ?
+        const containerIsBiggerThanMain = main_ref ? cointanerViewport.height > main_ref.current.getBoundingClientRect().height ? true : false : false;
+        const goingUp = scroll_offset < 0 && window_scroll > 0 ? true : false;
+        const goingDown = scroll_offset > 0 && window_scroll > 0 ? true : false;
         // styles
+        const staticStyle = {
+            position: 'static',
+            top: null,
+            bottom: null
+        }
         const stickyStyle = {
             position: 'sticky',
             top: 0,
@@ -86,33 +93,38 @@ const LeftMenuLinks = (props) => {
             bottom: 0
         }
         let newStyles = null;
-        if (goingDown) { 
-            if (containerIsBiggerThanWindow) {
-                if (isRoomForScrolling) {
-                    newStyles = absoluteStyle;
+        if (!containerIsBiggerThanMain) {
+            if (goingDown) {
+                if (containerIsBiggerThanWindow) {
+                    if (isRoomForScrolling) {
+                        newStyles = absoluteStyle;
+                        stickyBottom = false;
+                    } else {
+                        newStyles = fixedBottomStyle;
+                        stickyBottom = true;
+                    }
+                } else {
+                    newStyles = stickyStyle;
+                    stickyBottom = false;
+                }
+            }
+            if (goingUp) {
+                if (cointanerViewport.y >= 0) {
+                    newStyles = stickyStyle;
                     stickyBottom = false;
                 } else {
-                    newStyles = fixedBottomStyle;
-                    stickyBottom = true;
+                    if (isRoomForScrolling || stickyBottom) {
+                        newStyles = absoluteStyle;
+                        stickyBottom = false;
+                    }
                 }
-            } else {
-                newStyles = stickyStyle;
-                stickyBottom = false;
             }
-            // console.log(cointanerViewport.height + cointanerViewport.y, isRoomForScrolling, windowHeight)
         }
-        if (goingUp) {
-            // console.log('down', isRoomForScrolling, stickyBottom);
-            // console.log(cointanerViewport.height + cointanerViewport.y, isRoomForScrolling, windowHeight)
-            if (cointanerViewport.y >= 0) {
-                newStyles = stickyStyle;
-                stickyBottom = false;
-            } else {
-                if (isRoomForScrolling || stickyBottom) {
-                    newStyles = absoluteStyle;
-                    stickyBottom = false;
-                }
-            }
+        if (!goingUp && !goingDown && window_scroll === 0 && containerIsBiggerThanMain) {
+            newStyles = stickyStyle;
+            newStyles = staticStyle;
+            stickyBottom = false;
+            
         }
         if (newStyles) {
             container.style.position = newStyles.position;
@@ -127,13 +139,20 @@ const LeftMenuLinks = (props) => {
                 scrollingIntervalId = setTimeout(setPosition, wait);
             }
         }
-        setPosition();
+        // setPosition();
         window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll)
-    }, [])
+        return () => {
+            if (!scrollingIntervalId) {
+                clearInterval(scrollingIntervalId);
+            }
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }, []);
+    useEffect(() => {
+        setPosition();
+    }, [location.pathname]);
 
     return <nav ref={menu_ref} className={styles.container}>
-        {console.log('render')}
         <ul className={styles.side_list}>
             {menu_items && menu_items.map((elem, index) =>
                 <li key={index}>
