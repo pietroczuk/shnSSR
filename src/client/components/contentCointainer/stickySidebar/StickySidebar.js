@@ -17,10 +17,10 @@ const StickySidebar = props => {
     const { location } = props;
     const pathname = location ? location.pathname : null;
     // variables for prevent rendering when change position
-    let scrollingIntervalId = null;
-    let wait = 150;
+    let isUserScrolling = false;
     let prev_window_scroll = 0;
     let stickyBottom = false;
+    let prevStyle = null;
 
     const setPosition = (forceStatic = false) => {
         // init scroll direction
@@ -73,11 +73,13 @@ const StickySidebar = props => {
             bottom: 0
         }
         let newStyles = null;
+
         if (forceStatic || safetyBottomTrigger) {
             if (safetyBottomTrigger) {
                 newStyles = absoluteStyle;
             } else {
                 newStyles = staticStyle;
+                prevStyle = null;
             }
             stickyBottom = false;
         } else {
@@ -136,26 +138,26 @@ const StickySidebar = props => {
                 stickyBottom = false;
             }
         }
-        if (newStyles) {
+        if (newStyles && (prevStyle !== newStyles.position)) {
+            // console.log('style changed', prevStyle, ' => ', newStyles.position, prevStyle !== newStyles.position);
+            prevStyle = newStyles.position;
             container.style.position = newStyles.position;
             container.style.top = newStyles.top;
             container.style.bottom = newStyles.bottom;
         }
-        scrollingIntervalId = null;
+        isUserScrolling = false;
     }
     useEffect(() => {
         if (main_ref && main_ref.current !== undefined) {
             const handleScroll = () => {
-                if (scrollingIntervalId === null) {
-                    scrollingIntervalId = setTimeout(setPosition, wait);
+                if (!isUserScrolling) {
+                    isUserScrolling = true;
+                    setPosition();
                 }
             }
             setPosition();
             window.addEventListener('scroll', handleScroll);
             return () => {
-                if (!scrollingIntervalId) {
-                    clearInterval(scrollingIntervalId);
-                }
                 window.removeEventListener('scroll', handleScroll)
             }
         }
@@ -170,6 +172,7 @@ const StickySidebar = props => {
     }, [pathname, main_ref]);
 
     return <div className={styles.sidebar_column}>
+        {/* {console.log('render')} */}
         <div className={styles.container} ref={sidebar_ref}>{props.children}</div>
     </div>
 }

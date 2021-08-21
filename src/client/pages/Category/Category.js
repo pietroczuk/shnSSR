@@ -74,7 +74,7 @@ const Category = props => {
                     {/* {staticpage && renderHtmlFromJson(staticpage.page_body)} */}
                 </div>
             </MainContent>
-            <StickySidebar>dupa</StickySidebar>
+            {/* <StickySidebar>dupa</StickySidebar> */}
         </ContentCointainer>
     )
 }
