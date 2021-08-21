@@ -4,10 +4,15 @@
     &.multirow {
         display: flex;
 
-        .left_column {
+        .sidebar_column {
             width       : 200px;
             min-width   : 200px;
             margin-right: 2em;
+
+            .container {
+                width      : inherit;
+                will-change: position, top, bottom;
+            }
         }
     }
 

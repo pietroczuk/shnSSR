@@ -9,7 +9,10 @@ import { pageTypes, metatags, prepareSearchCode, renderHtmlFromJson, scrollToTop
 
 import Placeholder from '../../components/placeholder/Placeholder';
 import ContentCointainer from '../../components/contentCointainer/ContentCointainer';
+import StickySidebar from '../../components/contentCointainer/stickySidebar/StickySidebar';
+import MainContent from '../../components/contentCointainer/mainContent/MainContent';
 import LeftMenuLinks from '../../components/leftMenuLinks/LeftMenuLinks';
+
 
 const Category = props => {
 
@@ -24,10 +27,7 @@ const Category = props => {
     const { location } = props;
     // ref for main content
     const main_ref = useRef();
-
-
     // multirow
-
     const multirow = true;
 
     // dev - images
@@ -50,7 +50,6 @@ const Category = props => {
     }, [location.pathname]);
 
     const show_products = products => {
-        // console.log('prod: ', products);
         if (products) {
             return products.map(p =>
                 <li key={p.id}>
@@ -66,11 +65,11 @@ const Category = props => {
         <ContentCointainer miltirow={multirow}>
             {metatags(seo_title, seo_description, seo, url, lang, url_prefix)}
             {
-                multirow && <div className={stylesGlobal.left_column}>
-                    <LeftMenuLinks location={location} main_ref={main_ref}/>
-                </div>
+                multirow && <StickySidebar location={location} main_ref={main_ref}>
+                    <LeftMenuLinks location={location} />
+                </StickySidebar>
             }
-            <div className={stylesGlobal.main_column} ref={main_ref}>
+            <MainContent main_ref={main_ref}>
                 {category ? <h1>{category.title}</h1> : <h1><Placeholder /></h1>}
                 <div>
                     {category ? <div>{category.description}</div> : <div><Placeholder /></div>}
@@ -78,7 +77,8 @@ const Category = props => {
                     {category && <ul>{show_products(category.products)}</ul>}
                     {/* {staticpage && renderHtmlFromJson(staticpage.page_body)} */}
                 </div>
-            </div>
+            </MainContent>
+            <StickySidebar>dupa</StickySidebar>
         </ContentCointainer>
     )
 }
