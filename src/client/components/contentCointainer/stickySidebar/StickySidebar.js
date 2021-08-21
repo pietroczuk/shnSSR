@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import styles from '../contentCointainer.modules.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
-
+import ContenerContext from '../contenerContext/contenerContext';
 
 const StickySidebar = props => {
 
@@ -9,9 +9,12 @@ const StickySidebar = props => {
     const setForcePositionHandler = force => {
         setForcePosition(force);
     }
+    // read context for main ref
+    const contenerContext = useContext(ContenerContext);
+    const main_ref = contenerContext.mainContentRef;
     const sidebar_ref = useRef();
-    const { main_ref, location } = props;
 
+    const { location } = props;
     const pathname = location ? location.pathname : null;
     // variables for prevent rendering when change position
     let scrollingIntervalId = null;
@@ -141,7 +144,7 @@ const StickySidebar = props => {
         scrollingIntervalId = null;
     }
     useEffect(() => {
-        if (main_ref !== undefined && main_ref.current !== undefined) {
+        if (main_ref && main_ref.current !== undefined) {
             const handleScroll = () => {
                 if (scrollingIntervalId === null) {
                     scrollingIntervalId = setTimeout(setPosition, wait);
@@ -158,7 +161,7 @@ const StickySidebar = props => {
         }
     }, [main_ref]);
     useEffect(() => {
-        if (main_ref !== undefined && main_ref.current !== undefined) {
+        if (main_ref && main_ref.current !== undefined) {
             setPosition(!forcePosition);
             if (forcePosition) {
                 setForcePositionHandler(false);

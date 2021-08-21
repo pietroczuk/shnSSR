@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './category.modules.scss';
-import stylesGlobal from '../../components/contentCointainer/contentCointainer.modules.scss';
 
 import { connect } from 'react-redux';
 import { get_page, clear_page } from '../../redux/actions/all_actions';
@@ -25,11 +24,8 @@ const Category = props => {
     // from props
     const { url, lang } = props.match.params;
     const { location } = props;
-    // ref for main content
-    const main_ref = useRef();
     // multirow
     const multirow = true;
-
     // dev - images
     const { images_url } = props;
 
@@ -65,11 +61,11 @@ const Category = props => {
         <ContentCointainer miltirow={multirow}>
             {metatags(seo_title, seo_description, seo, url, lang, url_prefix)}
             {
-                multirow && <StickySidebar location={location} main_ref={main_ref}>
+                multirow && <StickySidebar location={location}>
                     <LeftMenuLinks location={location} />
                 </StickySidebar>
             }
-            <MainContent main_ref={main_ref}>
+            <MainContent>
                 {category ? <h1>{category.title}</h1> : <h1><Placeholder /></h1>}
                 <div>
                     {category ? <div>{category.description}</div> : <div><Placeholder /></div>}
