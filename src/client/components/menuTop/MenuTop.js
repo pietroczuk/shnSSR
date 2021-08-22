@@ -4,7 +4,7 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 
 import { connect } from 'react-redux';
 
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 
 import SubMenu from './submenu/SubMenu';
@@ -21,10 +21,9 @@ const MenuTop = (props) => {
 
         if (url) {
             const new_url = prepUrlFromConfigSlug(language, slug_urls, type, url)
-            const active_link = new_url === pathname ? styles.active : '';
-            return <Link to={new_url} className={`${active_link + ' ' + styles.link_container}`} onClick={clickHandler}>
+            return <NavLink to={new_url} activeClassName={styles.active} className={styles.link_container} onClick={clickHandler}>
                 {items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color)}
-            </Link>
+            </NavLink>
         } else {
             return items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color);
         }

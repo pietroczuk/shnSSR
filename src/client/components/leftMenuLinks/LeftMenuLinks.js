@@ -4,7 +4,7 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 
 import { connect } from 'react-redux';
 
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 
 import LeftMenuSubmenu from './leftMenuSubmenu/LeftMenuSubmenu';
@@ -29,11 +29,10 @@ const LeftMenuLinks = (props) => {
 
         if (url) {
             const new_url = prepUrlFromConfigSlug(language, slug_urls, type, url)
-            const active_link = new_url === pathname ? styles.active : '';
             return (
-                <Link to={new_url} className={`${active_link + ' ' + styles.side_link_container}`} onClick={clickHandler}>
+                <NavLink to={new_url} activeClassName={styles.active} className={styles.side_link_container} onClick={clickHandler}>
                     {items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color)}
-                </Link>
+                </NavLink>
             )
         } else {
             return items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color);
@@ -42,7 +41,7 @@ const LeftMenuLinks = (props) => {
     const prepareLabelMenu = (label, color = null, expand = false, bolder = false) => {
         const customColor = !color ? color : { color: color };
         return <div style={customColor} className={`${styles.side_label} ${expand ? styles.side_link_container : ''} ${bolder ? styles.bolder : ''}`}>{label}</div>
-    } 
+    }
 
     return <nav className={styles.container}>
         <ul className={styles.side_list}>
