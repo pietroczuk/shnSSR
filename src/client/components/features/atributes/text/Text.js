@@ -3,7 +3,7 @@ import styles from './text.modules.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import { Link } from 'react-router-dom';
 
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { set_product_curr_var_id } from '../../../../redux/actions/all_actions';
 // import base64 from 'base-64';
 // import { prepareAttribLink } from '../../../../utils/utilsFrondend';
@@ -17,16 +17,15 @@ const Text = props => {
 
     // const redirectUrl = base64.encode(JSON.stringify(variant_code_url));
 
-    // from redux
-    const { set_product_curr_var_id, variations } = props;
+    const variations = useSelector(state => state.page.data.variations);
+    const dispatch = useDispatch();
 
     const clickMe = () => {
         if(onClickFunction) {
             onClickFunction();
         }else{
-            set_product_curr_var_id(link, variations);
+            dispatch(set_product_curr_var_id(link, variations));
         }
-        // onClickFunction(code, feat_id, default_variant, null, null, null, link );
     }
     return (
         <Link to={"?" + link} onClick={clickMe}
@@ -38,11 +37,4 @@ const Text = props => {
     )
 }
 
-const mapStateToProps = state => ({
-    variations: state.page.data.variations
-});
-export default
-    connect(mapStateToProps, { set_product_curr_var_id })
-        (withStyles(styles)(Text))
-
-// export default withStyles(styles)(Text);
+export default withStyles(styles)(Text);

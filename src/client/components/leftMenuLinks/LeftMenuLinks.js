@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './leftMenuLinks.modules.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { NavLink } from 'react-router-dom';
 import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
@@ -10,7 +10,14 @@ import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 import LeftMenuSubmenu from './leftMenuSubmenu/LeftMenuSubmenu';
 
 const LeftMenuLinks = (props) => {
-    const { menu_items, slug_urls, language, location } = props;
+
+    const { menu_items, language, slug_urls } = useSelector(state => ({
+        menu_items: state.global.menu.side === 'top' ? state.global.menu.top : state.global.menu.side,
+        language: state.user.language,
+        slug_urls: state.config.urls,
+    }))
+
+    const { location } = props;
     const pathname = location !== undefined ? location.pathname : '';
 
 
@@ -54,11 +61,4 @@ const LeftMenuLinks = (props) => {
     </nav>
 }
 
-const mapStateToProps = state => ({
-    menu_items: state.global.menu.side === 'top' ? state.global.menu.top : state.global.menu.side,
-    language: state.user.language,
-    slug_urls: state.config.urls,
-});
-export default
-    connect(mapStateToProps, {})
-        (withStyles(styles)(LeftMenuLinks))
+export default withStyles(styles)(LeftMenuLinks);

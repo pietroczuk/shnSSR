@@ -103,12 +103,4 @@ const SingleFeature = ({ title, atributes, displayType, currentVariationCode, fe
         </React.Fragment>
     )
 }
-// const mapStateToProps = state => ({
-//     features: state.global.features
-// });
 export default withStyles(styles)(SingleFeature)
-// export default
-//     connect(null, {
-//         set_product_curr_var_id
-//     })
-//         (withStyles(styles)(SingleFeature))

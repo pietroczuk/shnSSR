@@ -5,10 +5,6 @@ import { action_types } from './action_types';
 import axios from 'axios';
 import { pageTypes } from '../../utils/utilsFrondend';
 
-import { useDispatch } from 'react-redux';
-
-// const dispatch = useDispatch()
-
 /* --------------------- CONFIG 
 loads global config
 - api urls
@@ -66,10 +62,10 @@ export const get_page = (api, type, lang, url, query) => dispatch => {
       });
   }
 }
-export const clear_page = () => dispatch => {
-  return dispatch({
+export const clear_page = () => {
+  return {
     type: action_types.CLEAR_PAGE,
-  })
+  }
 }
 
 export const set_product_curr_var_id = (product_variant_id, variations) => dispatch => {

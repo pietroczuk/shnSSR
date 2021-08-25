@@ -7,7 +7,7 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 // import SelectedBg from './atributes/text/selectedBg/SelectedBg';
 import SingleFeature from './atributes/singleFeature/SingleFeature';
 
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 // import { set_variant_code } from '../../redux/actions/all_actions';
 
 // import { getSearchParams } from '../../utils/utilsFrondend';
@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 
 const AllFeaturesDisplay = props => {
     // from redux
-    const { features } = props;
+    const features = useSelector(state => state.global.features);
     // from props
     const { currentVariationCode, allProductVariation } = props;
 
@@ -51,13 +51,4 @@ const AllFeaturesDisplay = props => {
         </div>
     )
 }
-const mapStateToProps = state => ({
-    features: state.global.features
-
-});
-
-export default
-    connect(mapStateToProps, {
-        // set_variant_code
-    })
-        (withStyles(styles)(AllFeaturesDisplay))
+export default withStyles(styles)(AllFeaturesDisplay);

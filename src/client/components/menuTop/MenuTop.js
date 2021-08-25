@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './menuTop.modules.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { NavLink } from 'react-router-dom';
 import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
@@ -10,8 +10,12 @@ import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 import SubMenu from './submenu/SubMenu';
 
 const MenuTop = (props) => {
-    const { menu_items, slug_urls, language, location } = props;
-    const pathname = location !== undefined ? location.pathname : '';
+    const { menu_items, slug_urls } = useSelector(state => ({
+        menu_items: state.global.menu.top,
+        slug_urls: state.config.urls,
+    }))
+    const { language, location } = props;
+    // const pathname = location !== undefined ? location.pathname : '';
 
     const prepareSubmenu = elem => {
         return <SubMenu elem={elem} prepareLabelMenu={prepareLabelMenu} prepareMenuLink={prepareMenuLink} />
@@ -43,10 +47,4 @@ const MenuTop = (props) => {
     </nav>
 }
 
-const mapStateToProps = state => ({
-    menu_items: state.global.menu.top,
-    slug_urls: state.config.urls,
-});
-export default
-    connect(mapStateToProps, {})
-        (withStyles(styles)(MenuTop))
+export default withStyles(styles)(MenuTop);

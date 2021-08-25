@@ -4,12 +4,17 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 
 import { useLocation } from 'react-router-dom';
 
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const LanguageSwitcher = (props) => {
     const [searchParams, setSearchParams] = useState('');
-    const { all_config_languages, urls, page } = props;
     const { search } = useLocation();
+
+    const { all_config_languages, urls, page } = useSelector(state => ({
+        all_config_languages: state.config.language,
+        urls: state.config.urls,
+        page: state.page
+    }));
 
     // let page_ulrs = null;
     // switch (page.type) {
@@ -28,16 +33,9 @@ const LanguageSwitcher = (props) => {
     }, [search]);
     return <div>
         <ul>
-            {page_ulrs && Object.entries(all_config_languages).map(([lang_key, lang_val]) => <li key={lang_key}><a href={'/' + lang_val.code + '/'+urls[page.type]+'/' + page_ulrs[lang_val.code] + searchParams}>{lang_val.label}</a></li>)}
+            {page_ulrs && Object.entries(all_config_languages).map(([lang_key, lang_val]) => <li key={lang_key}><a href={'/' + lang_val.code + '/' + urls[page.type] + '/' + page_ulrs[lang_val.code] + searchParams}>{lang_val.label}</a></li>)}
         </ul>
     </div>
 }
 
-const mapStateToProps = state => ({
-    all_config_languages: state.config.language,
-    urls: state.config.urls,
-    page: state.page
-});
-export default
-    connect(mapStateToProps, {})
-        (withStyles(styles)(LanguageSwitcher))
+export default withStyles(styles)(LanguageSwitcher);
