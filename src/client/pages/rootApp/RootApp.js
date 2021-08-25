@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { renderRoutes } from 'react-router-config';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { get_global_config } from '../../redux/actions/all_actions';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './rootapp.module.scss';
@@ -19,11 +19,18 @@ import Footer from '../../components/footer/Footer';
 //     });
 
 
-const RootApp = ({ route, language , currency, location}) => {
-    useEffect(()=> {
+const RootApp = ({ route, location }) => {
+    const { language, currency } = useSelector(
+        state => ({
+            language: state.user.language,
+            currency: state.user.currency,
+        })
+    )
+
+    useEffect(() => {
         !getCookie('language') && language && setCookie('language', language);
         !getCookie('currency') && currency && setCookie('currency', currency);
-    },[])
+    }, [])
     return (
         <React.Fragment>
             <Header white={true} whiteTopbar={true} language={language} location={location} />
@@ -33,21 +40,12 @@ const RootApp = ({ route, language , currency, location}) => {
     );
 };
 
-const mapStateToProps = state => ({
-    config: state.config,
-    language: state.user.language,
-    currency: state.user.currency,
-});
-
 const loadDataOnInit = (server_store, api_config, language) => {
     const my_promise = server_store.dispatch(get_global_config(api_config, language));
-
     return my_promise;
 }
 
 export default {
     loadDataOnInit: loadDataOnInit,
-    component:
-        connect(mapStateToProps, { get_global_config })
-            (withStyles(styles)(RootApp))
+    component: withStyles(styles)(RootApp)
 };

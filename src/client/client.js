@@ -63,6 +63,6 @@ loadableReady(() => {
             </StyleContext.Provider>
         </Provider>
 
-        , document.querySelector('#root')
+        , document.getElementById('root')
     );
 });

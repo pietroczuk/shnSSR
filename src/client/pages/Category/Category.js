@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './category.modules.scss';
 
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { get_page, clear_page } from '../../redux/actions/all_actions';
 import { pageTypes, metatags, prepareSearchCode, renderHtmlFromJson, scrollToTop } from '../../utils/utilsFrondend';
 
@@ -16,18 +16,26 @@ import LeftMenuLinks from '../../components/leftMenuLinks/LeftMenuLinks';
 const Category = props => {
 
     // from redux
-    const { seo, category, api, url_prefix, type } = props;
+    const { seo, category, api, url_prefix, type } = useSelector(
+        state => ({
+            seo: state.global.config.seo,
+            category: state.page.data,
+            type: state.page.type,
+            url_prefix: state.config.urls[pageTypes.categoryPage],
+            api: state.config.api,
+        })
+    )
+    const dispatch = useDispatch();
+    // seo
     const seo_title = category ? category.seo_title : null;
     const seo_description = category ? category.seo_description : null;
-    // redux function
-    const { get_page, clear_page } = props;
     // from props
     const { url, lang } = props.match.params;
     const { location } = props;
     // multirow
     const multirow = true;
     // dev - images
-    const { images_url } = props;
+    const { images_url } = useSelector(state => ({ images_url: state.config.images }));
 
     const [currentLocation, setCurrentLocation] = useState(location.pathname)
 
@@ -38,12 +46,12 @@ const Category = props => {
     }
     useEffect(() => {
         if (!category || currentLocation !== location.pathname || type !== pageTypes.categoryPage) {
-            get_page(api, pageTypes.categoryPage, lang, url, prepareSearchCode(location.search));
+            dispatch(get_page(api, pageTypes.categoryPage, lang, url, prepareSearchCode(location.search)));
             setCurrentLocationHandler(location.pathname);
             scrollToTop(window);
         }
-        return clear_page;
-    }, [location.pathname]);
+        return () => dispatch(clear_page());
+    }, [location.pathname, dispatch]);
 
     const show_products = products => {
         if (products) {
@@ -78,15 +86,6 @@ const Category = props => {
         </ContentCointainer>
     )
 }
-const mapStateToProps = state => ({
-    seo: state.global.config.seo,
-    category: state.page.data,
-    type: state.page.type,
-    url_prefix: state.config.urls[pageTypes.categoryPage],
-    api: state.config.api,
-    // dev
-    images_url: state.config.images,
-});
 
 const loadDataOnInit = (server_store, api_config, language, url, query) => {
     const my_promise = server_store.dispatch(
@@ -97,10 +96,5 @@ const loadDataOnInit = (server_store, api_config, language, url, query) => {
 
 export default {
     loadDataOnInit: loadDataOnInit,
-    component:
-        connect(mapStateToProps, {
-            get_page,
-            clear_page,
-        })
-            (withStyles(styles)(Category))
+    component: withStyles(styles)(Category)
 }

@@ -4,6 +4,11 @@
 import { action_types } from './action_types';
 import axios from 'axios';
 import { pageTypes } from '../../utils/utilsFrondend';
+
+import { useDispatch } from 'react-redux';
+
+// const dispatch = useDispatch()
+
 /* --------------------- CONFIG 
 loads global config
 - api urls
@@ -53,7 +58,6 @@ export const get_page = (api, type, lang, url, query) => dispatch => {
       .then(res =>
         dispatch({
           type: action_types.GET_PAGE,
-          // payload: { data: res.data, query: decodeParameters(query) }
           payload: { data: res.data, query: query }
         })
       )
