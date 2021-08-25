@@ -11,9 +11,9 @@ const LanguageSwitcher = (props) => {
     const { search } = useLocation();
 
     const { all_config_languages, urls, page } = useSelector(state => ({
-        all_config_languages: state.config.language,
-        urls: state.config.urls,
-        page: state.page
+        all_config_languages: state.SystemConfig.language,
+        urls: state.SystemConfig.urls,
+        page: state.Page,
     }));
 
     // let page_ulrs = null;
@@ -26,7 +26,6 @@ const LanguageSwitcher = (props) => {
     //         break;
     // }
     const page_ulrs = page.data ? page.data.url : null;
-    // const page_ulrs = page.type == 'product' ? page.product.product_url : page.type == 'page' ? page.page.page_url : null;
 
     useEffect(() => {
         setSearchParams(search);

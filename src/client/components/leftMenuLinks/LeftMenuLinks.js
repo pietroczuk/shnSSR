@@ -12,9 +12,9 @@ import LeftMenuSubmenu from './leftMenuSubmenu/LeftMenuSubmenu';
 const LeftMenuLinks = (props) => {
 
     const { menu_items, language, slug_urls } = useSelector(state => ({
-        menu_items: state.global.menu.side === 'top' ? state.global.menu.top : state.global.menu.side,
-        language: state.user.language,
-        slug_urls: state.config.urls,
+        menu_items: state.PublicConfig.menu.side === 'top' ? state.PublicConfig.menu.top : state.PublicConfig.menu.side,
+        language: state.User.language,
+        slug_urls: state.SystemConfig.urls,
     }))
 
     const { location } = props;

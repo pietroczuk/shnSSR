@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 // import Colors from '../../components/atributes/colors/Colors';
 
 const HomePage = props => {
-    const { config } = useSelector(state => state.config);
+    const { config } = useSelector(state => state.SystemConfig);
     useEffect(() => {
         if (!config) {
             // props.get_global_config();
@@ -27,12 +27,6 @@ const HomePage = props => {
         <React.Fragment>
             {/* { SeoHead() } */}
             <div>home component</div>
-            {
-                // props.config.map((elem, index) => {
-                //     // console.log(elem.title[0].pl);
-                //     return <li key={index}>aa</li>
-                // })
-            }
             <button onClick={() => { console.log('cklik me') }}>kliknij</button>
             <Link to='/gowno'>gowno</Link><br />
             <Link to='/pl/about'>about</Link><br />

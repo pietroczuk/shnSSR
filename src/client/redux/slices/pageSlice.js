@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { clear_page } from '../actions/all_actions';
 
 const pageSlice = createSlice({
     name: 'Page',
@@ -9,14 +8,15 @@ const pageSlice = createSlice({
             const { data, query } = action.payload;
             if (query && data.data.variations[query]) {
                 data.data.current_variation_id = query;
-                state = data;
             }
+            return data;
         },
-        clearPageData(state) {
-            state = {}
+        clearPageData() {
+            return {}
         },
         setProductCurrentVariantId(state, action) {
             state.data.current_variation_id = action.payload;
+            return state;
         }
     }
 });

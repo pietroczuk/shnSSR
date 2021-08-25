@@ -11,11 +11,10 @@ import SubMenu from './submenu/SubMenu';
 
 const MenuTop = (props) => {
     const { menu_items, slug_urls } = useSelector(state => ({
-        menu_items: state.global.menu.top,
-        slug_urls: state.config.urls,
+        menu_items: state.PublicConfig.menu.top,
+        slug_urls: state.SystemConfig.urls,
     }))
-    const { language, location } = props;
-    // const pathname = location !== undefined ? location.pathname : '';
+    const { language } = props;
 
     const prepareSubmenu = elem => {
         return <SubMenu elem={elem} prepareLabelMenu={prepareLabelMenu} prepareMenuLink={prepareMenuLink} />

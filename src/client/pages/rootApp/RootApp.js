@@ -22,8 +22,8 @@ import Footer from '../../components/footer/Footer';
 const RootApp = ({ route, location }) => {
     const { language, currency } = useSelector(
         state => ({
-            language: state.user.language,
-            currency: state.user.currency,
+            language: state.User.language,
+            currency: state.User.currency,
         })
     )
 
@@ -41,7 +41,10 @@ const RootApp = ({ route, location }) => {
 };
 
 const loadDataOnInit = (server_store, api_config, language) => {
+    // console.log('serverstore1', server_store.getState());
     const my_promise = server_store.dispatch(getGlobalConfig(api_config, language));
+    // console.log('serverstore2', my_promise);
+    // console.log('serverstore3', server_store.getState());
     return my_promise;
 }
 

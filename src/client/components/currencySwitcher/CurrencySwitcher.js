@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setUserCurrency } from '../../redux/actions/actionCreators';
 
 const CurrencySwitcher = (props) => {
-    const all_config_currencies = useSelector(state => state.config.currency);
+    const all_config_currencies = useSelector(state => state.SystemConfig.currency);
     const dispatch = useDispatch();
 
     const currencyClickHandler = (currency) => {

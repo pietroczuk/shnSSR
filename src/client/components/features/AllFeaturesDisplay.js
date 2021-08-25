@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 
 const AllFeaturesDisplay = props => {
     // from redux
-    const features = useSelector(state => state.global.features);
+    const features = useSelector(state => state.PublicConfig.features);
     // from props
     const { currentVariationCode, allProductVariation } = props;
 

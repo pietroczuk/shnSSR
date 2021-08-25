@@ -19,11 +19,11 @@ const Category = props => {
     // from redux
     const { seo, category, api, url_prefix, type } = useSelector(
         state => ({
-            seo: state.global.config.seo,
-            category: state.page.data,
-            type: state.page.type,
-            url_prefix: state.config.urls[pageTypes.categoryPage],
-            api: state.config.api,
+            seo: state.PublicConfig.config.seo,
+            category: state.Page.data,
+            type: state.Page.type,
+            url_prefix: state.SystemConfig.urls[pageTypes.categoryPage],
+            api: state.SystemConfig.api,
         })
     )
     const dispatch = useDispatch();
@@ -36,7 +36,7 @@ const Category = props => {
     // multirow
     const multirow = true;
     // dev - images
-    const { images_url } = useSelector(state => ({ images_url: state.config.images }));
+    const { images_url } = useSelector(state => ({ images_url: state.SystemConfig.images }));
 
     const [currentLocation, setCurrentLocation] = useState(location.pathname)
 

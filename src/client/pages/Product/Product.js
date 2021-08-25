@@ -17,14 +17,14 @@ const Product = (props) => {
     // from redux
     const { seo, product, type, api, url_prefix, images_url, all_config_currencies, user_currency_code } = useSelector(
         state => ({
-            seo: state.global.config.seo,
-            product: state.page.data,
-            type: state.page.type,
-            api: state.config.api,
-            url_prefix: state.config.urls[pageTypes.productPage],
-            images_url: state.config.images,
-            all_config_currencies: state.config.currency,
-            user_currency_code: state.user.currency
+            seo: state.PublicConfig.config.seo,
+            product: state.Page.data,
+            type: state.Page.type,
+            api: state.SystemConfig.api,
+            url_prefix: state.SystemConfig.urls[pageTypes.productPage],
+            images_url: state.SystemConfig.images,
+            all_config_currencies: state.SystemConfig.currency,
+            user_currency_code: state.User.currency
         })
     )
     const dispatch = useDispatch();

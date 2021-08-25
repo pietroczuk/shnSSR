@@ -11,14 +11,14 @@ import { prepare_routes_config } from './utils/config';
 
 import { configureStore } from '@reduxjs/toolkit';
 
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+// import { createStore, applyMiddleware } from 'redux';
+// import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import all_reducers from './redux/reducers/all_reducers';
+// import all_reducers from './redux/reducers/all_reducers';
 
 import { loadableReady } from '@loadable/component';
 
-import { composeWithDevTools } from 'redux-devtools-extension';
+// import { composeWithDevTools } from 'redux-devtools-extension';
 
 
 import allReducers from './redux/slices/allReducers';
@@ -37,12 +37,12 @@ import { renderRoutes } from 'react-router-config';
 
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 
-const store_client = createStore(all_reducers, window.__INITIAL_STATE__, composeWithDevTools(applyMiddleware(thunk)));
+// const store_client = createStore(all_reducers, window.__INITIAL_STATE__, composeWithDevTools(applyMiddleware(thunk)));
 
-// const store_client2 = configureStore({
-//     reducer: allReducers,
-//     preloadedState: window.__INITIAL_STATE__
-// });
+const store_client = configureStore({
+    reducer: allReducers,
+    preloadedState: window.__INITIAL_STATE__
+});
 
 const new_routes_config = window.__CONFIG__;
 

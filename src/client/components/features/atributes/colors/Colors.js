@@ -12,7 +12,7 @@ const Colors = props => {
     const { attrib, active, link, onClickFunction } = props;
     const { glow_color, attrib_title, attrib_tooltip } = attrib;
 
-    const variations = useSelector(state => state.page.data.variations);
+    const variations = useSelector(state => state.Page.data.variations);
     const dispatch = useDispatch();
     
     const clickMe = () => {

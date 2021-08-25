@@ -5,7 +5,7 @@ const systemConfigSlice = createSlice({
     initialState: {},
     reducers: {
         setSystemConfig(state, action) {
-            state = action.payload;
+            return action.payload;
         }
     }
 });

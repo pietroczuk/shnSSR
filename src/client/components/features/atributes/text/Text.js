@@ -17,7 +17,7 @@ const Text = props => {
 
     // const redirectUrl = base64.encode(JSON.stringify(variant_code_url));
 
-    const variations = useSelector(state => state.page.data.variations);
+    const variations = useSelector(state => state.Page.data.variations);
     const dispatch = useDispatch();
 
     const clickMe = () => {

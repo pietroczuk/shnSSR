@@ -13,11 +13,11 @@ const StaticPage = props => {
     // from redux
     const { seo, staticpage, type, url_prefix, api } = useSelector(
         state => ({
-            seo: state.global.config.seo,
-            staticpage: state.page.data,
-            type: state.page.type,
-            url_prefix: state.config.urls[pageTypes.staticPage],
-            api: state.config.api,
+            seo: state.PublicConfig.config.seo,
+            staticpage: state.Page.data,
+            type: state.Page.type,
+            url_prefix: state.SystemConfig.urls[pageTypes.staticPage],
+            api: state.SystemConfig.api,
         })
     );
     const dispatch = useDispatch();

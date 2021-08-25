@@ -71,7 +71,7 @@ export default (req, server_store, context, new_routes_config) => {
   const server_helmet = Helmet.renderStatic();
   const html = `
   <!DOCTYPE html>
-        <html lang="${server_store.getState().user.language}">
+        <html lang="${server_store.getState().User.language}">
             <head>
               ${server_helmet.title.toString()}
               ${server_helmet.meta.toString()}

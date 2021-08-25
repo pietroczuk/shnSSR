@@ -106,6 +106,7 @@ app.get('*', (req, res) => {
                     // console.log('server q: ', query);
                     return route.loadDataOnInit ? route.loadDataOnInit(server_store, api_config, user_language, real_path, query) : null;
                 }).map(promise => {
+                    // console.log('serverstore', server_store.getState());
                     // for fail promises, continue fetch data and resolve promises
                     // double primise (outer)
                     if (promise) {
@@ -119,6 +120,7 @@ app.get('*', (req, res) => {
                 Promise.all(load_data_promises).then(() => {
                     const server_context = {};
                     // const content = rednderHtml(req, server_store, server_context, css, insertCss);
+                    // console.log('serverstore', server_store.dispatch);
                     const content = rednderHtml(req, server_store, server_context, new_routes_config);
                     if (server_context.url) {
                         return res.redirect(301, server_context.url);

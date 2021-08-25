@@ -5,7 +5,7 @@ const publicConfigSlice = createSlice({
     initialState: {},
     reducers: {
         setPublicConfig(state, action) {
-            state = action.payload;
+            return action.payload;
         }
     }
 });
