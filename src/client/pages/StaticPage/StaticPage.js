@@ -3,7 +3,8 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './staticpage.module.scss';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { get_page, clear_page } from '../../redux/actions/all_actions';
+import { getPage } from '../../redux/actions/actionCreators';
+import { pageActions } from '../../redux/slices/pageSlice';
 import { pageTypes, metatags, prepareSearchCode, renderHtmlFromJson, scrollToTop } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
@@ -37,11 +38,11 @@ const StaticPage = props => {
 
     useEffect(() => {
         if (!staticpage || currentLocation !== location.pathname || type !== pageTypes.staticPage) {
-            dispatch(get_page(api, pageTypes.staticPage, lang, url, prepareSearchCode(location.search)));
+            dispatch(getPage(api, pageTypes.staticPage, lang, url, prepareSearchCode(location.search)));
             setCurrentLocationHandler(location.pathname);
             scrollToTop(window);
         }
-        return () => dispatch(clear_page());
+        return () => dispatch(pageActions.clearPageData());
     }, [location.pathname, dispatch]);
 
     return (
@@ -57,7 +58,7 @@ const StaticPage = props => {
 
 const loadDataOnInit = (server_store, api_config, language, url, query) => {
     const my_promise = server_store.dispatch(
-        get_page(api_config.api, pageTypes.staticPage, language, url, query)
+        getPage(api_config.api, pageTypes.staticPage, language, url, query)
     );
     return my_promise;
 }

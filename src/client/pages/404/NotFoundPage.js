@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 // import s from '../styles/404.css';
 import styles from './404.module.scss';
 

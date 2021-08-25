@@ -1,29 +1,26 @@
-// import axios from 'axios';
-// import config from '../../utils/config';
-
 import { action_types } from './action_types';
 import axios from 'axios';
 import { pageTypes } from '../../utils/utilsFrondend';
+
+import { systemConfigActions } from '../slices/systemConfigSlice';
+import { publicConfigActions } from '../slices/publicConfigSlice';
+import { pageActions } from '../slices/pageSlice';
+import { userActions } from '../slices/userSlice';
 
 /* --------------------- CONFIG 
 loads global config
 - api urls
 - awaible languages, currencies
 */
-export const get_global_config = (api_config, lang) => dispatch => {
+export const getGlobalConfig = (api_config, lang) => dispatch => {
   if (api_config) {
-    dispatch({
-      type: action_types.GET_GLOBAL_CONFIG_TYPE,
-      payload: api_config,
-    });
+    dispatch(systemConfigActions.setSystemConfig(api_config));
+
     const page_url = '?lang=' + lang;
     const axios_endpoint = api_config.api.global + page_url;
     return axios.get(api_config.api.url + '/' + axios_endpoint)
       .then(res =>
-        dispatch({
-          type: action_types.GET_GLOBAL_VARIABLES,
-          payload: res.data
-        })
+        dispatch(publicConfigActions.setPublicConfig(res.data))
       )
       .catch(err => {
         console.error('❌ Error get global variables', err);
@@ -35,7 +32,7 @@ load page based on type
 - PRODUCT
 */
 
-export const get_page = (api, type, lang, url, query) => dispatch => {
+export const getPage = (api, type, lang, url, query) => dispatch => {
   const page_url = '?url=' + url + '&lang=' + lang;
   let axios_endpoint = null;
   switch (type) {
@@ -52,29 +49,17 @@ export const get_page = (api, type, lang, url, query) => dispatch => {
   if (axios_endpoint) {
     return axios.get(api.url + '/' + axios_endpoint)
       .then(res =>
-        dispatch({
-          type: action_types.GET_PAGE,
-          payload: { data: res.data, query: query }
-        })
+        dispatch(pageActions.setPageData({ data: res.data, query: query }))
       )
       .catch(err => {
         console.error('❌ Error get data from DB', err);
       });
   }
 }
-export const clear_page = () => {
-  return {
-    type: action_types.CLEAR_PAGE,
-  }
-}
 
-export const set_product_curr_var_id = (product_variant_id, variations) => dispatch => {
+export const setProductCurrVarId = (product_variant_id, variations) => dispatch => {
   if (product_variant_id && variations[product_variant_id]) {
-    // console.log('ok zmeniam curr', product_variant_id);
-    dispatch({
-      type: action_types.SET_PRODUCT_CURR_VAR_ID,
-      payload: product_variant_id
-    })
+    dispatch(pageActions.setProductCurrentVariantId(product_variant_id))
   }
 }
 
@@ -137,11 +122,8 @@ export const get_global_variables = (api, lang) => dispatch => {
  * language etc
  */
 
-export const set_global_currency = (currency_code, all_currencies) => dispatch => {
+export const setUserCurrency = (currency_code, all_currencies) => dispatch => {
   if (all_currencies[currency_code]) {
-    dispatch({
-      type: action_types.SET_GLOBAL_CURRENCY,
-      payload: currency_code
-    })
+    dispatch(userActions.setUserCurrency(currency_code));
   }
 }

@@ -5,7 +5,7 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import { Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { set_product_curr_var_id } from '../../../../redux/actions/all_actions';
+import { setProductCurrVarId } from '../../../../redux/actions/actionCreators';
 
 const Colors = props => {
 
@@ -19,7 +19,7 @@ const Colors = props => {
         if(onClickFunction) {
             onClickFunction();
         }else{
-            dispatch(set_product_curr_var_id(link, variations));
+            dispatch(setProductCurrVarId(link, variations));
         }
     }
     

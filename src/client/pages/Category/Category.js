@@ -3,7 +3,8 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './category.modules.scss';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { get_page, clear_page } from '../../redux/actions/all_actions';
+import { getPage } from '../../redux/actions/actionCreators';
+import { pageActions } from '../../redux/slices/pageSlice'; 
 import { pageTypes, metatags, prepareSearchCode, renderHtmlFromJson, scrollToTop } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
@@ -46,14 +47,14 @@ const Category = props => {
     }
     useEffect(() => {
         if (!category || currentLocation !== location.pathname || type !== pageTypes.categoryPage) {
-            dispatch(get_page(api, pageTypes.categoryPage, lang, url, prepareSearchCode(location.search)));
+            dispatch(getPage(api, pageTypes.categoryPage, lang, url, prepareSearchCode(location.search)));
             setCurrentLocationHandler(location.pathname);
             scrollToTop(window);
         }
-        return () => dispatch(clear_page());
+        return () => dispatch(pageActions.clearPageData());
     }, [location.pathname, dispatch]);
 
-    const show_products = products => {
+    const showProducts = products => {
         if (products) {
             return products.map(p =>
                 <li key={p.id}>
@@ -78,7 +79,7 @@ const Category = props => {
                 <div>
                     {category ? <div>{category.description}</div> : <div><Placeholder /></div>}
 
-                    {category && <ul>{show_products(category.products)}</ul>}
+                    {category && <ul>{showProducts(category.products)}</ul>}
                     {/* {staticpage && renderHtmlFromJson(staticpage.page_body)} */}
                 </div>
             </MainContent>
@@ -89,7 +90,7 @@ const Category = props => {
 
 const loadDataOnInit = (server_store, api_config, language, url, query) => {
     const my_promise = server_store.dispatch(
-        get_page(api_config.api, pageTypes.categoryPage, language, url, query)
+        getPage(api_config.api, pageTypes.categoryPage, language, url, query)
     );
     return my_promise;
 }

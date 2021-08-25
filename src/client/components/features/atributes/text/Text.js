@@ -4,7 +4,7 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import { Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { set_product_curr_var_id } from '../../../../redux/actions/all_actions';
+import { setProductCurrVarId } from '../../../../redux/actions/actionCreators';
 // import base64 from 'base-64';
 // import { prepareAttribLink } from '../../../../utils/utilsFrondend';
 
@@ -24,7 +24,7 @@ const Text = props => {
         if(onClickFunction) {
             onClickFunction();
         }else{
-            dispatch(set_product_curr_var_id(link, variations));
+            dispatch(setProductCurrVarId(link, variations));
         }
     }
     return (

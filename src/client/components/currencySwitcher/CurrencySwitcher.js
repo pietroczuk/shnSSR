@@ -5,14 +5,14 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 // import { Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { set_global_currency } from '../../redux/actions/all_actions';
+import { setUserCurrency } from '../../redux/actions/actionCreators';
 
 const CurrencySwitcher = (props) => {
     const all_config_currencies = useSelector(state => state.config.currency);
     const dispatch = useDispatch();
 
     const currencyClickHandler = (currency) => {
-        dispatch(set_global_currency(currency, all_config_currencies));
+        dispatch(setUserCurrency(currency, all_config_currencies));
     }
     return <div>
         <ul>

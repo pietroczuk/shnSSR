@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { renderRoutes } from 'react-router-config';
 import { useSelector } from 'react-redux';
-import { get_global_config } from '../../redux/actions/all_actions';
+import { getGlobalConfig } from '../../redux/actions/actionCreators';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './rootapp.module.scss';
 
@@ -41,7 +41,7 @@ const RootApp = ({ route, location }) => {
 };
 
 const loadDataOnInit = (server_store, api_config, language) => {
-    const my_promise = server_store.dispatch(get_global_config(api_config, language));
+    const my_promise = server_store.dispatch(getGlobalConfig(api_config, language));
     return my_promise;
 }
 
