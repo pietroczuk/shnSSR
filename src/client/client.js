@@ -1,7 +1,7 @@
 /* ---------------- Main client file ----------------- */
 
 // import async await - babel-polyfil
-import 'babel-polyfill';
+// import 'babel-polyfill';
 
 import React from 'react';
 import { hydrate } from 'react-dom';

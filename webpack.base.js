@@ -85,6 +85,7 @@ module.exports = {
         //     chunks: 'all',
         // }
     },
+    // devtool: 'source-map',
     // performance: {
     //     hints: false,
     //     maxEntrypointSize: 512000,

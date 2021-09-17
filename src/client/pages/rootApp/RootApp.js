@@ -12,10 +12,10 @@ import Footer from '../../components/footer/Footer';
 
 // import loadable from '@loadable/component';
 
-// const Header2 = loadable(() => import('../../components/header/Header'),
+// const Header = loadable(() => import('../../components/header/Header'),
 //     {
 //         ssr: true,
-//         fallback: <span className="loading-state">ssr: true - Loading...</span>
+//         // fallback: <span className="loading-state">ssr: true - Loading...</span>
 //     });
 
 
