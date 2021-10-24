@@ -4,7 +4,7 @@ import styles from './logo.module.scss';
 import { Link } from 'react-router-dom';
 
 const Logo = ({ white, miniLogo, customWidth, link }) => {
-    const svgWidth = customWidth ? customWidth : 250;
+    const svgWidth = customWidth ? customWidth : 220;
     const logoWidth = miniLogo ? 54 : svgWidth;
     return (
         <div className={styles.logoContener} style={{ width: logoWidth + 'px', minWidth: (logoWidth+50) + 'px' }}>

@@ -9,8 +9,8 @@ const MainContent = props => {
     useEffect(()=>{
         contenerContext.setMainContentRef(main_ref);
     },[main_ref])
-    return <div className={styles.main_column} ref={main_ref}>
+    return <article className={styles.main_column} ref={main_ref}>
         {props.children}
-    </div>
+    </article>
 }
 export default withStyles(styles)(MainContent);

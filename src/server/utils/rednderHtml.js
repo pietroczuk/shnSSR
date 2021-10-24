@@ -106,7 +106,7 @@ export default (req, server_store, context, new_routes_config) => {
               <style>${[...css].join('')}</style>
             </head>
             <body>
-                <main id="root">${content}</main>
+                <div id="root">${content}</div>
                 ${webExtractor.getScriptTags()}
             </body>
            

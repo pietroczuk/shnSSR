@@ -8,9 +8,9 @@ const ContentCointainer = props => {
     const { miltirow } = props;
     return (
         <ContenerContextProvider>
-            <div className={`${styles.page_container} ${miltirow ? styles.multirow : ''}`}>
+            <main className={`${styles.page_container} ${miltirow ? styles.multirow : ''}`}>
                 {props.children}
-            </div>
+            </main>
         </ContenerContextProvider>
     )
 }

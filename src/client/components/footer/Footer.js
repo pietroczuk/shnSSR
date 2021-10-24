@@ -3,6 +3,6 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './footer.modules.scss';
 
 const Footer = () => {
-    return <div className={styles.footer}>stopka</div>;
+    return <footer className={styles.footer}>stopka</footer>;
 }
 export default withStyles(styles)(Footer);

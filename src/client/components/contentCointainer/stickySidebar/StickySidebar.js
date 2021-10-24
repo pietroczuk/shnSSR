@@ -175,9 +175,9 @@ const StickySidebar = props => {
         }
     }, [pathname, main_ref]);
 
-    return <div className={styles.sidebar_column}>
+    return <aside className={styles.sidebar_column}>
         {/* {console.log('render')} */}
         <div className={styles.container} ref={sidebar_ref}>{props.children}</div>
-    </div>
+    </aside>
 }
 export default withStyles(styles)(StickySidebar);
