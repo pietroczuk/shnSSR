@@ -2,6 +2,7 @@ node_modules
 temp
 .DS_Store
 public_html/public/client.*.js
+public_html/public/*.client.js
 public_html/server/loadable-stats.json
 public_html/server/server.js
 .DS_Store
