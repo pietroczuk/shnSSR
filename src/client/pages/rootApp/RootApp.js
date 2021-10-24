@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { renderRoutes } from 'react-router-config';
 import { useSelector } from 'react-redux';
-import { getGlobalConfig } from '../../redux/actions/actionCreators';
+// import { getGlobalConfig } from '../../redux/actions/actionCreators';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './rootapp.module.scss';
 
@@ -17,7 +17,7 @@ const Header = loadable(() => import(/* webpackPrefetch: true */ '../../componen
         ssr: true,
         // fallback: <span className="loading-state">ssr: true - Loading...</span>
     });
-const Footer = loadable(() => import(/* webpackPrefetch: true */ '../../components/footer/Footer'),{});
+const Footer = loadable(() => import(/* webpackPrefetch: true */ '../../components/footer/Footer'), {});
 
 
 const RootApp = ({ route, location }) => {
@@ -40,16 +40,4 @@ const RootApp = ({ route, location }) => {
         </React.Fragment>
     );
 };
-
-const loadDataOnInit = (server_store, api_config, language) => {
-    // console.log('serverstore1', server_store.getState());
-    const my_promise = server_store.dispatch(getGlobalConfig(api_config, language));
-    // console.log('serverstore2', my_promise);
-    // console.log('serverstore3', server_store.getState());
-    return my_promise;
-}
-
-export default {
-    loadDataOnInit: loadDataOnInit,
-    component: withStyles(styles)(RootApp)
-};
+export default withStyles(styles)(RootApp);

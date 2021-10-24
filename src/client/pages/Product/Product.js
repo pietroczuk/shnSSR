@@ -78,16 +78,5 @@ const Product = (props) => {
         </div>
     )
 }
-// const loadDataOnInit = (server_store, api_config, language, url, query) => {
-//     const my_promise = server_store.dispatch(
-//         getPage(api_config.api, pageTypes.productPage, language, url, query)
-//     );
-//     return my_promise;
-// }
 
 export default withStyles(styles)(Product)
-
-// export default {
-//     loadDataOnInit: loadDataOnInit,
-//     component: withStyles(styles)(Product)
-// }

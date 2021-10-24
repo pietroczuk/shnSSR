@@ -1,19 +1,14 @@
-// import React from 'react';
-
-import RootApp from './pages/rootApp/RootApp';
-import HomePage from './pages/HomePage/HomePage';
-
-// import NotFoundPage from './pages/404/NotFoundPage';
-import StaticPage from './pages/StaticPage/StaticPage';
-// import Product from './pages/Product/Product';
 import { loadDataOnInit } from './utils/loadDataOnInit';
-import Category from './pages/Category/Category';
-
+import { pageTypes } from './utils/utilsFrondend';
 
 import loadable from '@loadable/component';
 
-const NotFoundPage = loadable(() => import(/* webpackPrefetch: true */ './pages/404/NotFoundPage'), {});
+const RootApp = loadable(() => import(/* webpackPrefetch: true */ './pages/rootApp/RootApp'), {});
+const HomePage = loadable(() => import(/* webpackPrefetch: true */ './pages/HomePage/HomePage'), {});
+const StaticPage = loadable(() => import(/* webpackPrefetch: true */ './pages/StaticPage/StaticPage'), {});
 const Product = loadable(() => import(/* webpackPrefetch: true */ './pages/Product/Product'), {});
+const Category = loadable(() => import(/* webpackPrefetch: true */ './pages/Category/Category'), {});
+const NotFoundPage = loadable(() => import(/* webpackPrefetch: true */ './pages/404/NotFoundPage'), {});
 
 // zamiast klasycznego <router> 
 // do SSR, aby mozna bylo pobierac dane przez serwer
@@ -21,51 +16,49 @@ const Product = loadable(() => import(/* webpackPrefetch: true */ './pages/Produ
 export default
     [
         {
-            ...RootApp,
+            component: RootApp,
+            loadDataOnInit: loadDataOnInit,
+            type: null,
             routes: [
                 {
-                    ...HomePage,
+                    component: HomePage,
                     path: '/',
                     exact: true,
                     multilang: true,
                     server_change: false,
-                    type: 'homepage'
+                    type: pageTypes.homePage
                 },
                 {
-                    ...StaticPage,
+                    component: StaticPage,
+                    loadDataOnInit: loadDataOnInit,
                     path: '/:url',
                     multilang: true,
                     server_change: false,
-                    type: 'staticpage'
+                    type: pageTypes.staticPage
                 },
                 {
-                    // ...Product,
                     component: Product,
                     loadDataOnInit: loadDataOnInit,
                     path: '/:url',
                     multilang: true,
                     server_change: false,
-                    type: 'product'
+                    type: pageTypes.productPage
                 },
                 {
-                    ...Category,
+                    component: Category,
+                    loadDataOnInit: loadDataOnInit,
                     path: '/:url',
                     multilang: true,
                     server_change: false,
-                    type: 'category'
+                    type: pageTypes.categoryPage
                 },
                 {
-                    // ...NotFoundPage.component
-                    // component: {props => <About {...props} />}
-                    // component: NotFoundPage
                     component: NotFoundPage
-                    // render: NotFoundPage.render
                 }
 
             ]
         }
     ];
-    // console.log(NotFoundPage.component);
 
 
 // config:

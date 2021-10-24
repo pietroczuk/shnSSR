@@ -29,6 +29,10 @@ const StickySidebar = props => {
         prev_window_scroll = window_scroll;
         // init containers
         const container = sidebar_ref.current;
+        if(!container) {
+            isUserScrolling = false;
+            return;
+        }
         const cointanerViewport = container.getBoundingClientRect();
         const windowHeight = window.innerHeight;
         const main_height = main_ref.current.getBoundingClientRect().height;

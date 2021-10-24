@@ -88,14 +88,4 @@ const Category = props => {
     )
 }
 
-const loadDataOnInit = (server_store, api_config, language, url, query) => {
-    const my_promise = server_store.dispatch(
-        getPage(api_config.api, pageTypes.categoryPage, language, url, query)
-    );
-    return my_promise;
-}
-
-export default {
-    loadDataOnInit: loadDataOnInit,
-    component: withStyles(styles)(Category)
-}
+export default withStyles(styles)(Category);

@@ -39,7 +39,4 @@ const HomePage = props => {
     )
 };
 
-export default {
-    // loadDataOnInit: loadDataOnInit,
-    component: HomePage
-};
+export default HomePage;

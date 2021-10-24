@@ -56,13 +56,4 @@ const StaticPage = props => {
     )
 }
 
-const loadDataOnInit = (server_store, api_config, language, url, query) => {
-    const my_promise = server_store.dispatch(
-        getPage(api_config.api, pageTypes.staticPage, language, url, query)
-    );
-    return my_promise;
-}
-export default {
-    loadDataOnInit: loadDataOnInit,
-    component: withStyles(styles)(StaticPage)
-}
+export default withStyles(styles)(StaticPage);

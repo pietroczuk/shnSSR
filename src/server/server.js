@@ -104,7 +104,7 @@ app.get('*', (req, res) => {
                         }
                     }
                     // console.log('server q: ', query);
-                    return route.loadDataOnInit ? route.loadDataOnInit(server_store, api_config, user_language, real_path, query) : null;
+                    return route.loadDataOnInit ? route.loadDataOnInit(route.type, server_store, api_config, user_language, real_path, query) : null;
                 }).map(promise => {
                     // console.log('serverstore', server_store.getState());
                     // for fail promises, continue fetch data and resolve promises
