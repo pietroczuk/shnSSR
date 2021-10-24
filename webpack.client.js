@@ -31,7 +31,7 @@ const config = {
                 // outputAsset: true,
 
                 // writeToDisk: false,
-                outputAsset: false,
+                // outputAsset: false,
             }
         )
     ],

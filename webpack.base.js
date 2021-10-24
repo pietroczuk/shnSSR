@@ -101,8 +101,8 @@ module.exports = {
     //     react: path.resolve('./node_modules/react')
     //   },
 
-    mode: 'development' //development | production
-    // mode: 'production'
+    // mode: 'development' //development | production
+    mode: 'production'
 };
 
 
