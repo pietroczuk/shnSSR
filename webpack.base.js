@@ -20,7 +20,7 @@ module.exports = {
                             }
                         }]
                     ],
-                    // plugins: ['@loadable/babel-plugin']
+                    plugins: ['@loadable/babel-plugin']
                 }
             },
             {

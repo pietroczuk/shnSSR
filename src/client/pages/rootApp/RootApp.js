@@ -7,16 +7,17 @@ import styles from './rootapp.module.scss';
 
 import { setCookie, getCookie } from '../../utils/utilsFrondend';
 // components
-import Header from '../../components/header/Header';
-import Footer from '../../components/footer/Footer';
+// import Header from '../../components/header/Header';
+// import Footer from '../../components/footer/Footer';
 
-// import loadable from '@loadable/component';
+import loadable from '@loadable/component';
 
-// const Header = loadable(() => import('../../components/header/Header'),
-//     {
-//         ssr: true,
-//         // fallback: <span className="loading-state">ssr: true - Loading...</span>
-//     });
+const Header = loadable(() => import(/* webpackPrefetch: true */ '../../components/header/Header'),
+    {
+        ssr: true,
+        // fallback: <span className="loading-state">ssr: true - Loading...</span>
+    });
+const Footer = loadable(() => import(/* webpackPrefetch: true */ '../../components/footer/Footer'),{});
 
 
 const RootApp = ({ route, location }) => {

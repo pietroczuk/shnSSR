@@ -1,20 +1,17 @@
+import React from 'react';
+
 import RootApp from './pages/rootApp/RootApp';
 import HomePage from './pages/HomePage/HomePage';
 
-import NotFoundPage from './pages/404/NotFoundPage';
+// import NotFoundPage from './pages/404/NotFoundPage';
 import StaticPage from './pages/StaticPage/StaticPage';
 import Product from './pages/Product/Product';
 import Category from './pages/Category/Category';
 
 
-// import loadable from '@loadable/component';
+import loadable from '@loadable/component';
 
-// const NotFoundPage = loadable(() => import('../client/pages/NotFoundPage')
-// ,
-//     {
-//         ssr: true,
-//         fallback: <span className="loading-state">ssr: true - Loading...</span>
-//     });
+const NotFoundPage = loadable(() => import(/* webpackPrefetch: true */ './pages/404/NotFoundPage'),{});
 
 // zamiast klasycznego <router> 
 // do SSR, aby mozna bylo pobierac dane przez serwer
@@ -54,14 +51,16 @@ export default
                     type: 'category'
                 },
                 {
-                    ...NotFoundPage
+                    // ...NotFoundPage.component
                     // component: {props => <About {...props} />}
-                    // component: <NotFoundPage/>
+                    component: NotFoundPage
+                    // render: NotFoundPage.render
                 }
 
             ]
         }
     ];
+    // console.log(NotFoundPage.render);
 
 
 // config:

@@ -20,6 +20,8 @@ const NotFoundPage = ({ staticContext = {} }) => {
 //     component:  NotFoundPage
 // }
 
-export default {
-    component:  withStyles(styles)(NotFoundPage)
-}
+// export default {
+//     component:  withStyles(styles)(NotFoundPage)
+// }
+
+export default withStyles(styles)(NotFoundPage);

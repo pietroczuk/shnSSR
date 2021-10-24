@@ -33,20 +33,29 @@ import path from 'path';
 
 
 export default (req, server_store, context, new_routes_config) => {
+
+  const webStats = path.resolve(
+    __dirname,
+    '../../public_html/server/loadable-stats.json',
+  )
+  const webExtractor = new ChunkExtractor({ statsFile: webStats });
+
   const css = new Set(); // CSS for all rendered React components
   // console.log(...styles);
   const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
   const content = renderToString(
-    <Provider store={server_store}>
-      <StyleContext.Provider value={{ insertCss }}>
-        <StaticRouter location={req.path} context={context}>
-          {/* <Routes /> */}
-          <React.Fragment>
-            {renderRoutes(prepare_routes_config(new_routes_config))}
-          </React.Fragment>
-        </StaticRouter>
-      </StyleContext.Provider>
-    </Provider>
+    webExtractor.collectChunks(
+      <Provider store={server_store}>
+        <StyleContext.Provider value={{ insertCss }}>
+          <StaticRouter location={req.path} context={context}>
+            {/* <Routes /> */}
+            <React.Fragment>
+              {renderRoutes(prepare_routes_config(new_routes_config))}
+            </React.Fragment>
+          </StaticRouter>
+        </StyleContext.Provider>
+      </Provider>
+    )
   );
 
   //------------ loadable
@@ -55,14 +64,7 @@ export default (req, server_store, context, new_routes_config) => {
   //   '../../../public_html/server/ ../../public/dist/node/loadable-stats.json',
   // )
 
-  const webStats = path.resolve(
-    __dirname,
-    '../../public_html/server/loadable-stats.json',
-  )
- 
 
-  const webExtractor = new ChunkExtractor({ statsFile: webStats });
- 
 
   //------------ end loadable
 
@@ -104,7 +106,7 @@ export default (req, server_store, context, new_routes_config) => {
               <style>${[...css].join('')}</style>
             </head>
             <body>
-                <div id="root">${content}</div>
+                <main id="root">${content}</main>
                 ${webExtractor.getScriptTags()}
             </body>
            
