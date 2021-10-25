@@ -6,34 +6,43 @@ import { useLocation } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
+import GlobeIcon from '../InteractiveIcon/icons/GlobeIcon'
+
 const LanguageSwitcher = (props) => {
     const [searchParams, setSearchParams] = useState('');
     const { search } = useLocation();
 
-    const { all_config_languages, urls, page } = useSelector(state => ({
+    const [openSubmenu, setOpenSubmenu] = useState(false);
+
+    const openSubmenuHandler = () => {
+        setOpenSubmenu(true);
+    }
+    const closeSubmenuHandler = () => {
+        setOpenSubmenu(false);
+    }
+
+    const { all_config_languages, urls, page, user_language } = useSelector(state => ({
         all_config_languages: state.SystemConfig.language,
         urls: state.SystemConfig.urls,
         page: state.Page,
+        user_language: state.User.language
     }));
-
-    // let page_ulrs = null;
-    // switch (page.type) {
-    //     case 'product':
-    //         page_ulrs = page.data.url;
-    //         break;
-    //     case 'staticpage':
-    //         page_ulrs = page.data.url;
-    //         break;
-    // }
     const page_ulrs = page.data ? page.data.url : null;
 
     useEffect(() => {
         setSearchParams(search);
     }, [search]);
-    return <div>
-        <ul>
-            {page_ulrs && Object.entries(all_config_languages).map(([lang_key, lang_val]) => <li key={lang_key}><a href={'/' + lang_val.code + '/' + urls[page.type] + '/' + page_ulrs[lang_val.code] + searchParams}>{lang_val.label}</a></li>)}
-        </ul>
+    return <div className={styles.switcher}
+        onMouseOver={openSubmenuHandler}
+        onMouseLeave={closeSubmenuHandler}>
+        <GlobeIcon /> 
+        <span>{user_language}</span>
+        {openSubmenu && <div className={styles.submenu}>
+            <ul className={styles.list}>
+                {page_ulrs && Object.entries(all_config_languages).map(([lang_key, lang_val]) => <li key={lang_key} className={`${(lang_val.code === user_language ? styles.active : '')}`}><a href={'/' + lang_val.code + '/' + urls[page.type] + '/' + page_ulrs[lang_val.code] + searchParams}>{lang_val.label}</a></li>)}
+            </ul>
+        </div>
+        }
     </div>
 }
 
