@@ -8,5 +8,9 @@ export const ContenerContextProvider = (props) => {
     const setMainRefHandler = reference => {
         setMainRef(reference);
     }
-    return <ContenerContext.Provider value={{mainContentRef: mainRef, setMainContentRef: setMainRefHandler}}>{props.children}</ContenerContext.Provider>
+    const contextValue = {
+        mainContentRef: mainRef, 
+        setMainContentRef: setMainRefHandler
+    }
+    return <ContenerContext.Provider value={contextValue}>{props.children}</ContenerContext.Provider>
 }

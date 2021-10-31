@@ -1,10 +1,12 @@
+$transitionTime : 0.2s;
+
 .switcher {
     display     : flex;
     margin-right: 1em;
     position    : relative;
-    cursor: pointer;
+    cursor      : pointer;
 
-    span {
+    .chosenLabel {
         display        : flex;
         flex-direction : column;
         justify-content: center;
@@ -19,38 +21,67 @@
     }
 
     .submenu {
-        position        : absolute;
-        top             : 100%;
-        left            : -2em;
+        position           : absolute;
+        top                : 100%;
+        left               : 0;
         // display         : none;
         // display: flex;
         // justify-content : space-between;
         // min-width       : 500px;
-        background-color: #fff;
-        padding         : 20px;
-        box-shadow      : 0px -3px 40px -14px rgb(0 0 0 / 30%);
+        background-color   : #fff;
+        padding            : 20px;
+        box-shadow         : 0px -3px 40px -14px rgb(0 0 0 / 30%);
+        transform          : translateX(-30%);
 
         &::before {
             content      : "";
             position     : absolute;
-            left         : 4em;
             top          : -7px;
             border-left  : 7px solid transparent;
             border-right : 7px solid transparent;
             border-bottom: 7px solid #fff;
+            left         : 50%;
+            transform    : translateX(-50%);
         }
 
         .list {
-            list-style: none;
-            padding   : 0;
-            margin    : 0;
+            list-style    : none;
+            padding       : 0;
+            margin        : 0;
+            display       : flex;
+            flex-direction: column;
+            padding       : 0em 0.2em 0em 0.2em;
 
             li {
-                font-size: 0.9em;
-                margin   : 0.5em 0;
+                font-size  : 0.9em;
+                margin     : 0.3em 0;
                 white-space: nowrap;
+                padding    : 0.5em;
+
                 &.active {
                     font-weight: 700;
+                }
+
+                &:hover span {
+                    left: 0.5em;
+                }
+
+                svg {
+                    width       : 1.5em;
+                    margin-right: 0.7em;
+                }
+
+                span {
+                    position          : relative;
+                    left              : 0;
+                    -webkit-transition: left $transitionTime;
+                    -moz-transition   : left $transitionTime;
+                    -o-transition     : left $transitionTime;
+                    transition        : left $transitionTime;
+                }
+
+                a {
+                    display: flex;
                 }
             }
         }

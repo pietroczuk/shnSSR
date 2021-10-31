@@ -8,6 +8,10 @@ const MainContent = props => {
     const main_ref = useRef();
     useEffect(()=>{
         contenerContext.setMainContentRef(main_ref);
+
+        return () => {
+            contenerContext.setMainContentRef(null);
+        }
     },[main_ref])
     return <article className={styles.main_column} ref={main_ref}>
         {props.children}

@@ -163,6 +163,11 @@ export const prepUrlFromConfigSlug = (language, slug_urls, url_type, url) => {
 
 // scroll to top
 
+/**
+ * Just scroll to top of main window
+ * @param {*} window 
+ */
+
 export const scrollToTop = window => {
     if (window !== undefined) {
         window.scrollTo(0, 0);
