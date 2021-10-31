@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './selectedbg.modules.scss';
+import styles from './selectedbg.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
 const SelectedBg = ({ width, position }) => {

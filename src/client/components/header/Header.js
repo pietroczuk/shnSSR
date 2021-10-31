@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './header.module.scss';
+import styles from './header.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
 import Topbar from './topbar/Topbar.js';
@@ -13,15 +13,6 @@ import LanguageSwitcher from '../languageSwitcher/LanguageSwitcher';
 import CurrencySwitcher from '../currencySwitcher/CurrencySwitcher';
 
 import MenuTop from '../menuTop/MenuTop';
-
-
-// import loadable from '@loadable/component';
-
-// const styles = loadable(() => import('./header.module.scss'),
-//     {
-//         ssr: true,
-//         // fallback: <span className="loading-state">ssr: true - Loading...</span>
-//     });
 
 const Header = ({ white, whiteTopbar, language, location }) => {
     const [topbarOpen, setTopbarOpen] = useState(true);

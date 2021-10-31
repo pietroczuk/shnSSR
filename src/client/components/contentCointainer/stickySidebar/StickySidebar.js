@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
-import styles from '../contentCointainer.modules.scss';
+import styles from '../contentCointainer.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import ContenerContext from '../contenerContext/contenerContext';
 

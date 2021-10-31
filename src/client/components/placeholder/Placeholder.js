@@ -1,6 +1,6 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import styles from './placeholder.modules.scss';
+import styles from './placeholder.scss';
 
 const Placeholder = ({ customWidth, customHeight }) => {
     const width = customWidth ? customWidth : '100%';

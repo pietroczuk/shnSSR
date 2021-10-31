@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './allFeaturesDisplay.modules.scss';
+import styles from './allFeaturesDisplay.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
 // import Colors from './atributes/colors/Colors';

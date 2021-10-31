@@ -1,6 +1,6 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import styles from './interactiveIcon.module.scss';
+import styles from './interactiveIcon.scss';
 
 const InteractiveIcon = (props) => {
     const { white, hoverBg, hoverOpacity, customWidth, customSvgSize, onClick, onMouseEnter, onMouseLeave } = props;

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './text.modules.scss';
+import styles from './text.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import { Link } from 'react-router-dom';
 

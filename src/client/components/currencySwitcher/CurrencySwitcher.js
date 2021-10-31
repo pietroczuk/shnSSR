@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './currencySwitcher.modules.scss';
+import styles from './currencySwitcher.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
 // import { Link } from 'react-router-dom';

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './menuTop.modules.scss';
+import styles from './menuTop.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
 import { useSelector } from 'react-redux';

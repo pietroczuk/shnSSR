@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './singleFeature.modules.scss';
+import styles from './singleFeature.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
 import Colors from '../colors/Colors';

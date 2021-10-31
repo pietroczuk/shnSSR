@@ -1,6 +1,6 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import styles from './topbar.module.scss';
+import styles from './topbar.scss';
 
 import InteractiveIcon from '../../InteractiveIcon/InteractiveIcon';
 import CloseIcon from '../../InteractiveIcon/icons/CloseIcon';

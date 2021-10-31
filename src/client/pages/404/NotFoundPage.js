@@ -1,6 +1,6 @@
 import React from 'react';
 // import s from '../styles/404.css';
-import styles from './404.module.scss';
+import styles from './notFoundPage.scss';
 
 // import useStyles from 'isomorphic-style-loader/useStyles';
 import withStyles from 'isomorphic-style-loader/withStyles';

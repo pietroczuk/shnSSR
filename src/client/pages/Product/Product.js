@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import styles from './product.module.scss';
+import styles from './product.scss';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getPage } from '../../redux/actions/actionCreators';

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import styles from '../leftMenuLinks.modules.scss';
+import styles from '../leftMenuLinks.scss';
 
 import { prepUrlFromConfigSlug } from '../../../utils/utilsFrondend';
 

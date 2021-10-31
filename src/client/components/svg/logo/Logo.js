@@ -1,6 +1,6 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import styles from './logo.module.scss';
+import styles from './logo.scss';
 import { Link } from 'react-router-dom';
 
 const Logo = ({ white, miniLogo, customWidth, link }) => {

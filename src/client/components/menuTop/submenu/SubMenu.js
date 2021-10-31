@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import styles from '../menuTop.modules.scss';
+import styles from '../menuTop.scss';
 
 const SubMenu = ({ elem, prepareLabelMenu, prepareMenuLink }) => {
 

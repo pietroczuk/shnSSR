@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import styles from './staticpage.module.scss';
+import styles from './staticpage.scss';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getPage } from '../../redux/actions/actionCreators';

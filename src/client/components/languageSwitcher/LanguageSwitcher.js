@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './languageSwitcher.modules.scss';
+import styles from './languageSwitcher.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
 import { useLocation } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import GlobeIcon from '../InteractiveIcon/icons/GlobeIcon';
 
 import loadable from '@loadable/component';
+import { ErrorBoundary } from '../Error/ErrorBoundary';
 
 const PL = loadable(() => import(/* webpackPrefetch: true */ '../svg/flags/PL'), {});
 const EN = loadable(() => import(/* webpackPrefetch: true */ '../svg/flags/EN'), {});
@@ -52,28 +53,28 @@ const LanguageSwitcher = (props) => {
     }, [search]);
 
     const showLanguageFlag = (language) => {
-            switch (language) {
-                case 'pl': return <PL />;
-                case 'en': return <EN />;
-                case 'de': return <DE />;
-                case 'ar': return <AR />;
-                case 'es': return <ES />;
-                case 'fr': return <FR />;
-                case 'it': return <IT />;
-                case 'ko': return <KO />;
-                case 'nl': return <NL />;
-                case 'pt': return <PT />;
-                case 'br': return <BR />;
-                case 'ru': return <RU />;
-                case 'tr': return <TR />;
-                case 'zh': return <ZH />;
-                case 'ja': return <JA />;
-                default: return '';
-            }
+        switch (language) {
+            case 'pl': return <ErrorBoundary><PL /></ErrorBoundary>;
+            case 'en': return <ErrorBoundary><EN /></ErrorBoundary>;
+            case 'de': return <ErrorBoundary><DE /></ErrorBoundary>;
+            case 'ar': return <AR />;
+            case 'es': return <ES />;
+            case 'fr': return <FR />;
+            case 'it': return <IT />;
+            case 'ko': return <KO />;
+            case 'nl': return <NL />;
+            case 'pt': return <PT />;
+            case 'br': return <BR />;
+            case 'ru': return <RU />;
+            case 'tr': return <TR />;
+            case 'zh': return <ZH />;
+            case 'ja': return <JA />;
+            default: return '';
+        }
     }
     return <div className={styles.switcher}
         onMouseOver={openSubmenuHandler}
-    // onMouseLeave={closeSubmenuHandler}
+        onMouseLeave={closeSubmenuHandler}
     >
         <GlobeIcon />
         <span className={styles.chosenLabel}>{user_language}</span>

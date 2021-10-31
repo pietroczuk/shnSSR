@@ -3,7 +3,7 @@ import { renderRoutes } from 'react-router-config';
 import { useSelector } from 'react-redux';
 // import { getGlobalConfig } from '../../redux/actions/actionCreators';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import styles from './rootapp.module.scss';
+import styles from './rootapp.scss';
 
 import { setCookie, getCookie } from '../../utils/utilsFrondend';
 // components
