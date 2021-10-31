@@ -18,8 +18,8 @@ const Product = (props) => {
     const { seo, product, type, api, url_prefix, images_url, all_config_currencies, user_currency_code } = useSelector(
         state => ({
             seo: state.PublicConfig.config.seo,
-            product: state.Page.data,
-            type: state.Page.type,
+            product: state.Page.data ? state.Page.data : null,
+            type: state.Page.type ? state.Page.type : null,
             api: state.SystemConfig.api,
             url_prefix: state.SystemConfig.urls[pageTypes.productPage],
             images_url: state.SystemConfig.images,
@@ -74,7 +74,7 @@ const Product = (props) => {
             {current_variation_id && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[current_variation_id].variation_image.poster + images_url.medium} />}
             {current_variation_id && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[current_variation_id].variation_image.wall + images_url.medium} />}
 
-            {product && <AllFeaturesDisplay currentVariationCode={product.variations[current_variation_id].variation_code} allProductVariation={product.variations} />}
+            {product && current_variation_id && <AllFeaturesDisplay currentVariationCode={product.variations[current_variation_id].variation_code} allProductVariation={product.variations} />}
         </div>
     )
 }
