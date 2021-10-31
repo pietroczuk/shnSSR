@@ -66,14 +66,15 @@ $transitionTime : 0.2s;
                     left: 0.5em;
                 }
 
-                svg {
-                    width       : 1.5em;
-                    margin-right: 0.7em;
+                .flagContainer {
+                    width: 1.5em;
                 }
+
 
                 span {
                     position          : relative;
                     left              : 0;
+                    margin-left       : 0.7em;
                     -webkit-transition: left $transitionTime;
                     -moz-transition   : left $transitionTime;
                     -o-transition     : left $transitionTime;

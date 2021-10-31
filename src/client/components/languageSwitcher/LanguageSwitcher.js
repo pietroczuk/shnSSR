@@ -10,6 +10,7 @@ import GlobeIcon from '../InteractiveIcon/icons/GlobeIcon';
 
 import loadable from '@loadable/component';
 import { ErrorBoundary } from '../Error/ErrorBoundary';
+import LoadingSpinner from '../loadingSpinner/LoadingSpinner';
 
 const PL = loadable(() => import(/* webpackPrefetch: true */ '../svg/flags/PL'), {});
 const EN = loadable(() => import(/* webpackPrefetch: true */ '../svg/flags/EN'), {});
@@ -54,9 +55,9 @@ const LanguageSwitcher = (props) => {
 
     const showLanguageFlag = (language) => {
         switch (language) {
-            case 'pl': return <ErrorBoundary><PL /></ErrorBoundary>;
-            case 'en': return <ErrorBoundary><EN /></ErrorBoundary>;
-            case 'de': return <ErrorBoundary><DE /></ErrorBoundary>;
+            case 'pl': return <PL />;
+            case 'en': return <EN />;
+            case 'de': return <DE />;
             case 'ar': return <AR />;
             case 'es': return <ES />;
             case 'fr': return <FR />;
@@ -87,9 +88,18 @@ const LanguageSwitcher = (props) => {
                             className={`${(lang_val.code === user_language ? styles.active : '')}`}
                         >
                             <a href={'/' + lang_val.code + '/' + urls[page.type] + '/' + page_ulrs[lang_val.code] + searchParams}>
-                                {
-                                    showLanguageFlag(lang_val.flag_image)
-                                }
+                                <div className={styles.flagContainer} >
+                                    <ErrorBoundary
+                                        errorComponent={
+                                            <LoadingSpinner
+                                                customSpinerSizeEm={1}
+                                                customBorderHeight={1}
+                                            />
+                                        }
+                                    >
+                                        {showLanguageFlag(lang_val.flag_image)}
+                                    </ErrorBoundary>
+                                </div>
                                 <span>{lang_val.label}</span>
                             </a>
                         </li>
