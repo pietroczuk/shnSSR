@@ -4,7 +4,7 @@ import styles from './category.scss';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getPage } from '../../redux/actions/actionCreators';
-import { pageActions } from '../../redux/slices/pageSlice'; 
+import { pageActions } from '../../redux/slices/pageSlice';
 import { pageTypes, metatags, prepareSearchCode, renderHtmlFromJson, scrollToTop } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
@@ -14,17 +14,17 @@ import MainContent from '../../components/contentCointainer/mainContent/MainCont
 import LeftMenuLinks from '../../components/leftMenuLinks/LeftMenuLinks';
 import ProductItem from '../../components/productItem/ProductItem';
 
-
 const Category = props => {
 
     // from redux
-    const { seo, category, api, url_prefix, type } = useSelector(
+    const { seo, category, api, url_prefix, type, category_products } = useSelector(
         state => ({
             seo: state.PublicConfig.config.seo,
             category: state.Page.data,
             type: state.Page.type,
             url_prefix: state.SystemConfig.urls[pageTypes.categoryPage],
             api: state.SystemConfig.api,
+            category_products: state.SystemConfig.placeholder.category_products
         })
     )
     const dispatch = useDispatch();
@@ -36,8 +36,6 @@ const Category = props => {
     const { location } = props;
     // multirow
     const multirow = true;
-    // dev - images
-    // const { images_url } = useSelector(state => ({ images_url: state.SystemConfig.images }));
 
     const [currentLocation, setCurrentLocation] = useState(location.pathname)
 
@@ -55,13 +53,13 @@ const Category = props => {
         return () => dispatch(pageActions.clearPageData());
     }, [location.pathname, dispatch]);
 
-    const showProducts = products => {
+    const showProducts = category => {
+        const products = category && category.products ? category.products : null;
         if (products) {
-            return products.map(p => <ProductItem product={p} key={p.id}/>)
+            return products.map(p => <ProductItem product={p} key={p.id}/>);
         }
-        return <h1>loading...</h1>
+        return [...Array(category_products)].map((el, index) => <ProductItem key={index} />);
     }
-
     return (
         <ContentCointainer miltirow={multirow}>
             {metatags(seo_title, seo_description, seo, url, lang, url_prefix)}
@@ -71,11 +69,10 @@ const Category = props => {
                 </StickySidebar>
             }
             <MainContent>
-                {category ? <h1>{category.title}</h1> : <h1><Placeholder /></h1>}
+                {category ? <h1>{category.title}</h1> : <h1><Placeholder customWidth={'20%'} /></h1>}
                 <div>
+                    <div className={styles.productsGrid}>{showProducts(category)}</div>
                     {category ? <div>{category.description}</div> : <div><Placeholder /></div>}
-
-                    {category && <div className={styles.productsGrid}>{showProducts(category.products)}</div>}
                     {/* {staticpage && renderHtmlFromJson(staticpage.page_body)} */}
                 </div>
             </MainContent>
