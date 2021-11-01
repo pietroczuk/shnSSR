@@ -12,6 +12,7 @@ import ContentCointainer from '../../components/contentCointainer/ContentCointai
 import StickySidebar from '../../components/contentCointainer/stickySidebar/StickySidebar';
 import MainContent from '../../components/contentCointainer/mainContent/MainContent';
 import LeftMenuLinks from '../../components/leftMenuLinks/LeftMenuLinks';
+import ProductItem from '../../components/productItem/ProductItem';
 
 
 const Category = props => {
@@ -36,7 +37,7 @@ const Category = props => {
     // multirow
     const multirow = true;
     // dev - images
-    const { images_url } = useSelector(state => ({ images_url: state.SystemConfig.images }));
+    // const { images_url } = useSelector(state => ({ images_url: state.SystemConfig.images }));
 
     const [currentLocation, setCurrentLocation] = useState(location.pathname)
 
@@ -56,14 +57,9 @@ const Category = props => {
 
     const showProducts = products => {
         if (products) {
-            return products.map(p =>
-                <li key={p.id}>
-                    {p.title}
-                    <img width="300px" height="400px" alt={p.title} src={images_url.url + '/' + p.variations[Object.keys(p.variations)[0]].variation_image.poster + images_url.medium} />
-                </li>
-            )
+            return products.map(p => <ProductItem product={p} key={p.id}/>)
         }
-        return <li>loading...</li>
+        return <h1>loading...</h1>
     }
 
     return (
@@ -79,7 +75,7 @@ const Category = props => {
                 <div>
                     {category ? <div>{category.description}</div> : <div><Placeholder /></div>}
 
-                    {category && <ul>{showProducts(category.products)}</ul>}
+                    {category && <div className={styles.productsGrid}>{showProducts(category.products)}</div>}
                     {/* {staticpage && renderHtmlFromJson(staticpage.page_body)} */}
                 </div>
             </MainContent>
