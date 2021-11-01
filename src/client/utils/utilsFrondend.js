@@ -165,7 +165,17 @@ export const prepareProductLink = (language, slug_prefix, url) => {
     return '/' + language + '/' + slug_prefix + '/' + url;
 }
 
-// scroll to top
+export const getPriceByCurrency = (productPrices, userCurrency, currency) => {
+    const price = productPrices &&
+        userCurrency &&
+        currency &&
+        currency[userCurrency] &&
+        currency[userCurrency].sign &&
+        productPrices[userCurrency] ? productPrices[userCurrency] : null;
+    return price && currency[userCurrency].display ?
+        currency[userCurrency].display === 'right' ?
+            price + ' ' + currency[userCurrency].sign : currency[userCurrency].sign + ' ' + price : null;
+}
 
 /**
  * Just scroll to top of main window

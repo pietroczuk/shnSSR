@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { prepareProductLink } from '../../utils/utilsFrondend';
+import { prepareProductLink, getPriceByCurrency } from '../../utils/utilsFrondend';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './productItem.scss';
@@ -15,19 +15,22 @@ const ProductItemPlaceholder = ({ product }) => {
 
     const placeholder = product ? false : true;
 
-    const { title, titlekey, variations, url } = product ? product : {
+    const { title, titlekey, variations, url, min_price } = product ? product : {
         title: null,
         titlekey: null,
         variations: null,
-        url: null
+        url: null,
+        min_price: null
     };
 
     const multiplyMesurment = 100;
-    const { image_width, image_height, images_url, translation, language, slug_urls } = useSelector(state => ({
+    const { image_width, image_height, images_url, language, userCurrency, currency, slug_urls, translation } = useSelector(state => ({
         image_width: state.SystemConfig.images.aspect_ratio.width * multiplyMesurment,
         image_height: state.SystemConfig.images.aspect_ratio.height * multiplyMesurment,
         images_url: state.SystemConfig.images,
         language: state.User.language,
+        userCurrency: state.User.currency,
+        currency: state.SystemConfig.currency,
         slug_urls: state.SystemConfig.urls.product,
         translation: state.PublicConfig.translation,
     }));
@@ -61,7 +64,7 @@ const ProductItemPlaceholder = ({ product }) => {
                     {!placeholder && translation && translation.price_from ? translation.price_from : ''}
                 </div>
                 <div className={styles.price}>
-                    {!placeholder && '20 zł'}
+                    {!placeholder && getPriceByCurrency(min_price, userCurrency, currency)}
                 </div>
             </div>
         </div>
