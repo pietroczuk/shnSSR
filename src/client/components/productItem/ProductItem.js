@@ -6,7 +6,7 @@ import { prepareProductLink } from '../../utils/utilsFrondend';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './productItem.scss';
 
-import LoadingSpinner from '../loadingSpinner/loadingSpinner';
+import LoadingSpinner from '../loadingSpinner/LoadingSpinner';
 
 import Blank from '../svg/blank/Blank';
 import Placeholder from '../placeholder/Placeholder';
@@ -38,7 +38,7 @@ const ProductItemPlaceholder = ({ product }) => {
             <div className={styles.imageContainerRelative}>
                 <div className={styles.imagePicture}>
                     {placeholder && <LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={3} customBorderTopColor={'#f3f3f3'} />}
-                    {!placeholder && <img className={styles.single} alt={titlekey} src={images_url.url + '/' + variations[Object.keys(variations)[0]].variation_image.poster + images_url.medium} />}
+                    {!placeholder && <img style={{width: '100%', height: 'auto'}} className={styles.single} alt={titlekey} src={images_url.url + '/' + variations[Object.keys(variations)[0]].variation_image.poster + images_url.medium} />}
                 </div>
                 <div className={styles.imagePlaceholder} >
                     <Blank width={image_width} height={image_height} />
