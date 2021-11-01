@@ -161,6 +161,10 @@ export const prepUrlFromConfigSlug = (language, slug_urls, url_type, url) => {
     return '/' + language + '/' + slug_urls[url_type] + '/' + url;
 }
 
+export const prepareProductLink = (language, slug_prefix, url) => {
+    return '/' + language + '/' + slug_prefix + '/' + url;
+}
+
 // scroll to top
 
 /**
