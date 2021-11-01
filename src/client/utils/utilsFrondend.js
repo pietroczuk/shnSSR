@@ -172,9 +172,9 @@ export const getPriceByCurrency = (productPrices, userCurrency, currency) => {
         currency[userCurrency] &&
         currency[userCurrency].sign &&
         productPrices[userCurrency] ? productPrices[userCurrency] : null;
-    return price && currency[userCurrency].display ?
-        currency[userCurrency].display === 'right' ?
-            price + ' ' + currency[userCurrency].sign : currency[userCurrency].sign + ' ' + price : null;
+    return price && currency[userCurrency].displayLeft !== undefined ?
+        currency[userCurrency].displayLeft ?
+            currency[userCurrency].sign + ' ' + price : price + ' ' + currency[userCurrency].sign : null;
 }
 
 /**
