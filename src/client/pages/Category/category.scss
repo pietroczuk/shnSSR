@@ -1,5 +1,8 @@
 .productsGrid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 3em 1em;
+    display   : flex;
+    flex-wrap : wrap;
+    gap       : 3em 1em;
+    margin-top: 1em;
 }
+
+.categoryName {}

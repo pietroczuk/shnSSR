@@ -8,7 +8,7 @@ import { pageActions } from '../../redux/slices/pageSlice';
 import { pageTypes, metatags, prepareSearchCode, scrollToTop } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
-// import FixedBar from '../../components/header/fixedbar/FixedBar';
+// import FixedBar from '../../components/fixedbar/FixedBar';
 
 import AllFeaturesDisplay from '../../components/features/AllFeaturesDisplay';
 

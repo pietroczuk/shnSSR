@@ -13,6 +13,9 @@ import StickySidebar from '../../components/contentCointainer/stickySidebar/Stic
 import MainContent from '../../components/contentCointainer/mainContent/MainContent';
 import LeftMenuLinks from '../../components/leftMenuLinks/LeftMenuLinks';
 import ProductItem from '../../components/productItem/ProductItem';
+import FixedBar from '../../components/fixedbar/FixedBar';
+import NiceSwicher from '../../components/ui/niceSwitcher/NiceSwicher';
+import ImageSwicher from '../../components/ui/imageSwicher/ImageSwicher';
 
 const Category = props => {
 
@@ -69,8 +72,18 @@ const Category = props => {
                 </StickySidebar>
             }
             <MainContent>
-                {category ? <h1>{category.title}</h1> : <h1><Placeholder customWidth={'20%'} /></h1>}
+                <h1 className={styles.categoryName}>
+                    {category ? category.title : <Placeholder customWidth={'20%'} />}
+                </h1>
                 <div>
+                    <FixedBar>
+                        {/* <NiceSwicher>
+                            <span>Pokaż aranżację</span>
+                            <span>Schowaj aranżację</span>
+                        </NiceSwicher> */}
+                        <ImageSwicher />
+                        <ImageSwicher />
+                    </FixedBar>
                     <div className={styles.productsGrid}>{showProducts(category)}</div>
                     {category ? <div>{category.description}</div> : <div><Placeholder /></div>}
                     {/* {staticpage && renderHtmlFromJson(staticpage.page_body)} */}
