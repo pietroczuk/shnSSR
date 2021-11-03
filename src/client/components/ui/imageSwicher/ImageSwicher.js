@@ -1,11 +1,17 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import NiceSwicher from '../niceSwitcher/NiceSwicher';
 import styles from './imageSwicher.scss';
 
+import NiceSwicher from '../niceSwitcher/NiceSwicher';
+import { useDispatch } from 'react-redux';
+import { setProductVisual } from '../../../redux/actions/actionCreators';
+
 const ImageSwicher = () => {
+    const dispatch = useDispatch();
+
     const clickHandlerFunction = () => {
         console.log('switch');
+        dispatch(setProductVisual());
     }
     const options = [
         {

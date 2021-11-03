@@ -11,7 +11,7 @@ import LoadingSpinner from '../loadingSpinner/LoadingSpinner';
 import Blank from '../svg/blank/Blank';
 import Placeholder from '../placeholder/Placeholder';
 
-const ProductItemPlaceholder = ({ product }) => {
+const ProductItemPlaceholder = ({ product, forceVisual = false }) => {
 
     const placeholder = product ? false : true;
 
@@ -24,24 +24,32 @@ const ProductItemPlaceholder = ({ product }) => {
     };
 
     const multiplyMesurment = 100;
-    const { image_width, image_height, images_url, language, userCurrency, currency, slug_urls, translation } = useSelector(state => ({
+    const { image_width, image_height, images_url, language, userCurrency, currency, slug_urls, translation, showVisual } = useSelector(state => ({
         image_width: state.SystemConfig.images.aspect_ratio.width * multiplyMesurment,
         image_height: state.SystemConfig.images.aspect_ratio.height * multiplyMesurment,
         images_url: state.SystemConfig.images,
         language: state.User.language,
         userCurrency: state.User.currency,
+        showVisual: state.User.showVisual,
         currency: state.SystemConfig.currency,
         slug_urls: state.SystemConfig.urls.product,
         translation: state.PublicConfig.translation,
     }));
     const product_url = !placeholder ? prepareProductLink(language, slug_urls, url) : '#';
-
+    const showVisualImage = showVisual || forceVisual ? true : false;
+    const getProductImageUrl = () => {
+        const img_base = images_url.url + '/';
+        const img_size = '?size=700&sh=7&q=80';
+        const simple = img_base + variations[Object.keys(variations)[0]].variation_image.poster + img_size;
+        const visual = img_base + variations[Object.keys(variations)[0]].variation_image.wall + img_size;
+        return showVisualImage ? visual : simple;
+    }
     return <NavLink to={product_url} className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}>
         <div className={styles.imageContainer}>
             <div className={styles.imageContainerRelative}>
-                <div className={styles.imagePicture}>
+                <div className={`${styles.imagePicture} ${showVisualImage ? styles.noPadding : ''}`}>
                     {placeholder && <LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={3} customBorderTopColor={'#f3f3f3'} />}
-                    {!placeholder && <img style={{width: '100%', height: 'auto'}} className={styles.single} alt={titlekey} src={images_url.url + '/' + variations[Object.keys(variations)[0]].variation_image.poster + images_url.medium} />}
+                    {!placeholder && <img style={{ width: '100%', height: '100%' }} className={styles.single} alt={titlekey} src={getProductImageUrl()} />}
                 </div>
                 <div className={styles.imagePlaceholder} >
                     <Blank width={image_width} height={image_height} />

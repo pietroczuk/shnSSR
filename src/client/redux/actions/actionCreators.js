@@ -74,3 +74,11 @@ export const setUserCurrency = (currency_code, all_currencies) => dispatch => {
     dispatch(userActions.setUserCurrency(currency_code));
   }
 }
+
+/**
+ * set product visual
+ */
+
+export const setProductVisual = () => dispatch => {
+  dispatch(userActions.setProductVisual());
+}

@@ -5,7 +5,9 @@ import styles from './category.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { getPage } from '../../redux/actions/actionCreators';
 import { pageActions } from '../../redux/slices/pageSlice';
-import { pageTypes, metatags, prepareSearchCode, renderHtmlFromJson, scrollToTop } from '../../utils/utilsFrondend';
+import { pageTypes, metatags, prepareSearchCode, 
+    // renderHtmlFromJson, 
+    scrollToTop } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
 import ContentCointainer from '../../components/contentCointainer/ContentCointainer';
@@ -14,7 +16,7 @@ import MainContent from '../../components/contentCointainer/mainContent/MainCont
 import LeftMenuLinks from '../../components/leftMenuLinks/LeftMenuLinks';
 import ProductItem from '../../components/productItem/ProductItem';
 import FixedBar from '../../components/fixedbar/FixedBar';
-import NiceSwicher from '../../components/ui/niceSwitcher/NiceSwicher';
+// import NiceSwicher from '../../components/ui/niceSwitcher/NiceSwicher';
 import ImageSwicher from '../../components/ui/imageSwicher/ImageSwicher';
 
 const Category = props => {

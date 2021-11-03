@@ -3,7 +3,11 @@ import { setCookie } from '../../utils/utilsFrondend';
 
 const userSlice = createSlice({ 
     name: 'User',
-    initialState: {},
+    initialState: {
+        showVisual : false,
+        language: '',
+        currency: ''
+    },
     reducers: {
         setUserLanguage(state, action) {
             setCookie('language', action.payload);
@@ -13,6 +17,10 @@ const userSlice = createSlice({
         setUserCurrency(state, action) {
             setCookie('currency', action.payload);
             state.currency = action.payload;
+            return state;
+        },
+        setProductVisual(state) {
+            state.showVisual = !state.showVisual;
             return state;
         }
     }

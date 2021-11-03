@@ -16,6 +16,10 @@ const NiceSwicher = ({ options, size }) => {
         });
     }, [options]);
 
+    const clickHandlerOption = (index, clickFn) => {
+        clickFn();
+        setPosition(index);
+    }
 
 
     const showOptions = (options) => {
@@ -24,7 +28,7 @@ const NiceSwicher = ({ options, size }) => {
                 key={index}
                 className={`${styles.clickElement} ${index === postion ? styles.active : ''}`}
                 // onClick={elem.clickHandler}
-                onClick={() => setPosition(index)}
+                onClick={() => clickHandlerOption(index, elem.clickHandler)}
                 style={{
                     // width: width + '%', 
                     padding: sizeSwicher + 'em ' + sizeSwicher * 2 + 'em'
