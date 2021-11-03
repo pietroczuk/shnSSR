@@ -18,6 +18,7 @@ import ProductItem from '../../components/productItem/ProductItem';
 import FixedBar from '../../components/fixedbar/FixedBar';
 // import NiceSwicher from '../../components/ui/niceSwitcher/NiceSwicher';
 import ImageSwicher from '../../components/ui/imageSwicher/ImageSwicher';
+import RandomColorSwicher from '../../components/ui/randomColorSwicher/RandomColorSwicher';
 
 const Category = props => {
 
@@ -61,7 +62,7 @@ const Category = props => {
     const showProducts = category => {
         const products = category && category.products ? category.products : null;
         if (products) {
-            return products.map(p => <ProductItem product={p} key={p.id}/>);
+            return products.map((p, index) => <ProductItem product={p} key={p.id} index={index}/>);
         }
         return [...Array(category_products)].map((el, index) => <ProductItem key={index} />);
     }
@@ -83,8 +84,9 @@ const Category = props => {
                             <span>Pokaż aranżację</span>
                             <span>Schowaj aranżację</span>
                         </NiceSwicher> */}
+                        {/* <ImageSwicher /> */}
                         <ImageSwicher />
-                        <ImageSwicher />
+                        <RandomColorSwicher/>
                     </FixedBar>
                     <div className={styles.productsGrid}>{showProducts(category)}</div>
                     {category ? <div>{category.description}</div> : <div><Placeholder /></div>}

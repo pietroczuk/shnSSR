@@ -11,7 +11,7 @@ import LoadingSpinner from '../loadingSpinner/LoadingSpinner';
 import Blank from '../svg/blank/Blank';
 import Placeholder from '../placeholder/Placeholder';
 
-const ProductItemPlaceholder = ({ product, forceVisual = false }) => {
+const ProductItemPlaceholder = ({ product, forceVisual = false , index}) => {
 
     const placeholder = product ? false : true;
 
@@ -24,13 +24,14 @@ const ProductItemPlaceholder = ({ product, forceVisual = false }) => {
     };
 
     const multiplyMesurment = 100;
-    const { image_width, image_height, images_url, language, userCurrency, currency, slug_urls, translation, showVisual } = useSelector(state => ({
+    const { image_width, image_height, images_url, language, userCurrency, currency, slug_urls, translation, showVisual, showRandom } = useSelector(state => ({
         image_width: state.SystemConfig.images.aspect_ratio.width * multiplyMesurment,
         image_height: state.SystemConfig.images.aspect_ratio.height * multiplyMesurment,
         images_url: state.SystemConfig.images,
         language: state.User.language,
         userCurrency: state.User.currency,
-        showVisual: state.User.showVisual,
+        showVisual: state.Display.showVisual,
+        showRandom: state.Display.showRandom,
         currency: state.SystemConfig.currency,
         slug_urls: state.SystemConfig.urls.product,
         translation: state.PublicConfig.translation,
@@ -38,10 +39,13 @@ const ProductItemPlaceholder = ({ product, forceVisual = false }) => {
     const product_url = !placeholder ? prepareProductLink(language, slug_urls, url) : '#';
     const showVisualImage = showVisual || forceVisual ? true : false;
     const getProductImageUrl = () => {
+        let variantIndexStyle = showRandom ? index < Object.keys(variations).length ? index : index % Object.keys(variations).length : 0;
+        // set middle images in visual mode to dark background
+        variantIndexStyle = variantIndexStyle == 1 ? 4 : variantIndexStyle == 4 ? 1 : variantIndexStyle;
         const img_base = images_url.url + '/';
         const img_size = '?size=700&sh=7&q=80';
-        const simple = img_base + variations[Object.keys(variations)[0]].variation_image.poster + img_size;
-        const visual = img_base + variations[Object.keys(variations)[0]].variation_image.wall + img_size;
+        const simple = img_base + variations[Object.keys(variations)[variantIndexStyle]].variation_image.poster + img_size;
+        const visual = img_base + variations[Object.keys(variations)[variantIndexStyle]].variation_image.wall + img_size;
         return showVisualImage ? visual : simple;
     }
     return <NavLink to={product_url} className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}>

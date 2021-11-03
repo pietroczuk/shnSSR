@@ -1,12 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { setCookie } from '../../utils/utilsFrondend';
 
-const userSlice = createSlice({ 
+const userSlice = createSlice({
     name: 'User',
     initialState: {
-        showVisual : false,
         language: '',
-        currency: ''
+        currency: '',
     },
     reducers: {
         setUserLanguage(state, action) {
@@ -19,10 +18,6 @@ const userSlice = createSlice({
             state.currency = action.payload;
             return state;
         },
-        setProductVisual(state) {
-            state.showVisual = !state.showVisual;
-            return state;
-        }
     }
 });
 export const userActions = userSlice.actions;

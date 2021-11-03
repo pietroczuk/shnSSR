@@ -5,6 +5,7 @@ import { systemConfigActions } from '../slices/systemConfigSlice';
 import { publicConfigActions } from '../slices/publicConfigSlice';
 import { pageActions } from '../slices/pageSlice';
 import { userActions } from '../slices/userSlice';
+import { displayActions} from '../slices/displaySlice';
 
 /* --------------------- CONFIG 
 loads global config
@@ -75,10 +76,13 @@ export const setUserCurrency = (currency_code, all_currencies) => dispatch => {
   }
 }
 
-/**
+/**  ----------------------- Display
  * set product visual
  */
 
 export const setProductVisual = () => dispatch => {
-  dispatch(userActions.setProductVisual());
+  dispatch(displayActions.setProductVisual());
+}
+export const setProductRandomColors = () => dispatch => {
+  dispatch(displayActions.setProductRandomColors());
 }
