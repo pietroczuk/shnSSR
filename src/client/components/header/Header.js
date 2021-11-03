@@ -5,9 +5,9 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import Topbar from './topbar/Topbar.js';
 import Logo from '../svg/logo/Logo';
 import InteractiveIcon from '../InteractiveIcon/InteractiveIcon';
-import CartIcon from '../InteractiveIcon/icons/CartIcon';
-import WishlistIcon from '../InteractiveIcon/icons/WishlistIcon';
-import SearchIcon from '../InteractiveIcon/icons/SearchIcon';
+import CartIcon from '../svg/icons/CartIcon';
+import WishlistIcon from '../svg/icons/WishlistIcon';
+import SearchIcon from '../svg/icons/SearchIcon';
 
 import LanguageSwitcher from '../languageSwitcher/LanguageSwitcher';
 import CurrencySwitcher from '../currencySwitcher/CurrencySwitcher';

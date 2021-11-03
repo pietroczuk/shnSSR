@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
-import GlobeIcon from '../InteractiveIcon/icons/GlobeIcon';
+import GlobeIcon from '../svg/icons/GlobeIcon';
 
 import loadable from '@loadable/component';
 import { ErrorBoundary } from '../Error/ErrorBoundary';

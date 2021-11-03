@@ -4,7 +4,7 @@ import styles from '../leftMenuLinks.scss';
 
 import { prepUrlFromConfigSlug } from '../../../utils/utilsFrondend';
 
-import ArrowDown from '../../InteractiveIcon/icons/ArrowDown';
+import ArrowDown from '../../svg/icons/ArrowDown';
 
 const LeftMenuSubmenu = props => {
     const { elem, prepareLabelMenu, prepareMenuLink, pathname, language, slug_urls } = props;

@@ -8,7 +8,7 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserCurrency } from '../../redux/actions/actionCreators';
 
-import CurrencyIcon from '../InteractiveIcon/icons/CurrencyIcon';
+import CurrencyIcon from '../svg/icons/CurrencyIcon';
 
 const CurrencySwitcher = (props) => {
     const { all_config_currencies, user_currency } = useSelector(state => ({
