@@ -5,7 +5,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import allReducers from '../../client/redux/slices/allReducers';
 
-export default (language = null, currency = null) => {
+export default (language = null, currency = null, display_options = null) => {
     const store_init_data = {
         User: {
             language: language,
@@ -13,7 +13,8 @@ export default (language = null, currency = null) => {
             today: {
                 date: new Date().toLocaleString("pl-PL", {timeZone: 'Europe/Warsaw'})
             },
-        }
+        },
+        Display: display_options
     };
     const server_store = configureStore({
         reducer: allReducers,

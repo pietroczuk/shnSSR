@@ -31,12 +31,16 @@ export const language_from_path = (full_path, languages = null) => {
 
 export const get_currency_cookie = (cookie_header = null, currencies = null) => {
     const cookie_currency = new Cookies(cookie_header).get('currency');
-    // let find_cookie_cur = currencies.find(cur => cur.code === cookie_currency);
-    // if (!find_cookie_cur) {
-    //     return currencies[0].code;
-    // }
     if(!currencies[cookie_currency]) {
         return Object.keys(currencies)[0];
     }
     return cookie_currency;
+}
+
+// DISPLAY
+
+export const get_display_coockies = (cookie_header = null) => {
+    const visual = new Cookies(cookie_header).get('visual') === "true" ? true : false;
+    const random = new Cookies(cookie_header).get('random') === "true" ? true : false;
+    return {showVisual : visual, showRandom: random}
 }

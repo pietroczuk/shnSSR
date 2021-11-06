@@ -23,14 +23,16 @@ import RandomColorSwicher from '../../components/ui/randomColorSwicher/RandomCol
 const Category = props => {
 
     // from redux
-    const { seo, category, api, url_prefix, type, category_products } = useSelector(
+    const { seo, category, api, url_prefix, type, category_products, showVisual, showRandom } = useSelector(
         state => ({
             seo: state.PublicConfig.config.seo,
             category: state.Page.data,
             type: state.Page.type,
             url_prefix: state.SystemConfig.urls[pageTypes.categoryPage],
             api: state.SystemConfig.api,
-            category_products: state.SystemConfig.placeholder.category_products
+            category_products: state.SystemConfig.placeholder.category_products,
+            showVisual: state.Display.showVisual,
+            showRandom: state.Display.showRandom
         })
     )
     const dispatch = useDispatch();
@@ -85,8 +87,8 @@ const Category = props => {
                             <span>Schowaj aranżację</span>
                         </NiceSwicher> */}
                         {/* <ImageSwicher /> */}
-                        <ImageSwicher />
-                        <RandomColorSwicher/>
+                        <ImageSwicher showVisual={showVisual}/>
+                        <RandomColorSwicher showRandom={showRandom} />
                     </FixedBar>
                     <div className={styles.productsGrid}>{showProducts(category)}</div>
                     {category ? <div>{category.description}</div> : <div><Placeholder /></div>}

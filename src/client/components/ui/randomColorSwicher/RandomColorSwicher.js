@@ -6,7 +6,7 @@ import NiceSwicher from '../niceSwitcher/NiceSwicher';
 import { useDispatch } from 'react-redux';
 import { setProductRandomColors } from '../../../redux/actions/actionCreators';
 
-const RandomColorSwicher = () => {
+const RandomColorSwicher = ({showRandom}) => {
     const dispatch = useDispatch();
 
     const clickHandlerFunction = () => {
@@ -15,12 +15,13 @@ const RandomColorSwicher = () => {
     const options = [
         {
             title : "Losowy blask i papier",
-            clickHandler : clickHandlerFunction
+            clickHandler : clickHandlerFunction,
+            default: showRandom ? true : false,
         },
         {
             title : "Twój osobisty wybór",
             clickHandler : clickHandlerFunction,
-            default: true
+            default: !showRandom ? true : false,
         },
     ]
 

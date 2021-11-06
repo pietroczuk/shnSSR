@@ -19,7 +19,8 @@ import { prepare_routes_config } from '../client/utils/config';
 import { 
     check_user_language, 
     language_from_path,
-    get_currency_cookie
+    get_currency_cookie,
+    get_display_coockies
 } from './utils/utilsBackend';
 
 /** CACHE */
@@ -79,9 +80,12 @@ app.get('*', (req, res) => {
                 const user_currency = get_currency_cookie(req.headers.cookie, api_config.currency);
                 const user_language = language_from_path(req.path, api_config.language);
 
+                // get display coockies
+                const display_options = get_display_coockies(req.headers.cookie);
+
                 // console.log('server', user_language);
 
-                const server_store = createServerInitStore(user_language, user_currency);
+                const server_store = createServerInitStore(user_language, user_currency, display_options);
                 const new_routes_config = {
                     language: api_config.language,
                     urls: api_config.urls

@@ -6,7 +6,7 @@ import NiceSwicher from '../niceSwitcher/NiceSwicher';
 import { useDispatch } from 'react-redux';
 import { setProductVisual } from '../../../redux/actions/actionCreators';
 
-const ImageSwicher = () => {
+const ImageSwicher = ({showVisual}) => {
     const dispatch = useDispatch();
 
     const clickHandlerFunction = () => {
@@ -15,12 +15,13 @@ const ImageSwicher = () => {
     const options = [
         {
             title : "Pokaż aranżację",
-            clickHandler : clickHandlerFunction
+            clickHandler : clickHandlerFunction,
+            default: showVisual ? true: false
         },
         {
             title : "Schowaj aranżację",
             clickHandler : clickHandlerFunction,
-            default: true
+            default: !showVisual ? true: false
         },
     ]
 
