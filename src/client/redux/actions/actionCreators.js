@@ -6,6 +6,7 @@ import { publicConfigActions } from '../slices/publicConfigSlice';
 import { pageActions } from '../slices/pageSlice';
 import { userActions } from '../slices/userSlice';
 import { displayActions } from '../slices/displaySlice';
+import { wishlistActions } from '../slices/wishlistSlice'
 
 /* --------------------- CONFIG 
 loads global config
@@ -86,4 +87,13 @@ export const setProductVisual = (cookieKey) => dispatch => {
 }
 export const setProductRandomColors = (cookieKey) => dispatch => {
   dispatch(displayActions.setProductRandomColors(cookieKey));
+}
+
+/**
+ * 
+ * Get wishlist from localstorage  
+ */
+
+export const initWishlistFromLocalstorage = storageKey => dispatch => {
+  dispatch(wishlistActions.initWishlist(storageKey));
 }

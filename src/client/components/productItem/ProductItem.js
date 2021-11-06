@@ -13,6 +13,11 @@ import Placeholder from '../placeholder/Placeholder';
 import AddToWishlistSticker from '../ui/addToWishlistSticker/AddToWishlistSticker'
 
 const ProductItem = ({ product, forceVisual = false, index }) => {
+    const [variantId, setVariantId] = useState(null);
+    const changeVariantId = vId => {
+        vId !== variantId && setVariantId(vId);
+    }
+
     const placeholder = product ? false : true;
 
     const { title, titlekey, variations, url, min_price, likes } = product ? product : {
@@ -28,7 +33,7 @@ const ProductItem = ({ product, forceVisual = false, index }) => {
      * api -> 4 * 100 => 400 (px)
      */
     const multiplyMesurment = 100;
-    const { image_width, image_height, images_url, language, userCurrency, currency, slug_urls, translation, showVisual, showRandom } = useSelector(state => ({
+    const { image_width, image_height, images_url, language, userCurrency, currency, slug_urls, translation, showVisual, showRandom, localstorageWishlistKey } = useSelector(state => ({
         image_width: state.SystemConfig.images.aspect_ratio.width * multiplyMesurment,
         image_height: state.SystemConfig.images.aspect_ratio.height * multiplyMesurment,
         images_url: state.SystemConfig.images,
@@ -39,22 +44,20 @@ const ProductItem = ({ product, forceVisual = false, index }) => {
         currency: state.SystemConfig.currency,
         slug_urls: state.SystemConfig.urls.product,
         translation: state.PublicConfig.translation,
+        localstorageWishlistKey: state.SystemConfig.localstorage_keys.wishlist,
     }));
     const product_url = !placeholder ? prepareProductLink(language, slug_urls, url) : '#';
 
-    const [variantId, setVariantId] = useState(null);  
-    const changeVariantId = variantId => {
-        setVariantId(variantId);
-    }
-    useEffect(()=> {   
-        product && changeVariantId(product.variations[Object.keys(variations)[0]].id);
-    },[])
-    
+    // useEffect(()=> {   
+    //     product && changeVariantId(product.variations[Object.keys(variations)[0]].id);
+    // },[])
+
     const showVisualImage = showVisual || forceVisual ? true : false;
     const getProductImageUrl = () => {
         let variantIndexStyle = showRandom ? index < Object.keys(variations).length ? index : index % Object.keys(variations).length : 0;
         // set middle images in visual mode to dark background
         variantIndexStyle = variantIndexStyle == 1 ? 4 : variantIndexStyle == 4 ? 1 : variantIndexStyle;
+        changeVariantId(product.variations[Object.keys(variations)[variantIndexStyle]].id);
         const img_base = images_url.url + '/';
         const img_size = '?size=700&sh=7&q=80';
         const simple = img_base + variations[Object.keys(variations)[variantIndexStyle]].variation_image.poster + img_size;
@@ -64,8 +67,7 @@ const ProductItem = ({ product, forceVisual = false, index }) => {
 
     const wishListClickHandler = () => {
         const productData = product;
-        variantId && productData ? setLocalStorageWishlist(variantId, productData) : null;
-        // console.log(variations, variantId);
+        variantId && productData && setLocalStorageWishlist(variantId, productData, localstorageWishlistKey);
     }
     return <div className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}>
         {!placeholder && <AddToWishlistSticker visualMode={showVisualImage} likes={likes} clickHandler={wishListClickHandler} />}

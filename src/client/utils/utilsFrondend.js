@@ -199,14 +199,40 @@ export const scrollToTop = window => {
 // }
 
 /**
+ *  Localstorage 
+ */
+
+ export const setLocalStorage = (value, key) => {
+    if (typeof window !== 'undefined') {
+        if (localStorage) {
+            localStorage.setItem(key, JSON.stringify(value));
+            return true;
+        }
+    }
+    return false;
+};
+
+export const getLocalStorage = key => {
+    if (typeof window !== 'undefined') {
+        const storageValue = localStorage ? localStorage.getItem(key) : null;
+        // console.log(JSON.parse(storageValue));
+        return storageValue ? JSON.parse(storageValue) : storageValue;
+    }
+    return null;
+};
+
+/**
  *  Localstorage wishlist
  */
 
- export const setLocalStorageWishlist = (variantId, productData) => {
-    if (typeof window !== 'undefined') {
-        if (localStorage) {
-            localStorage.setItem(variantId, JSON.stringify(productData));
-            console.log('localstorage wishlist');
-        }
+ export const setLocalStorageWishlist = (variantId, productData, localstorageWishlistKey) => {
+    const wishlistObj = {
+        product : productData,
+        variantId : variantId
     }
+    setLocalStorage(wishlistObj, localstorageWishlistKey);
+};
+
+export const getLocalStorageWishlist = (localstorageWishlistKey) => {
+    return getLocalStorage(localstorageWishlistKey);
 };

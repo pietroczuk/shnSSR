@@ -1,20 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import { setCookie } from '../../utils/utilsFrondend';
+import { getLocalStorageWishlist } from '../../utils/utilsFrondend';
 
 const wishlistSlice = createSlice({
     name: 'Wishlist',
-    initialState: [],
+    initialState: null,
     reducers: {
-        // setProductVisual(state) {
-        //     state.showVisual = !state.showVisual;
-        //     setCookie('visual', state.showVisual);
-        //     return state;
-        // },
-        // setProductRandomColors(state) {
-        //     state.showRandom = !state.showRandom;
-        //     setCookie('random', state.showRandom);
-        //     return state;
-        // }
+        initWishlist(state, action) {
+            const localstorageWishlistKey = action.payload;
+            return state = getLocalStorageWishlist(localstorageWishlistKey);
+        }
     }
 });
 export const wishlistActions = wishlistSlice.actions;
