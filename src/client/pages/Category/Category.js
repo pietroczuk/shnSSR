@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getPage } from '../../redux/actions/actionCreators';
 import { pageActions } from '../../redux/slices/pageSlice';
 import { pageTypes, metatags, prepareSearchCode, 
-    // renderHtmlFromJson, 
+    renderHtmlFromJson, 
     scrollToTop } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
@@ -91,7 +91,7 @@ const Category = props => {
                         <RandomColorSwicher showRandom={showRandom} />
                     </FixedBar>
                     <div className={styles.productsGrid}>{showProducts(category)}</div>
-                    {category ? <div>{category.description}</div> : <div><Placeholder /></div>}
+                    {category ? <div>{renderHtmlFromJson(category.description)}</div> : <div><Placeholder /></div>}
                     {/* {staticpage && renderHtmlFromJson(staticpage.page_body)} */}
                 </div>
             </MainContent>

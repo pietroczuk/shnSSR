@@ -114,7 +114,7 @@ export const prepareSearchCode = search => {
 // ----------- static page html
 
 export const renderHtmlFromJson = json => {
-    return json ? json.map((text_object, index) => {
+    return json ? Array.isArray(json) ? json.map((text_object, index) => {
         const textAlign = text_object.align === 'left' ||
             text_object.align === 'right' ||
             text_object.align === 'center'
@@ -152,7 +152,7 @@ export const renderHtmlFromJson = json => {
             default:
                 return childText;
         }
-    }) : '';
+    }) : json : '';
 }
 
 // ----------- prepare url links in menu based on array slug from config
