@@ -7,6 +7,7 @@ const wishlistSlice = createSlice({
     reducers: {
         initWishlist(state, action) {
             const localstorageWishlistKey = action.payload;
+            // check xss
             return state = getLocalStorageWishlist(localstorageWishlistKey);
         }
     }

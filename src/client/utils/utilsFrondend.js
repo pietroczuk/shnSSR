@@ -202,7 +202,7 @@ export const scrollToTop = window => {
  *  Localstorage 
  */
 
- export const setLocalStorage = (value, key) => {
+export const setLocalStorage = (value, key) => {
     if (typeof window !== 'undefined') {
         if (localStorage) {
             localStorage.setItem(key, JSON.stringify(value));
@@ -225,11 +225,20 @@ export const getLocalStorage = key => {
  *  Localstorage wishlist
  */
 
- export const setLocalStorageWishlist = (variantId, productData, localstorageWishlistKey) => {
+export const setLocalStorageWishlist = (variantId, productData, localstorageWishlistKey) => {
+    //variantId is have numeric values at start, we neet do use [] for index like arrays
     const wishlistObj = {
-        product : productData,
-        variantId : variantId
+        product: productData.id,
+        variantData: null
     }
+    wishlistObj.variantData = variantId &&
+        productData.variations &&
+        productData.variations[variantId] &&
+        productData.variations[variantId].variation_code ? {
+        id: variantId,
+        variation_code: productData.variations[variantId].variation_code
+    } : null;
+
     setLocalStorage(wishlistObj, localstorageWishlistKey);
 };
 
