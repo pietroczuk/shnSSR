@@ -3,7 +3,7 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './topbar.scss';
 
 import InteractiveIcon from '../../InteractiveIcon/InteractiveIcon';
-import CloseIcon from '../../svg/icons/CartIcon';
+import CloseIcon from '../../svg/icons/CloseIcon';
 
 const Topbar = ({ white, closeHandler }) => {
     return (

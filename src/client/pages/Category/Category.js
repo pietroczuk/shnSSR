@@ -20,6 +20,8 @@ import FixedBar from '../../components/fixedbar/FixedBar';
 import ImageSwicher from '../../components/ui/imageSwicher/ImageSwicher';
 import RandomColorSwicher from '../../components/ui/randomColorSwicher/RandomColorSwicher';
 
+import LoadingSpinner from '../../components/ui/loadingSpinner/LoadingSpinner';
+
 const Category = props => {
 
     // from redux
@@ -82,17 +84,12 @@ const Category = props => {
                 </h1>
                 <div>
                     <FixedBar>
-                        {/* <NiceSwicher>
-                            <span>Pokaż aranżację</span>
-                            <span>Schowaj aranżację</span>
-                        </NiceSwicher> */}
-                        {/* <ImageSwicher /> */}
                         <ImageSwicher showVisual={showVisual}/>
                         <RandomColorSwicher showRandom={showRandom} />
                     </FixedBar>
                     <div className={styles.productsGrid}>{showProducts(category)}</div>
-                    {category ? <div>{renderHtmlFromJson(category.description)}</div> : <div><Placeholder /></div>}
-                    {/* {staticpage && renderHtmlFromJson(staticpage.page_body)} */}
+                    <div className={styles.categroryLoadMore}><LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={2}/></div>
+                    {category ? <div className={styles.categoryDescription} >{renderHtmlFromJson(category.description)}</div> : <div><Placeholder /></div>}
                 </div>
             </MainContent>
             {/* <StickySidebar>dupa</StickySidebar> */}

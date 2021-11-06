@@ -6,7 +6,7 @@ import { prepareProductLink, getPriceByCurrency } from '../../utils/utilsFronden
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './productItem.scss';
 
-import LoadingSpinner from '../loadingSpinner/LoadingSpinner';
+import LoadingSpinner from '../ui/loadingSpinner/LoadingSpinner';
 
 import Blank from '../svg/blank/Blank';
 import Placeholder from '../placeholder/Placeholder';
