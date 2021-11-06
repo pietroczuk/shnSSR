@@ -20,7 +20,7 @@ import {
     check_user_language, 
     language_from_path,
     get_currency_cookie,
-    get_display_coockies
+    get_display_cookies
 } from './utils/utilsBackend';
 
 /** CACHE */
@@ -69,7 +69,7 @@ app.get('*', (req, res) => {
             console.error('❌ Error get config file', err);
         }).then(api_config => {
 
-            const language_init = check_user_language(req.headers.cookie, req.headers['accept-language'], api_config.language);
+            const language_init = check_user_language(req.headers.cookie, req.headers['accept-language'], api_config.language, api_config.cookies_keys['user_language']);
 
             if (req.path === '/') {
                 res.redirect('/' + language_init);
@@ -77,11 +77,11 @@ app.get('*', (req, res) => {
                 // const css = new Set(); // CSS for all rendered React components
                 // const insertCss = (...styles) =>
                 //     styles.forEach((style) => css.add(style._getCss()));
-                const user_currency = get_currency_cookie(req.headers.cookie, api_config.currency);
+                const user_currency = get_currency_cookie(req.headers.cookie, api_config.currency, api_config.cookies_keys['user_currency']);
                 const user_language = language_from_path(req.path, api_config.language);
 
-                // get display coockies
-                const display_options = get_display_coockies(req.headers.cookie);
+                // get display cookies
+                const display_options = get_display_cookies(req.headers.cookie, api_config.cookies_keys.display);
 
                 // console.log('server', user_language);
 

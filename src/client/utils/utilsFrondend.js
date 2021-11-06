@@ -197,3 +197,16 @@ export const scrollToTop = window => {
 //     }
 //     return params;
 // }
+
+/**
+ *  Localstorage wishlist
+ */
+
+ export const setLocalStorageWishlist = (variantId, productData) => {
+    if (typeof window !== 'undefined') {
+        if (localStorage) {
+            localStorage.setItem(variantId, JSON.stringify(productData));
+            console.log('localstorage wishlist');
+        }
+    }
+};

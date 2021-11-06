@@ -4,10 +4,7 @@ import styles from './addToWishlistSticker.scss';
 import WishlistIcon from '../../svg/icons/WishlistIcon';
 import HeartFull from '../../svg/icons/HeartFull';
 
-const AddToWishlistSticker = ({ visualMode = false, likes, inWishlist = false }) => {
-    const clickHandler = () => {
-        console.log('add to wishlist');
-    }
+const AddToWishlistSticker = ({ visualMode = false, likes, inWishlist = false, clickHandler }) => {
     return <div className={`${styles.addToWishContainer} ${visualMode ? styles.visualMode : ''}`} onClick={clickHandler}>
         <div className={styles.iconContainer}>
             {inWishlist ? <HeartFull /> : <WishlistIcon />}

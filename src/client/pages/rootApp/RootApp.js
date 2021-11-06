@@ -21,16 +21,18 @@ const Footer = loadable(() => import(/* webpackPrefetch: true */ '../../componen
 
 
 const RootApp = ({ route, location }) => {
-    const { language, currency } = useSelector(
+    const { language, currency, cookieLanguageKey, cookieCurrencyKey } = useSelector(
         state => ({
             language: state.User.language,
             currency: state.User.currency,
+            cookieLanguageKey: state.SystemConfig.cookies_keys.user_language,
+            cookieCurrencyKey: state.SystemConfig.cookies_keys.user_currency,
         })
     )
 
     useEffect(() => {
-        !getCookie('language') && language && setCookie('language', language);
-        !getCookie('currency') && currency && setCookie('currency', currency);
+        !getCookie(cookieLanguageKey) && language && setCookie(cookieLanguageKey, language);
+        !getCookie(cookieCurrencyKey) && currency && setCookie(cookieCurrencyKey, currency);
     }, [])
     return (
         <React.Fragment>

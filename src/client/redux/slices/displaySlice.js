@@ -8,14 +8,16 @@ const displaySlice = createSlice({
         showRandom: false,
     },
     reducers: {
-        setProductVisual(state) {
+        setProductVisual(state, action) { 
+            const cookieKey = action.payload;
             state.showVisual = !state.showVisual;
-            setCookie('visual', state.showVisual);
+            setCookie(cookieKey, state.showVisual);
             return state;
         },
-        setProductRandomColors(state) {
+        setProductRandomColors(state, action) {
+            const cookieKey = action.payload;
             state.showRandom = !state.showRandom;
-            setCookie('random', state.showRandom);
+            setCookie(cookieKey, state.showRandom);
             return state;
         }
     }

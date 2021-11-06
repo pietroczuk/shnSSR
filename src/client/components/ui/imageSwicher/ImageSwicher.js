@@ -6,11 +6,11 @@ import NiceSwicher from '../niceSwitcher/NiceSwicher';
 import { useDispatch } from 'react-redux';
 import { setProductVisual } from '../../../redux/actions/actionCreators';
 
-const ImageSwicher = ({showVisual}) => {
+const ImageSwicher = ({showVisual, cookieKey}) => {
     const dispatch = useDispatch();
 
-    const clickHandlerFunction = () => {
-        dispatch(setProductVisual());
+    const clickHandlerFunction = () => { 
+        dispatch(setProductVisual(cookieKey));
     }
     const options = [
         {

@@ -11,9 +11,11 @@ import { setUserCurrency } from '../../redux/actions/actionCreators';
 import CurrencyIcon from '../svg/icons/CurrencyIcon';
 
 const CurrencySwitcher = (props) => {
-    const { all_config_currencies, user_currency } = useSelector(state => ({
+    const { all_config_currencies, user_currency, cookieCurrencyKey } = useSelector(state => ({
         all_config_currencies: state.SystemConfig.currency,
-        user_currency: state.User.currency
+        user_currency: state.User.currency,
+        cookieCurrencyKey: state.SystemConfig.cookies_keys.user_currency,
+
     }));
 
     const [openSubmenu, setOpenSubmenu] = useState(false);
@@ -27,9 +29,9 @@ const CurrencySwitcher = (props) => {
 
     const dispatch = useDispatch();
 
-    const currencyClickHandler = (currency) => {
+    const currencyClickHandler = (currency, cookieCurrencyKey) => {
         closeSubmenuHandler();
-        dispatch(setUserCurrency(currency, all_config_currencies));
+        dispatch(setUserCurrency(currency, all_config_currencies, cookieCurrencyKey));
     }
     return <div className={styles.switcher}
         onMouseOver={openSubmenuHandler}
@@ -44,7 +46,7 @@ const CurrencySwitcher = (props) => {
                         <li
                             key={curr_key}
                             className={`${(curr_key === user_currency ? styles.active : '')}`}
-                            onClick={() => currencyClickHandler(curr_key)}>
+                            onClick={() => currencyClickHandler(curr_key, cookieCurrencyKey)}>
                             <span>{curr_val.label}</span>
                         </li>
                 )}

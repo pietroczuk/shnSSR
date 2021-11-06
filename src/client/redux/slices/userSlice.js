@@ -8,14 +8,15 @@ const userSlice = createSlice({
         currency: '',
     },
     reducers: {
-        setUserLanguage(state, action) {
-            setCookie('language', action.payload);
-            state.language = action.payload;
-            return state;
-        },
+        // setUserLanguage(state, action, cookieKey) {
+        //     setCookie(cookieKey, action.payload);
+        //     state.language = action.payload;
+        //     return state;
+        // },
         setUserCurrency(state, action) {
-            setCookie('currency', action.payload);
-            state.currency = action.payload;
+            const { cookieCurrencyKey, currency_code } = action.payload;
+            setCookie(cookieCurrencyKey, currency_code);
+            state.currency = currency_code;
             return state;
         },
     }

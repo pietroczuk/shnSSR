@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { prepareProductLink, getPriceByCurrency } from '../../utils/utilsFrondend';
+import { prepareProductLink, getPriceByCurrency, setLocalStorageWishlist } from '../../utils/utilsFrondend';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './productItem.scss';
@@ -12,8 +12,7 @@ import Blank from '../svg/blank/Blank';
 import Placeholder from '../placeholder/Placeholder';
 import AddToWishlistSticker from '../ui/addToWishlistSticker/AddToWishlistSticker'
 
-const ProductItemPlaceholder = ({ product, forceVisual = false, index }) => {
-
+const ProductItem = ({ product, forceVisual = false, index }) => {
     const placeholder = product ? false : true;
 
     const { title, titlekey, variations, url, min_price, likes } = product ? product : {
@@ -24,7 +23,10 @@ const ProductItemPlaceholder = ({ product, forceVisual = false, index }) => {
         min_price: null,
         likes: null
     };
-
+    /**
+     * value that we neet to multiply aspect ratio from api, ex:
+     * api -> 4 * 100 => 400 (px)
+     */
     const multiplyMesurment = 100;
     const { image_width, image_height, images_url, language, userCurrency, currency, slug_urls, translation, showVisual, showRandom } = useSelector(state => ({
         image_width: state.SystemConfig.images.aspect_ratio.width * multiplyMesurment,
@@ -39,6 +41,15 @@ const ProductItemPlaceholder = ({ product, forceVisual = false, index }) => {
         translation: state.PublicConfig.translation,
     }));
     const product_url = !placeholder ? prepareProductLink(language, slug_urls, url) : '#';
+
+    const [variantId, setVariantId] = useState(null);  
+    const changeVariantId = variantId => {
+        setVariantId(variantId);
+    }
+    useEffect(()=> {   
+        product && changeVariantId(product.variations[Object.keys(variations)[0]].id);
+    },[])
+    
     const showVisualImage = showVisual || forceVisual ? true : false;
     const getProductImageUrl = () => {
         let variantIndexStyle = showRandom ? index < Object.keys(variations).length ? index : index % Object.keys(variations).length : 0;
@@ -50,8 +61,14 @@ const ProductItemPlaceholder = ({ product, forceVisual = false, index }) => {
         const visual = img_base + variations[Object.keys(variations)[variantIndexStyle]].variation_image.wall + img_size;
         return showVisualImage ? visual : simple;
     }
+
+    const wishListClickHandler = () => {
+        const productData = product;
+        variantId && productData ? setLocalStorageWishlist(variantId, productData) : null;
+        // console.log(variations, variantId);
+    }
     return <div className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}>
-        {likes && <AddToWishlistSticker visualMode={showVisualImage} likes={likes} />}
+        {!placeholder && <AddToWishlistSticker visualMode={showVisualImage} likes={likes} clickHandler={wishListClickHandler} />}
         <NavLink to={product_url}>
             <div className={styles.imageContainer}>
                 <div className={styles.imageContainerRelative}>
@@ -87,4 +104,4 @@ const ProductItemPlaceholder = ({ product, forceVisual = false, index }) => {
         </NavLink>
     </div>
 }
-export default withStyles(styles)(ProductItemPlaceholder);
+export default withStyles(styles)(ProductItem);

@@ -5,7 +5,7 @@ import { systemConfigActions } from '../slices/systemConfigSlice';
 import { publicConfigActions } from '../slices/publicConfigSlice';
 import { pageActions } from '../slices/pageSlice';
 import { userActions } from '../slices/userSlice';
-import { displayActions} from '../slices/displaySlice';
+import { displayActions } from '../slices/displaySlice';
 
 /* --------------------- CONFIG 
 loads global config
@@ -70,9 +70,10 @@ export const setProductCurrVarId = (product_variant_id, variations) => dispatch 
  * language etc
  */
 
-export const setUserCurrency = (currency_code, all_currencies) => dispatch => {
+export const setUserCurrency = (currency_code, all_currencies, cookieCurrencyKey) => dispatch => {
   if (all_currencies[currency_code]) {
-    dispatch(userActions.setUserCurrency(currency_code));
+    const actionPayload = { currency_code, cookieCurrencyKey };
+    dispatch(userActions.setUserCurrency(actionPayload));
   }
 }
 
@@ -80,9 +81,9 @@ export const setUserCurrency = (currency_code, all_currencies) => dispatch => {
  * set product visual
  */
 
-export const setProductVisual = () => dispatch => {
-  dispatch(displayActions.setProductVisual());
+export const setProductVisual = (cookieKey) => dispatch => {
+  dispatch(displayActions.setProductVisual(cookieKey));
 }
-export const setProductRandomColors = () => dispatch => {
-  dispatch(displayActions.setProductRandomColors());
+export const setProductRandomColors = (cookieKey) => dispatch => {
+  dispatch(displayActions.setProductRandomColors(cookieKey));
 }

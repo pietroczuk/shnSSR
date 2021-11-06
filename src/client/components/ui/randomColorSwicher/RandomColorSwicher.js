@@ -6,11 +6,11 @@ import NiceSwicher from '../niceSwitcher/NiceSwicher';
 import { useDispatch } from 'react-redux';
 import { setProductRandomColors } from '../../../redux/actions/actionCreators';
 
-const RandomColorSwicher = ({showRandom}) => {
+const RandomColorSwicher = ({showRandom, cookieKey}) => {
     const dispatch = useDispatch();
 
     const clickHandlerFunction = () => {
-        dispatch(setProductRandomColors());
+        dispatch(setProductRandomColors(cookieKey));
     }
     const options = [
         {

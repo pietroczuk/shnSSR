@@ -1,8 +1,8 @@
 import Cookies from 'universal-cookie';
 
 // LANGUAGE
-export const check_user_language = (cookie_header = null, browser_language = null, languages = null) => {
-    let cookie_lang = new Cookies(cookie_header).get('language');
+export const check_user_language = (cookie_header = null, browser_language = null, languages = null, cookie_key) => {
+    let cookie_lang = new Cookies(cookie_header).get(cookie_key);
     if(!languages[cookie_lang]) {
         // browser
         if (browser_language) {
@@ -29,8 +29,8 @@ export const language_from_path = (full_path, languages = null) => {
 
 // CURRENCY
 
-export const get_currency_cookie = (cookie_header = null, currencies = null) => {
-    const cookie_currency = new Cookies(cookie_header).get('currency');
+export const get_currency_cookie = (cookie_header = null, currencies = null, cookie_key) => {
+    const cookie_currency = new Cookies(cookie_header).get(cookie_key);
     if(!currencies[cookie_currency]) {
         return Object.keys(currencies)[0];
     }
@@ -39,8 +39,8 @@ export const get_currency_cookie = (cookie_header = null, currencies = null) => 
 
 // DISPLAY
 
-export const get_display_coockies = (cookie_header = null) => {
-    const visual = new Cookies(cookie_header).get('visual') === "true" ? true : false;
-    const random = new Cookies(cookie_header).get('random') === "true" ? true : false;
+export const get_display_cookies = (cookie_header = null, display_cookie_key_obj) => {
+    const visual = new Cookies(cookie_header).get(display_cookie_key_obj['visual_mode']) === "true" ? true : false;
+    const random = new Cookies(cookie_header).get(display_cookie_key_obj['random_variant']) === "true" ? true : false;
     return {showVisual : visual, showRandom: random}
 }

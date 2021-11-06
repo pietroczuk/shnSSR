@@ -25,7 +25,7 @@ import LoadingSpinner from '../../components/ui/loadingSpinner/LoadingSpinner';
 const Category = props => {
 
     // from redux
-    const { seo, category, api, url_prefix, type, category_products, showVisual, showRandom } = useSelector(
+    const { seo, category, api, url_prefix, type, category_products, showVisual, showRandom, cookiesDisplayKeys } = useSelector(
         state => ({
             seo: state.PublicConfig.config.seo,
             category: state.Page.data,
@@ -34,7 +34,8 @@ const Category = props => {
             api: state.SystemConfig.api,
             category_products: state.SystemConfig.placeholder.category_products,
             showVisual: state.Display.showVisual,
-            showRandom: state.Display.showRandom
+            showRandom: state.Display.showRandom,
+            cookiesDisplayKeys: state.SystemConfig.cookies_keys.display,
         })
     )
     const dispatch = useDispatch();
@@ -84,8 +85,8 @@ const Category = props => {
                 </h1>
                 <div>
                     <FixedBar>
-                        <ImageSwicher showVisual={showVisual}/>
-                        <RandomColorSwicher showRandom={showRandom} />
+                        <ImageSwicher showVisual={showVisual} cookieKey = {cookiesDisplayKeys.visual_mode}/>
+                        <RandomColorSwicher showRandom={showRandom} cookieKey = {cookiesDisplayKeys.random_variant} />
                     </FixedBar>
                     <div className={styles.productsGrid}>{showProducts(category)}</div>
                     <div className={styles.categroryLoadMore}><LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={2}/></div>
