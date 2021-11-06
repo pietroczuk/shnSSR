@@ -2,6 +2,7 @@ $lightColor : #727272;
 
 .productItemContainer {
     flex: 1 1 30%;
+    position: relative;
 
     &.disable {
         cursor: not-allowed;

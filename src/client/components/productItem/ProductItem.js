@@ -10,17 +10,19 @@ import LoadingSpinner from '../loadingSpinner/LoadingSpinner';
 
 import Blank from '../svg/blank/Blank';
 import Placeholder from '../placeholder/Placeholder';
+import AddToWishlistSticker from '../ui/addToWishlistSticker/AddToWishlistSticker'
 
-const ProductItemPlaceholder = ({ product, forceVisual = false , index}) => {
+const ProductItemPlaceholder = ({ product, forceVisual = false, index }) => {
 
     const placeholder = product ? false : true;
 
-    const { title, titlekey, variations, url, min_price } = product ? product : {
+    const { title, titlekey, variations, url, min_price, likes } = product ? product : {
         title: null,
         titlekey: null,
         variations: null,
         url: null,
-        min_price: null
+        min_price: null,
+        likes: null
     };
 
     const multiplyMesurment = 100;
@@ -48,38 +50,41 @@ const ProductItemPlaceholder = ({ product, forceVisual = false , index}) => {
         const visual = img_base + variations[Object.keys(variations)[variantIndexStyle]].variation_image.wall + img_size;
         return showVisualImage ? visual : simple;
     }
-    return <NavLink to={product_url} className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}>
-        <div className={styles.imageContainer}>
-            <div className={styles.imageContainerRelative}>
-                <div className={`${styles.imagePicture} ${showVisualImage ? styles.noPadding : ''}`}>
-                    {placeholder && <LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={3} customBorderTopColor={'#f3f3f3'} />}
-                    {!placeholder && <img style={{ width: '100%', height: '100%' }} className={styles.single} alt={titlekey} src={getProductImageUrl()} />}
-                </div>
-                <div className={styles.imagePlaceholder} >
-                    <Blank width={image_width} height={image_height} />
-                </div>
-            </div>
-        </div>
-        <div className={styles.productDataContainer}>
-            <div className={styles.titleContainer}>
-                <div className={styles.title}>
-                    {placeholder && <Placeholder customWidth={'100%'} />}
-                    {!placeholder && titlekey}
-                </div>
-                <div className={styles.subtitle}>
-                    {placeholder && <Placeholder customWidth={'50%'} />}
-                    {!placeholder && title}
+    return <div className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}>
+        {likes && <AddToWishlistSticker visualMode={showVisualImage} likes={likes} />}
+        <NavLink to={product_url}>
+            <div className={styles.imageContainer}>
+                <div className={styles.imageContainerRelative}>
+                    <div className={`${styles.imagePicture} ${showVisualImage ? styles.noPadding : ''}`}>
+                        {placeholder && <LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={3} customBorderTopColor={'#f3f3f3'} />}
+                        {!placeholder && <img style={{ width: '100%', height: '100%' }} className={styles.single} alt={titlekey} src={getProductImageUrl()} />}
+                    </div>
+                    <div className={styles.imagePlaceholder} >
+                        <Blank width={image_width} height={image_height} />
+                    </div>
                 </div>
             </div>
-            <div className={styles.priceContainer}>
-                <div className={styles.label}>
-                    {!placeholder && translation && translation.price_from ? translation.price_from : ''}
+            <div className={styles.productDataContainer}>
+                <div className={styles.titleContainer}>
+                    <div className={styles.title}>
+                        {placeholder && <Placeholder customWidth={'100%'} />}
+                        {!placeholder && titlekey}
+                    </div>
+                    <div className={styles.subtitle}>
+                        {placeholder && <Placeholder customWidth={'50%'} />}
+                        {!placeholder && title}
+                    </div>
                 </div>
-                <div className={styles.price}>
-                    {!placeholder && getPriceByCurrency(min_price, userCurrency, currency)}
+                <div className={styles.priceContainer}>
+                    <div className={styles.label}>
+                        {!placeholder && translation && translation.price_from ? translation.price_from : ''}
+                    </div>
+                    <div className={styles.price}>
+                        {!placeholder && getPriceByCurrency(min_price, userCurrency, currency)}
+                    </div>
                 </div>
             </div>
-        </div>
-    </NavLink>
+        </NavLink>
+    </div>
 }
 export default withStyles(styles)(ProductItemPlaceholder);
