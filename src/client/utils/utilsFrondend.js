@@ -187,6 +187,18 @@ export const scrollToTop = window => {
     }
 }
 
+/**
+ * Check if object is empty or not
+ */
+export const isObjectEmpty = obj => {
+    for (const i in obj) return false;
+    return true;
+}
+
+export const getObjectLenght = obj => {
+    return Object.keys(obj).length;
+}
+
 // get search params from url
 
 // export const getSearchParams = () => {
@@ -219,11 +231,18 @@ export const getLocalStorage = key => {
     }
     return null;
 };
+export const clearLocalStorage = key => {
+    if (typeof window !== 'undefined') {
+        localStorage.removeItem(key);
+        return true;
+    }
+    return false;
+}
 
 /**
  *  Localstorage wishlist
  *  TODO: we send brand new object to localstorage, all logic are in wishlist slicer
- * 
+ *
  */
 /*
 export const setLocalStorageWishlist = (variantId, productData, localstorageWishlistKey) => {
