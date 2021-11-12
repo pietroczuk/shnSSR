@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { setLocalStorage, getLocalStorage, clearLocalStorage, isObjectEmpty, getObjectLenght } from '../../utils/utilsFrondend';
+import { setLocalStorage, getLocalStorage, clearLocalStorage, isObjectEmpty, getObjectLength } from '../../utils/utilsFrondend';
 
 const wishlistSlice = createSlice({
     name: 'Wishlist',
     initialState: {
-        lenght: 0,
+        length: 0,
         products: {}
     },
     reducers: {
@@ -14,7 +14,7 @@ const wishlistSlice = createSlice({
             const localstorageData = getLocalStorage(localstorageWishlistKey);
             if (localstorageData) {
                 state.products = localstorageData;
-                state.lenght = getObjectLenght(localstorageData);
+                state.length = getObjectLength(localstorageData);
             }
             return state;
         },
@@ -28,7 +28,7 @@ const wishlistSlice = createSlice({
             const { product, variantId, localstorageWishlistKey } = action.payload;
             if (variantId && state && state.products && state.products[variantId]) {
                 delete state.products[variantId];
-                state.lenght -= 1;
+                state.length -= 1;
             } else {
                 const productId = product ? product.id : null;
                 if (productId && variantId) {
@@ -36,7 +36,7 @@ const wishlistSlice = createSlice({
                         p: productId,
                         v: variantId,
                     }
-                    state.lenght++;
+                    state.length++;
                 }
             }
             if (isObjectEmpty(state.products)) {

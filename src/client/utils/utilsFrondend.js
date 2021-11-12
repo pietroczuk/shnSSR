@@ -195,7 +195,7 @@ export const isObjectEmpty = obj => {
     return true;
 }
 
-export const getObjectLenght = obj => {
+export const getObjectLength = obj => {
     return Object.keys(obj).length;
 }
 

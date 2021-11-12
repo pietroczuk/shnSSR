@@ -3,7 +3,7 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './interactiveIcon.scss';
 
 const InteractiveIcon = (props) => {
-    const { white, hoverBg, hoverOpacity, customWidth, customSvgSize, onClick, onMouseEnter, onMouseLeave } = props;
+    const { white, hoverBg, hoverOpacity, customWidth, customSvgSize, badgeNumber = 0, onClick, onMouseEnter, onMouseLeave } = props;
     const width = customWidth ? customWidth : 50;
     const svgSize = customSvgSize ? customSvgSize : 20;
     return (
@@ -21,10 +21,11 @@ const InteractiveIcon = (props) => {
             onMouseLeave={onMouseLeave}
         >
             <div className={styles.svgContener}
-            style={{
-                maxWidth: svgSize + 'px',
-                maxHeight: svgSize + 'px',
-            }}>
+                style={{
+                    maxWidth: svgSize + 'px',
+                    maxHeight: svgSize + 'px',
+                }}>
+                {badgeNumber > 0 && <div className={styles.badge}>{badgeNumber}</div>}
                 {props.children}
             </div>
         </div>

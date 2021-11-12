@@ -19,16 +19,15 @@ import { useSelector } from 'react-redux';
 const Header = ({ white, whiteTopbar, language, location }) => {
     const [topbarOpen, setTopbarOpen] = useState(true);
 
-    const { all_config_languages, all_config_currencies } = useSelector(state => ({
+    const { all_config_languages, all_config_currencies, wishlistLength } = useSelector(state => ({
         all_config_languages: state.SystemConfig.language,
         all_config_currencies: state.SystemConfig.currency,
+        wishlistLength: state.Wishlist.length,
     }));
 
     const setTopbarOpenHandler = () => {
-        // console.log('ok');
         setTopbarOpen(prevstate => !prevstate);
     }
-
     return (
         <header id="root_header" className={`${styles.rootHeader} ${!white ? styles.darkHeader : ''}`}>
             {topbarOpen && <Topbar closeHandler={setTopbarOpenHandler} white={whiteTopbar} />}
@@ -40,7 +39,7 @@ const Header = ({ white, whiteTopbar, language, location }) => {
                     {all_config_languages && Object.keys(all_config_languages).length > 1 && <LanguageSwitcher />}
                     {all_config_currencies && Object.keys(all_config_currencies).length > 1 && <CurrencySwitcher />}
                     <InteractiveIcon hoverBg={true} white={!white}><SearchIcon /></InteractiveIcon>
-                    <InteractiveIcon hoverBg={true} white={!white}><WishlistIcon /></InteractiveIcon>
+                    <InteractiveIcon hoverBg={true} white={!white} badgeNumber={wishlistLength}><WishlistIcon /></InteractiveIcon>
                     <InteractiveIcon hoverBg={true} white={!white}><CartIcon /></InteractiveIcon>
                 </div>
             </div>
