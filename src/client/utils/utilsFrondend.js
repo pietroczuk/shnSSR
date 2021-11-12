@@ -179,7 +179,6 @@ export const getPriceByCurrency = (productPrices, userCurrency, currency) => {
 
 /**
  * Just scroll to top of main window
- * @param {*} window 
  */
 
 export const scrollToTop = window => {
@@ -223,10 +222,13 @@ export const getLocalStorage = key => {
 
 /**
  *  Localstorage wishlist
+ *  TODO: we send brand new object to localstorage, all logic are in wishlist slicer
+ * 
  */
-
+/*
 export const setLocalStorageWishlist = (variantId, productData, localstorageWishlistKey) => {
-    //variantId is have numeric values at start, we neet do use [] for index like arrays
+    // variantId is have numeric values at start, we neet do use [] for index like arrays
+
     const wishlistObj = {
         product: productData.id,
         variantData: null
@@ -241,7 +243,8 @@ export const setLocalStorageWishlist = (variantId, productData, localstorageWish
 
     setLocalStorage(wishlistObj, localstorageWishlistKey);
 };
+*/
 
-export const getLocalStorageWishlist = (localstorageWishlistKey) => {
-    return getLocalStorage(localstorageWishlistKey);
-};
+// export const getLocalStorageWishlist = (localstorageWishlistKey) => {
+//     return getLocalStorage(localstorageWishlistKey);
+// };

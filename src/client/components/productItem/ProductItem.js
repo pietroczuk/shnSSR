@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector, useDispatch} from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { prepareProductLink, getPriceByCurrency, setLocalStorageWishlist } from '../../utils/utilsFrondend';
+import { prepareProductLink, getPriceByCurrency, 
+    // setLocalStorageWishlist 
+} from '../../utils/utilsFrondend';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './productItem.scss';
@@ -10,13 +12,17 @@ import LoadingSpinner from '../ui/loadingSpinner/LoadingSpinner';
 
 import Blank from '../svg/blank/Blank';
 import Placeholder from '../placeholder/Placeholder';
-import AddToWishlistSticker from '../ui/addToWishlistSticker/AddToWishlistSticker'
+import AddToWishlistSticker from '../ui/addToWishlistSticker/AddToWishlistSticker';
+
+import { addToStoreWishlist } from '../../redux/actions/actionCreators';
 
 const ProductItem = ({ product, forceVisual = false, index }) => {
     const [variantId, setVariantId] = useState(null);
     const changeVariantId = vId => {
         vId !== variantId && setVariantId(vId);
     }
+
+    const dispatch = useDispatch();
 
     const placeholder = product ? false : true;
 
@@ -67,7 +73,8 @@ const ProductItem = ({ product, forceVisual = false, index }) => {
 
     const wishListClickHandler = () => {
         const productData = product;
-        variantId && productData && setLocalStorageWishlist(variantId, productData, localstorageWishlistKey);
+        variantId && productData && dispatch(addToStoreWishlist(product, variantId, localstorageWishlistKey));
+        // setLocalStorageWishlist(variantId, productData, localstorageWishlistKey);
     }
     return <div className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}>
         {!placeholder && <AddToWishlistSticker visualMode={showVisualImage} likes={likes} clickHandler={wishListClickHandler} />}
