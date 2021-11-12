@@ -32,9 +32,11 @@ const wishlistSlice = createSlice({
             } else {
                 const productId = product ? product.id : null;
                 if (productId && variantId) {
+                    // 
                     state.products[variantId] = {
                         p: productId,
                         v: variantId,
+                        productData: product
                     }
                     state.length++;
                 }
@@ -42,7 +44,14 @@ const wishlistSlice = createSlice({
             if (isObjectEmpty(state.products)) {
                 clearLocalStorage(localstorageWishlistKey);
             } else {
-                setLocalStorage(state.products, localstorageWishlistKey);
+                const localStorageWishlist = {};
+                Object.entries(state.products).forEach(([key, value]) => {
+                    localStorageWishlist[key] = {
+                        p: value.id,
+                        v: key
+                    }
+                });
+                setLocalStorage(localStorageWishlist, localstorageWishlistKey);
             }
             return state;
         }

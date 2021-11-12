@@ -92,9 +92,26 @@ export const setProductRandomColors = (cookieKey) => dispatch => {
  * Add to wishlist
  */
 
-export const addToStoreWishlist = (product, variantId, localstorageWishlistKey) => dispatch => {
-  const actionPayload = { product, variantId, localstorageWishlistKey };
-  dispatch(wishlistActions.addToWishlist(actionPayload));
+// export const addToStoreWishlist = (product, variantId, localstorageWishlistKey) => dispatch => {
+//   const actionPayload = { product, variantId, localstorageWishlistKey };
+
+//   dispatch(wishlistActions.addToWishlist(actionPayload));
+// }
+
+export const addToStoreWishlist = (api, lang, url, variantId, localstorageWishlistKey, inWishList = false) => dispatch => {
+  if (!inWishList) {
+    const page_url = '?url=' + url + '&lang=' + lang + '&variant=' + variantId;
+    const axios_endpoint = api.product + page_url;
+    return axios.get(api.url + '/' + axios_endpoint)
+      .then(res => dispatch(wishlistActions.addToWishlist({ product: res.data.data, variantId, localstorageWishlistKey }))
+      )
+      .catch(err => {
+        console.error('❌ Error get data from DB', err);
+      });
+  } else {
+    const actionPayload = { product: null, variantId, localstorageWishlistKey };
+    dispatch(wishlistActions.addToWishlist(actionPayload));
+  }
 }
 
 /**

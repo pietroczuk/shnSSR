@@ -9,14 +9,16 @@ import { addToStoreWishlist } from '../../../redux/actions/actionCreators';
 
 const AddToWishlistSticker = ({ visualMode = false, showLikes = false, likes, variantId, productData }) => {
     const dispatch = useDispatch();
-    const { localstorageWishlistKey, wishlistProducts } = useSelector(state => ({
+    const {api, lang, localstorageWishlistKey, wishlistProducts } = useSelector(state => ({
+        api: state.SystemConfig.api,
+        lang: state.User.language,
         localstorageWishlistKey: state.SystemConfig.localstorage_keys.wishlist,
         wishlistProducts: state.Wishlist.products,
     }))
-    const clickHandler = () => {
-        variantId && productData && dispatch(addToStoreWishlist(productData, variantId, localstorageWishlistKey));
-    }
     const inWishList = wishlistProducts[variantId] !== undefined ? true : false;
+    const clickHandler = () => {
+        variantId && productData && dispatch(addToStoreWishlist(api, lang, productData.url, variantId, localstorageWishlistKey, inWishList));
+    }
     return <div className={`${styles.addToWishContainer} ${visualMode ? styles.visualMode : ''}`} onClick={clickHandler}>
         <div className={styles.iconContainer}>
             {inWishList ? <HeartFull /> : <WishlistIcon />}

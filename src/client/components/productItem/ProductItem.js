@@ -33,10 +33,10 @@ const ProductItem = ({ product, forceVisual = false, index }) => {
      * api -> 4 * 100 => 400 (px)
      */
     const multiplyMesurment = 100;
-    const { image_width, image_height, images_url, language, userCurrency, currency, slug_urls, translation, showVisual, showRandom, localstorageWishlistKey } = useSelector(state => ({
+    const { image_width, image_height, imagesConfig, language, userCurrency, currency, slug_urls, translation, showVisual, showRandom } = useSelector(state => ({
+        imagesConfig: state.SystemConfig.images,
         image_width: state.SystemConfig.images.aspect_ratio.width * multiplyMesurment,
         image_height: state.SystemConfig.images.aspect_ratio.height * multiplyMesurment,
-        images_url: state.SystemConfig.images,
         language: state.User.language,
         userCurrency: state.User.currency,
         showVisual: state.Display.showVisual,
@@ -57,8 +57,8 @@ const ProductItem = ({ product, forceVisual = false, index }) => {
         // set middle images in visual mode to dark background
         variantIndexStyle = variantIndexStyle == 1 ? 4 : variantIndexStyle == 4 ? 1 : variantIndexStyle;
         changeVariantId(product.variations[Object.keys(variations)[variantIndexStyle]].id);
-        const img_base = images_url.url + '/';
-        const img_size = '?size=700&sh=7&q=80';
+        const img_base = imagesConfig.url + '/';
+        const img_size = imagesConfig.large;
         const simple = img_base + variations[Object.keys(variations)[variantIndexStyle]].variation_image.poster + img_size;
         const visual = img_base + variations[Object.keys(variations)[variantIndexStyle]].variation_image.wall + img_size;
         return showVisualImage ? visual : simple;
