@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch} from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { prepareProductLink, getPriceByCurrency, 
-    // setLocalStorageWishlist 
-} from '../../utils/utilsFrondend';
+import { prepareProductLink, getPriceByCurrency } from '../../utils/utilsFrondend';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './productItem.scss';
@@ -14,15 +12,11 @@ import Blank from '../svg/blank/Blank';
 import Placeholder from '../placeholder/Placeholder';
 import AddToWishlistSticker from '../ui/addToWishlistSticker/AddToWishlistSticker';
 
-import { addToStoreWishlist } from '../../redux/actions/actionCreators';
-
 const ProductItem = ({ product, forceVisual = false, index }) => {
     const [variantId, setVariantId] = useState(null);
     const changeVariantId = vId => {
         vId !== variantId && setVariantId(vId);
     }
-
-    const dispatch = useDispatch();
 
     const placeholder = product ? false : true;
 
@@ -49,8 +43,7 @@ const ProductItem = ({ product, forceVisual = false, index }) => {
         showRandom: state.Display.showRandom,
         currency: state.SystemConfig.currency,
         slug_urls: state.SystemConfig.urls.product,
-        translation: state.PublicConfig.translation,
-        localstorageWishlistKey: state.SystemConfig.localstorage_keys.wishlist,
+        translation: state.PublicConfig.translation
     }));
     const product_url = !placeholder ? prepareProductLink(language, slug_urls, url) : '#';
 
@@ -71,13 +64,15 @@ const ProductItem = ({ product, forceVisual = false, index }) => {
         return showVisualImage ? visual : simple;
     }
 
-    const wishListClickHandler = () => {
-        const productData = product;
-        variantId && productData && dispatch(addToStoreWishlist(product, variantId, localstorageWishlistKey));
-        // setLocalStorageWishlist(variantId, productData, localstorageWishlistKey);
-    }
     return <div className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}>
-        {!placeholder && <AddToWishlistSticker visualMode={showVisualImage} likes={likes} clickHandler={wishListClickHandler} />}
+        {!placeholder && <AddToWishlistSticker
+            visualMode={showVisualImage}
+            showLikes={true}
+            likes={likes}
+            variantId={variantId}
+            productData={product}
+        />
+        }
         <NavLink to={product_url}>
             <div className={styles.imageContainer}>
                 <div className={styles.imageContainerRelative}>

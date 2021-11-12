@@ -4,13 +4,24 @@ import styles from './addToWishlistSticker.scss';
 import WishlistIcon from '../../svg/icons/WishlistIcon';
 import HeartFull from '../../svg/icons/HeartFull';
 
-const AddToWishlistSticker = ({ visualMode = false, likes, inWishlist = false, clickHandler }) => {
+import { useSelector, useDispatch } from 'react-redux';
+import { addToStoreWishlist } from '../../../redux/actions/actionCreators';
+
+const AddToWishlistSticker = ({ visualMode = false, showLikes = false, likes, variantId, productData }) => {
+    const dispatch = useDispatch();
+    const { localstorageWishlistKey, wishlistProducts } = useSelector(state => ({
+        localstorageWishlistKey: state.SystemConfig.localstorage_keys.wishlist,
+        wishlistProducts: state.Wishlist.products,
+    }))
+    const clickHandler = () => {
+        variantId && productData && dispatch(addToStoreWishlist(productData, variantId, localstorageWishlistKey));
+    }
     return <div className={`${styles.addToWishContainer} ${visualMode ? styles.visualMode : ''}`} onClick={clickHandler}>
         <div className={styles.iconContainer}>
-            {inWishlist ? <HeartFull /> : <WishlistIcon />}
+            {wishlistProducts[variantId] !== undefined ? <HeartFull /> : <WishlistIcon />}
             {visualMode && <div className={styles.iconBg}></div>}
         </div>
-        <div className={styles.counter}>{likes}</div>
+        {showLikes && <div className={styles.counter}>{likes}</div>}
     </div>;
 }
 export default withStyles(styles)(AddToWishlistSticker);
