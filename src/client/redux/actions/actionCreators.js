@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { pageTypes } from '../../utils/utilsFrondend';
+import { pageTypes, isObjectEmpty, getLocalStorage } from '../../utils/utilsFrondend';
 
 import { systemConfigActions } from '../slices/systemConfigSlice';
 import { publicConfigActions } from '../slices/publicConfigSlice';
@@ -92,18 +92,17 @@ export const setProductRandomColors = (cookieKey) => dispatch => {
  * Add to wishlist
  */
 
-// export const addToStoreWishlist = (product, variantId, localstorageWishlistKey) => dispatch => {
-//   const actionPayload = { product, variantId, localstorageWishlistKey };
-
-//   dispatch(wishlistActions.addToWishlist(actionPayload));
-// }
-
-export const addToStoreWishlist = (api, lang, url, variantId, localstorageWishlistKey, inWishList = false) => dispatch => {
+export const addToStoreWishlist = (api, lang, productId, variantId, localstorageWishlistKey, inWishList = false) => dispatch => {
   if (!inWishList) {
-    const page_url = '?url=' + url + '&lang=' + lang + '&variant=' + variantId;
+    const page_url = '?lang=' + lang + '&variant=' + variantId + '&product=' + productId;
     const axios_endpoint = api.product + page_url;
     return axios.get(api.url + '/' + axios_endpoint)
-      .then(res => dispatch(wishlistActions.addToWishlist({ product: res.data.data, variantId, localstorageWishlistKey }))
+      .then(res => {
+        const productData = res.data.data;
+        if (!isObjectEmpty(productData)) {
+          return dispatch(wishlistActions.addToWishlist({ product: productData, variantId, localstorageWishlistKey }))
+        }
+      }
       )
       .catch(err => {
         console.error('❌ Error get data from DB', err);
@@ -115,10 +114,45 @@ export const addToStoreWishlist = (api, lang, url, variantId, localstorageWishli
 }
 
 /**
- * 
+ * Init wishlist, and check actual wishlist
  * Get wishlist from localstorage  
  */
 
-export const initWishlistFromLocalstorage = storageKey => dispatch => {
-  dispatch(wishlistActions.initWishlist(storageKey));
+export const checkWishlist = (initLocalstorageWishlistKey = null, wishlistState = null, api, language, productUrl = null) => dispatch => {
+  const localstorageData = initLocalstorageWishlistKey ? getLocalStorage(initLocalstorageWishlistKey) : null;
+  const wishlistData = localstorageData ? localstorageData : wishlistState && wishlistState.products ? wishlistState.products : null;
+  if (wishlistData) {
+    const wishlistProducts = {};
+    Promise.all(Object.entries(wishlistData).map(
+      ([key, val]) => {
+        const variantId = val.v;
+        const productId = val.p;
+        const page_url = '?lang=' + language + '&variant=' + variantId + '&product=' + productId;
+        const axios_endpoint = api.product + page_url;
+        return axios.get(api.url + '/' + axios_endpoint)
+          .then(res => {
+            return {
+              variantId: variantId,
+              responseData: res
+            }
+          })
+          .catch(e => {
+            console.error('❌ Error get data from DB', e);
+          });
+      }
+    )).then(res => {
+      res.forEach(r => {
+        if (r.responseData.status == 200 && !isObjectEmpty(r.responseData.data.data)) {
+          wishlistProducts[r.variantId] = {
+            p: r.responseData.data.data.id,
+            v: r.variantId,
+            productData: r.responseData.data.data
+          };
+        }
+      })
+      dispatch(wishlistActions.updateWishlist(wishlistProducts));
+    }).catch(e => {
+      console.error('❌ Error: get multiple wishlist products data from DB', e);
+    });
+  }
 }

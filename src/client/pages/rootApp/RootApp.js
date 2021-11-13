@@ -7,7 +7,7 @@ import styles from './rootapp.scss';
 
 import { setCookie, getCookie } from '../../utils/utilsFrondend';
 // actions
-import { initWishlistFromLocalstorage } from '../../redux/actions/actionCreators';
+import { checkWishlist } from '../../redux/actions/actionCreators';
 // components
 // import Header from '../../components/header/Header';
 // import Footer from '../../components/footer/Footer';
@@ -23,13 +23,14 @@ const Footer = loadable(() => import(/* webpackPrefetch: true */ '../../componen
 
 
 const RootApp = ({ route, location }) => {
-    const { language, currency, cookieLanguageKey, cookieCurrencyKey, localstorageWishlistKey } = useSelector(
+    const {api, language, currency, cookieLanguageKey, cookieCurrencyKey, initLocalstorageWishlistKey } = useSelector(
         state => ({
+            api: state.SystemConfig.api,
             language: state.User.language,
             currency: state.User.currency,
             cookieLanguageKey: state.SystemConfig.cookies_keys.user_language,
             cookieCurrencyKey: state.SystemConfig.cookies_keys.user_currency,
-            localstorageWishlistKey: state.SystemConfig.localstorage_keys.wishlist,
+            initLocalstorageWishlistKey: state.SystemConfig.localstorage_keys.wishlist,
         })
     )
     const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const RootApp = ({ route, location }) => {
     useEffect(() => {
         !getCookie(cookieLanguageKey) && language && setCookie(cookieLanguageKey, language);
         !getCookie(cookieCurrencyKey) && currency && setCookie(cookieCurrencyKey, currency);
-        dispatch(initWishlistFromLocalstorage(localstorageWishlistKey));
+        dispatch(checkWishlist(initLocalstorageWishlistKey, null, api, language));
     }, [])
     return (
         <React.Fragment>

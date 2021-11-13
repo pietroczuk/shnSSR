@@ -17,7 +17,7 @@ const AddToWishlistSticker = ({ visualMode = false, showLikes = false, likes, va
     }))
     const inWishList = wishlistProducts[variantId] !== undefined ? true : false;
     const clickHandler = () => {
-        variantId && productData && dispatch(addToStoreWishlist(api, lang, productData.url, variantId, localstorageWishlistKey, inWishList));
+        variantId && productData && dispatch(addToStoreWishlist(api, lang, productData.id, variantId, localstorageWishlistKey, inWishList));
     }
     return <div className={`${styles.addToWishContainer} ${visualMode ? styles.visualMode : ''}`} onClick={clickHandler}>
         <div className={styles.iconContainer}>

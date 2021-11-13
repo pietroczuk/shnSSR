@@ -8,14 +8,10 @@ const wishlistSlice = createSlice({
         products: {}
     },
     reducers: {
-        initWishlist(state, action) {
-            const localstorageWishlistKey = action.payload;
-            // check xss
-            const localstorageData = getLocalStorage(localstorageWishlistKey);
-            if (localstorageData) {
-                state.products = localstorageData;
-                state.length = getObjectLength(localstorageData);
-            }
+        updateWishlist(state, action) {
+            const productsData = action.payload;
+            state.products = productsData;
+            state.length = getObjectLength(productsData);
             return state;
         },
         addToWishlist(state, action) {
@@ -47,7 +43,7 @@ const wishlistSlice = createSlice({
                 const localStorageWishlist = {};
                 Object.entries(state.products).forEach(([key, value]) => {
                     localStorageWishlist[key] = {
-                        p: value.id,
+                        p: value.p,
                         v: key
                     }
                 });
