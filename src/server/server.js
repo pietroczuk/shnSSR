@@ -86,6 +86,10 @@ app.get('*', (req, res) => {
                 // console.log('server', user_language);
 
                 const server_store = createServerInitStore(user_language, user_currency, display_options);
+                // preapre system pages uls
+                api_config.urls.wishlist = api_config.urls.wishlist[user_language];
+                api_config.urls.homepage = api_config.urls.homepage[user_language];
+                api_config.urls.cart = api_config.urls.cart[user_language];
                 const new_routes_config = {
                     language: api_config.language,
                     urls: api_config.urls

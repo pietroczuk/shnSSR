@@ -19,10 +19,11 @@ import { useSelector } from 'react-redux';
 const Header = ({ white, whiteTopbar, language, location }) => {
     const [topbarOpen, setTopbarOpen] = useState(true);
 
-    const { all_config_languages, all_config_currencies, wishlistLength } = useSelector(state => ({
+    const { all_config_languages, all_config_currencies, wishlistLength, slug_urls } = useSelector(state => ({
         all_config_languages: state.SystemConfig.language,
         all_config_currencies: state.SystemConfig.currency,
         wishlistLength: state.Wishlist.length,
+        slug_urls: state.SystemConfig.urls
     }));
 
     const setTopbarOpenHandler = () => {
@@ -34,12 +35,19 @@ const Header = ({ white, whiteTopbar, language, location }) => {
             <div className={styles.headerContent}>
                 <Logo white={!white} miniLogo={false} link={language} />
                 {/* <div onClick={setTopbarOpenHandler}>moj header</div> */}
-                <MenuTop language={language} location={location}/>
+                <MenuTop language={language} location={location} />
                 <div className={styles.headerRight}>
                     {all_config_languages && Object.keys(all_config_languages).length > 1 && <LanguageSwitcher />}
                     {all_config_currencies && Object.keys(all_config_currencies).length > 1 && <CurrencySwitcher />}
                     <InteractiveIcon hoverBg={true} white={!white}><SearchIcon /></InteractiveIcon>
-                    <InteractiveIcon hoverBg={true} white={!white} badgeNumber={wishlistLength}><WishlistIcon /></InteractiveIcon>
+                    <InteractiveIcon
+                        hoverBg={true}
+                        white={!white}
+                        badgeNumber={wishlistLength}
+                        url={slug_urls.wishlist}
+                        language={language}
+                        slug_urls={slug_urls.staticpage}
+                    ><WishlistIcon /></InteractiveIcon>
                     <InteractiveIcon hoverBg={true} white={!white}><CartIcon /></InteractiveIcon>
                 </div>
             </div>

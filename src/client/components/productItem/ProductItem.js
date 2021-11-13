@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { prepareProductLink, getPriceByCurrency } from '../../utils/utilsFrondend';
+import { prepareLink, getPriceByCurrency } from '../../utils/utilsFrondend';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './productItem.scss';
@@ -45,7 +45,7 @@ const ProductItem = ({ product, forceVisual = false, index }) => {
         slug_urls: state.SystemConfig.urls.product,
         translation: state.PublicConfig.translation
     }));
-    const product_url = !placeholder ? prepareProductLink(language, slug_urls, url) : '#';
+    const product_url = !placeholder ? prepareLink(language, slug_urls, url) : '#';
 
     // useEffect(()=> {   
     //     product && changeVariantId(product.variations[Object.keys(variations)[0]].id);

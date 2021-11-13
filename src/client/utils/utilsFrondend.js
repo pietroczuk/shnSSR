@@ -161,7 +161,7 @@ export const prepUrlFromConfigSlug = (language, slug_urls, url_type, url) => {
     return '/' + language + '/' + slug_urls[url_type] + '/' + url;
 }
 
-export const prepareProductLink = (language, slug_prefix, url) => {
+export const prepareLink = (language, slug_prefix, url) => {
     return '/' + language + '/' + slug_prefix + '/' + url;
 }
 
@@ -238,32 +238,3 @@ export const clearLocalStorage = key => {
     }
     return false;
 }
-
-/**
- *  Localstorage wishlist
- *  TODO: we send brand new object to localstorage, all logic are in wishlist slicer
- *
- */
-/*
-export const setLocalStorageWishlist = (variantId, productData, localstorageWishlistKey) => {
-    // variantId is have numeric values at start, we neet do use [] for index like arrays
-
-    const wishlistObj = {
-        product: productData.id,
-        variantData: null
-    }
-    wishlistObj.variantData = variantId &&
-        productData.variations &&
-        productData.variations[variantId] &&
-        productData.variations[variantId].variation_code ? {
-        id: variantId,
-        variation_code: productData.variations[variantId].variation_code
-    } : null;
-
-    setLocalStorage(wishlistObj, localstorageWishlistKey);
-};
-*/
-
-// export const getLocalStorageWishlist = (localstorageWishlistKey) => {
-//     return getLocalStorage(localstorageWishlistKey);
-// };
