@@ -19,11 +19,11 @@ import { useSelector } from 'react-redux';
 const Header = ({ white, whiteTopbar, language, location }) => {
     const [topbarOpen, setTopbarOpen] = useState(true);
 
-    const { 
-        all_config_languages, 
-        all_config_currencies, 
-        wishlistLength, 
-        special_pages_urls, 
+    const {
+        all_config_languages,
+        all_config_currencies,
+        wishlistLength,
+        special_pages_urls,
         multilanguage,
         multicurrency
     } = useSelector(state => ({
@@ -42,10 +42,10 @@ const Header = ({ white, whiteTopbar, language, location }) => {
         <header id="root_header" className={`${styles.rootHeader} ${!white ? styles.darkHeader : ''}`}>
             {topbarOpen && <Topbar closeHandler={setTopbarOpenHandler} white={whiteTopbar} />}
             <div className={styles.headerContent}>
-                <Logo 
-                    white={!white} 
-                    miniLogo={false} 
-                    special_pages_urls={special_pages_urls.homepage[language]} 
+                <Logo
+                    white={!white}
+                    miniLogo={false}
+                    special_pages_urls={special_pages_urls.homepage[language]}
                     language={language}
                     multilanguage={multilanguage}
                 />
@@ -62,7 +62,9 @@ const Header = ({ white, whiteTopbar, language, location }) => {
                         special_pages_urls={special_pages_urls.wishlist[language]}
                         language={language}
                         multilanguage={multilanguage}
-                    ><WishlistIcon /></InteractiveIcon>
+                    >
+                        <WishlistIcon />
+                    </InteractiveIcon>
                     <InteractiveIcon hoverBg={true} white={!white}><CartIcon /></InteractiveIcon>
                 </div>
             </div>
