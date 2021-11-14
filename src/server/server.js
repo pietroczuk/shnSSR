@@ -109,7 +109,7 @@ app.get('*', (req, res) => {
                     urls: api_config.urls,
                     special_pages_urls: api_config.special_pages_urls
                 }
-                console.log('server multilanguage: ', multilanguage);
+                // console.log('server multilanguage: ', multilanguage);
                 const new_Routes = prepare_routes_config(new_routes_config, user_language, multilanguage, true);
                 // console.log(new_Routes[0].routes);
                 const load_data_promises = matchRoutes(new_Routes, req.path).map(({ route }) => {

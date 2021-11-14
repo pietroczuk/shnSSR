@@ -36,8 +36,11 @@ const RootApp = ({ route, location }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        !getCookie(cookieLanguageKey) && language && setCookie(cookieLanguageKey, language);
-        !getCookie(cookieCurrencyKey) && currency && setCookie(cookieCurrencyKey, currency);
+        const cookieLang = getCookie(cookieLanguageKey);
+        language && (language !== cookieLang) && setCookie(cookieLanguageKey, language);
+
+        const cookieCurr = getCookie(cookieCurrencyKey);
+        currency && (currency !== cookieCurr) && setCookie(cookieCurrencyKey, currency);
         dispatch(checkWishlist(initLocalstorageWishlistKey, null, api, language));
     }, [])
     return (
