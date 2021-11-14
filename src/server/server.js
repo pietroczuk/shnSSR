@@ -17,10 +17,11 @@ import { prepare_routes_config } from '../client/utils/config';
 // user language init
 import {
     check_user_language,
-    language_from_path,
+    // language_from_path,
     get_currency_cookie,
     get_display_cookies,
-    get_reques_slug
+    // get_reques_slug,
+    url_data_from_path
 } from './utils/utilsBackend';
 
 /** CACHE */
@@ -67,9 +68,12 @@ app.get('*', (req, res) => {
             console.error('❌ Error get config file', err);
         }).then(api_config => {
             const multilanguage = api_config.multilanguage;
-            const blankUrl = req.path === '/' ? true : false;
             const languages = api_config.language;
-            const languageFromUrl = language_from_path(req.path, languages);
+            const urlData = url_data_from_path(req.path, languages);
+            const languageFromUrl = urlData.languageCode; 
+            const real_path = urlData.realPath;
+            const blankUrl = req.path === '/' || urlData.blankPath ? true : false;
+            // console.log('blankUrl', blankUrl, urlData);
             const user_language =
                 multilanguage ?
                     blankUrl ?
@@ -78,15 +82,17 @@ app.get('*', (req, res) => {
                         languageFromUrl
                     :
                     Object.values(languages)[0]['code'];
-
+            // console.log('user_language: ', user_language, 'blankUrl', blankUrl);
             if (blankUrl) {
-                const homepageUrl = api_config.special_pages_urls &&
-                    api_config.special_pages_urls.homepage &&
-                    api_config.special_pages_urls.homepage[user_language] ?
+                const homepageUrl = 
+                api_config.special_pages_urls &&
+                    api_config.special_pages_urls.homepage ?
+                    // api_config.special_pages_urls.homepage[user_language] ?
                     multilanguage ?
                         user_language + '/' + api_config.special_pages_urls.homepage[user_language]
                         : api_config.special_pages_urls.homepage[user_language]
                     : user_language;
+                    // console.log('redirect:', homepageUrl, multilanguage);
                 res.redirect('/' + homepageUrl);
             } else {
                 // const css = new Set(); // CSS for all rendered React components
@@ -115,7 +121,7 @@ app.get('*', (req, res) => {
                 const load_data_promises = matchRoutes(new_Routes, req.path).map(({ route }) => {
                     // console.log(req);
                     // const real_path = req.path.split('/').pop();
-                    const real_path = get_reques_slug(req.path);
+                    // const real_path = get_reques_slug(req.path);
 
                     // console.log(real_path);
 

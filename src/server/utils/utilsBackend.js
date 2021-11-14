@@ -16,17 +16,42 @@ export const check_user_language = (cookie_header = null, browser_language = nul
     return cookie_lang;
 }
 
-export const language_from_path = (full_path, languages = null) => {
-    const path_lng_code = full_path.split('/')[1];
-    // console.log('full_path: ',path_lng_code);
-    // const in_config_array = languages.find(lang => lang.code === path_lng_code);
-    // if (!in_config_array) {
-    // console.log('lang server', path_lng_code, languages[path_lng_code], languages );
-    if (!languages[path_lng_code]) {
-        // return languages[0].code;
-        return Object.keys(languages)[0]['code'];
+export const get_reques_slug = arrayPath => {
+    const real_path_arr = arrayPath.split('/');
+    for (let index = real_path_arr.length - 1; index >= 0; index--) {
+        if (real_path_arr[index] && real_path_arr[index] !== '') {
+            return real_path_arr[index];
+        }
     }
-    return path_lng_code ? path_lng_code : null;
+    return null;
+}
+
+export const url_data_from_path = (full_path, languages = null) => {
+    const pathData = {
+        languageCode: null,
+        blankPath : false,
+        realPath: null
+    }
+    const pathCriticalIndex = 2;
+    const real_path_arr = full_path.split('/');
+    // console.log(real_path_arr);
+    if(real_path_arr.length >= pathCriticalIndex) {
+        if(!languages[real_path_arr] && Object.keys(languages)[0]['code']) {
+            pathData.languageCode = Object.keys(languages)[0]['code'];
+        }else{
+            pathData.languageCode = real_path_arr[1];
+        }
+        if(!real_path_arr[pathCriticalIndex]) {
+            pathData.blankPath = true;
+        }
+        for (let index = real_path_arr.length - 1; index >= 0; index--) {
+            if (real_path_arr[index] && real_path_arr[index] !== '') {
+                pathData.realPath = real_path_arr[index];
+                break;
+            }
+        }
+    }
+    return pathData;
 }
 
 // CURRENCY
@@ -45,16 +70,4 @@ export const get_display_cookies = (cookie_header = null, display_cookie_key_obj
     const visual = new Cookies(cookie_header).get(display_cookie_key_obj['visual_mode']) === "true" ? true : false;
     const random = new Cookies(cookie_header).get(display_cookie_key_obj['random_variant']) === "true" ? true : false;
     return { showVisual: visual, showRandom: random }
-}
-
-// SLUG FROM URL
-
-export const get_reques_slug = arrayPath => {
-    const real_path_arr = arrayPath.split('/');
-    for (let index = real_path_arr.length - 1; index >= 0; index--) {
-        if (real_path_arr[index] && real_path_arr[index] !== '') {
-            return real_path_arr[index];
-        }
-    }
-    return null;
 }
