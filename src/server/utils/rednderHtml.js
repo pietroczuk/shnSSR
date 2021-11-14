@@ -34,6 +34,7 @@ import path from 'path';
 
 export default (req, server_store, context, new_routes_config) => {
 
+  const userLanguage = server_store.getState().User.language;
   const webStats = path.resolve(
     __dirname,
     '../../public_html/server/loadable-stats.json',
@@ -50,7 +51,7 @@ export default (req, server_store, context, new_routes_config) => {
           <StaticRouter location={req.path} context={context}>
             {/* <Routes /> */}
             <React.Fragment>
-              {renderRoutes(prepare_routes_config(new_routes_config))}
+              {renderRoutes(prepare_routes_config(new_routes_config, userLanguage))}
             </React.Fragment>
           </StaticRouter>
         </StyleContext.Provider>
@@ -73,7 +74,7 @@ export default (req, server_store, context, new_routes_config) => {
   const server_helmet = Helmet.renderStatic();
   const html = `
   <!DOCTYPE html>
-        <html lang="${server_store.getState().User.language}">
+        <html lang="${userLanguage}">
             <head>
               ${server_helmet.title.toString()}
               ${server_helmet.meta.toString()}

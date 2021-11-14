@@ -24,7 +24,6 @@ export default
                     component: HomePage,
                     path: '/',
                     exact: true,
-                    multilang: true,
                     server_change: false,
                     type: pageTypes.homePage
                 },
@@ -32,7 +31,6 @@ export default
                     component: StaticPage,
                     loadDataOnInit: loadDataOnInit,
                     path: '/:url',
-                    multilang: true,
                     server_change: false,
                     type: pageTypes.staticPage
                 },
@@ -40,7 +38,6 @@ export default
                     component: Product,
                     loadDataOnInit: loadDataOnInit,
                     path: '/:url',
-                    multilang: true,
                     server_change: false,
                     type: pageTypes.productPage
                 },
@@ -48,9 +45,16 @@ export default
                     component: Category,
                     loadDataOnInit: loadDataOnInit,
                     path: '/:url',
-                    multilang: true,
                     server_change: false,
                     type: pageTypes.categoryPage
+                },
+                {
+                    component: Category,
+                    loadDataOnInit: loadDataOnInit,
+                    path: '/',
+                    exact: true,
+                    server_change: false,
+                    type: pageTypes.wishlist
                 },
                 {
                     component: NotFoundPage

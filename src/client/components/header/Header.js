@@ -19,11 +19,11 @@ import { useSelector } from 'react-redux';
 const Header = ({ white, whiteTopbar, language, location }) => {
     const [topbarOpen, setTopbarOpen] = useState(true);
 
-    const { all_config_languages, all_config_currencies, wishlistLength, slug_urls } = useSelector(state => ({
+    const { all_config_languages, all_config_currencies, wishlistLength, special_pages_urls } = useSelector(state => ({
         all_config_languages: state.SystemConfig.language,
         all_config_currencies: state.SystemConfig.currency,
         wishlistLength: state.Wishlist.length,
-        slug_urls: state.SystemConfig.urls
+        special_pages_urls: state.SystemConfig.special_pages_urls
     }));
 
     const setTopbarOpenHandler = () => {
@@ -33,7 +33,7 @@ const Header = ({ white, whiteTopbar, language, location }) => {
         <header id="root_header" className={`${styles.rootHeader} ${!white ? styles.darkHeader : ''}`}>
             {topbarOpen && <Topbar closeHandler={setTopbarOpenHandler} white={whiteTopbar} />}
             <div className={styles.headerContent}>
-                <Logo white={!white} miniLogo={false} link={language} />
+                <Logo white={!white} miniLogo={false} special_pages_urls={special_pages_urls.homepage[language]} language={language}/>
                 {/* <div onClick={setTopbarOpenHandler}>moj header</div> */}
                 <MenuTop language={language} location={location} />
                 <div className={styles.headerRight}>
@@ -44,9 +44,8 @@ const Header = ({ white, whiteTopbar, language, location }) => {
                         hoverBg={true}
                         white={!white}
                         badgeNumber={wishlistLength}
-                        url={slug_urls.wishlist}
+                        special_pages_urls={special_pages_urls.wishlist[language]}
                         language={language}
-                        slug_urls={slug_urls.staticpage}
                     ><WishlistIcon /></InteractiveIcon>
                     <InteractiveIcon hoverBg={true} white={!white}><CartIcon /></InteractiveIcon>
                 </div>

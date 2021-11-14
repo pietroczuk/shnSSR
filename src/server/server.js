@@ -87,15 +87,16 @@ app.get('*', (req, res) => {
 
                 const server_store = createServerInitStore(user_language, user_currency, display_options);
                 // preapre system pages uls
-                api_config.urls.wishlist = api_config.urls.wishlist[user_language];
-                api_config.urls.homepage = api_config.urls.homepage[user_language];
-                api_config.urls.cart = api_config.urls.cart[user_language];
+                // api_config.urls.wishlist = api_config.special_pages_urls.wishlist[user_language];
+                // api_config.urls.homepage = api_config.special_pages_urls.homepage[user_language];
+                // api_config.urls.cart = api_config.special_pages_urls.cart[user_language];
                 const new_routes_config = {
                     language: api_config.language,
-                    urls: api_config.urls
+                    urls: api_config.urls,
+                    special_pages_urls: api_config.special_pages_urls
                 }
                 // console.log(Routes);
-                const new_Routes = prepare_routes_config(new_routes_config);
+                const new_Routes = prepare_routes_config(new_routes_config, user_language);
                 // console.log(new_Routes[0].routes);
                 const load_data_promises = matchRoutes(new_Routes, req.path).map(({ route }) => {
                     // console.log(req);

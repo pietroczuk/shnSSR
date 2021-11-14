@@ -10,7 +10,9 @@ export const pageTypes = {
     productPage: 'product',
     homePage: 'homepage',
     staticPage: 'staticpage',
-    categoryPage: 'category'
+    categoryPage: 'category',
+    wishlist: 'wishlist',
+    cart: 'cart'
 }
 // ---------- end get page
 
@@ -162,7 +164,11 @@ export const prepUrlFromConfigSlug = (language, slug_urls, url_type, url) => {
 }
 
 export const prepareLink = (language, slug_prefix, url) => {
-    return '/' + language + '/' + slug_prefix + '/' + url;
+    let url_link = '/';
+    language ? url_link += language + '/' : null;
+    slug_prefix ? url_link += slug_prefix + '/' : null;
+    url ? url_link += url + '/' : null;
+    return url_link;
 }
 
 export const getPriceByCurrency = (productPrices, userCurrency, currency) => {

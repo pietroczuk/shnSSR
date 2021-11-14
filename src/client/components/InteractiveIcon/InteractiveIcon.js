@@ -6,13 +6,13 @@ import styles from './interactiveIcon.scss';
 import { prepareLink } from '../../utils/utilsFrondend';
 
 const InteractiveIcon = (props) => {
-    const { white, hoverBg, hoverOpacity, customWidth, customSvgSize, badgeNumber = 0, onMouseEnter, onMouseLeave, url, slug_urls, language } = props;
+    const { white, hoverBg, hoverOpacity, customWidth, customSvgSize, badgeNumber = 0, onMouseEnter, onMouseLeave, special_pages_urls, language } = props;
     const width = customWidth ? customWidth : 50;
     const svgSize = customSvgSize ? customSvgSize : 20;
-    const icon_url = url ? prepareLink(language, slug_urls, url) : '#';
+    const link_url = special_pages_urls ? prepareLink(language, null, special_pages_urls) : '#';
 
     return (
-        <NavLink to={icon_url}
+        <NavLink to={link_url}
             className={`
             ${styles.icon} 
             ${white ? styles.whiteIcon : ''}
