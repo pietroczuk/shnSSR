@@ -10,9 +10,10 @@ import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 import SubMenu from './submenu/SubMenu';
 
 const MenuTop = (props) => {
-    const { menu_items, slug_urls } = useSelector(state => ({
+    const { menu_items, slug_urls, multilanguage } = useSelector(state => ({
         menu_items: state.PublicConfig.menu.top,
         slug_urls: state.SystemConfig.urls,
+        multilanguage: state.SystemConfig.multilanguage
     }))
     const { language } = props;
 
@@ -23,7 +24,7 @@ const MenuTop = (props) => {
         const { type, url, label, items, color } = elem;
 
         if (url) {
-            const new_url = prepUrlFromConfigSlug(language, slug_urls, type, url)
+            const new_url = prepUrlFromConfigSlug(language, slug_urls, type, null, url, multilanguage);
             return <NavLink to={new_url} activeClassName={styles.active} className={styles.link_container} onClick={clickHandler}>
                 {items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color)}
             </NavLink>

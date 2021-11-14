@@ -3,13 +3,25 @@ import { NavLink } from 'react-router-dom';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './interactiveIcon.scss';
 
-import { prepareLink } from '../../utils/utilsFrondend';
+import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 
 const InteractiveIcon = (props) => {
-    const { white, hoverBg, hoverOpacity, customWidth, customSvgSize, badgeNumber = 0, onMouseEnter, onMouseLeave, special_pages_urls, language } = props;
+    const { 
+        white, 
+        hoverBg, 
+        hoverOpacity, 
+        customWidth, 
+        customSvgSize, 
+        badgeNumber = 0, 
+        onMouseEnter, 
+        onMouseLeave, 
+        special_pages_urls, 
+        language, 
+        multilanguage 
+    } = props;
     const width = customWidth ? customWidth : 50;
     const svgSize = customSvgSize ? customSvgSize : 20;
-    const link_url = special_pages_urls ? prepareLink(language, null, special_pages_urls) : '#';
+    const link_url = special_pages_urls ? prepUrlFromConfigSlug(language, null, null, null, special_pages_urls, multilanguage) : '#';
 
     return (
         <NavLink to={link_url}

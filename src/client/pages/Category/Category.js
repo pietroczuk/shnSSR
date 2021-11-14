@@ -25,7 +25,18 @@ import LoadingSpinner from '../../components/ui/loadingSpinner/LoadingSpinner';
 const Category = props => {
 
     // from redux
-    const { seo, category, api, url_prefix, type, category_products, showVisual, showRandom, cookiesDisplayKeys } = useSelector(
+    const { 
+        seo, 
+        category, 
+        api, 
+        url_prefix, 
+        type, 
+        category_products, 
+        showVisual, 
+        showRandom, 
+        cookiesDisplayKeys,
+        language
+    } = useSelector(
         state => ({
             seo: state.PublicConfig.config.seo,
             category: state.Page.data,
@@ -36,6 +47,7 @@ const Category = props => {
             showVisual: state.Display.showVisual,
             showRandom: state.Display.showRandom,
             cookiesDisplayKeys: state.SystemConfig.cookies_keys.display,
+            language: state.User.language
         })
     )
     const dispatch = useDispatch();
@@ -43,7 +55,7 @@ const Category = props => {
     const seo_title = category ? category.seo_title : null;
     const seo_description = category ? category.seo_description : null;
     // from props
-    const { url, lang } = props.match.params;
+    const { url } = props.match.params;
     const { location } = props;
     // multirow
     const multirow = true;
@@ -57,7 +69,7 @@ const Category = props => {
     }
     useEffect(() => {
         if (!category || currentLocation !== location.pathname || type !== pageTypes.categoryPage) {
-            dispatch(getPage(api, pageTypes.categoryPage, lang, url, prepareSearchCode(location.search)));
+            dispatch(getPage(api, pageTypes.categoryPage, language, url, prepareSearchCode(location.search)));
             setCurrentLocationHandler(location.pathname);
             scrollToTop(window);
         }
@@ -73,7 +85,7 @@ const Category = props => {
     }
     return (
         <ContentCointainer miltirow={multirow}>
-            {metatags(seo_title, seo_description, seo, url, lang, url_prefix)}
+            {metatags(seo_title, seo_description, seo, url, language, url_prefix)}
             {
                 multirow && <StickySidebar location={location}>
                     <LeftMenuLinks location={location} />

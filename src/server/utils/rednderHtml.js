@@ -2,7 +2,6 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 
-// import Routes from '../../client/Routes';
 import { prepare_routes_config } from '../../client/utils/config';
 
 import { Provider } from 'react-redux';
@@ -32,9 +31,7 @@ import path from 'path';
 
 
 
-export default (req, server_store, context, new_routes_config) => {
-
-  const userLanguage = server_store.getState().User.language;
+export const rednderHtml = (req, server_store, context, new_routes_config, user_language, multilanguage) => {
   const webStats = path.resolve(
     __dirname,
     '../../public_html/server/loadable-stats.json',
@@ -49,9 +46,8 @@ export default (req, server_store, context, new_routes_config) => {
       <Provider store={server_store}>
         <StyleContext.Provider value={{ insertCss }}>
           <StaticRouter location={req.path} context={context}>
-            {/* <Routes /> */}
             <React.Fragment>
-              {renderRoutes(prepare_routes_config(new_routes_config, userLanguage))}
+              {renderRoutes(prepare_routes_config(new_routes_config, user_language, multilanguage))}
             </React.Fragment>
           </StaticRouter>
         </StyleContext.Provider>
@@ -74,7 +70,7 @@ export default (req, server_store, context, new_routes_config) => {
   const server_helmet = Helmet.renderStatic();
   const html = `
   <!DOCTYPE html>
-        <html lang="${userLanguage}">
+        <html lang="${user_language}">
             <head>
               ${server_helmet.title.toString()}
               ${server_helmet.meta.toString()}
@@ -121,3 +117,4 @@ export default (req, server_store, context, new_routes_config) => {
   // return html_mini;
   return html;
 }
+export default rednderHtml;

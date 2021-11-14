@@ -2,13 +2,13 @@ import React from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './logo.scss';
 import { Link } from 'react-router-dom';
-import { prepareLink } from '../../../utils/utilsFrondend';
+import { prepUrlFromConfigSlug } from '../../../utils/utilsFrondend';
 
 const Logo = props => {
-    const { white, miniLogo, customWidth, special_pages_urls, language } = props;
+    const { white, miniLogo, customWidth, special_pages_urls, language, multilanguage } = props;
     const svgWidth = customWidth ? customWidth : 220;
     const logoWidth = miniLogo ? 54 : svgWidth;
-    const link_url = special_pages_urls ? prepareLink(language, null, special_pages_urls) : '#';
+    const link_url = special_pages_urls ? prepUrlFromConfigSlug(language, null, null, null, special_pages_urls, multilanguage) : '#';
     return (
         <div className={styles.logoContener} style={{ width: logoWidth + 'px', minWidth: (logoWidth + 50) + 'px' }}>
             <Link to={link_url}>

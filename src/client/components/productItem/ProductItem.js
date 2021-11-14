@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { prepareLink, getPriceByCurrency } from '../../utils/utilsFrondend';
+import { prepUrlFromConfigSlug, getPriceByCurrency, pageTypes } from '../../utils/utilsFrondend';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './productItem.scss';
@@ -33,7 +33,19 @@ const ProductItem = ({ product, forceVisual = false, index }) => {
      * api -> 4 * 100 => 400 (px)
      */
     const multiplyMesurment = 100;
-    const { image_width, image_height, imagesConfig, language, userCurrency, currency, slug_urls, translation, showVisual, showRandom } = useSelector(state => ({
+    const { 
+        image_width, 
+        image_height, 
+        imagesConfig, 
+        language, 
+        userCurrency, 
+        currency, 
+        slug_urls, 
+        translation, 
+        showVisual, 
+        showRandom,
+        multilanguage
+    } = useSelector(state => ({
         imagesConfig: state.SystemConfig.images,
         image_width: state.SystemConfig.images.aspect_ratio.width * multiplyMesurment,
         image_height: state.SystemConfig.images.aspect_ratio.height * multiplyMesurment,
@@ -42,10 +54,12 @@ const ProductItem = ({ product, forceVisual = false, index }) => {
         showVisual: state.Display.showVisual,
         showRandom: state.Display.showRandom,
         currency: state.SystemConfig.currency,
-        slug_urls: state.SystemConfig.urls.product,
-        translation: state.PublicConfig.translation
+        slug_urls: state.SystemConfig.urls,
+        translation: state.PublicConfig.translation,
+        multilanguage: state.SystemConfig.multilanguage
     }));
-    const product_url = !placeholder ? prepareLink(language, slug_urls, url) : '#';
+    const product_url = !placeholder ? 
+    prepUrlFromConfigSlug(language, slug_urls, pageTypes.productPage, null, url, multilanguage) : '#';
 
     // useEffect(()=> {   
     //     product && changeVariantId(product.variations[Object.keys(variations)[0]].id);

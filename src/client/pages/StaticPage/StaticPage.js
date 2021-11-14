@@ -11,13 +11,14 @@ import Placeholder from '../../components/placeholder/Placeholder';
 
 const StaticPage = props => {
     // from redux
-    const { seo, staticpage, type, url_prefix, api } = useSelector(
+    const { seo, staticpage, type, url_prefix, api, language } = useSelector(
         state => ({
             seo: state.PublicConfig.config.seo,
             staticpage: state.Page.data,
             type: state.Page.type,
             url_prefix: state.SystemConfig.urls[pageTypes.staticPage],
             api: state.SystemConfig.api,
+            language: state.User.language
         })
     );
     const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const StaticPage = props => {
     const seo_title = staticpage ? staticpage.seo_title : null;
     const seo_description = staticpage ? staticpage.seo_description : null;
     // from props
-    const { url, lang } = props.match.params;
+    const { url } = props.match.params;
     const { location } = props;
 
     const [currentLocation, setCurrentLocation] = useState(location.pathname)
@@ -38,7 +39,7 @@ const StaticPage = props => {
 
     useEffect(() => {
         if (!staticpage || currentLocation !== location.pathname || type !== pageTypes.staticPage) {
-            dispatch(getPage(api, pageTypes.staticPage, lang, url, prepareSearchCode(location.search)));
+            dispatch(getPage(api, pageTypes.staticPage, language, url, prepareSearchCode(location.search)));
             setCurrentLocationHandler(location.pathname);
             scrollToTop(window);
         }
@@ -47,7 +48,7 @@ const StaticPage = props => {
 
     return (
         <div>
-            {metatags(seo_title, seo_description, seo, url, lang, url_prefix)}
+            {metatags(seo_title, seo_description, seo, url, language, url_prefix)}
             {staticpage ? <h1>{staticpage.title}</h1> : <h1><Placeholder /></h1>}
             <div>
                 {staticpage && renderHtmlFromJson(staticpage.body)}

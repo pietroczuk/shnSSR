@@ -9,18 +9,18 @@ import rednderHtml from './utils/rednderHtml';
 import createServerInitStore from './utils/serverInitStore';
 // routes
 import { matchRoutes } from 'react-router-config';
-// import Routes from '../client/Routes';
 
 import axios from 'axios';
 // Zamiast routes prepare_routes_config - modyfikujemy dynamicznie z api
 import { prepare_routes_config } from '../client/utils/config';
 
 // user language init
-import { 
-    check_user_language, 
+import {
+    check_user_language,
     language_from_path,
     get_currency_cookie,
-    get_display_cookies
+    get_display_cookies,
+    get_reques_slug
 } from './utils/utilsBackend';
 
 /** CACHE */
@@ -62,23 +62,37 @@ app.get('*', (req, res) => {
             console.log('🌎 Web Api config load Success!');
             // return api_config;
             return apires.data;
-        }
-        )
-
+        })
         .catch(err => {
             console.error('❌ Error get config file', err);
         }).then(api_config => {
+            const multilanguage = api_config.multilanguage;
+            const blankUrl = req.path === '/' ? true : false;
+            const languages = api_config.language;
+            const languageFromUrl = language_from_path(req.path, languages);
+            const user_language =
+                multilanguage ?
+                    blankUrl ?
+                        check_user_language(req.headers.cookie, req.headers['accept-language'], languages, api_config.cookies_keys['user_language'])
+                        :
+                        languageFromUrl
+                    :
+                    Object.values(languages)[0]['code'];
 
-            const language_init = check_user_language(req.headers.cookie, req.headers['accept-language'], api_config.language, api_config.cookies_keys['user_language']);
-
-            if (req.path === '/') {
-                res.redirect('/' + language_init);
+            if (blankUrl) {
+                const homepageUrl = api_config.special_pages_urls &&
+                    api_config.special_pages_urls.homepage &&
+                    api_config.special_pages_urls.homepage[user_language] ?
+                    multilanguage ?
+                        user_language + '/' + api_config.special_pages_urls.homepage[user_language]
+                        : api_config.special_pages_urls.homepage[user_language]
+                    : user_language;
+                res.redirect('/' + homepageUrl);
             } else {
                 // const css = new Set(); // CSS for all rendered React components
                 // const insertCss = (...styles) =>
                 //     styles.forEach((style) => css.add(style._getCss()));
                 const user_currency = get_currency_cookie(req.headers.cookie, api_config.currency, api_config.cookies_keys['user_currency']);
-                const user_language = language_from_path(req.path, api_config.language);
 
                 // get display cookies
                 const display_options = get_display_cookies(req.headers.cookie, api_config.cookies_keys.display);
@@ -91,16 +105,19 @@ app.get('*', (req, res) => {
                 // api_config.urls.homepage = api_config.special_pages_urls.homepage[user_language];
                 // api_config.urls.cart = api_config.special_pages_urls.cart[user_language];
                 const new_routes_config = {
-                    language: api_config.language,
+                    language: languages,
                     urls: api_config.urls,
                     special_pages_urls: api_config.special_pages_urls
                 }
-                // console.log(Routes);
-                const new_Routes = prepare_routes_config(new_routes_config, user_language);
+                console.log('server multilanguage: ', multilanguage);
+                const new_Routes = prepare_routes_config(new_routes_config, user_language, multilanguage, true);
                 // console.log(new_Routes[0].routes);
                 const load_data_promises = matchRoutes(new_Routes, req.path).map(({ route }) => {
                     // console.log(req);
-                    const real_path = req.path.split('/').pop();
+                    // const real_path = req.path.split('/').pop();
+                    const real_path = get_reques_slug(req.path);
+
+                    // console.log(real_path);
 
                     const i = req.url.indexOf('?');
                     const q = req.url.indexOf('&');
@@ -130,7 +147,7 @@ app.get('*', (req, res) => {
                     const server_context = {};
                     // const content = rednderHtml(req, server_store, server_context, css, insertCss);
                     // console.log('serverstore', server_store.dispatch);
-                    const content = rednderHtml(req, server_store, server_context, new_routes_config);
+                    const content = rednderHtml(req, server_store, server_context, new_routes_config, user_language, multilanguage);
                     if (server_context.url) {
                         return res.redirect(301, server_context.url);
                     }

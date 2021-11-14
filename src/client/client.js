@@ -6,7 +6,6 @@
 import React from 'react';
 import { hydrate } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-// import Routes from './Routes';
 import { prepare_routes_config } from './utils/config';
 
 import { configureStore } from '@reduxjs/toolkit';
@@ -45,8 +44,9 @@ const store_client = configureStore({
 });
 
 const new_routes_config = window.__CONFIG__;
-
-const userLanguage = store_client.getState().User.language;
+const initialState = store_client.getState();
+const userLanguage = initialState.User.language;
+const multilanguage = initialState.SystemConfig.multilanguage;
 
 const insertCss = (...styles) => {
 
@@ -60,14 +60,14 @@ const insertCss = (...styles) => {
 // const css = new Set();
 // const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
 // const insertCss = null;
+// console.log('client multilanguage:', multilanguage);
 loadableReady(() => {
     hydrate(
         <Provider store={store_client}>
             <StyleContext.Provider value={{ insertCss }}>
                 <BrowserRouter>
-                    {/* <Routes /> */}
                     <React.Fragment>
-                        {renderRoutes(prepare_routes_config(new_routes_config, userLanguage))}
+                        {renderRoutes(prepare_routes_config(new_routes_config, userLanguage, multilanguage))}
                     </React.Fragment>
                 </BrowserRouter>
             </StyleContext.Provider>

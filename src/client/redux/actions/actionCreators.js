@@ -49,6 +49,7 @@ export const getPage = (api, type, lang, url, query) => dispatch => {
       axios_endpoint = api.category + page_url;
       break;
   }
+  // console.log(axios_endpoint);
   if (axios_endpoint) {
     return axios.get(api.url + '/' + axios_endpoint)
       .then(res =>

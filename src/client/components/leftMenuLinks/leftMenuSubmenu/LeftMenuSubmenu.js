@@ -7,7 +7,7 @@ import { prepUrlFromConfigSlug } from '../../../utils/utilsFrondend';
 import ArrowDown from '../../svg/icons/ArrowDown';
 
 const LeftMenuSubmenu = props => {
-    const { elem, prepareLabelMenu, prepareMenuLink, pathname, language, slug_urls } = props;
+    const { elem, prepareLabelMenu, prepareMenuLink, pathname, language, slug_urls, multilanguage } = props;
     const { items, label, color } = elem;
 
     const [openSubmenu, setOpenSubmenu] = useState(false);
@@ -20,7 +20,7 @@ const LeftMenuSubmenu = props => {
     }
     useEffect(() => {
         const foudmatch = items.some(item => {
-            if (item.url && pathname === prepUrlFromConfigSlug(language, slug_urls, item.type, item.url)) {
+            if (item.url && pathname === prepUrlFromConfigSlug(language, slug_urls, item.type, null, item.url, multilanguage)) {
                 openSubmenuHandler(true);
                 return true;
             }

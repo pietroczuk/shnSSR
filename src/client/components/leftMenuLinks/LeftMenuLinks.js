@@ -11,10 +11,11 @@ import LeftMenuSubmenu from './leftMenuSubmenu/LeftMenuSubmenu';
 
 const LeftMenuLinks = (props) => {
 
-    const { menu_items, language, slug_urls } = useSelector(state => ({
+    const { menu_items, language, slug_urls, multilanguage} = useSelector(state => ({
         menu_items: state.PublicConfig.menu.side === 'top' ? state.PublicConfig.menu.top : state.PublicConfig.menu.side,
         language: state.User.language,
         slug_urls: state.SystemConfig.urls,
+        multilanguage: state.SystemConfig.multilanguage
     }))
 
     const { location } = props;
@@ -29,13 +30,14 @@ const LeftMenuLinks = (props) => {
             language={language}
             prepareLabelMenu={prepareLabelMenu}
             prepareMenuLink={prepareMenuLink}
+            multilanguage={multilanguage}
         />
     }
     const prepareMenuLink = (elem, clickHandler = null) => {
         const { type, url, label, items, color } = elem;
 
         if (url) {
-            const new_url = prepUrlFromConfigSlug(language, slug_urls, type, url)
+            const new_url = prepUrlFromConfigSlug(language, slug_urls, type, null, url, multilanguage);
             return (
                 <NavLink to={new_url} activeClassName={styles.active} className={styles.side_link_container} onClick={clickHandler}>
                     {items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color)}

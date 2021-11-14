@@ -14,7 +14,8 @@ const Topbar = ({ white, closeHandler }) => {
                 onClick={closeHandler}
                 hoverOpacity={true}
                 customWidth={30}
-                customSvgSize={15}>
+                customSvgSize={15}
+                >
                 <CloseIcon />
             </InteractiveIcon>
         </div>

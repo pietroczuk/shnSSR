@@ -159,17 +159,22 @@ export const renderHtmlFromJson = json => {
 
 // ----------- prepare url links in menu based on array slug from config
 
-export const prepUrlFromConfigSlug = (language, slug_urls, url_type, url) => {
-    return '/' + language + '/' + slug_urls[url_type] + '/' + url;
-}
-
-export const prepareLink = (language, slug_prefix, url) => {
+export const prepUrlFromConfigSlug = (language, slug_urls, url_type, slug_prefix, url, multilanguage) => {
     let url_link = '/';
-    language ? url_link += language + '/' : null;
+    language && multilanguage ? url_link += language + '/' : null;
+    url_type && slug_urls ? url_link += slug_urls[url_type] + '/' : null;
     slug_prefix ? url_link += slug_prefix + '/' : null;
     url ? url_link += url + '/' : null;
     return url_link;
 }
+
+// export const prepareLink = (language, slug_prefix, url, multilanguage) => {
+//     let url_link = '/';
+//     language && multilanguage ? url_link += language + '/' : null;
+//     slug_prefix ? url_link += slug_prefix + '/' : null;
+//     url ? url_link += url + '/' : null;
+//     return url_link;
+// }
 
 export const getPriceByCurrency = (productPrices, userCurrency, currency) => {
     const price = productPrices &&
