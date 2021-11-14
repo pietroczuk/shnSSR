@@ -47,12 +47,16 @@ const Product = (props) => {
     }
 
     useEffect(() => {
+        const axiosAbortController = new AbortController();
         if (!product || currentLocation !== location.pathname || type !== pageTypes.productPage) {
-            dispatch(getPage(api, pageTypes.productPage, lang, url, prepareSearchCode(location.search)));
+            dispatch(getPage(api, pageTypes.productPage, lang, url, prepareSearchCode(location.search), axiosAbortController));
             setCurrentLocationHandler(location.pathname);
             scrollToTop(window);
         }
-        return () => dispatch(pageActions.clearPageData());
+        return () => {
+            axiosAbortController.abort();
+            dispatch(pageActions.clearPageData());
+        }
     }, [location.pathname, dispatch])
 
     return (

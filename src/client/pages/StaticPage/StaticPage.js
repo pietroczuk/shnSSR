@@ -30,20 +30,27 @@ const StaticPage = props => {
     const { location } = props;
 
     const [currentLocation, setCurrentLocation] = useState(location.pathname)
-
     const setCurrentLocationHandler = loc => {
         if (currentLocation !== loc) {
             setCurrentLocation(loc);
         }
     }
+    // let axiosAbortController = null; 
+    // const setAxiosAbortControllerHandler = () => {
+    //         axiosAbortController = new AbortController();
+    // }
 
     useEffect(() => {
+        const axiosAbortController = new AbortController();
         if (!staticpage || currentLocation !== location.pathname || type !== pageTypes.staticPage) {
-            dispatch(getPage(api, pageTypes.staticPage, language, url, prepareSearchCode(location.search)));
+            dispatch(getPage(api, pageTypes.staticPage, language, url, prepareSearchCode(location.search), axiosAbortController));
             setCurrentLocationHandler(location.pathname);
             scrollToTop(window);
         }
-        return () => dispatch(pageActions.clearPageData());
+        return () => {
+            axiosAbortController.abort();
+            return dispatch(pageActions.clearPageData());
+        }
     }, [location.pathname, dispatch]);
 
     return (

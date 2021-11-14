@@ -35,7 +35,7 @@ load page based on type
 - PRODUCT
 */
 
-export const getPage = (api, type, lang, url, query) => dispatch => {
+export const getPage = (api, type, lang, url, query, axiosAbortController = null) => dispatch => {
   const page_url = '?url=' + url + '&lang=' + lang;
   let axios_endpoint = null;
   switch (type) {
@@ -51,7 +51,8 @@ export const getPage = (api, type, lang, url, query) => dispatch => {
   }
   // console.log(axios_endpoint);
   if (axios_endpoint) {
-    return axios.get(api.url + '/' + axios_endpoint)
+    return axios.get(api.url + '/' + axios_endpoint, 
+            { signal: axiosAbortController ? axiosAbortController.signal : null })
       .then(res =>
         dispatch(pageActions.setPageData({ data: res.data, query: query }))
       )

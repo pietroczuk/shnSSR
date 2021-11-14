@@ -8,6 +8,7 @@ import styles from './rootapp.scss';
 import { setCookie, getCookie } from '../../utils/utilsFrondend';
 // actions
 import { checkWishlist } from '../../redux/actions/actionCreators';
+
 // components
 // import Header from '../../components/header/Header';
 // import Footer from '../../components/footer/Footer';
@@ -41,6 +42,7 @@ const RootApp = ({ route, location }) => {
 
         const cookieCurr = getCookie(cookieCurrencyKey);
         currency && (currency !== cookieCurr) && setCookie(cookieCurrencyKey, currency);
+
         dispatch(checkWishlist(initLocalstorageWishlistKey, null, api, language));
     }, [])
     return (

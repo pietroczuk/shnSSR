@@ -5,9 +5,11 @@ import styles from './category.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { getPage } from '../../redux/actions/actionCreators';
 import { pageActions } from '../../redux/slices/pageSlice';
-import { pageTypes, metatags, prepareSearchCode, 
-    renderHtmlFromJson, 
-    scrollToTop } from '../../utils/utilsFrondend';
+import {
+    pageTypes, metatags, prepareSearchCode,
+    renderHtmlFromJson,
+    scrollToTop
+} from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
 import ContentCointainer from '../../components/contentCointainer/ContentCointainer';
@@ -25,15 +27,15 @@ import LoadingSpinner from '../../components/ui/loadingSpinner/LoadingSpinner';
 const Category = props => {
 
     // from redux
-    const { 
-        seo, 
-        category, 
-        api, 
-        url_prefix, 
-        type, 
-        category_products, 
-        showVisual, 
-        showRandom, 
+    const {
+        seo,
+        category,
+        api,
+        url_prefix,
+        type,
+        category_products,
+        showVisual,
+        showRandom,
         cookiesDisplayKeys,
         language
     } = useSelector(
@@ -67,19 +69,24 @@ const Category = props => {
             setCurrentLocation(loc);
         }
     }
+    
     useEffect(() => {
+        const axiosAbortController = new AbortController();
         if (!category || currentLocation !== location.pathname || type !== pageTypes.categoryPage) {
-            dispatch(getPage(api, pageTypes.categoryPage, language, url, prepareSearchCode(location.search)));
+            dispatch(getPage(api, pageTypes.categoryPage, language, url, prepareSearchCode(location.search), axiosAbortController));
             setCurrentLocationHandler(location.pathname);
             scrollToTop(window);
         }
-        return () => dispatch(pageActions.clearPageData());
+        return () => {
+            axiosAbortController.abort();
+            return dispatch(pageActions.clearPageData());
+        }
     }, [location.pathname, dispatch]);
 
     const showProducts = category => {
         const products = category && category.products ? category.products : null;
         if (products) {
-            return products.map((p, index) => <ProductItem product={p} key={p.id} index={index}/>);
+            return products.map((p, index) => <ProductItem product={p} key={p.id} index={index} />);
         }
         return [...Array(category_products)].map((el, index) => <ProductItem key={index} />);
     }
@@ -97,11 +104,11 @@ const Category = props => {
                 </h1>
                 <div>
                     <FixedBar>
-                        <ImageSwicher showVisual={showVisual} cookieKey = {cookiesDisplayKeys.visual_mode}/>
-                        <RandomColorSwicher showRandom={showRandom} cookieKey = {cookiesDisplayKeys.random_variant} />
+                        <ImageSwicher showVisual={showVisual} cookieKey={cookiesDisplayKeys.visual_mode} />
+                        <RandomColorSwicher showRandom={showRandom} cookieKey={cookiesDisplayKeys.random_variant} />
                     </FixedBar>
                     <div className={styles.productsGrid}>{showProducts(category)}</div>
-                    <div className={styles.categroryLoadMore}><LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={2}/></div>
+                    <div className={styles.categroryLoadMore}><LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={2} /></div>
                     {category ? <div className={styles.categoryDescription} >{renderHtmlFromJson(category.description)}</div> : <div><Placeholder /></div>}
                 </div>
             </MainContent>
