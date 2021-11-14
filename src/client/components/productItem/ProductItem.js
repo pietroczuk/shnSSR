@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import { prepUrlFromConfigSlug, getPriceByCurrency, pageTypes } from '../../utils/utilsFrondend';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
@@ -8,6 +7,7 @@ import styles from './productItem.scss';
 
 import LoadingSpinner from '../ui/loadingSpinner/LoadingSpinner';
 
+import DivNavLink from '../DivNavLink/DivNavLink';
 import Blank from '../svg/blank/Blank';
 import Placeholder from '../placeholder/Placeholder';
 import AddToWishlistSticker from '../ui/addToWishlistSticker/AddToWishlistSticker';
@@ -59,7 +59,7 @@ const ProductItem = ({ product, forceVisual = false, index }) => {
         multilanguage: state.SystemConfig.multilanguage
     }));
     const product_url = !placeholder ? 
-    prepUrlFromConfigSlug(language, slug_urls, pageTypes.productPage, null, url, multilanguage) : '#';
+    prepUrlFromConfigSlug(language, slug_urls, pageTypes.productPage, null, url, multilanguage) : null;
 
     // useEffect(()=> {   
     //     product && changeVariantId(product.variations[Object.keys(variations)[0]].id);
@@ -87,7 +87,7 @@ const ProductItem = ({ product, forceVisual = false, index }) => {
             productData={product}
         />
         }
-        <NavLink to={product_url}>
+        <DivNavLink to={product_url}>
             <div className={styles.imageContainer}>
                 <div className={styles.imageContainerRelative}>
                     <div className={`${styles.imagePicture} ${showVisualImage ? styles.noPadding : ''}`}>
@@ -119,7 +119,7 @@ const ProductItem = ({ product, forceVisual = false, index }) => {
                     </div>
                 </div>
             </div>
-        </NavLink>
+        </DivNavLink>
     </div>
 }
 export default withStyles(styles)(ProductItem);

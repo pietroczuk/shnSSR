@@ -1,17 +1,17 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './logo.scss';
-import { Link } from 'react-router-dom';
+import DivNavLink from '../../DivNavLink/DivNavLink';
 import { prepUrlFromConfigSlug } from '../../../utils/utilsFrondend';
 
 const Logo = props => {
     const { white, miniLogo, customWidth, special_pages_urls, language, multilanguage } = props;
     const svgWidth = customWidth ? customWidth : 220;
     const logoWidth = miniLogo ? 54 : svgWidth;
-    const link_url = special_pages_urls ? prepUrlFromConfigSlug(language, null, null, null, special_pages_urls, multilanguage) : '#';
+    const link_url = special_pages_urls ? prepUrlFromConfigSlug(language, null, null, null, special_pages_urls, multilanguage) : null;
     return (
         <div className={styles.logoContener} style={{ width: logoWidth + 'px', minWidth: (logoWidth + 50) + 'px' }}>
-            <Link to={link_url}>
+            <DivNavLink to={link_url}>
                 <span className={styles.assitiveText}>Homepage</span>
                 <div className={`${styles.logo} ${white ? styles.whiteLogo : ''}`}
                     style={{ width: svgWidth + 'px' }}>
@@ -83,7 +83,7 @@ const Logo = props => {
                         <path fill="#181818" d="M289.457,18.134v1.859h-22.555v-1.859H289.457z" />
                     </svg>
                 </div>
-            </Link>
+            </DivNavLink>
         </div>
     );
 }
