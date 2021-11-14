@@ -69,7 +69,7 @@ app.get('*', (req, res) => {
         }).then(api_config => {
             const multilanguage = api_config.multilanguage;
             const languages = api_config.language;
-            const urlData = url_data_from_path(req.path, languages);
+            const urlData = url_data_from_path(req.path, languages, multilanguage);
             const languageFromUrl = urlData.languageCode; 
             const real_path = urlData.realPath;
             const blankUrl = req.path === '/' || urlData.blankPath ? true : false;
@@ -92,7 +92,7 @@ app.get('*', (req, res) => {
                         user_language + '/' + api_config.special_pages_urls.homepage[user_language]
                         : api_config.special_pages_urls.homepage[user_language]
                     : user_language;
-                    // console.log('redirect:', homepageUrl, multilanguage);
+                    // console.log('redirect:', homepageUrl, multilanguage, urlData);
                 res.redirect('/' + homepageUrl);
             } else {
                 // const css = new Set(); // CSS for all rendered React components

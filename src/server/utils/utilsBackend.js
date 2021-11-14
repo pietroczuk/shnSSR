@@ -26,7 +26,7 @@ export const get_reques_slug = arrayPath => {
     return null;
 }
 
-export const url_data_from_path = (full_path, languages = null) => {
+export const url_data_from_path = (full_path, languages = null, multilanguage) => {
     const pathData = {
         languageCode: null,
         blankPath : false,
@@ -41,7 +41,7 @@ export const url_data_from_path = (full_path, languages = null) => {
         }else{
             pathData.languageCode = real_path_arr[1];
         }
-        if(!real_path_arr[pathCriticalIndex]) {
+        if(!real_path_arr[pathCriticalIndex] && multilanguage) {
             pathData.blankPath = true;
         }
         for (let index = real_path_arr.length - 1; index >= 0; index--) {
