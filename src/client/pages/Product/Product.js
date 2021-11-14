@@ -4,7 +4,7 @@ import styles from './product.scss';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getPage } from '../../redux/actions/actionCreators';
-import { pageActions } from '../../redux/slices/pageSlice'; 
+import { pageActions } from '../../redux/slices/pageSlice';
 import { pageTypes, metatags, prepareSearchCode, scrollToTop } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
@@ -15,18 +15,19 @@ import AllFeaturesDisplay from '../../components/features/AllFeaturesDisplay';
 
 const Product = (props) => {
     // from redux
-    const { seo, product, type, api, url_prefix, images_url, all_config_currencies, user_currency_code } = useSelector(
-        state => ({
-            seo: state.PublicConfig.config.seo,
-            product: state.Page.data ? state.Page.data : null,
-            type: state.Page.type ? state.Page.type : null,
-            api: state.SystemConfig.api,
-            url_prefix: state.SystemConfig.urls[pageTypes.productPage],
-            images_url: state.SystemConfig.images,
-            all_config_currencies: state.SystemConfig.currency,
-            user_currency_code: state.User.currency
-        })
-    )
+    const { seo, product,
+        // type, 
+        api, url_prefix, images_url, all_config_currencies, user_currency_code } = useSelector(
+            state => ({
+                seo: state.PublicConfig.config.seo,
+                product: state.Page.data ? state.Page.data : null,
+                api: state.SystemConfig.api,
+                url_prefix: state.SystemConfig.urls[pageTypes.productPage],
+                images_url: state.SystemConfig.images,
+                all_config_currencies: state.SystemConfig.currency,
+                user_currency_code: state.User.currency
+            })
+        )
     const dispatch = useDispatch();
     // seo
     const seo_title = product ? product.seo_title : null;
@@ -36,23 +37,10 @@ const Product = (props) => {
     const { url, lang } = props.match.params;
     const { location } = props;
 
-    // console.log(product.variations[current_variation_id].variation_price[user_currency_code], user_currency_code);
-
-    const [currentLocation, setCurrentLocation] = useState(location.pathname)
-
-    const setCurrentLocationHandler = loc => {
-        if (currentLocation !== loc) {
-            setCurrentLocation(loc);
-        }
-    }
-
     useEffect(() => {
         const axiosAbortController = new AbortController();
-        if (!product || currentLocation !== location.pathname || type !== pageTypes.productPage) {
-            dispatch(getPage(api, pageTypes.productPage, lang, url, prepareSearchCode(location.search), axiosAbortController));
-            setCurrentLocationHandler(location.pathname);
-            scrollToTop(window);
-        }
+        dispatch(getPage(api, pageTypes.productPage, lang, url, prepareSearchCode(location.search), axiosAbortController));
+        scrollToTop(window);
         return () => {
             axiosAbortController.abort();
             dispatch(pageActions.clearPageData());

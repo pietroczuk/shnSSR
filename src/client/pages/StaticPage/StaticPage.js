@@ -11,11 +11,10 @@ import Placeholder from '../../components/placeholder/Placeholder';
 
 const StaticPage = props => {
     // from redux
-    const { seo, staticpage, type, url_prefix, api, language } = useSelector(
+    const { seo, staticpage, url_prefix, api, language } = useSelector(
         state => ({
             seo: state.PublicConfig.config.seo,
             staticpage: state.Page.data,
-            type: state.Page.type,
             url_prefix: state.SystemConfig.urls[pageTypes.staticPage],
             api: state.SystemConfig.api,
             language: state.User.language
@@ -29,24 +28,10 @@ const StaticPage = props => {
     const { url } = props.match.params;
     const { location } = props;
 
-    const [currentLocation, setCurrentLocation] = useState(location.pathname)
-    const setCurrentLocationHandler = loc => {
-        if (currentLocation !== loc) {
-            setCurrentLocation(loc);
-        }
-    }
-    // let axiosAbortController = null; 
-    // const setAxiosAbortControllerHandler = () => {
-    //         axiosAbortController = new AbortController();
-    // }
-
     useEffect(() => {
         const axiosAbortController = new AbortController();
-        if (!staticpage || currentLocation !== location.pathname || type !== pageTypes.staticPage) {
-            dispatch(getPage(api, pageTypes.staticPage, language, url, prepareSearchCode(location.search), axiosAbortController));
-            setCurrentLocationHandler(location.pathname);
-            scrollToTop(window);
-        }
+        dispatch(getPage(api, pageTypes.staticPage, language, url, prepareSearchCode(location.search), axiosAbortController));
+        scrollToTop(window);
         return () => {
             axiosAbortController.abort();
             return dispatch(pageActions.clearPageData());

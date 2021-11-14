@@ -18,21 +18,18 @@ import MainContent from '../../components/contentCointainer/mainContent/MainCont
 import LeftMenuLinks from '../../components/leftMenuLinks/LeftMenuLinks';
 import ProductItem from '../../components/productItem/ProductItem';
 import FixedBar from '../../components/fixedbar/FixedBar';
-// import NiceSwicher from '../../components/ui/niceSwitcher/NiceSwicher';
 import ImageSwicher from '../../components/ui/imageSwicher/ImageSwicher';
 import RandomColorSwicher from '../../components/ui/randomColorSwicher/RandomColorSwicher';
 
 import LoadingSpinner from '../../components/ui/loadingSpinner/LoadingSpinner';
 
 const Category = props => {
-
     // from redux
     const {
         seo,
         category,
         api,
         url_prefix,
-        type,
         category_products,
         showVisual,
         showRandom,
@@ -42,7 +39,6 @@ const Category = props => {
         state => ({
             seo: state.PublicConfig.config.seo,
             category: state.Page.data,
-            type: state.Page.type,
             url_prefix: state.SystemConfig.urls[pageTypes.categoryPage],
             api: state.SystemConfig.api,
             category_products: state.SystemConfig.placeholder.category_products,
@@ -61,22 +57,10 @@ const Category = props => {
     const { location } = props;
     // multirow
     const multirow = true;
-
-    const [currentLocation, setCurrentLocation] = useState(location.pathname)
-
-    const setCurrentLocationHandler = loc => {
-        if (currentLocation !== loc) {
-            setCurrentLocation(loc);
-        }
-    }
-    
     useEffect(() => {
         const axiosAbortController = new AbortController();
-        if (!category || currentLocation !== location.pathname || type !== pageTypes.categoryPage) {
-            dispatch(getPage(api, pageTypes.categoryPage, language, url, prepareSearchCode(location.search), axiosAbortController));
-            setCurrentLocationHandler(location.pathname);
-            scrollToTop(window);
-        }
+        dispatch(getPage(api, pageTypes.categoryPage, language, url, prepareSearchCode(location.search), axiosAbortController));
+        scrollToTop(window);
         return () => {
             axiosAbortController.abort();
             return dispatch(pageActions.clearPageData());
