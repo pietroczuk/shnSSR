@@ -1,20 +1,19 @@
 $transitionTime : 0.2s;
 
 .addToWishContainer {
-    position          : absolute;
-    padding           : 0.7em;
-    right             : 0;
-    top               : 0;
-    width             : 3.1em;
-    z-index           : 1;
-    opacity           : 0.4;
-    cursor            : pointer;
-    -webkit-transition: opacity $transitionTime;
-    -moz-transition   : opacity $transitionTime;
-    -o-transition     : opacity $transitionTime;
-    transition        : opacity $transitionTime;
+    position: absolute;
+    padding : 0.7em;
+    right   : 0;
+    top     : 0;
+    width   : 3.1em;
+    z-index : 1;
+    cursor  : pointer;
 
-    &:hover {
+    &:hover .iconContainer {
+        opacity: 1;
+    }
+
+    &:hover .counter {
         opacity: 1;
     }
 
@@ -24,10 +23,15 @@ $transitionTime : 0.2s;
         margin            : auto;
         position          : relative;
         margin-bottom     : 0.2em;
-        // -webkit-transition: width $transitionTime;
-        // -moz-transition   : width $transitionTime;
-        // -o-transition     : width $transitionTime;
-        // transition        : width $transitionTime;
+        opacity           : 0.4;
+        -webkit-transition: opacity $transitionTime;
+        -moz-transition   : opacity $transitionTime;
+        -o-transition     : opacity $transitionTime;
+        transition        : opacity $transitionTime;
+
+        &.fullOpacity {
+            opacity: 1;
+        }
 
         svg {
             z-index : 1;
@@ -36,18 +40,21 @@ $transitionTime : 0.2s;
     }
 
     .counter {
-        font-size : 0.7em;
-        text-align: center;
+        font-size         : 0.7em;
+        text-align        : center;
+        opacity           : 0.4;
+        -webkit-transition: opacity $transitionTime;
+        -moz-transition   : opacity $transitionTime;
+        -o-transition     : opacity $transitionTime;
+        transition        : opacity $transitionTime;
     }
 
     &.visualMode {
-        opacity: 1;
-
         .iconContainer {
-            // background-color: #fff;
             width        : 1em;
             height       : 1em;
             margin-bottom: 0.5em;
+            opacity      : 1;
 
             .iconBg {
                 background-color: #fff;
@@ -66,6 +73,7 @@ $transitionTime : 0.2s;
         .counter {
             color           : #fff;
             background-color: #000000;
+            opacity         : 1;
         }
     }
 }

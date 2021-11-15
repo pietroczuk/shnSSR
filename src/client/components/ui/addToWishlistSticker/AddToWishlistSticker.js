@@ -20,7 +20,7 @@ const AddToWishlistSticker = ({ visualMode = false, showLikes = false, likes, va
         variantId && productData && dispatch(addToStoreWishlist(api, lang, productData.id, variantId, localstorageWishlistKey, inWishList));
     }
     return <div className={`${styles.addToWishContainer} ${visualMode ? styles.visualMode : ''}`} onClick={clickHandler}>
-        <div className={styles.iconContainer}>
+        <div className={`${styles.iconContainer} ${inWishList ? styles.fullOpacity: ''}`}>
             {inWishList ? <HeartFull /> : <WishlistIcon />}
             {visualMode && <div className={styles.iconBg}></div>}
         </div>

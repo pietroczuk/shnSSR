@@ -17,8 +17,8 @@ import StickySidebar from '../../components/contentCointainer/stickySidebar/Stic
 import MainContent from '../../components/contentCointainer/mainContent/MainContent';
 import LeftMenuLinks from '../../components/leftMenuLinks/LeftMenuLinks';
 import ProductItem from '../../components/productItem/ProductItem';
-// import FixedBar from '../../components/fixedbar/FixedBar';
-// import ImageSwicher from '../../components/ui/imageSwicher/ImageSwicher';
+import FixedBar from '../../components/fixedbar/FixedBar';
+import ImageSwicher from '../../components/ui/imageSwicher/ImageSwicher';
 // import RandomColorSwicher from '../../components/ui/randomColorSwicher/RandomColorSwicher';
 
 // import LoadingSpinner from '../../components/ui/loadingSpinner/LoadingSpinner';
@@ -26,24 +26,26 @@ import ProductItem from '../../components/productItem/ProductItem';
 import ShowTitleWithBadge from '../../components/ui/showTitleWithBadge/ShowTitleWithBadge';
 
 const Wishlist = props => {
-    const { title, Wishlist, seo, language } = useSelector(state => ({
+    const { title, Wishlist, seo, language, showVisual, cookiesDisplayKeys } = useSelector(state => ({
         title: state.PublicConfig.translation.wishlist,
         Wishlist: state.Wishlist,
         seo: state.PublicConfig.config.seo,
-        language: state.User.language
-        })
+        language: state.User.language,
+        showVisual: state.Display.showVisual,
+        cookiesDisplayKeys: state.SystemConfig.cookies_keys.display,
+    })
     );
     const { location } = props;
     const { url } = props.match.params;
     const multirow = true;
     const badgeNumber = Wishlist.length;
-   
+
     const showProducts = wishlistData => {
         const products = wishlistData && wishlistData.products ? wishlistData.products : null;
         if (products) {
             return (Object.entries(products).map(
                 ([key, val]) => {
-                    return <ProductItem product={val.productData} key={val.v} imagesInRootVariant = { true }/>
+                    return <ProductItem product={val.productData} key={val.v} imagesInRootVariant={true} />
                 })
             );
         }
@@ -57,15 +59,12 @@ const Wishlist = props => {
                 </StickySidebar>
             }
             <MainContent>
-                <ShowTitleWithBadge title={title} badgeNumber={badgeNumber} customWidth={20}/>
-                {/* <h1 className={styles.categoryName}>
-                    {wishlistTitle ? <span>{wishlistTitle} <span className={styles.titleBagde}>{Wishlist.length}</span> </span>: <Placeholder customWidth={'20%'} />}
-                </h1> */}
+                <ShowTitleWithBadge title={title} badgeNumber={badgeNumber} customWidth={20} />
                 <div>
-                    {/* <FixedBar>
+                    <FixedBar>
                         <ImageSwicher showVisual={showVisual} cookieKey={cookiesDisplayKeys.visual_mode} />
-                        <RandomColorSwicher showRandom={showRandom} cookieKey={cookiesDisplayKeys.random_variant} />
-                    </FixedBar> */}
+                        {/* <RandomColorSwicher showRandom={showRandom} cookieKey={cookiesDisplayKeys.random_variant} /> */}
+                    </FixedBar>
                     <div className={styles.productsGrid}>{showProducts(Wishlist)}</div>
                     {/* <div className={styles.categroryLoadMore}><LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={2} /></div> */}
                     {/* {category ? <div className={styles.categoryDescription} >{renderHtmlFromJson(category.description)}</div> : <div><Placeholder /></div>} */}
