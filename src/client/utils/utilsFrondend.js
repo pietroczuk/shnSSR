@@ -12,7 +12,8 @@ export const pageTypes = {
     staticPage: 'staticpage',
     categoryPage: 'category',
     wishlist: 'wishlist',
-    cart: 'cart'
+    cart: 'cart',
+    specialPage: 'special',
 }
 // ---------- end get page
 

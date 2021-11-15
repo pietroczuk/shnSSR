@@ -3,12 +3,14 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './wishlist.scss';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { getPage } from '../../redux/actions/actionCreators';
+// import { getPage , serpa } from '../../redux/actions/actionCreators';
 import { pageActions } from '../../redux/slices/pageSlice';
 import {
-    pageTypes, metatags, prepareSearchCode,
+    pageTypes, 
+    metatags, 
+    // prepareSearchCode,
     // renderHtmlFromJson,
-    scrollToTop
+    // scrollToTop
 } from '../../utils/utilsFrondend';
 
 // import Placeholder from '../../components/placeholder/Placeholder';
@@ -26,19 +28,34 @@ import ImageSwicher from '../../components/ui/imageSwicher/ImageSwicher';
 import ShowTitleWithBadge from '../../components/ui/showTitleWithBadge/ShowTitleWithBadge';
 
 const Wishlist = props => {
-    const { title, Wishlist, seo, language, showVisual, cookiesDisplayKeys } = useSelector(state => ({
+    const { title, Wishlist, seo, language, showVisual, cookiesDisplayKeys, wishlistMultiUrl } = useSelector(state => ({
         title: state.PublicConfig.translation.wishlist,
         Wishlist: state.Wishlist,
         seo: state.PublicConfig.config.seo,
         language: state.User.language,
         showVisual: state.Display.showVisual,
         cookiesDisplayKeys: state.SystemConfig.cookies_keys.display,
+        wishlistMultiUrl: state.SystemConfig.special_pages_urls[pageTypes.wishlist]
     })
     );
     const { location } = props;
     const { url } = props.match.params;
     const multirow = true;
     const badgeNumber = Wishlist.length;
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        const wishlistPageObj = {
+            data: {
+                url: wishlistMultiUrl,
+                type: pageTypes.specialPage
+            }
+        }
+        dispatch(pageActions.setPageData({ data: wishlistPageObj }));
+        return () => {
+            return dispatch(pageActions.clearPageData());
+        }
+    },[]);
 
     const showProducts = wishlistData => {
         const products = wishlistData && wishlistData.products ? wishlistData.products : null;

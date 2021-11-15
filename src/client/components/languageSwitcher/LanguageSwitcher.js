@@ -6,6 +6,8 @@ import { useLocation } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
+import { pageTypes } from '../../utils/utilsFrondend';
+
 import GlobeIcon from '../svg/icons/GlobeIcon';
 
 import loadable from '@loadable/component';
@@ -48,6 +50,7 @@ const LanguageSwitcher = (props) => {
         user_language: state.User.language
     }));
     const page_ulrs = page.data ? page.data.url : null;
+    const page_type = page && page.data && page.data.type ? page.data.type : null;
 
     useEffect(() => {
         setSearchParams(search);
@@ -82,27 +85,33 @@ const LanguageSwitcher = (props) => {
         {openSubmenu && page_ulrs && <div className={styles.submenu}>
             <ul className={styles.list}>
                 {page_ulrs && Object.entries(all_config_languages).map(
-                    ([lang_key, lang_val]) =>
-                        <li
-                            key={lang_key}
-                            className={`${(lang_val.code === user_language ? styles.active : '')}`}
-                        >
-                            <a href={'/' + lang_val.code + '/' + urls[page.type] + '/' + page_ulrs[lang_val.code] + searchParams}>
-                                <div className={styles.flagContainer} >
-                                    <ErrorBoundary
-                                        errorComponent={
-                                            <LoadingSpinner
-                                                customSpinerSizeEm={1}
-                                                customBorderHeight={1}
-                                            />
-                                        }
-                                    >
-                                        {showLanguageFlag(lang_val.flag_image)}
-                                    </ErrorBoundary>
-                                </div>
-                                <span>{lang_val.label}</span>
-                            </a>
-                        </li>
+                    ([lang_key, lang_val]) => {
+                        let languageLink = '/' + lang_val.code;
+                        page_type !== pageTypes.specialPage ? languageLink += ('/' + urls[page.type]) : null;
+                        languageLink += '/' + page_ulrs[lang_val.code] + searchParams;
+                        return (
+                            <li
+                                key={lang_key}
+                                className={`${(lang_val.code === user_language ? styles.active : '')}`}
+                            >
+                                <a href={languageLink}>
+                                    <div className={styles.flagContainer} >
+                                        <ErrorBoundary
+                                            errorComponent={
+                                                <LoadingSpinner
+                                                    customSpinerSizeEm={1}
+                                                    customBorderHeight={1}
+                                                />
+                                            }
+                                        >
+                                            {showLanguageFlag(lang_val.flag_image)}
+                                        </ErrorBoundary>
+                                    </div>
+                                    <span>{lang_val.label}</span>
+                                </a>
+                            </li>
+                        )
+                    }
                 )
                 }
             </ul>
