@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './category.scss';
 
@@ -22,6 +22,7 @@ import ImageSwicher from '../../components/ui/imageSwicher/ImageSwicher';
 import RandomColorSwicher from '../../components/ui/randomColorSwicher/RandomColorSwicher';
 
 import LoadingSpinner from '../../components/ui/loadingSpinner/LoadingSpinner';
+import ShowTitleWithBadge from '../../components/ui/showTitleWithBadge/ShowTitleWithBadge';
 
 const Category = props => {
     // from redux
@@ -57,6 +58,9 @@ const Category = props => {
     const { location } = props;
     // multirow
     const multirow = true;
+    const title = category ? category.title : null;
+    const badgeNumber = null;
+
     useEffect(() => {
         const axiosAbortController = new AbortController();
         dispatch(getPage(api, pageTypes.categoryPage, language, url, prepareSearchCode(location.search), axiosAbortController));
@@ -83,9 +87,7 @@ const Category = props => {
                 </StickySidebar>
             }
             <MainContent>
-                <h1 className={styles.categoryName}>
-                    {category ? category.title : <Placeholder customWidth={'20%'} />}
-                </h1>
+                <ShowTitleWithBadge title={title} badgeNumber={badgeNumber} customWidth={20}/>
                 <div>
                     <FixedBar>
                         <ImageSwicher showVisual={showVisual} cookieKey={cookiesDisplayKeys.visual_mode} />

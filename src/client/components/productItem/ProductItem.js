@@ -12,7 +12,8 @@ import Blank from '../svg/blank/Blank';
 import Placeholder from '../placeholder/Placeholder';
 import AddToWishlistSticker from '../ui/addToWishlistSticker/AddToWishlistSticker';
 
-const ProductItem = ({ product, forceVisual = false, index }) => {
+const ProductItem = props => {
+    const { product, forceVisual = false, index = 0, imagesInRootVariant } = props;
     const [variantId, setVariantId] = useState(null);
     const changeVariantId = vId => {
         vId !== variantId && setVariantId(vId);
@@ -26,23 +27,23 @@ const ProductItem = ({ product, forceVisual = false, index }) => {
         variations: null,
         url: null,
         min_price: null,
-        likes: null
+        likes: null,
     };
     /**
      * value that we neet to multiply aspect ratio from api, ex:
      * api -> 4 * 100 => 400 (px)
      */
     const multiplyMesurment = 100;
-    const { 
-        image_width, 
-        image_height, 
-        imagesConfig, 
-        language, 
-        userCurrency, 
-        currency, 
-        slug_urls, 
-        translation, 
-        showVisual, 
+    const {
+        image_width,
+        image_height,
+        imagesConfig,
+        language,
+        userCurrency,
+        currency,
+        slug_urls,
+        translation,
+        showVisual,
         showRandom,
         multilanguage
     } = useSelector(state => ({
@@ -58,8 +59,8 @@ const ProductItem = ({ product, forceVisual = false, index }) => {
         translation: state.PublicConfig.translation,
         multilanguage: state.SystemConfig.multilanguage
     }));
-    const product_url = !placeholder ? 
-    prepUrlFromConfigSlug(language, slug_urls, pageTypes.productPage, null, url, multilanguage) : null;
+    const product_url = !placeholder ?
+        prepUrlFromConfigSlug(language, slug_urls, pageTypes.productPage, null, url, multilanguage) : null;
 
     // useEffect(()=> {   
     //     product && changeVariantId(product.variations[Object.keys(variations)[0]].id);
@@ -73,8 +74,10 @@ const ProductItem = ({ product, forceVisual = false, index }) => {
         changeVariantId(product.variations[Object.keys(variations)[variantIndexStyle]].id);
         const img_base = imagesConfig.url + '/';
         const img_size = imagesConfig.large;
-        const simple = img_base + variations[Object.keys(variations)[variantIndexStyle]].variation_image.poster + img_size;
-        const visual = img_base + variations[Object.keys(variations)[variantIndexStyle]].variation_image.wall + img_size;
+        const imagesHolderUrl = imagesInRootVariant ? product : variations[Object.keys(variations)[variantIndexStyle]];
+
+        const simple = img_base + imagesHolderUrl.variation_image.poster + img_size;
+        const visual = img_base + imagesHolderUrl.variation_image.wall + img_size;
         return showVisualImage ? visual : simple;
     }
 

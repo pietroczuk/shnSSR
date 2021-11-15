@@ -8,6 +8,7 @@ const HomePage = loadable(() => import(/* webpackPrefetch: true */ './pages/Home
 const StaticPage = loadable(() => import(/* webpackPrefetch: true */ './pages/StaticPage/StaticPage'), {});
 const Product = loadable(() => import(/* webpackPrefetch: true */ './pages/Product/Product'), {});
 const Category = loadable(() => import(/* webpackPrefetch: true */ './pages/Category/Category'), {});
+const Wishlist = loadable(() => import(/* webpackPrefetch: true */ './pages/Wishlist/Wishlist'), {});
 const NotFoundPage = loadable(() => import(/* webpackPrefetch: true */ './pages/404/NotFoundPage'), {});
 
 // zamiast klasycznego <router> 
@@ -50,8 +51,8 @@ export const getRoutes = () => {
                         type: pageTypes.categoryPage
                     },
                     {
-                        component: Category,
-                        loadDataOnInit: loadDataOnInit,
+                        component: Wishlist,
+                        // loadDataOnInit: loadDataOnInit,
                         path: '/',
                         exact: true,
                         server_change: false,

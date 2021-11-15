@@ -1,0 +1,19 @@
+.title {
+    .titleBagde {
+        background-color: #ebebeb;
+        width           : 1.7em;
+        display         : inline-flex;
+        text-align      : center;
+        font-size       : 0.6em;
+        height          : 1.7em;
+        border-radius   : 2em;
+        flex-direction  : column;
+        justify-content : center;
+        font-weight     : 500;
+        color           : #7a7a7a;
+        margin-left     : 0.5em;
+        position        : relative;
+        top             : -0.2em;
+        line-height     : 1em;
+    }
+}
