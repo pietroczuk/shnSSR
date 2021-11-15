@@ -6,13 +6,7 @@ const systemConfigSlice = createSlice({
     reducers: {
         setSystemConfig(state, action) {
             return action.payload;
-        },
-        setAbortController(state, action) {
-            state.AxiosAbortController = new AbortController();
-            // console.log(AxiosAbortController);
-            return state;
         }
-        // export const AxiosAbortController = new window.AbortController();
     }
 });
 export const systemConfigActions = systemConfigSlice.actions;

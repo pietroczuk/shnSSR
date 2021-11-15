@@ -15,10 +15,7 @@ loads global config
 */
 export const getGlobalConfig = (api_config, lang) => async dispatch => {
   if (api_config) {
-    // const apiData = { api_config, lang };
-    // dispatch(systemConfigActions.setSystemConfig(apiData));
     dispatch(systemConfigActions.setSystemConfig(api_config));
-
     const page_url = '?lang=' + lang;
     const axios_endpoint = api_config.api.global + page_url;
     return axios.get(api_config.api.url + '/' + axios_endpoint)

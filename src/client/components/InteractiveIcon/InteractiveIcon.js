@@ -1,5 +1,4 @@
 import React from 'react';
-// import { NavLink } from 'react-router-dom';
 import DivNavLink from '../DivNavLink/DivNavLink';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './interactiveIcon.scss';
@@ -7,20 +6,19 @@ import styles from './interactiveIcon.scss';
 import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 
 const InteractiveIcon = (props) => {
-    const { 
-        white, 
-        hoverBg, 
-        hoverOpacity, 
-        customWidth, 
-        customSvgSize, 
-        badgeNumber = 0, 
-        onMouseEnter, 
-        onMouseLeave, 
+    const {
+        white,
+        hoverBg,
+        hoverOpacity,
+        customWidth,
+        customSvgSize,
+        badgeNumber = 0,
+        onMouseEnter,
+        onMouseLeave,
         onClick,
-        special_pages_urls = null, 
-        language, 
+        special_pages_urls = null,
+        language,
         multilanguage,
-        // title
     } = props;
     const width = customWidth ? customWidth : 50;
     const svgSize = customSvgSize ? customSvgSize : 20;
