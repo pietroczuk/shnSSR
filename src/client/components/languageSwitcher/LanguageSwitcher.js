@@ -12,7 +12,7 @@ import GlobeIcon from '../svg/icons/GlobeIcon';
 
 import loadable from '@loadable/component';
 import { ErrorBoundary } from '../Error/ErrorBoundary';
-import LoadingSpinner from '../ui/loadingSpinner/LoadingSpinner';
+import LoadingSpinner from '../helpers/ui/loadingSpinner/LoadingSpinner';
 
 const PL = loadable(() => import(/* webpackPrefetch: true */ '../svg/flags/PL'), {});
 const EN = loadable(() => import(/* webpackPrefetch: true */ '../svg/flags/EN'), {});

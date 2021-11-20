@@ -10,8 +10,8 @@ import { pageTypes, metatags, prepareSearchCode, scrollToTop } from '../../utils
 import Placeholder from '../../components/placeholder/Placeholder';
 // import FixedBar from '../../components/fixedbar/FixedBar';
 
-import AllFeaturesDisplay from '../../components/features/AllFeaturesDisplay';
-
+// import AllFeaturesDisplay from ' ../../components/features/AllFeaturesDisplay';
+import AllFeaturesDisplay from '../../components/helpers/product/features/AllFeaturesDisplay';
 
 const Product = (props) => {
     // from redux

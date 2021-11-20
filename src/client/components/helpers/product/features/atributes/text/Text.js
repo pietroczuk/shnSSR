@@ -4,7 +4,7 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import { Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setProductCurrVarId } from '../../../../redux/actions/actionCreators';
+import { setProductCurrVarId } from '../../../../../../redux/actions/actionCreators';
 // import base64 from 'base-64';
 // import { prepareAttribLink } from '../../../../utils/utilsFrondend';
 

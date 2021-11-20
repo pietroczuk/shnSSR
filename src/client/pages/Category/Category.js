@@ -18,11 +18,11 @@ import MainContent from '../../components/contentCointainer/mainContent/MainCont
 import LeftMenuLinks from '../../components/leftMenuLinks/LeftMenuLinks';
 import ProductItem from '../../components/productItem/ProductItem';
 import FixedBar from '../../components/fixedbar/FixedBar';
-import ImageSwicher from '../../components/ui/imageSwicher/ImageSwicher';
-import RandomColorSwicher from '../../components/ui/randomColorSwicher/RandomColorSwicher';
+import ImageSwicher from '../../components/helpers/ui/imageSwicher/ImageSwicher';
+import RandomColorSwicher from '../../components/helpers/ui/randomColorSwicher/RandomColorSwicher';
 
-import LoadingSpinner from '../../components/ui/loadingSpinner/LoadingSpinner';
-import ShowTitleWithBadge from '../../components/ui/showTitleWithBadge/ShowTitleWithBadge';
+import LoadingSpinner from '../../components/helpers/ui/loadingSpinner/LoadingSpinner';
+import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/ShowTitleWithBadge';
 
 const Category = props => {
     // from redux

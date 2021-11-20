@@ -1,31 +1,31 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import styles from './imageSwicher.scss';
+import styles from './randomColorSwicher.scss';
 
 import NiceSwicher from '../niceSwitcher/NiceSwicher';
 import { useDispatch } from 'react-redux';
-import { setProductVisual } from '../../../redux/actions/actionCreators';
+import { setProductRandomColors } from '../../../../redux/actions/actionCreators';
 
-const ImageSwicher = ({showVisual, cookieKey}) => {
+const RandomColorSwicher = ({showRandom, cookieKey}) => {
     const dispatch = useDispatch();
 
-    const clickHandlerFunction = () => { 
-        dispatch(setProductVisual(cookieKey));
+    const clickHandlerFunction = () => {
+        dispatch(setProductRandomColors(cookieKey));
     }
     const options = [
         {
-            title : "Pokaż aranżację",
+            title : "Losowy blask i papier",
             clickHandler : clickHandlerFunction,
-            default: showVisual ? true: false
+            default: showRandom ? true : false,
         },
         {
-            title : "Schowaj aranżację",
+            title : "Twój osobisty wybór",
             clickHandler : clickHandlerFunction,
-            default: !showVisual ? true: false
+            default: !showRandom ? true : false,
         },
     ]
 
     return <div className={styles.barSwicher}><NiceSwicher options={options} size={0.8}/></div>;
     // return <NiceSwicher options={options} size={0.8}/>
 }
-export default withStyles(styles)(ImageSwicher);
+export default withStyles(styles)(RandomColorSwicher);

@@ -160,12 +160,13 @@ export const renderHtmlFromJson = json => {
 
 // ----------- prepare url links in menu based on array slug from config
 
-export const prepUrlFromConfigSlug = (language, slug_urls, url_type, slug_prefix, url, multilanguage) => {
+export const prepUrlFromConfigSlug = (language, slug_urls, url_type, slug_prefix, url, multilanguage, search = null) => {
     let url_link = '/';
     language && multilanguage ? url_link += language + '/' : null;
     url_type && slug_urls ? url_link += slug_urls[url_type] + '/' : null;
     slug_prefix ? url_link += slug_prefix + '/' : null;
     url ? url_link += url + '/' : null;
+    search ? url_link += '?' + search : null;
     return url_link;
 }
 

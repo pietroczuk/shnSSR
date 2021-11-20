@@ -20,12 +20,12 @@ import MainContent from '../../components/contentCointainer/mainContent/MainCont
 import LeftMenuLinks from '../../components/leftMenuLinks/LeftMenuLinks';
 import ProductItem from '../../components/productItem/ProductItem';
 import FixedBar from '../../components/fixedbar/FixedBar';
-import ImageSwicher from '../../components/ui/imageSwicher/ImageSwicher';
+import ImageSwicher from '../../components/helpers/ui/imageSwicher/ImageSwicher';
 // import RandomColorSwicher from '../../components/ui/randomColorSwicher/RandomColorSwicher';
 
 // import LoadingSpinner from '../../components/ui/loadingSpinner/LoadingSpinner';
 
-import ShowTitleWithBadge from '../../components/ui/showTitleWithBadge/ShowTitleWithBadge';
+import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/ShowTitleWithBadge';
 
 const Wishlist = props => {
     const { title, Wishlist, seo, language, showVisual, cookiesDisplayKeys, wishlistMultiUrl } = useSelector(state => ({
@@ -62,7 +62,7 @@ const Wishlist = props => {
         if (products) {
             return (Object.entries(products).map(
                 ([key, val]) => {
-                    return <ProductItem product={val.productData} key={val.v} imagesInRootVariant={true} />
+                    return <ProductItem product={val.productData} key={val.v} imagesInRootVariant={true} wishlistPage={true}/>
                 })
             );
         }

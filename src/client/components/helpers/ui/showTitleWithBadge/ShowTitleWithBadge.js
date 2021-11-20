@@ -2,7 +2,7 @@ import React from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './showTitleWithBadge.scss';
 
-import Placeholder from '../../placeholder/Placeholder';
+import Placeholder from '../../../placeholder/Placeholder';
 
 const ShowTitleWithBadge = props => {
     const { title, badgeNumber, customWidth } = props;

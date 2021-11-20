@@ -1,11 +1,11 @@
 import React from 'react';
-import styles from './colors.scss';
-import withStyles from 'isomorphic-style-loader/withStyles';
-
 import { Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setProductCurrVarId } from '../../../../redux/actions/actionCreators';
+// import { setProductCurrVarId } from '../../../../../../redux/actions/actionCreators';
+import { setProductCurrVarId } from '../../../../../../redux/actions/actionCreators';
+
+import ColorCircle from './colorCircle/ColorCircle';
 
 const Colors = props => {
 
@@ -28,15 +28,9 @@ const Colors = props => {
         onClick={clickMe}
         aria-label={attrib_title}
         >
-            <div className={`${styles.contener} ${active ? styles.active : ''}`} >
-                <div className={styles.shadow}></div>
-                <div className={styles.color}>
-                    <div className={styles.bg} style={{ backgroundColor: glow_color }}></div>
-                    <div className={styles.bg} style={{ backgroundColor: glow_color }}></div>
-                </div>
-            </div>
+            <ColorCircle active={active} glow_color={glow_color} />
         </Link>
     )
 }
 
-export default withStyles(styles)(Colors);
+export default Colors;

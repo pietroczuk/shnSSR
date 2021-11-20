@@ -23,7 +23,6 @@ const InteractiveIcon = (props) => {
     const width = customWidth ? customWidth : 50;
     const svgSize = customSvgSize ? customSvgSize : 20;
     const link_url = special_pages_urls ? prepUrlFromConfigSlug(language, null, null, null, special_pages_urls, multilanguage) : null;
-    // console.log(title, special_pages_urls, link_url);
     return (
         <DivNavLink to={link_url}
             className={`

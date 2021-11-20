@@ -1,11 +1,11 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './addToWishlistSticker.scss';
-import WishlistIcon from '../../svg/icons/WishlistIcon';
-import HeartFull from '../../svg/icons/HeartFull';
+import WishlistIcon from '../../../svg/icons/WishlistIcon';
+import HeartFull from '../../../svg/icons/HeartFull';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { addToStoreWishlist } from '../../../redux/actions/actionCreators';
+import { addToStoreWishlist } from '../../../../redux/actions/actionCreators';
 
 const AddToWishlistSticker = ({ visualMode = false, showLikes = false, likes, variantId, productData }) => {
     const dispatch = useDispatch();

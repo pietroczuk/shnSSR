@@ -1,0 +1,32 @@
+.featDataCont {
+    font-size     : 0.8em;
+    margin-top    : 0.5em;
+    text-transform: capitalize;
+
+    .attribContener {
+        margin-bottom: 0.3em;
+
+        .title {
+            font-weight: 400;
+            color      : #727272;
+        }
+
+        .attribTitle {
+            font-weight: 500;
+        }
+
+        .attribColor {
+            font-weight  : 300;
+            width        : 1.3em;
+            height       : 1.3em;
+            display      : inline-block;
+            border-radius: 3em;
+            position     : relative;
+            top          : 0.3em;
+        }
+
+        span {
+            margin-right: 0.5em;
+        }
+    }
+}

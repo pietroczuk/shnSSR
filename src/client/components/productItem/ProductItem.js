@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { prepUrlFromConfigSlug, getPriceByCurrency, pageTypes } from '../../utils/utilsFrondend';
+import { prepUrlFromConfigSlug, getPriceByCurrency, pageTypes, isObjectEmpty } from '../../utils/utilsFrondend';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './productItem.scss';
 
-import LoadingSpinner from '../ui/loadingSpinner/LoadingSpinner';
+import LoadingSpinner from '../helpers/ui/loadingSpinner/LoadingSpinner';
 
 import DivNavLink from '../DivNavLink/DivNavLink';
 import Blank from '../svg/blank/Blank';
 import Placeholder from '../placeholder/Placeholder';
-import AddToWishlistSticker from '../ui/addToWishlistSticker/AddToWishlistSticker';
+import AddToWishlistSticker from '../helpers/ui/addToWishlistSticker/AddToWishlistSticker';
+
+import loadable from '@loadable/component';
+
+const ShowSelectedAttributes = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/showSelectedAttributes/ShowSelectedAttributes'), {});
 
 const ProductItem = props => {
-    const { product, forceVisual = false, index = 0, imagesInRootVariant } = props;
+    const { product, forceVisual = false, index = 0, imagesInRootVariant, wishlistPage } = props;
     const [variantId, setVariantId] = useState(null);
     const changeVariantId = vId => {
         vId !== variantId && setVariantId(vId);
@@ -45,7 +49,7 @@ const ProductItem = props => {
         translation,
         showVisual,
         showRandom,
-        multilanguage
+        multilanguage,
     } = useSelector(state => ({
         imagesConfig: state.SystemConfig.images,
         image_width: state.SystemConfig.images.aspect_ratio.width * multiplyMesurment,
@@ -57,10 +61,10 @@ const ProductItem = props => {
         currency: state.SystemConfig.currency,
         slug_urls: state.SystemConfig.urls,
         translation: state.PublicConfig.translation,
-        multilanguage: state.SystemConfig.multilanguage
+        multilanguage: state.SystemConfig.multilanguage,
     }));
     const product_url = !placeholder ?
-        prepUrlFromConfigSlug(language, slug_urls, pageTypes.productPage, null, url, multilanguage) : null;
+        prepUrlFromConfigSlug(language, slug_urls, pageTypes.productPage, null, url, multilanguage, variantId) : null;
 
     // useEffect(()=> {   
     //     product && changeVariantId(product.variations[Object.keys(variations)[0]].id);
@@ -112,6 +116,7 @@ const ProductItem = props => {
                         {placeholder && <Placeholder customWidth={'50%'} />}
                         {!placeholder && title}
                     </div>
+                    {wishlistPage && <ShowSelectedAttributes selectedVariantId={variantId} avaibleVariations={variations} />}
                 </div>
                 <div className={styles.priceContainer}>
                     <div className={styles.label}>
