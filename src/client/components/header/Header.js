@@ -13,6 +13,7 @@ import LanguageSwitcher from '../languageSwitcher/LanguageSwitcher';
 import CurrencySwitcher from '../currencySwitcher/CurrencySwitcher';
 
 import MenuTop from '../menuTop/MenuTop';
+import { getObjectLength } from '../../utils/utilsFrondend';
 
 import { useSelector } from 'react-redux';
 
@@ -52,8 +53,8 @@ const Header = ({ white, whiteTopbar, language, location }) => {
                 {/* <div onClick={setTopbarOpenHandler}>moj header</div> */}
                 <MenuTop language={language} location={location} />
                 <div className={styles.headerRight}>
-                    {all_config_languages && Object.keys(all_config_languages).length > 1 && <LanguageSwitcher />}
-                    {all_config_currencies && Object.keys(all_config_currencies).length > 1 && <CurrencySwitcher />}
+                    {all_config_languages && getObjectLength(all_config_languages) > 1 && <LanguageSwitcher />}
+                    {all_config_currencies && getObjectLength(all_config_currencies) > 1 && <CurrencySwitcher />}
                     <InteractiveIcon hoverBg={true} white={!white}><SearchIcon /></InteractiveIcon>
                     <InteractiveIcon
                         hoverBg={true}

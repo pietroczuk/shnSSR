@@ -6,9 +6,11 @@ import Colors from '../colors/Colors';
 import Text from '../text/Text';
 import SelectedBg from '../text/selectedBg/SelectedBg';
 
+import { getObjectLength } from '../../../../../../utils/utilsFrondend';
+
 
 const SingleFeature = ({ title, atributes, displayType, currentVariationCode, featureKey, allProductVariation }) => {
-    const width = atributes ? Object.keys(atributes).length : 'auto';
+    const width = atributes ? getObjectLength(atributes) : 'auto';
 
     const [activeCodeValue, setActiveCodeValue] = useState('');
 

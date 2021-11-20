@@ -1,8 +1,8 @@
 $lightColor : #727272;
 
 .productItemContainer {
-    flex: 1 1 30%;
-    position: relative;
+    flex     : 1 1 30%;
+    position : relative;
     max-width: 32.666666666666667%;
 
     &.disable {
@@ -13,6 +13,9 @@ $lightColor : #727272;
         background-color: #f3f3f3;
         display         : flex;
         justify-content : center;
+        position        : relative;
+        z-index         : 1;
+
 
         .imageContainerRelative {
             position: relative;
@@ -37,13 +40,15 @@ $lightColor : #727272;
             }
 
             .imagePlaceholder {
-                width: 100%;
+                width  : 100%;
+                display: flex;
+                padding: 2em;
             }
 
             img {
                 display: block;
 
-                .single {
+                &.single {
                     box-shadow: 0px 0px 57px -20px rgb(0 0 0 / 10%);
                 }
             }
@@ -52,10 +57,13 @@ $lightColor : #727272;
     }
 
     .productDataContainer {
-        display        : flex;
-        justify-content: space-between;
-        padding        : 0.7em;
-        gap            : 3em;
+        display         : flex;
+        justify-content : space-between;
+        padding         : 0.7em;
+        gap             : 3em;
+        position        : relative;
+        z-index         : 3;
+        background-color: #fff;
 
         .titleContainer {
             font-size      : 0.85em;
@@ -99,5 +107,9 @@ $lightColor : #727272;
                 font-weight: 500;
             }
         }
+    }
+
+    a {
+        display: block;
     }
 }

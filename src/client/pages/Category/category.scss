@@ -3,16 +3,18 @@
     flex-wrap : wrap;
     gap       : 3em 1%;
     margin-top: 1em;
+    position  : relative;
+    z-index   : 1;
 }
 
 .categoryName {}
 
 .categroryLoadMore {
-    width: 100%;
+    width : 100%;
     height: 5em;
 }
 
 .categoryDescription {
-    font-size: 0.8em;
+    font-size  : 0.8em;
     line-height: 1.4em;
 }

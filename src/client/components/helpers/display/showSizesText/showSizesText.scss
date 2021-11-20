@@ -1,0 +1,13 @@
+.label {
+    font-size  : 0.95em;
+    font-weight: 600;
+
+    .minilabel {
+        font-size  : 0.75em;
+        color      : #7c7c7c;
+        margin-left: 0.7em;
+        font-weight: 400;
+        position   : relative;
+        top        : -0.1em;
+    }
+}

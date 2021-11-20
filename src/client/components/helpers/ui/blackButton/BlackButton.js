@@ -7,7 +7,16 @@ import styles from './blackButton.scss';
 import { isObjectEmpty } from "../../../../utils/utilsFrondend";
 
 const BlackButton = props => {
-    const { label, customBgColor, customHoverBgColor, color, colorHover, clickHandler, showHoverUnderline, sizeEm } = props;
+    const {
+        label,
+        customBgColor,
+        customHoverBgColor,
+        color,
+        colorHover,
+        clickHandler,
+        showHoverUnderline,
+        sizeEm
+    } = props;
 
     const [customSyle, setCustomStyle] = useState({});
     const [customHoverStyle, setCustomHoverStyle] = useState({});

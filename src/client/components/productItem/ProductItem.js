@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { prepUrlFromConfigSlug, getPriceByCurrency, pageTypes, isObjectEmpty } from '../../utils/utilsFrondend';
+import { prepUrlFromConfigSlug, getPriceByCurrency, pageTypes, getObjectLength } from '../../utils/utilsFrondend';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './productItem.scss';
@@ -15,14 +15,22 @@ import AddToWishlistSticker from '../helpers/ui/addToWishlistSticker/AddToWishli
 import loadable from '@loadable/component';
 
 const ShowSelectedAttributes = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/showSelectedAttributes/ShowSelectedAttributes'), {});
-
-import BlackButton from '../helpers/ui/blackButton/BlackButton';
+const ShowAddToCartVariants = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/showAddToCartVariants/ShowAddToCartVariants'), {});
 
 const ProductItem = props => {
     const { product, forceVisual = false, index = 0, imagesInRootVariant, wishlistPage } = props;
     const [variantId, setVariantId] = useState(null);
     const changeVariantId = vId => {
         vId !== variantId && setVariantId(vId);
+    }
+
+    const [onHover, setOnHover] = useState(false);
+
+    const onHoverHandler = () => {
+        setOnHover(true);
+    }
+    const onLeaveHandler = () => {
+        setOnHover(false);
     }
 
     const placeholder = product ? false : true;
@@ -74,7 +82,7 @@ const ProductItem = props => {
 
     const showVisualImage = showVisual || forceVisual ? true : false;
     const getProductImageUrl = () => {
-        let variantIndexStyle = showRandom ? index < Object.keys(variations).length ? index : index % Object.keys(variations).length : 0;
+        let variantIndexStyle = showRandom ? index < getObjectLength(variations) ? index : index % getObjectLength(variations) : 0;
         // set middle images in visual mode to dark background
         variantIndexStyle = variantIndexStyle == 1 ? 4 : variantIndexStyle == 4 ? 1 : variantIndexStyle;
         changeVariantId(product.variations[Object.keys(variations)[variantIndexStyle]].id);
@@ -87,7 +95,9 @@ const ProductItem = props => {
         return showVisualImage ? visual : simple;
     }
 
-    return <div className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}>
+    return <div className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}
+        onMouseEnter={onHoverHandler} onMouseLeave={onLeaveHandler}
+    >
         {!placeholder && <AddToWishlistSticker
             visualMode={showVisualImage}
             showLikes={true}
@@ -108,6 +118,13 @@ const ProductItem = props => {
                     </div>
                 </div>
             </div>
+        </DivNavLink>
+        {wishlistPage && <ShowAddToCartVariants 
+        active={onHover}
+        avaibleVariations={variations}
+        // active={true} 
+        />}
+        <DivNavLink to={product_url}>
             <div className={styles.productDataContainer}>
                 <div className={styles.titleContainer}>
                     <div className={styles.title}>
@@ -129,7 +146,6 @@ const ProductItem = props => {
                     </div>
                 </div>
             </div>
-        <BlackButton label={'dodaj do koszyka'} sizeEm={0.8}/>
         </DivNavLink>
     </div>
 }
