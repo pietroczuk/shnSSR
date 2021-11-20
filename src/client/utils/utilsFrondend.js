@@ -209,7 +209,7 @@ export const isObjectEmpty = obj => {
 }
 
 export const getObjectLength = obj => {
-    return Object.keys(obj).length;
+    return obj !== undefined && obj !== null ? Object.keys(obj).length : 0;
 }
 
 // get search params from url

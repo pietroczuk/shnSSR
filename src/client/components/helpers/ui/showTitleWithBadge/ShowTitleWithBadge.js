@@ -12,7 +12,7 @@ const ShowTitleWithBadge = props => {
     return (
         <h1 className={styles.title}>
             {title}
-            {badgeNumber !== null && <span className={styles.titleBagde}>{badgeNumber}</span>}
+            {badgeNumber !== null && badgeNumber > 0 && <span className={styles.titleBagde}>{badgeNumber}</span>}
         </h1>
     )
 

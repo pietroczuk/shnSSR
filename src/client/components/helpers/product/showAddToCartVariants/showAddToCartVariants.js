@@ -8,14 +8,18 @@ import ShowSizesText from "../../display/showSizesText/ShowSizesText";
 import PopupTitle from '../../display/popupTitle/PopupTitle';
 import ShowPrice from "../../display/showPrice/ShowPrice";
 
-import { getObjectLength } from "../../../../utils/utilsFrondend";
+import { getObjectLength, isObjectEmpty } from "../../../../utils/utilsFrondend";
 
 const ShowAddToCartVariants = props => {
-    const { active, avaibleVariations } = props;
+    const { active, avaibleVariations, productId } = props;
     const [showSubmenu, setShowSubmenu] = useState(false);
 
     const onClickHandler = () => {
-        setShowSubmenu(prevstate => !prevstate);
+        if (getObjectLength(avaibleVariations) > 1) {
+            setShowSubmenu(prevstate => !prevstate);
+        } else {
+            addToCartClickHandler();
+        }
     }
     const { add_to_cart, choise, features } = useSelector(state => ({
         add_to_cart: state.PublicConfig.translation && state.PublicConfig.translation.add_to_cart ? state.PublicConfig.translation.add_to_cart : null,
@@ -31,20 +35,22 @@ const ShowAddToCartVariants = props => {
         // console.log('add to cart');
     }
 
+
     const showRestVariants = avaibleVariations => {
-        if (!getObjectLength(avaibleVariations)) {
+        if (!getObjectLength(avaibleVariations) || isObjectEmpty(features)) {
             return;
         }
+        const featureIdForSelect = Object.keys(features).find(featId => !features[featId].wishlist);
+        const featureTitle = featureIdForSelect ? features[featureIdForSelect].feature_title : '';
+
         return <div className={styles.selectOptionsCointainerRoot}>
             <div className={styles.selectOptionsCointainerChild}>
-                <PopupTitle text={choise} underline={true} />
+                <PopupTitle text={choise + ' ' + featureTitle} underline={true} />
                 <div className={styles.selectOptionsCointainer}>
                     {Object.keys(avaibleVariations).map(variantId => {
                         const variant = avaibleVariations[variantId];
                         const variantCode = variant.variation_code;
-                        const attribId = Object.keys(variantCode).find(v_code =>
-                            features[variantCode[v_code].feature].wishlist === false
-                        );
+                        const attribId = Object.keys(variantCode).find(attribId => variantCode[attribId].feature === featureIdForSelect);
                         const featureId = attribId ? variantCode[attribId].feature : null;
                         // console.log(attribId, variantCode[attribId], variantCode);
                         const attribTitle = featureId ? features[featureId].atributes[attribId].attrib_title : null;

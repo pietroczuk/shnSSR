@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { prepUrlFromConfigSlug, pageTypes, getObjectLength } from '../../utils/utilsFrondend';
 
@@ -24,6 +24,10 @@ const ProductItem = props => {
     const changeVariantId = vId => {
         vId !== variantId && setVariantId(vId);
     }
+    const [variantIndexStyle, setVariantIndexStyle] = useState(0);
+    const changeVariantIndexStyle = varIndexStyle => {
+        variantIndexStyle !== varIndexStyle && setVariantIndexStyle(varIndexStyle);
+    }
 
     const [onHover, setOnHover] = useState(false);
 
@@ -36,14 +40,16 @@ const ProductItem = props => {
 
     const placeholder = product ? false : true;
 
-    const { title, titlekey, variations, url, min_price, likes } = product ? product : {
+    const { title, titlekey, variations, url, min_price, likes, id } = product ? product : {
         title: null,
         titlekey: null,
         variations: null,
         url: null,
         min_price: null,
         likes: null,
+        id: null
     };
+    const productId = id;
     /**
      * value that we neet to multiply aspect ratio from api, ex:
      * api -> 4 * 100 => 400 (px)
@@ -73,16 +79,18 @@ const ProductItem = props => {
     const product_url = !placeholder ?
         prepUrlFromConfigSlug(language, slug_urls, pageTypes.productPage, null, url, multilanguage, variantId) : null;
 
-    // useEffect(()=> {   
-    //     product && changeVariantId(product.variations[Object.keys(variations)[0]].id);
-    // },[])
+    useEffect(()=> {   
+        let newVariantIndexStyle = showRandom ? index < getObjectLength(variations) ? index : index % getObjectLength(variations) : 0;
+        newVariantIndexStyle = newVariantIndexStyle == 1 ? 4 : newVariantIndexStyle == 4 ? 1 : newVariantIndexStyle;
+        changeVariantIndexStyle(newVariantIndexStyle);
+    },[showRandom, index, variations]);
+    useEffect(() => {
+        productId && changeVariantId(variations[Object.keys(variations)[variantIndexStyle]].id);
+        // set middle images in visual mode to dark background
+    },[variantIndexStyle]);
 
     const showVisualImage = showVisual || forceVisual ? true : false;
     const getProductImageUrl = () => {
-        let variantIndexStyle = showRandom ? index < getObjectLength(variations) ? index : index % getObjectLength(variations) : 0;
-        // set middle images in visual mode to dark background
-        variantIndexStyle = variantIndexStyle == 1 ? 4 : variantIndexStyle == 4 ? 1 : variantIndexStyle;
-        changeVariantId(product.variations[Object.keys(variations)[variantIndexStyle]].id);
         const img_base = imagesConfig.url + '/';
         const img_size = imagesConfig.large;
         const imagesHolderUrl = imagesInRootVariant ? product : variations[Object.keys(variations)[variantIndexStyle]];
@@ -92,6 +100,7 @@ const ProductItem = props => {
         return showVisualImage ? visual : simple;
     }
 
+    // console.log(variantId);
     return <div className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}
         onMouseEnter={onHoverHandler} onMouseLeave={onLeaveHandler}
     >
@@ -100,7 +109,7 @@ const ProductItem = props => {
             showLikes={true}
             likes={likes}
             variantId={variantId}
-            productData={product}
+            productId={productId}
         />
         }
         <DivNavLink to={product_url}>
@@ -116,9 +125,10 @@ const ProductItem = props => {
                 </div>
             </div>
         </DivNavLink>
-        {wishlistPage && <ShowAddToCartVariants 
-        avaibleVariations={variations}
-        active={onHover}
+        {wishlistPage && <ShowAddToCartVariants
+            avaibleVariations={variations}
+            active={onHover}
+            productId={productId}
         // active={true} 
         />}
         <DivNavLink to={product_url}>
