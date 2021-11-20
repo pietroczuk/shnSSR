@@ -16,6 +16,8 @@ import loadable from '@loadable/component';
 
 const ShowSelectedAttributes = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/showSelectedAttributes/ShowSelectedAttributes'), {});
 
+import BlackButton from '../helpers/ui/blackButton/BlackButton';
+
 const ProductItem = props => {
     const { product, forceVisual = false, index = 0, imagesInRootVariant, wishlistPage } = props;
     const [variantId, setVariantId] = useState(null);
@@ -127,6 +129,7 @@ const ProductItem = props => {
                     </div>
                 </div>
             </div>
+        <BlackButton label={'dodaj do koszyka'} sizeEm={0.8}/>
         </DivNavLink>
     </div>
 }
