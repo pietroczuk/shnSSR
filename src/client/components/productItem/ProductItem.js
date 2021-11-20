@@ -115,7 +115,7 @@ const ProductItem = props => {
         <DivNavLink to={product_url}>
             <div className={styles.imageContainer}>
                 <div className={styles.imageContainerRelative}>
-                    <div className={`${styles.imagePicture} ${showVisualImage ? styles.noPadding : ''}`}>
+                    <div className={`${styles.imagePicture} ${showVisualImage ? styles.noPadding : ''} ${onHover ? styles.slideTop: ''}`}>
                         {placeholder && <LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={3} customBorderTopColor={'#f3f3f3'} />}
                         {!placeholder && <img style={{ width: '100%', height: '100%' }} className={styles.single} alt={titlekey} src={getProductImageUrl()} />}
                     </div>
