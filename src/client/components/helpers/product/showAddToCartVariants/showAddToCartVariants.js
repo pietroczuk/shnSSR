@@ -6,8 +6,9 @@ import styles from './showAddToCartVariants.scss';
 import BlackButton from "../../ui/blackButton/BlackButton";
 import ShowSizesText from "../../display/showSizesText/ShowSizesText";
 import PopupTitle from '../../display/popupTitle/PopupTitle';
+import ShowPrice from "../../display/showPrice/ShowPrice";
 
-import { getObjectLength, getPriceByCurrency } from "../../../../utils/utilsFrondend";
+import { getObjectLength } from "../../../../utils/utilsFrondend";
 
 const ShowAddToCartVariants = props => {
     const { active, avaibleVariations } = props;
@@ -16,12 +17,10 @@ const ShowAddToCartVariants = props => {
     const onClickHandler = () => {
         setShowSubmenu(prevstate => !prevstate);
     }
-    const { add_to_cart, choise, features, userCurrency, currency } = useSelector(state => ({
+    const { add_to_cart, choise, features } = useSelector(state => ({
         add_to_cart: state.PublicConfig.translation && state.PublicConfig.translation.add_to_cart ? state.PublicConfig.translation.add_to_cart : null,
         choise: state.PublicConfig.translation && state.PublicConfig.translation.choise ? state.PublicConfig.translation.choise : null,
         features: state.PublicConfig.features,
-        userCurrency: state.User.currency,
-        currency: state.SystemConfig.currency,
     }));
 
     useEffect(() => {
@@ -36,27 +35,29 @@ const ShowAddToCartVariants = props => {
         if (!getObjectLength(avaibleVariations)) {
             return;
         }
-        // console.log(avaibleVariations);
-        /**
-         * TODO: check if variants number > 1 !!!!!
-         */
         return <div className={styles.selectOptionsCointainerRoot}>
             <div className={styles.selectOptionsCointainerChild}>
                 <PopupTitle text={choise} underline={true} />
-                {Object.keys(avaibleVariations).map(variantId => {
-                    // console.log(variantId, avaibleVariations);
-                    const productPrice = getPriceByCurrency(avaibleVariations[variantId].variation_price, userCurrency, currency);
-                    return (
-                        <div className={styles.selectOptionsCointainer} key={variantId}>
-                            <div className={styles.selectOption} onClick={addToCartClickHandler}>
-                                <ShowSizesText text={'30x40'} minitext={'3cm 4 cm'} />
-                                <span className={styles.price}>
-                                    {productPrice}
-                                </span>
+                <div className={styles.selectOptionsCointainer}>
+                    {Object.keys(avaibleVariations).map(variantId => {
+                        const variant = avaibleVariations[variantId];
+                        const variantCode = variant.variation_code;
+                        const attribId = Object.keys(variantCode).find(v_code =>
+                            features[variantCode[v_code].feature].wishlist === false
+                        );
+                        const featureId = attribId ? variantCode[attribId].feature : null;
+                        // console.log(attribId, variantCode[attribId], variantCode);
+                        const attribTitle = featureId ? features[featureId].atributes[attribId].attrib_title : null;
+                        const attribTooltip = featureId ? features[featureId].atributes[attribId].attrib_tooltip : null;
+
+                        return (
+                            <div className={styles.selectOption} onClick={addToCartClickHandler} key={variantId}>
+                                <ShowSizesText text={attribTitle} minitext={attribTooltip} />
+                                <ShowPrice allPrices={variant.variation_price} />
                             </div>
-                        </div>
-                    )
-                })}
+                        )
+                    })}
+                </div>
             </div>
         </div>
     }

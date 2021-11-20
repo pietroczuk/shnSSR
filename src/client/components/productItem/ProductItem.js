@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { prepUrlFromConfigSlug, getPriceByCurrency, pageTypes, getObjectLength } from '../../utils/utilsFrondend';
+import { prepUrlFromConfigSlug, pageTypes, getObjectLength } from '../../utils/utilsFrondend';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './productItem.scss';
@@ -11,6 +11,7 @@ import DivNavLink from '../DivNavLink/DivNavLink';
 import Blank from '../svg/blank/Blank';
 import Placeholder from '../placeholder/Placeholder';
 import AddToWishlistSticker from '../helpers/ui/addToWishlistSticker/AddToWishlistSticker';
+import ShowPrice from '../helpers/display/showPrice/ShowPrice';
 
 import loadable from '@loadable/component';
 
@@ -53,8 +54,6 @@ const ProductItem = props => {
         image_height,
         imagesConfig,
         language,
-        userCurrency,
-        currency,
         slug_urls,
         translation,
         showVisual,
@@ -65,10 +64,8 @@ const ProductItem = props => {
         image_width: state.SystemConfig.images.aspect_ratio.width * multiplyMesurment,
         image_height: state.SystemConfig.images.aspect_ratio.height * multiplyMesurment,
         language: state.User.language,
-        userCurrency: state.User.currency,
         showVisual: state.Display.showVisual,
         showRandom: state.Display.showRandom,
-        currency: state.SystemConfig.currency,
         slug_urls: state.SystemConfig.urls,
         translation: state.PublicConfig.translation,
         multilanguage: state.SystemConfig.multilanguage,
@@ -120,8 +117,8 @@ const ProductItem = props => {
             </div>
         </DivNavLink>
         {wishlistPage && <ShowAddToCartVariants 
-        active={onHover}
         avaibleVariations={variations}
+        active={onHover}
         // active={true} 
         />}
         <DivNavLink to={product_url}>
@@ -141,9 +138,7 @@ const ProductItem = props => {
                     <div className={styles.label}>
                         {!placeholder && translation && translation.price_from ? translation.price_from : ''}
                     </div>
-                    <div className={styles.price}>
-                        {!placeholder && getPriceByCurrency(min_price, userCurrency, currency)}
-                    </div>
+                    <ShowPrice allPrices={min_price} />
                 </div>
             </div>
         </DivNavLink>
