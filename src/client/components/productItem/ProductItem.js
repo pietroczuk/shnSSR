@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { prepUrlFromConfigSlug, pageTypes, getObjectLength, cutText } from '../../utils/utilsFrondend';
+import { prepUrlFromConfigSlug, pageTypes, getObjectLength, cutText, runSSRfunctions } from '../../utils/utilsFrondend';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './productItem.scss';
@@ -20,23 +20,6 @@ const ShowAddToCartVariants = loadable(() => import(/* webpackPrefetch: true */ 
 
 const ProductItem = props => {
     const { product, forceVisual = false, index = 0, imagesInRootVariant, wishlistPage } = props;
-    const [variantId, setVariantId] = useState(null);
-    const changeVariantId = vId => {
-        vId !== variantId && setVariantId(vId);
-    }
-    const [variantIndexStyle, setVariantIndexStyle] = useState(0);
-    const changeVariantIndexStyle = varIndexStyle => {
-        variantIndexStyle !== varIndexStyle && setVariantIndexStyle(varIndexStyle);
-    }
-
-    const [onHover, setOnHover] = useState(false);
-
-    const onHoverHandler = () => {
-        setOnHover(true);
-    }
-    const onLeaveHandler = () => {
-        setOnHover(false);
-    }
 
     const placeholder = product ? false : true;
 
@@ -50,11 +33,13 @@ const ProductItem = props => {
         id: null
     };
     const productId = id;
+
     /**
-     * value that we neet to multiply aspect ratio from api, ex:
-     * api -> 4 * 100 => 400 (px)
-     */
+    * value that we neet to multiply aspect ratio from api, ex:
+    * api -> 4 * 100 => 400 (px)
+    */
     const multiplyMesurment = 100;
+
     const {
         image_width,
         image_height,
@@ -76,21 +61,64 @@ const ProductItem = props => {
         translation: state.PublicConfig.translation,
         multilanguage: state.SystemConfig.multilanguage,
     }));
-    const product_url = !placeholder ?
-        prepUrlFromConfigSlug(language, slug_urls, pageTypes.productPage, null, url, multilanguage, variantId) : null;
-
-    useEffect(()=> {   
-        let newVariantIndexStyle = showRandom ? index < getObjectLength(variations) ? index : index % getObjectLength(variations) : 0;
-        newVariantIndexStyle = newVariantIndexStyle == 1 ? 4 : newVariantIndexStyle == 4 ? 1 : newVariantIndexStyle;
-        changeVariantIndexStyle(newVariantIndexStyle);
-        // console.log(newVariantIndexStyle);
-    },[showRandom, index, variations]);
-    useEffect(() => {
-        productId && changeVariantId(variations[Object.keys(variations)[variantIndexStyle]].id);
-        // set middle images in visual mode to dark background
-    },[variantIndexStyle]);
 
     const showVisualImage = showVisual || forceVisual ? true : false;
+
+    const [ssr, setSrr] = useState(true);
+
+    const initialState = {
+        variantIndexStyle: null,
+        variantId: null,
+    }
+    const setVariantIndexStyleHelper = () => {
+        let newVariantIndexStyle = showRandom ? index < getObjectLength(variations) ? index : index % getObjectLength(variations) : 0;
+        newVariantIndexStyle = newVariantIndexStyle == 1 ? 4 : newVariantIndexStyle == 4 ? 1 : newVariantIndexStyle;
+        return newVariantIndexStyle;
+    }
+    const setVariantIdHelper = indexNumber => {
+        return productId && variations[Object.keys(variations)[indexNumber]] ? variations[Object.keys(variations)[indexNumber]].id : null;
+    }
+    if(ssr) {
+        initialState.variantIndexStyle = ssr ? setVariantIndexStyleHelper(): null;
+        initialState.variantId = setVariantIdHelper(initialState.variantIndexStyle);
+    }
+    const [variantIndexStyle, setVariantIndexStyle] = useState(initialState.variantIndexStyle);
+    const changeVariantIndexStyle = varIndexStyle => {
+        variantIndexStyle !== varIndexStyle && setVariantIndexStyle(varIndexStyle);
+    }
+    const setVariantIndexStyleHandler = () => {
+        changeVariantIndexStyle(setVariantIndexStyleHelper());
+    }
+
+    const [variantId, setVariantId] = useState(initialState.variantId);
+    const changeVariantId = vId => {
+        vId !== variantId && setVariantId(vId);
+    }
+    const setVariantIdHandler = () => {
+        changeVariantId(setVariantIdHelper(variantIndexStyle));
+    }
+
+    const variantIdForUrl = variantId ? variantId : initialState.variantId;
+    const productUrl = prepUrlFromConfigSlug(language, slug_urls, pageTypes.productPage, null, url, multilanguage, variantIdForUrl);
+
+    const [onHover, setOnHover] = useState(false);
+
+    const onHoverHandler = () => {
+        setOnHover(true);
+    }
+    const onLeaveHandler = () => {
+        setOnHover(false);
+    }
+    useEffect(() => {
+        setSrr(false);
+    }, []);
+    useEffect(() => {
+        !ssr && setVariantIndexStyleHandler();
+    }, [showRandom, index, variations, setVariantIndexStyleHandler]);
+    useEffect(() => {
+        !ssr && setVariantIdHandler();
+    }, [variantIndexStyle, setVariantIdHandler]);
+
     const getProductImageUrl = () => {
         const img_base = imagesConfig.url + '/';
         const img_size = imagesConfig.large;
@@ -100,8 +128,6 @@ const ProductItem = props => {
         const visual = img_base + imagesHolderUrl.variation_image.wall + img_size;
         return showVisualImage ? visual : simple;
     }
-
-    // console.log(variantId);
     return <div className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}
         onMouseEnter={onHoverHandler} onMouseLeave={onLeaveHandler}
     >
@@ -113,10 +139,10 @@ const ProductItem = props => {
             productId={productId}
         />
         }
-        <DivNavLink to={product_url}>
+        <DivNavLink to={productUrl}>
             <div className={styles.imageContainer}>
                 <div className={styles.imageContainerRelative}>
-                    <div className={`${styles.imagePicture} ${showVisualImage ? styles.noPadding : ''} ${onHover ? styles.slideTop: ''}`}>
+                    <div className={`${styles.imagePicture} ${showVisualImage ? styles.noPadding : ''} ${onHover ? styles.slideTop : ''}`}>
                         {placeholder && <LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={3} customBorderTopColor={'#f3f3f3'} />}
                         {!placeholder && <img style={{ width: '100%', height: '100%' }} className={styles.single} alt={titlekey} src={getProductImageUrl()} />}
                     </div>
@@ -132,7 +158,7 @@ const ProductItem = props => {
             productId={productId}
         // active={true} 
         />}
-        <DivNavLink to={product_url}>
+        <DivNavLink to={productUrl}>
             <div className={styles.productDataContainer}>
                 <div className={styles.titleContainer}>
                     <div className={styles.title}>
