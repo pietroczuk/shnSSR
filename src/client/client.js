@@ -40,7 +40,8 @@ import StyleContext from 'isomorphic-style-loader/StyleContext';
 
 const store_client = configureStore({
     reducer: allReducers,
-    preloadedState: window.__INITIAL_STATE__
+    preloadedState: window.__INITIAL_STATE__,
+    // devTools: false, //process.env.NODE_ENV !== 'production',
 });
 
 const new_routes_config = window.__CONFIG__;
