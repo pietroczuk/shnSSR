@@ -1,3 +1,26 @@
+.featureTitle {
+    display        : flex;
+    flex-direction : column;
+    justify-content: center;
+    margin-right   : 1em;
+
+    .label {
+        text-transform: capitalize;
+        font-size     : 0.7em;
+        letter-spacing: 0.05em;
+        margin-bottom : 0.2em;
+        color         : #8e8e8e;
+        font-weight   : 400;
+    }
+
+    .subtitle {
+        font-weight   : 700;
+        text-transform: uppercase;
+        font-size     : 0.7em;
+        letter-spacing: 0.05em;
+    }
+}
+
 .featureAttribs {
     display: flex;
 
@@ -10,6 +33,6 @@
         display         : flex;
         justify-content : space-between;
         position        : relative;
-        padding: 0 5px;
+        padding         : 0 5px;
     }
 }

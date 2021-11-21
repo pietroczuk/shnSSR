@@ -24,6 +24,8 @@ import RandomColorSwicher from '../../components/helpers/ui/randomColorSwicher/R
 import LoadingSpinner from '../../components/helpers/ui/loadingSpinner/LoadingSpinner';
 import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/ShowTitleWithBadge';
 
+import AllFeaturesDisplay from '../../components/helpers/product/features/AllFeaturesDisplay';
+
 const Category = props => {
     // from redux
     const {
@@ -35,7 +37,8 @@ const Category = props => {
         showVisual,
         showRandom,
         cookiesDisplayKeys,
-        language
+        language,
+        default_variant_code
     } = useSelector(
         state => ({
             seo: state.PublicConfig.config.seo,
@@ -46,7 +49,8 @@ const Category = props => {
             showVisual: state.Display.showVisual,
             showRandom: state.Display.showRandom,
             cookiesDisplayKeys: state.SystemConfig.cookies_keys.display,
-            language: state.User.language
+            language: state.User.language,
+            default_variant_code: state.PublicConfig.default_variant_code
         })
     )
     const dispatch = useDispatch();
@@ -87,11 +91,12 @@ const Category = props => {
                 </StickySidebar>
             }
             <MainContent>
-                <ShowTitleWithBadge title={title} badgeNumber={badgeNumber} customWidth={20}/>
+                <ShowTitleWithBadge title={title} badgeNumber={badgeNumber} customWidth={20} />
                 <div>
                     <FixedBar>
                         <ImageSwicher showVisual={showVisual} cookieKey={cookiesDisplayKeys.visual_mode} />
                         <RandomColorSwicher showRandom={showRandom} cookieKey={cookiesDisplayKeys.random_variant} />
+                        <AllFeaturesDisplay currentVariationCode={default_variant_code} allProductVariation={null} wishlistAvaible={true} displayInline={true}/>
                     </FixedBar>
                     <div className={styles.productsGrid}>{showProducts(category)}</div>
                     <div className={styles.categroryLoadMore}><LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={2} /></div>

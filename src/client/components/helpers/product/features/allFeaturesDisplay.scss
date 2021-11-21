@@ -4,9 +4,22 @@
     margin : 20px;
     width  : 400px;
 
+    &.inline {
+        float          : none;
+        width          : 100%;
+        margin         : auto;
+        display        : flex;
+        justify-content: space-around;
+        font-size: 0.8em;
+
+        .featureContainer {
+            margin: 0;
+        }
+    }
+
     .featureContainer {
         display: flex;
-        margin: 20px;
+        margin : 20px;
 
         // &.featureColor {
         //     color: inherit

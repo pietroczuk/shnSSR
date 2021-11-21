@@ -83,6 +83,7 @@ const ProductItem = props => {
         let newVariantIndexStyle = showRandom ? index < getObjectLength(variations) ? index : index % getObjectLength(variations) : 0;
         newVariantIndexStyle = newVariantIndexStyle == 1 ? 4 : newVariantIndexStyle == 4 ? 1 : newVariantIndexStyle;
         changeVariantIndexStyle(newVariantIndexStyle);
+        // console.log(newVariantIndexStyle);
     },[showRandom, index, variations]);
     useEffect(() => {
         productId && changeVariantId(variations[Object.keys(variations)[variantIndexStyle]].id);

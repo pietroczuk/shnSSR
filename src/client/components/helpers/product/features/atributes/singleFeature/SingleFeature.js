@@ -42,7 +42,7 @@ const SingleFeature = ({ title, atributes, displayType, currentVariationCode, fe
                 // console.log(att_val.attrib_title);
             }
             // console.log('single', allProductVariation);
-            Object.entries(allProductVariation).forEach(([variant_key, variant_val]) => {
+            allProductVariation && Object.entries(allProductVariation).forEach(([variant_key, variant_val]) => {
                 /**********
                      new_variant - input data
                         - key = attrib_key
@@ -90,9 +90,9 @@ const SingleFeature = ({ title, atributes, displayType, currentVariationCode, fe
     return (
         <React.Fragment>
             {/* {console.log('render', activeCodeValue)} */}
-            <div>
-                <p>{title}</p>
-                <p><strong>{activeCodeValue}</strong></p>
+            <div className={styles.featureTitle}>
+                <span className={styles.label}>{title}</span>
+                <span className={styles.subtitle}>{activeCodeValue}</span>
             </div>
             <div className={`${styles.featureAttribs}
                 ${displayType == 'color' ? styles.featureColor : ''}

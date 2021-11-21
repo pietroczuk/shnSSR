@@ -14,30 +14,21 @@ import { useSelector } from 'react-redux';
 
 
 const AllFeaturesDisplay = props => {
+    const { currentVariationCode, allProductVariation, wishlistAvaible, displayInline } = props;
     // from redux
     const features = useSelector(state => state.PublicConfig.features);
-    // from props
-    const { currentVariationCode, allProductVariation } = props;
 
-    // const avaible_features_array = [];
-    // Object.entries(features).forEach(([featureKey, feature]) => 
-    //     {
-    //         current_variation_code.some(c_v_code => feature.
-    //         );
-    //     }
-    // );
-    // console.log('all', currentVariationCode);
-    // useEffect(() => {
-    //     getSearchParams();
-    // }, []);
+    console.log(currentVariationCode, allProductVariation);
 
     return (
-        <div className={styles.featureRootContainer}>
-            {Object.entries(features).map(([featureKey, feature]) =>
-                <div key={featureKey} className={`
-                ${styles.featureContainer} 
-                
-                `}>
+        <div className={`${styles.featureRootContainer} ${displayInline ? styles.inline : ''}`}>
+            {Object.entries(features).map(([featureKey, feature]) => {
+                if(wishlistAvaible) {
+                    if(!feature.wishlist) {
+                        return;
+                    }
+                }
+                return <div key={featureKey} className={styles.featureContainer}>
                     <SingleFeature
                         title={feature.feature_title}
                         atributes={feature.atributes}
@@ -47,6 +38,7 @@ const AllFeaturesDisplay = props => {
                         allProductVariation={allProductVariation}
                     />
                 </div>
+            }
             )}
         </div>
     )
