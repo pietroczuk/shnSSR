@@ -1,5 +1,6 @@
-$lightColor : #727272;
+$lightColor     : #727272;
 $transitionTime : 0.2s;
+$paddingImage   : 2.5em;
 
 .productItemContainer {
     flex     : 1 1 30%;
@@ -30,7 +31,7 @@ $transitionTime : 0.2s;
                 top               : 0;
                 width             : 100%;
                 height            : 100%;
-                padding           : 2.5em;
+                padding           : $paddingImage;
                 -webkit-transition: padding $transitionTime, top $transitionTime;
                 -moz-transition   : padding $transitionTime, top $transitionTime;
                 -o-transition     : padding $transitionTime, top $transitionTime;
@@ -39,6 +40,7 @@ $transitionTime : 0.2s;
                 &.noPadding {
                     padding: 0;
                 }
+
                 &.slideTop {
                     top: -1em;
                 }
@@ -47,7 +49,7 @@ $transitionTime : 0.2s;
             .imagePlaceholder {
                 width  : 100%;
                 display: flex;
-                padding: 2em;
+                padding: $paddingImage;
             }
 
             img {
