@@ -18,7 +18,7 @@ const AllFeaturesDisplay = props => {
     // from redux
     const features = useSelector(state => state.PublicConfig.features);
 
-    console.log(currentVariationCode, allProductVariation);
+    // console.log(currentVariationCode, allProductVariation);
 
     return (
         <div className={`${styles.featureRootContainer} ${displayInline ? styles.inline : ''}`}>

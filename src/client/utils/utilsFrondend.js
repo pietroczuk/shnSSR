@@ -251,3 +251,9 @@ export const clearLocalStorage = key => {
     }
     return false;
 }
+
+export const cutText = (text, cutLenght = 50) => {
+    return text && text.length > cutLenght ?
+        text.substr(0, cutLenght).substr(0, Math.min(text.length, text.lastIndexOf(" "))) + '...' :
+        text ? text : null;
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { prepUrlFromConfigSlug, pageTypes, getObjectLength } from '../../utils/utilsFrondend';
+import { prepUrlFromConfigSlug, pageTypes, getObjectLength, cutText } from '../../utils/utilsFrondend';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './productItem.scss';
@@ -141,7 +141,7 @@ const ProductItem = props => {
                     </div>
                     <div className={styles.subtitle}>
                         {placeholder && <Placeholder customWidth={'50%'} />}
-                        {!placeholder && title}
+                        {!placeholder && cutText(title)}
                     </div>
                     {wishlistPage && <ShowSelectedAttributes selectedVariantId={variantId} avaibleVariations={variations} />}
                 </div>
