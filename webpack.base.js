@@ -36,21 +36,21 @@ module.exports = {
                             esModule: false,
                             // for normal names
                             modules: {
-                                localIdentName: '[local]_[hash:base64:5]' 
+                                localIdentName: '[local]_[hash:base64:5]'
                                 // localIdentName: '[local]' 
                             }
-                           /* modules: {
-                                compileType: "module",
-                                mode: "local",
-                                auto: true,
-                                exportGlobals: true,
-                                localIdentName: "[path][name]__[local]--[hash:base64:5]",
-                                localIdentContext: path.resolve(__dirname, "src"),
-                                localIdentHashPrefix: "my-custom-hash",
-                                namedExport: true,
-                                exportLocalsConvention: "camelCaseOnly",
-                                exportOnlyLocals: false,
-                              }, */
+                            /* modules: {
+                                 compileType: "module",
+                                 mode: "local",
+                                 auto: true,
+                                 exportGlobals: true,
+                                 localIdentName: "[path][name]__[local]--[hash:base64:5]",
+                                 localIdentContext: path.resolve(__dirname, "src"),
+                                 localIdentHashPrefix: "my-custom-hash",
+                                 namedExport: true,
+                                 exportLocalsConvention: "camelCaseOnly",
+                                 exportOnlyLocals: false,
+                               }, */
 
 
                             // localIdentName: '[hash:base64:5]_[name]_[local]' // name of classess
@@ -82,8 +82,18 @@ module.exports = {
             }),
         ],
         // splitChunks: {
-        //     chunks: 'all',
+        //     cacheGroups: {
+        //         default: false,
+        //         vendors: false,
+        //     }
         // }
+
+        // runtimeChunk: false,
+        // splitChunks: {
+        //   chunks(chunk) {
+        //     return false
+        //   },
+        // },
     },
     // devtool: 'source-map',
     // performance: {
@@ -108,11 +118,11 @@ module.exports = {
 
 
 /***
- * 
- * 
- * 
+ *
+ *
+ *
  * studio/Documents/shn/shn2021/node_modules/isomorphic-style-loader
- * 
+ *
  * wywalic node modules i poprawic wersje reacta
- * 
+ *
  */
