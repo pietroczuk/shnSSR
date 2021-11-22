@@ -266,3 +266,15 @@ export const cutText = (text, cutLenght = 50) => {
         text.substr(0, cutLenght).substr(0, Math.min(text.length, text.lastIndexOf(" "))) + '...' :
         text ? text : null;
 }
+
+/**
+ * find the same value in multiple arrays
+ */
+
+export const intersectArray = arrayOfArrays => {
+    // data = [array1, array2, array3, array4],
+    return arrayOfArrays ?
+        arrayOfArrays.length > 1 ?
+            arrayOfArrays.reduce((a, b) => a.filter(c => b.includes(c))) :
+            arrayOfArrays : null;
+}
