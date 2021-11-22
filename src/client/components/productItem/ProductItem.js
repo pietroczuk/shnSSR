@@ -120,6 +120,7 @@ const ProductItem = props => {
     }, [variantIndexStyle, setVariantIdHandler]);
 
     const getProductImageUrl = () => {
+        // return null;
         const img_base = imagesConfig.url + '/';
         const img_size = imagesConfig.large;
         const imagesHolderUrl = imagesInRootVariant ? product : variations[Object.keys(variations)[variantIndexStyle]];
@@ -139,6 +140,7 @@ const ProductItem = props => {
             productId={productId}
         />
         }
+        {/* <link rel="preload" src={getProductImageUrl()} /> */}
         <DivNavLink to={productUrl}>
             <div className={styles.imageContainer}>
                 <div className={styles.imageContainerRelative}>

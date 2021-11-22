@@ -91,7 +91,6 @@ export const rednderHtml = (req, server_store, context, new_routes_config, user_
               <link rel="apple-touch-icon" href="/images/shineposters_favicon_dark_black.png" sizes="144x144">
               <link rel="apple-touch-icon" href="/images/shineposters_favicon_dark_black.png" sizes="152x152">
               <link rel="apple-touch-icon" href="/images/shineposters_favicon_dark_black.png" sizes="180x180">
-              <link rel="preconnect" href="https://cdn.shineposters.com" />
               <meta name="msapplication-TileImage" content="/images/shineposters_favicon_dark_black.png">
               <meta name="msapplication-TileColor" content="#fff">
               <meta name="theme-color" content="#000000">
