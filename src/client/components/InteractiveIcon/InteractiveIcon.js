@@ -10,25 +10,32 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { checkWishlist } from '../../redux/actions/actionCreators';
 
 const InteractiveIcon = (props) => {
+    const { language, multilanguage, special_pages_urls } = useSelector(state => ({
+        language: state.User.language,
+        multilanguage: state.SystemConfig.multilanguage,
+        special_pages_urls: state.SystemConfig.special_pages_urls,
+    }), shallowEqual);
     const {
         white,
         hoverBg,
         hoverOpacity,
         customWidth,
         customSvgSize,
-        badgeNumber = 0,
+        // badgeNumber = 0,
         onMouseEnter,
         onMouseLeave,
         onClick,
-        special_pages_urls = null,
-        language,
-        multilanguage,
+        // special_pages_urls = null,
+        // language,
+        // multilanguage,
         type
     } = props;
-    let badgeNumberDisplay = badgeNumber;
+    let badgeNumberDisplay = 0;
     const width = customWidth ? customWidth : 50;
     const svgSize = customSvgSize ? customSvgSize : 20;
-    const link_url = special_pages_urls ? prepUrlFromConfigSlug(language, null, null, null, special_pages_urls, multilanguage) : null;
+    // console.log(special_pages_urls, type);
+    const link_url_type = type && special_pages_urls[type][language]
+    const link_url = link_url_type ? prepUrlFromConfigSlug(language, null, null, null, link_url_type, multilanguage) : null;
 
     if (type === pageTypes.wishlist) {
         badgeNumberDisplay = useSelector(state => state.Wishlist.length, shallowEqual);

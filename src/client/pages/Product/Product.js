@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './product.scss';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { getPage } from '../../redux/actions/actionCreators';
 import { pageActions } from '../../redux/slices/pageSlice';
+import { publicConfigActions } from '../../redux/slices/publicConfigSlice';
 import { pageTypes, metatags, prepareSearchCode, scrollToTop } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
@@ -17,7 +18,7 @@ const Product = (props) => {
     // from redux
     const { seo, product,
         // type, 
-        api, url_prefix, images_url, all_config_currencies, user_currency_code } = useSelector(
+        api, url_prefix, images_url, all_config_currencies, user_currency_code, ssr } = useSelector(
             state => ({
                 seo: state.PublicConfig.config.seo,
                 product: state.Page.data ? state.Page.data : null,
@@ -25,8 +26,9 @@ const Product = (props) => {
                 url_prefix: state.SystemConfig.urls[pageTypes.productPage],
                 images_url: state.SystemConfig.images,
                 all_config_currencies: state.SystemConfig.currency,
-                user_currency_code: state.User.currency
-            })
+                user_currency_code: state.User.currency,
+                ssr: state.PublicConfig.ssr
+            }), shallowEqual
         )
     const dispatch = useDispatch();
     // seo
@@ -45,7 +47,11 @@ const Product = (props) => {
             axiosAbortController.abort();
             dispatch(pageActions.clearPageData());
         }
-    }, [location.pathname, dispatch])
+    }, [location.pathname])
+
+    useEffect(() => {
+        ssr && dispatch(publicConfigActions.disableSrr());
+    }, [])
 
     return (
         <div>

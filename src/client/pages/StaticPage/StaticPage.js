@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './staticpage.scss';
 
@@ -11,11 +11,6 @@ import { pageTypes, metatags, prepareSearchCode, renderHtmlFromJson, scrollToTop
 import Placeholder from '../../components/placeholder/Placeholder';
 
 const StaticPage = props => {
-    // ssr
-    // const [ssr, setSrr] = useState(true);
-    // const setSrrHandler = val => {
-    //     ssr !== val && setSrr(val);
-    // }
     // from redux
     const { seo, staticpage, url_prefix, api, language, ssr } = useSelector(
         state => ({
@@ -34,12 +29,9 @@ const StaticPage = props => {
     // from props
     const { url } = props.match.params;
     const { location } = props;
-    // useEffect(() => {
-    // }, []);
+
     useEffect(() => {
-        // setSrrHandler(false);
         const axiosAbortController = new AbortController();
-        // console.log('page ssr:' ,ssr);
         !ssr && dispatch(getPage(api, pageTypes.staticPage, language, url, prepareSearchCode(location.search), axiosAbortController));
         scrollToTop(window);
         return () => {

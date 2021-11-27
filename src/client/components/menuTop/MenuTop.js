@@ -9,13 +9,13 @@ import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 
 import SubMenu from './submenu/SubMenu';
 
-const MenuTop = (props) => {
-    const { menu_items, slug_urls, multilanguage } = useSelector(state => ({
+const MenuTop = () => {
+    const { menu_items, slug_urls, multilanguage, language } = useSelector(state => ({
         menu_items: state.PublicConfig.menu.top,
         slug_urls: state.SystemConfig.urls,
-        multilanguage: state.SystemConfig.multilanguage
+        multilanguage: state.SystemConfig.multilanguage,
+        language: state.User.language,
     }), shallowEqual)
-    const { language } = props;
 
     const prepareSubmenu = elem => {
         return <SubMenu elem={elem} prepareLabelMenu={prepareLabelMenu} prepareMenuLink={prepareMenuLink} />

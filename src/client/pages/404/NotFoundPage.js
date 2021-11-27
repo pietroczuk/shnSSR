@@ -1,11 +1,18 @@
-import React from 'react';
-// import s from '../styles/404.css';
+import React, {useEffect} from 'react';
 import styles from './notFoundPage.scss';
-
-// import useStyles from 'isomorphic-style-loader/useStyles';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
+import { publicConfigActions } from '../../redux/slices/publicConfigSlice';
+import { useSelector, shallowEqual } from 'react-redux';
+
 const NotFoundPage = ({ staticContext = {} }) => {
+    const ssr = useSelector(state => state.PublicConfig.ssr, shallowEqual);
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        ssr && dispatch(publicConfigActions.disableSrr());
+    },[])
+
     // useEffect(()=>{
     //     console.log('404');
     // },[]);

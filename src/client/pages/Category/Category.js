@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './category.scss';
 
@@ -28,9 +28,6 @@ import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/S
 import AllFeaturesDisplay from '../../components/helpers/product/features/AllFeaturesDisplay';
 
 const Category = props => {
-    //ssr
-    // const [ssr, setSrr] = useState(true);
-
     // from redux
     const {
         seo,
@@ -39,9 +36,6 @@ const Category = props => {
         api,
         url_prefix,
         category_products,
-        // showVisual,
-        // showRandom,
-        // cookiesDisplayKeys,
         language,
         default_variant_code
     } = useSelector(
@@ -52,9 +46,6 @@ const Category = props => {
             url_prefix: state.SystemConfig.urls[pageTypes.categoryPage],
             api: state.SystemConfig.api,
             category_products: state.SystemConfig.placeholder.category_products,
-            // showVisual: state.Display.showVisual,
-            // showRandom: state.Display.showRandom,
-            // cookiesDisplayKeys: state.SystemConfig.cookies_keys.display,
             language: state.User.language,
             default_variant_code: state.PublicConfig.default_variant_code
         })
@@ -71,9 +62,6 @@ const Category = props => {
     const multirow = true;
     const title = category ? category.title : null;
     const badgeNumber = null;
-    // useEffect(() => {
-    //     setSrr(false);
-    // }, [location.pathname]);
 
     useEffect(() => {
         const axiosAbortController = new AbortController();

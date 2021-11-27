@@ -19,56 +19,36 @@ import { useSelector, shallowEqual } from 'react-redux';
 
 import { pageTypes } from '../../utils/utilsFrondend';
 
-const Header = ({ white, whiteTopbar, language, location }) => {
+const Header = ({ white, whiteTopbar }) => {
     const [topbarOpen, setTopbarOpen] = useState(false);
 
-    const {
-        all_config_languages,
-        all_config_currencies,
-        // wishlistLength,
-        special_pages_urls,
-        multilanguage,
-    } = useSelector(state => ({
+    const { all_config_languages, all_config_currencies, } = useSelector(state => ({
         all_config_languages: state.SystemConfig.language,
         all_config_currencies: state.SystemConfig.currency,
-        // wishlistLength: state.Wishlist.length,
-        special_pages_urls: state.SystemConfig.special_pages_urls,
-        multilanguage: state.SystemConfig.multilanguage,
     }), shallowEqual);
-    // const wishlistLength = 0;
+
     const setTopbarOpenHandler = () => {
         setTopbarOpen(prevstate => !prevstate);
     }
+    // console.log('header location', location);
     return (
         <header id="root_header" className={`${styles.rootHeader} ${!white ? styles.darkHeader : ''}`}>
             {console.log('render header')}
             {topbarOpen && <Topbar closeHandler={setTopbarOpenHandler} white={whiteTopbar} />}
             <div className={styles.headerContent}>
-                <Logo
-                    white={!white}
-                    miniLogo={false}
-                    special_pages_urls={special_pages_urls.homepage[language]}
-                    language={language}
-                    multilanguage={multilanguage}
-                />
+                <Logo white={!white} miniLogo={false} />
                 {/* <div onClick={setTopbarOpenHandler}>moj header</div> */}
-                <MenuTop language={language} location={location} />
+                <MenuTop />
                 <div className={styles.headerRight}>
                     {all_config_languages && getObjectLength(all_config_languages) > 1 && <LanguageSwitcher />}
                     {all_config_currencies && getObjectLength(all_config_currencies) > 1 && <CurrencySwitcher />}
                     <InteractiveIcon hoverBg={true} white={!white}><SearchIcon /></InteractiveIcon>
-                    <InteractiveIcon
-                        hoverBg={true}
-                        white={!white}
-                        // badgeNumber={wishlistLength}
-                        special_pages_urls={special_pages_urls.wishlist[language]}
-                        language={language}
-                        multilanguage={multilanguage}
-                        type={pageTypes.wishlist}
-                    >
+                    <InteractiveIcon hoverBg={true} white={!white} type={pageTypes.wishlist}>
                         <WishlistIcon />
                     </InteractiveIcon>
-                    <InteractiveIcon hoverBg={true} white={!white}><CartIcon /></InteractiveIcon>
+                    <InteractiveIcon hoverBg={true} white={!white} type={pageTypes.cart}>
+                        <CartIcon />
+                    </InteractiveIcon>
                 </div>
             </div>
         </header>

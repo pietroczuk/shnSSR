@@ -2,13 +2,22 @@ import React from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './logo.scss';
 import DivNavLink from '../../DivNavLink/DivNavLink';
-import { prepUrlFromConfigSlug } from '../../../utils/utilsFrondend';
+import { prepUrlFromConfigSlug, pageTypes } from '../../../utils/utilsFrondend';
+import { useSelector, shallowEqual } from 'react-redux';
 
 const Logo = props => {
-    const { white, miniLogo, customWidth, special_pages_urls, language, multilanguage } = props;
+    const { white, miniLogo, customWidth } = props;
+
+    const { language, multilanguage, special_pages_urls } = useSelector(state => ({
+        language: state.User.language,
+        multilanguage: state.SystemConfig.multilanguage,
+        special_pages_urls: state.SystemConfig.special_pages_urls,
+    }), shallowEqual)
+
     const svgWidth = customWidth ? customWidth : 220;
     const logoWidth = miniLogo ? 54 : svgWidth;
-    const link_url = special_pages_urls ? prepUrlFromConfigSlug(language, null, null, null, special_pages_urls, multilanguage) : null;
+    const link_url_type = special_pages_urls[pageTypes.homePage][language]
+    const link_url = link_url_type ? prepUrlFromConfigSlug(language, null, null, null, link_url_type, multilanguage) : null;
     return (
         <div className={styles.logoContener} style={{ width: logoWidth + 'px', minWidth: (logoWidth + 50) + 'px' }}>
             <DivNavLink to={link_url}>
