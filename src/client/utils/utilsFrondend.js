@@ -200,14 +200,6 @@ export const scrollToTop = window => {
     }
 }
 
-// export const runSSRfunctions = funcArr => {
-//     // console.log('ssr server func');
-//     if(typeof window === 'undefined') {
-//         funcArr.forEach(element => {
-//             element();
-//         });
-//     }
-// }
 
 /**
  * Check if object is empty or not

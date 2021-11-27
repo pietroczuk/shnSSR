@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, shallowEqual } from "react-redux";
 
 import { isObjectEmpty } from "../../../../utils/utilsFrondend";
 
@@ -10,9 +10,7 @@ import ColorCircle from "../features/atributes/colors/colorCircle/ColorCircle";
 
 const ShowSelectedAttributes = props => {
     const { selectedVariantId, avaibleVariations } = props;
-    const { features } = useSelector(state => ({
-        features: state.PublicConfig.features
-    }));
+    const features = useSelector(state => state.PublicConfig.features, shallowEqual);
     const productFeatData = avaibleVariations && avaibleVariations[selectedVariantId] && avaibleVariations[selectedVariantId].variation_code ? avaibleVariations[selectedVariantId].variation_code : null;
     if (isObjectEmpty(productFeatData) || isObjectEmpty(features)) {
         return null;

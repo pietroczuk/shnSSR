@@ -32,7 +32,7 @@ const ShowAddToCartVariants = props => {
     }, [active]);
 
     const addToCartClickHandler = () => {
-        // console.log('add to cart');
+        console.log('add to cart');
     }
 
 

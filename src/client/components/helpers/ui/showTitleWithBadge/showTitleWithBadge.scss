@@ -1,9 +1,10 @@
 .title {
     font-size: 1.2em;
+    display: flex;
     .titleBagde {
         background-color: #ebebeb;
         width           : 2em;
-        display         : inline-flex;
+        display         : flex;
         text-align      : center;
         font-size       : 0.6em;
         height          : 2em;
@@ -13,8 +14,8 @@
         font-weight     : 500;
         color           : #7a7a7a;
         margin-left     : 0.5em;
-        position        : relative;
-        top             : -0.2em;
-        line-height     : 1em;
+        // position        : relative;
+        // top             : -0.2em;
+        // line-height     : 1em;
     }
 }

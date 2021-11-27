@@ -1,7 +1,7 @@
 import React from "react";
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './showPrice.scss';
-import { useSelector } from "react-redux";
+import { useSelector, shallowEqual } from "react-redux";
 import { getPriceByCurrency } from "../../../../utils/utilsFrondend";
 
 const ShowPrice = props => {
@@ -10,7 +10,7 @@ const ShowPrice = props => {
     const { userCurrency, currency } = useSelector(state => ({
         userCurrency: state.User.currency,
         currency: state.SystemConfig.currency,
-    }));
+    }), shallowEqual);
 
     const price = getPriceByCurrency(allPrices, userCurrency, currency);
 

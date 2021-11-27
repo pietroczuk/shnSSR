@@ -24,13 +24,9 @@ const InteractiveIcon = (props) => {
         hoverOpacity,
         customWidth,
         customSvgSize,
-        // badgeNumber = 0,
         onMouseEnter,
         onMouseLeave,
         onClick,
-        // special_pages_urls = null,
-        // language,
-        // multilanguage,
         type
     } = props;
     let badgeNumberDisplay = 0;
