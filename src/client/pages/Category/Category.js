@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './category.scss';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { getPage } from '../../redux/actions/actionCreators';
 import { pageActions } from '../../redux/slices/pageSlice';
 import {
@@ -27,31 +27,37 @@ import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/S
 import AllFeaturesDisplay from '../../components/helpers/product/features/AllFeaturesDisplay';
 
 const Category = props => {
+    //ssr
+    // const [ssr, setSrr] = useState(true);
+
     // from redux
     const {
         seo,
+        ssr,
         category,
         api,
         url_prefix,
         category_products,
-        showVisual,
-        showRandom,
-        cookiesDisplayKeys,
+        // showVisual,
+        // showRandom,
+        // cookiesDisplayKeys,
         language,
         default_variant_code
     } = useSelector(
         state => ({
             seo: state.PublicConfig.config.seo,
+            ssr: state.PublicConfig.ssr,
             category: state.Page.data,
             url_prefix: state.SystemConfig.urls[pageTypes.categoryPage],
             api: state.SystemConfig.api,
             category_products: state.SystemConfig.placeholder.category_products,
-            showVisual: state.Display.showVisual,
-            showRandom: state.Display.showRandom,
-            cookiesDisplayKeys: state.SystemConfig.cookies_keys.display,
+            // showVisual: state.Display.showVisual,
+            // showRandom: state.Display.showRandom,
+            // cookiesDisplayKeys: state.SystemConfig.cookies_keys.display,
             language: state.User.language,
             default_variant_code: state.PublicConfig.default_variant_code
         })
+        ,shallowEqual
     )
     const dispatch = useDispatch();
     // seo
@@ -64,16 +70,20 @@ const Category = props => {
     const multirow = true;
     const title = category ? category.title : null;
     const badgeNumber = null;
+    // useEffect(() => {
+    //     setSrr(false);
+    // }, [location.pathname]);
 
     useEffect(() => {
         const axiosAbortController = new AbortController();
-        dispatch(getPage(api, pageTypes.categoryPage, language, url, prepareSearchCode(location.search), axiosAbortController));
+        console.log('category ssr:' ,ssr);
+        !ssr && dispatch(getPage(api, pageTypes.categoryPage, language, url, prepareSearchCode(location.search), axiosAbortController));
         scrollToTop(window);
         return () => {
             axiosAbortController.abort();
             return dispatch(pageActions.clearPageData());
         }
-    }, [location.pathname, dispatch]);
+    }, [location.pathname]);
 
     const showProducts = category => {
         const products = category && category.products ? category.products : null;
@@ -94,8 +104,8 @@ const Category = props => {
                 <ShowTitleWithBadge title={title} badgeNumber={badgeNumber} customWidth={20} />
                 <div>
                     <FixedBar>
-                        <ImageSwicher showVisual={showVisual} cookieKey={cookiesDisplayKeys.visual_mode} />
-                        <RandomColorSwicher showRandom={showRandom} cookieKey={cookiesDisplayKeys.random_variant} />
+                        <ImageSwicher/>
+                        <RandomColorSwicher/>
                         <AllFeaturesDisplay currentVariationCode={default_variant_code} allProductVariation={null} wishlistAvaible={true} displayInline={true}/>
                     </FixedBar>
                     <div className={styles.productsGrid}>{showProducts(category)}</div>

@@ -1,22 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import styles from './currencySwitcher.scss';
 import styles from '../languageSwitcher/languageSwitcher.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
 // import { Link } from 'react-router-dom';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { setUserCurrency } from '../../redux/actions/actionCreators';
+import { getCookie, setCookie } from '../../utils/utilsFrondend';
 
 import CurrencyIcon from '../svg/icons/CurrencyIcon';
 
-const CurrencySwitcher = (props) => {
-    const { all_config_currencies, user_currency, cookieCurrencyKey } = useSelector(state => ({
-        all_config_currencies: state.SystemConfig.currency,
-        user_currency: state.User.currency,
+const CurrencySwitcher = () => {
+    const { currency, cookieCurrencyKey, all_config_currencies } = useSelector(state => ({
+        currency: state.User.currency,
         cookieCurrencyKey: state.SystemConfig.cookies_keys.user_currency,
-
-    }));
+        all_config_currencies: state.SystemConfig.currency,
+        // user_currency: state.User.currency,
+    }), shallowEqual);
 
     const [openSubmenu, setOpenSubmenu] = useState(false);
 
@@ -29,6 +30,11 @@ const CurrencySwitcher = (props) => {
 
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        const cookieCurr = getCookie(cookieCurrencyKey);
+        currency && (currency !== cookieCurr) && setCookie(cookieCurrencyKey, currency);
+    })
+
     const currencyClickHandler = (currency, cookieCurrencyKey) => {
         closeSubmenuHandler();
         dispatch(setUserCurrency(currency, all_config_currencies, cookieCurrencyKey));
@@ -38,14 +44,14 @@ const CurrencySwitcher = (props) => {
         onMouseLeave={closeSubmenuHandler}
     >
         <CurrencyIcon />
-        <span className={styles.chosenLabel}>{user_currency}</span>
+        <span className={styles.chosenLabel}>{currency}</span>
         {openSubmenu && <div className={styles.submenu}>
             <ul className={styles.list}>
                 {Object.entries(all_config_currencies).map(
                     ([curr_key, curr_val]) =>
                         <li
                             key={curr_key}
-                            className={`${(curr_key === user_currency ? styles.active : '')}`}
+                            className={`${(curr_key === currency ? styles.active : '')}`}
                             onClick={() => currencyClickHandler(curr_key, cookieCurrencyKey)}>
                             <span>{curr_val.label}</span>
                         </li>

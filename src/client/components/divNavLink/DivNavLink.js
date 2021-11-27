@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 const DivNavLink = props => {
     const { to, className, style, onMouseEnter, onMouseLeave, onClick } = props;
-    if (props.to) {
+    if (props.to && props.to !== '?') {
         return <NavLink
             to={to}
             className={className}
@@ -16,7 +16,7 @@ const DivNavLink = props => {
         </NavLink>
     }
     return <div
-        to={props.to}
+        // to={props.to}
         className={className}
         style={style}
         onMouseEnter={onMouseEnter}

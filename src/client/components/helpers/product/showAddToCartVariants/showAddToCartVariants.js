@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, shallowEqual } from "react-redux";
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './showAddToCartVariants.scss';
 
@@ -25,7 +25,7 @@ const ShowAddToCartVariants = props => {
         add_to_cart: state.PublicConfig.translation && state.PublicConfig.translation.add_to_cart ? state.PublicConfig.translation.add_to_cart : null,
         choise: state.PublicConfig.translation && state.PublicConfig.translation.choise ? state.PublicConfig.translation.choise : null,
         features: state.PublicConfig.features,
-    }));
+    }), shallowEqual);
 
     useEffect(() => {
         active !== showSubmenu && setShowSubmenu(false);

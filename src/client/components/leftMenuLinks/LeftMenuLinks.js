@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './leftMenuLinks.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 
 import { NavLink } from 'react-router-dom';
 import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
@@ -16,7 +16,7 @@ const LeftMenuLinks = (props) => {
         language: state.User.language,
         slug_urls: state.SystemConfig.urls,
         multilanguage: state.SystemConfig.multilanguage
-    }))
+    }), shallowEqual)
 
     const { location } = props;
     const pathname = location !== undefined ? location.pathname : '';

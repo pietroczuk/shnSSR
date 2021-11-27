@@ -1,11 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 // import { setProductCurrVarId } from '../../../../../../redux/actions/actionCreators';
 import { setProductCurrVarId } from '../../../../../../redux/actions/actionCreators';
 
 import ColorCircle from './colorCircle/ColorCircle';
+import DivNavLink from '../../../../../DivNavLink/DivNavLink';
 
 const Colors = props => {
 
@@ -16,22 +17,22 @@ const Colors = props => {
         return state.Page.data ? state.Page.data.variations : null;
     });
     const dispatch = useDispatch();
-    
+
     const clickMe = () => {
-        if(onClickFunction) {
+        if (onClickFunction) {
             onClickFunction();
-        }else{
+        } else {
             dispatch(setProductCurrVarId(link, variations));
         }
     }
-    
+
     return (
-        <Link to={"?" + link} 
-        onClick={clickMe}
-        aria-label={attrib_title}
+        <DivNavLink to={"?" + link}
+            onClick={clickMe}
+            aria-label={attrib_title}
         >
             <ColorCircle active={active} glow_color={glow_color} />
-        </Link>
+        </DivNavLink>
     )
 }
 

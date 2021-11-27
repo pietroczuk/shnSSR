@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './menuTop.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 
 import { NavLink } from 'react-router-dom';
 import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
@@ -14,7 +14,7 @@ const MenuTop = (props) => {
         menu_items: state.PublicConfig.menu.top,
         slug_urls: state.SystemConfig.urls,
         multilanguage: state.SystemConfig.multilanguage
-    }))
+    }), shallowEqual)
     const { language } = props;
 
     const prepareSubmenu = elem => {
@@ -37,6 +37,7 @@ const MenuTop = (props) => {
         return <div className={styles.label} style={customColor}>{label}</div>
     }
     return <nav className={styles.main_menu}>
+        {/* {console.log('render top menu')} */}
         <ul className={styles.list}>
             {menu_items && menu_items.map((elem, index) =>
                 <li key={index} className={styles.list_li}>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import { prepUrlFromConfigSlug, pageTypes, getObjectLength, cutText, runSSRfunctions } from '../../utils/utilsFrondend';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
@@ -60,7 +60,7 @@ const ProductItem = props => {
         slug_urls: state.SystemConfig.urls,
         translation: state.PublicConfig.translation,
         multilanguage: state.SystemConfig.multilanguage,
-    }));
+    }), shallowEqual);
 
     const showVisualImage = showVisual || forceVisual ? true : false;
 
@@ -133,7 +133,7 @@ const ProductItem = props => {
         onMouseEnter={onHoverHandler} onMouseLeave={onLeaveHandler}
     >
         {!placeholder && <AddToWishlistSticker
-            visualMode={showVisualImage}
+            // visualMode={showVisualImage}
             showLikes={true}
             likes={likes}
             variantId={variantId}

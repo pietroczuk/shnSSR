@@ -4,7 +4,7 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 
 import { useLocation } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 
 import { pageTypes } from '../../utils/utilsFrondend';
 
@@ -48,7 +48,7 @@ const LanguageSwitcher = (props) => {
         urls: state.SystemConfig.urls,
         page: state.Page,
         user_language: state.User.language
-    }));
+    }), shallowEqual);
     const page_ulrs = page.data ? page.data.url : null;
     const page_type = page && page.data && page.data.type ? page.data.type : null;
 

@@ -19,9 +19,9 @@ const AllFeaturesDisplay = props => {
     const features = useSelector(state => state.PublicConfig.features);
 
     // console.log(currentVariationCode, allProductVariation);
-
     return (
         <div className={`${styles.featureRootContainer} ${displayInline ? styles.inline : ''}`}>
+            
             {Object.entries(features).map(([featureKey, feature]) => {
                 if(wishlistAvaible) {
                     if(!feature.wishlist) {

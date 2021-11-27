@@ -5,7 +5,12 @@ const publicConfigSlice = createSlice({
     initialState: {},
     reducers: {
         setPublicConfig(state, action) {
+            action.payload.ssr = true;
             return action.payload;
+        },
+        disableSrr(state) {
+            state.ssr = state.ssr ? false : state.ssr;
+            return state;
         }
     }
 });

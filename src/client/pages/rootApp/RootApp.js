@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react';
 import { renderRoutes } from 'react-router-config';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, 
+    useDispatch, 
+    shallowEqual } from 'react-redux';
 // import { getGlobalConfig } from '../../redux/actions/actionCreators';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './rootapp.scss';
 
 import { setCookie, getCookie } from '../../utils/utilsFrondend';
 // actions
-import { checkWishlist } from '../../redux/actions/actionCreators';
+// import { checkWishlist } from '../../redux/actions/actionCreators';
+import { publicConfigActions } from '../../redux/slices/publicConfigSlice';
 
 // components
 // import Header from '../../components/header/Header';
@@ -24,29 +27,36 @@ const Footer = loadable(() => import(/* webpackPrefetch: true */ '../../componen
 
 
 const RootApp = ({ route, location }) => {
-    const {api, language, currency, cookieLanguageKey, cookieCurrencyKey, initLocalstorageWishlistKey } = useSelector(
+    const {
+        // api, 
+        language, 
+        // currency, 
+        cookieLanguageKey, 
+        // cookieCurrencyKey, 
+        // initLocalstorageWishlistKey 
+    } = useSelector(
         state => ({
-            api: state.SystemConfig.api,
+            // api: state.SystemConfig.api,
             language: state.User.language,
-            currency: state.User.currency,
+            // currency: state.User.currency,
             cookieLanguageKey: state.SystemConfig.cookies_keys.user_language,
-            cookieCurrencyKey: state.SystemConfig.cookies_keys.user_currency,
-            initLocalstorageWishlistKey: state.SystemConfig.localstorage_keys.wishlist,
-        })
+            // cookieCurrencyKey: state.SystemConfig.cookies_keys.user_currency,
+            // initLocalstorageWishlistKey: state.SystemConfig.localstorage_keys.wishlist,
+        }), shallowEqual
     )
-    const dispatch = useDispatch();
-
+    const dispach = useDispatch()
     useEffect(() => {
         const cookieLang = getCookie(cookieLanguageKey);
         language && (language !== cookieLang) && setCookie(cookieLanguageKey, language);
 
-        const cookieCurr = getCookie(cookieCurrencyKey);
-        currency && (currency !== cookieCurr) && setCookie(cookieCurrencyKey, currency);
-
-        dispatch(checkWishlist(initLocalstorageWishlistKey, null, api, language));
+        // const cookieCurr = getCookie(cookieCurrencyKey);
+        // currency && (currency !== cookieCurr) && setCookie(cookieCurrencyKey, currency);
+        dispach(publicConfigActions.disableSrr());
+        // dispatch(checkWishlist(initLocalstorageWishlistKey, null, api, language));
     }, [])
     return (
         <React.Fragment>
+            {console.log('render app')}
             <Header white={true} whiteTopbar={true} language={language} location={location} />
             {renderRoutes(route.routes)}
             <Footer />

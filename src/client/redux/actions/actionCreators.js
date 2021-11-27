@@ -48,8 +48,8 @@ export const getPage = (api, type, lang, url, query, axiosAbortController = null
   }
   // console.log(axios_endpoint);
   if (axios_endpoint) {
-    return axios.get(api.url + '/' + axios_endpoint, 
-            { signal: axiosAbortController ? axiosAbortController.signal : null })
+    return axios.get(api.url + '/' + axios_endpoint,
+      { signal: axiosAbortController ? axiosAbortController.signal : null })
       .then(res =>
         dispatch(pageActions.setPageData({ data: res.data, query: query }))
       )

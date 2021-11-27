@@ -15,32 +15,33 @@ import CurrencySwitcher from '../currencySwitcher/CurrencySwitcher';
 import MenuTop from '../menuTop/MenuTop';
 import { getObjectLength } from '../../utils/utilsFrondend';
 
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
+
+import { pageTypes } from '../../utils/utilsFrondend';
 
 const Header = ({ white, whiteTopbar, language, location }) => {
-    const [topbarOpen, setTopbarOpen] = useState(true);
+    const [topbarOpen, setTopbarOpen] = useState(false);
 
     const {
         all_config_languages,
         all_config_currencies,
-        wishlistLength,
+        // wishlistLength,
         special_pages_urls,
         multilanguage,
-        multicurrency
     } = useSelector(state => ({
         all_config_languages: state.SystemConfig.language,
         all_config_currencies: state.SystemConfig.currency,
-        wishlistLength: state.Wishlist.length,
+        // wishlistLength: state.Wishlist.length,
         special_pages_urls: state.SystemConfig.special_pages_urls,
         multilanguage: state.SystemConfig.multilanguage,
-        multicurrency: state.SystemConfig.multicurrency
-    }));
-
+    }), shallowEqual);
+    // const wishlistLength = 0;
     const setTopbarOpenHandler = () => {
         setTopbarOpen(prevstate => !prevstate);
     }
     return (
         <header id="root_header" className={`${styles.rootHeader} ${!white ? styles.darkHeader : ''}`}>
+            {console.log('render header')}
             {topbarOpen && <Topbar closeHandler={setTopbarOpenHandler} white={whiteTopbar} />}
             <div className={styles.headerContent}>
                 <Logo
@@ -59,10 +60,11 @@ const Header = ({ white, whiteTopbar, language, location }) => {
                     <InteractiveIcon
                         hoverBg={true}
                         white={!white}
-                        badgeNumber={wishlistLength}
+                        // badgeNumber={wishlistLength}
                         special_pages_urls={special_pages_urls.wishlist[language]}
                         language={language}
                         multilanguage={multilanguage}
+                        type={pageTypes.wishlist}
                     >
                         <WishlistIcon />
                     </InteractiveIcon>
