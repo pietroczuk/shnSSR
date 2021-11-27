@@ -8,12 +8,15 @@ import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 import { pageTypes } from '../../utils/utilsFrondend';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { checkWishlist } from '../../redux/actions/actionCreators';
+import AssitiveText from '../helpers/display/assitiveText/AssitiveText';
 
 const InteractiveIcon = (props) => {
-    const { language, multilanguage, special_pages_urls } = useSelector(state => ({
+    const { language, multilanguage, special_pages_urls, translation } = useSelector(state => ({
         language: state.User.language,
         multilanguage: state.SystemConfig.multilanguage,
         special_pages_urls: state.SystemConfig.special_pages_urls,
+        translation: state.PublicConfig.translation
+
     }), shallowEqual);
     const {
         white,
@@ -64,6 +67,7 @@ const InteractiveIcon = (props) => {
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >
+           <AssitiveText>{translation[type]}</AssitiveText>
             <div className={styles.svgContener}
                 style={{
                     maxWidth: svgSize + 'px',

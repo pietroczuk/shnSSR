@@ -4,14 +4,16 @@ import styles from './logo.scss';
 import DivNavLink from '../../DivNavLink/DivNavLink';
 import { prepUrlFromConfigSlug, pageTypes } from '../../../utils/utilsFrondend';
 import { useSelector, shallowEqual } from 'react-redux';
+import AssitiveText from '../../helpers/display/assitiveText/AssitiveText';
 
 const Logo = props => {
     const { white, miniLogo, customWidth } = props;
 
-    const { language, multilanguage, special_pages_urls } = useSelector(state => ({
+    const { language, multilanguage, special_pages_urls, homepage } = useSelector(state => ({
         language: state.User.language,
         multilanguage: state.SystemConfig.multilanguage,
         special_pages_urls: state.SystemConfig.special_pages_urls,
+        homepage: state.PublicConfig.translation.homepage,
     }), shallowEqual)
 
     const svgWidth = customWidth ? customWidth : 220;
@@ -21,7 +23,7 @@ const Logo = props => {
     return (
         <div className={styles.logoContener} style={{ width: logoWidth + 'px', minWidth: (logoWidth + 50) + 'px' }}>
             <DivNavLink to={link_url}>
-                <span className={styles.assitiveText}>Homepage</span>
+                <AssitiveText>{homepage}</AssitiveText>
                 <div className={`${styles.logo} ${white ? styles.whiteLogo : ''}`}
                     style={{ width: svgWidth + 'px' }}>
                     <svg viewBox="0 0 528.59 41.316">
