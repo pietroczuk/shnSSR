@@ -49,7 +49,7 @@ const Category = props => {
             language: state.User.language,
             default_variant_code: state.PublicConfig.default_variant_code
         })
-        ,shallowEqual
+        , shallowEqual
     )
     const dispatch = useDispatch();
     // seo
@@ -65,7 +65,7 @@ const Category = props => {
 
     useEffect(() => {
         const axiosAbortController = new AbortController();
-        console.log('category ssr:' ,ssr);
+        console.log('category ssr:', ssr);
         !ssr && dispatch(getPage(api, pageTypes.categoryPage, language, url, prepareSearchCode(location.search), axiosAbortController));
         scrollToTop(window);
         return () => {
@@ -76,7 +76,7 @@ const Category = props => {
 
     useEffect(() => {
         ssr && dispatch(publicConfigActions.disableSrr());
-    },[])
+    }, [])
 
     const showProducts = category => {
         const products = category && category.products ? category.products : null;
@@ -97,9 +97,15 @@ const Category = props => {
                 <ShowTitleWithBadge title={title} badgeNumber={badgeNumber} customWidth={20} />
                 <div>
                     <FixedBar>
-                        <ImageSwicher/>
-                        <RandomColorSwicher/>
-                        <AllFeaturesDisplay currentVariationCode={default_variant_code} allProductVariation={null} wishlistAvaible={true} displayInline={true}/>
+                        <ImageSwicher />
+                        <RandomColorSwicher />
+                        <AllFeaturesDisplay
+                            currentVariationCode={default_variant_code}
+                            allProductVariation={null}
+                            wishlistAvaible={true}
+                            displayInline={true}
+                            globalChange={true}
+                        />
                     </FixedBar>
                     <div className={styles.productsGrid}>{showProducts(category)}</div>
                     <div className={styles.categroryLoadMore}><LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={2} /></div>

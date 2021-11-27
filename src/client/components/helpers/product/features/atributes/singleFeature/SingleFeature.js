@@ -9,21 +9,20 @@ import SelectedBg from '../text/selectedBg/SelectedBg';
 import { getObjectLength } from '../../../../../../utils/utilsFrondend';
 
 
-const SingleFeature = ({ title, atributes, displayType, currentVariationCode, featureKey, allProductVariation }) => {
+const SingleFeature = props => {
+    const { title, atributes, displayType, currentVariationCode, featureKey, allProductVariation, globalChange } = props;
     const width = atributes ? getObjectLength(atributes) : 'auto';
 
     const [activeCodeValue, setActiveCodeValue] = useState('');
 
     let bgPossition = 0;
-    // let activeCodeValue = '';
 
     const setActiveCodeValueHandler = codeValue => {
         activeCodeValue != codeValue && setActiveCodeValue(codeValue); // : null;
     }
     const displaySingleFeature = () => {
-        // setActiveCodeValue('aaaaaa');
         return Object.entries(atributes).map(([att_key, att_val], index) => {
-            const active = currentVariationCode[att_key] ? true : false;
+            const active = currentVariationCode[featureKey] && currentVariationCode[featureKey].atrib_id == att_key ? true : false;
             let matchCode = '';
             const new_variant = { ...currentVariationCode };
             // active ? setActiveCodeValue(att_val.attrib_title): null;
@@ -74,6 +73,8 @@ const SingleFeature = ({ title, atributes, displayType, currentVariationCode, fe
                         active={active}
                         width={width}
                         link={matchCode}
+                        globalChange={globalChange}
+                        featureKey={featureKey}
                     />
                 case 'text':
                     return <Text
@@ -82,6 +83,8 @@ const SingleFeature = ({ title, atributes, displayType, currentVariationCode, fe
                         active={active}
                         width={width}
                         link={matchCode}
+                        globalChange={globalChange}
+                        featureKey={featureKey}
                     />
             }
         })

@@ -20,8 +20,8 @@ const ImageDisplay = props => {
     const img_base = imagesConfig.url + '/';
     const img_size = imagesConfig.large;
 
-    const simple = !placeholder ? img_base + imagesHolderUrl.variation_image.poster + img_size : null;
-    const visual = !placeholder ? img_base + imagesHolderUrl.variation_image.wall + img_size : null;
+    const simple = !placeholder && imagesHolderUrl ? img_base + imagesHolderUrl.variation_image.poster + img_size : null;
+    const visual = !placeholder && imagesHolderUrl ? img_base + imagesHolderUrl.variation_image.wall + img_size : null;
     const image_url = showVisual ? visual : simple;
 
     return (

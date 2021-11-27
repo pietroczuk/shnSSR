@@ -65,6 +65,15 @@ export const setProductCurrVarId = (product_variant_id, variations) => dispatch 
   }
 }
 
+export const setGlobalDefaultVariantcode = (featureKey, value) => dispatch => {
+  /**
+   * todo: check if feature key exist and attrib id in public config data
+   */
+  if (featureKey && value) {
+    dispatch(publicConfigActions.setSelectedVariantCode({ key: featureKey, val: value }));
+  }
+}
+
 
 /*** ----------------------- USER
  * 
@@ -86,8 +95,8 @@ export const setUserCurrency = (currency_code, all_currencies, cookieCurrencyKey
 export const setProductVisual = (cookieKey) => dispatch => {
   dispatch(displayActions.setProductVisual(cookieKey));
 }
-export const setProductRandomColors = (cookieKey) => dispatch => {
-  dispatch(displayActions.setProductRandomColors(cookieKey));
+export const setProductRandomColors = (cookieKey, randomValue = null) => dispatch => {
+  dispatch(displayActions.setProductRandomColors({ cookieKey: cookieKey, randomValue: randomValue }));
 }
 /**
  * Add to wishlist

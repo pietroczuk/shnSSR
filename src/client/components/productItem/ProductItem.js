@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
-import { prepUrlFromConfigSlug, pageTypes, getObjectLength, cutText } from '../../utils/utilsFrondend';
+import { prepUrlFromConfigSlug, pageTypes, getObjectLength, cutText, intersectArray } from '../../utils/utilsFrondend';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './productItem.scss';
@@ -17,18 +17,19 @@ const ShowSelectedAttributes = loadable(() => import(/* webpackPrefetch: true */
 const ShowAddToCartVariants = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/showAddToCartVariants/ShowAddToCartVariants'), {});
 
 const ProductItem = props => {
-    const { product, forceVisual, index = 0, imagesInRootVariant, wishlistPage } = props;
+    const { product, forceVisual, index = 0, imagesInRootVariant, wishlistPage, wishlistVariantId } = props;
 
     const placeholder = product ? false : true;
 
-    const { title, titlekey, variations, url, min_price, likes, id } = product ? product : {
+    const { title, titlekey, variations, url, min_price, likes, id, hashmap } = product ? product : {
         title: null,
         titlekey: null,
         variations: null,
         url: null,
         min_price: null,
         likes: null,
-        id: null
+        id: null,
+        hashmap: null
     };
     const productId = id;
 
@@ -38,50 +39,17 @@ const ProductItem = props => {
         translation,
         showRandom,
         multilanguage,
+        default_variant_code,
+        ssr,
     } = useSelector(state => ({
         language: state.User.language,
         showRandom: state.Display.showRandom,
         slug_urls: state.SystemConfig.urls,
         translation: state.PublicConfig.translation,
         multilanguage: state.SystemConfig.multilanguage,
+        default_variant_code: state.PublicConfig.default_variant_code,
+        ssr: state.PublicConfig.ssr,
     }), shallowEqual);
-
-    const [ssr, setSrr] = useState(true);
-
-    const initialState = {
-        variantIndexStyle: null,
-        variantId: null,
-    }
-    const setVariantIndexStyleHelper = () => {
-        let newVariantIndexStyle = showRandom ? index < getObjectLength(variations) ? index : index % getObjectLength(variations) : 0;
-        newVariantIndexStyle = newVariantIndexStyle == 1 ? 4 : newVariantIndexStyle == 4 ? 1 : newVariantIndexStyle;
-        return newVariantIndexStyle;
-    }
-    const setVariantIdHelper = indexNumber => {
-        return productId && variations[Object.keys(variations)[indexNumber]] ? variations[Object.keys(variations)[indexNumber]].id : null;
-    }
-    if (ssr) {
-        initialState.variantIndexStyle = ssr ? setVariantIndexStyleHelper() : null;
-        initialState.variantId = setVariantIdHelper(initialState.variantIndexStyle);
-    }
-    const [variantIndexStyle, setVariantIndexStyle] = useState(initialState.variantIndexStyle);
-    const changeVariantIndexStyle = varIndexStyle => {
-        variantIndexStyle !== varIndexStyle && setVariantIndexStyle(varIndexStyle);
-    }
-    const setVariantIndexStyleHandler = () => {
-        changeVariantIndexStyle(setVariantIndexStyleHelper());
-    }
-
-    const [variantId, setVariantId] = useState(initialState.variantId);
-    const changeVariantId = vId => {
-        vId !== variantId && setVariantId(vId);
-    }
-    const setVariantIdHandler = () => {
-        changeVariantId(setVariantIdHelper(variantIndexStyle));
-    }
-
-    const variantIdForUrl = variantId ? variantId : initialState.variantId;
-    const productUrl = prepUrlFromConfigSlug(language, slug_urls, pageTypes.productPage, null, url, multilanguage, variantIdForUrl);
 
     const [onHover, setOnHover] = useState(false);
 
@@ -91,21 +59,48 @@ const ProductItem = props => {
     const onLeaveHandler = () => {
         !placeholder && setOnHover(false);
     }
-    useEffect(() => {
-        setSrr(false);
-    }, []);
-    useEffect(() => {
-        !ssr && setVariantIndexStyleHandler();
-    }, [showRandom, index, variations, setVariantIndexStyleHandler]);
-    useEffect(() => {
-        !ssr && setVariantIdHandler();
-    }, [variantIndexStyle, setVariantIdHandler]);
 
-    const imagesHolderUrl = imagesInRootVariant ? product : variations ? variations[Object.keys(variations)[variantIndexStyle]] : null;
-    
+    const [variantId, setVariantId] = useState(null);
+    const changeVariantId = vId => {
+        vId !== variantId && setVariantId(vId);
+    }
+
+    const setupVariantIdOnHashmap = () => {
+        if (hashmap && !showRandom) {
+            const productVarianArray = [];
+            for (const featureKey in default_variant_code) {
+                if (default_variant_code[featureKey].wishlist) {
+                    productVarianArray.push(hashmap[featureKey][default_variant_code[featureKey].atrib_id]);
+                }
+            }
+            const variantFound = productVarianArray.length > 1 ? intersectArray(productVarianArray) : [];
+            variantFound[0] && changeVariantId(variantFound[0]);
+        }
+        if (showRandom) {
+            let newVariantIndexStyle = index < getObjectLength(variations) ? index : index % getObjectLength(variations);
+            newVariantIndexStyle = newVariantIndexStyle == 1 ? 4 : newVariantIndexStyle == 4 ? 1 : newVariantIndexStyle;
+            newVariantIndexStyle = productId && variations[Object.keys(variations)[newVariantIndexStyle]] ? variations[Object.keys(variations)[newVariantIndexStyle]].id : null
+            newVariantIndexStyle && changeVariantId(newVariantIndexStyle);
+        }
+    }
+
+    ssr && !wishlistPage && setupVariantIdOnHashmap();
+
+    useEffect(() => {
+        !ssr && !wishlistPage && setupVariantIdOnHashmap();
+    }, [default_variant_code, showRandom]);
+
+    useEffect(() => {
+        wishlistVariantId && changeVariantId(wishlistVariantId);
+    }, [wishlistPage, wishlistVariantId])
+
+    const productUrl = prepUrlFromConfigSlug(language, slug_urls, pageTypes.productPage, null, url, multilanguage, variantId);
+    const imagesHolderUrl = imagesInRootVariant ? product : variations ? variations[variantId] : null;
+
     return <div className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}
         onMouseEnter={onHoverHandler} onMouseLeave={onLeaveHandler}
     >
+        {/* {console.log(variantId)} */}
         {!placeholder && <AddToWishlistSticker
             showLikes={true}
             likes={likes}
@@ -113,9 +108,8 @@ const ProductItem = props => {
             productId={productId}
         />
         }
-        {/* <link rel="preload" src={getProductImageUrl()} /> */}
         <DivNavLink to={productUrl}>
-            <ImageDisplay title={title} imagesHolderUrl={imagesHolderUrl} forceVisual={forceVisual} onHover={onHover} placeholder={placeholder}/>
+            <ImageDisplay title={title} imagesHolderUrl={imagesHolderUrl} forceVisual={forceVisual} onHover={onHover} placeholder={placeholder} />
         </DivNavLink>
         {wishlistPage && <ShowAddToCartVariants
             avaibleVariations={variations}

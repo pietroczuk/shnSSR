@@ -1,9 +1,10 @@
-$lightColor     : #727272;
+$lightColor : #727272;
 
 .productItemContainer {
     flex     : 1 1 30%;
     position : relative;
     max-width: 32.666666666666667%;
+    overflow : hidden;
 
     &.disable {
         cursor: not-allowed;

@@ -2,29 +2,22 @@ import React from 'react';
 import styles from './allFeaturesDisplay.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
-// import Colors from './atributes/colors/Colors';
-// import Text from './atributes/text/Text';
-// import SelectedBg from './atributes/text/selectedBg/SelectedBg';
 import SingleFeature from './atributes/singleFeature/SingleFeature';
 
-import { useSelector } from 'react-redux';
-// import { set_variant_code } from '../../redux/actions/all_actions';
-
-// import { getSearchParams } from '../../utils/utilsFrondend';
-
+import { useSelector, shallowEqual } from 'react-redux';
 
 const AllFeaturesDisplay = props => {
-    const { currentVariationCode, allProductVariation, wishlistAvaible, displayInline } = props;
+    const { currentVariationCode, allProductVariation, wishlistAvaible, displayInline, globalChange } = props;
     // from redux
-    const features = useSelector(state => state.PublicConfig.features);
-
-    // console.log(currentVariationCode, allProductVariation);
+    const { features, showRandom } = useSelector(state => ({
+        features: state.PublicConfig.features,
+        showRandom: state.Display.showRandom
+    }), shallowEqual);
     return (
-        <div className={`${styles.featureRootContainer} ${displayInline ? styles.inline : ''}`}>
-            
+        <div className={`${styles.featureRootContainer} ${displayInline ? styles.inline : ''} ${showRandom && displayInline ? styles.halfvisible: ''}`}>
             {Object.entries(features).map(([featureKey, feature]) => {
-                if(wishlistAvaible) {
-                    if(!feature.wishlist) {
+                if (wishlistAvaible) {
+                    if (!feature.wishlist) {
                         return;
                     }
                 }
@@ -36,6 +29,7 @@ const AllFeaturesDisplay = props => {
                         featureKey={featureKey}
                         currentVariationCode={currentVariationCode}
                         allProductVariation={allProductVariation}
+                        globalChange={globalChange}
                     />
                 </div>
             }

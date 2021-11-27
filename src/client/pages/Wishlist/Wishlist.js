@@ -5,9 +5,10 @@ import styles from './wishlist.scss';
 import { useSelector, useDispatch } from 'react-redux';
 // import { getPage , serpa } from '../../redux/actions/actionCreators';
 import { pageActions } from '../../redux/slices/pageSlice';
+import { publicConfigActions } from '../../redux/slices/publicConfigSlice';
 import {
-    pageTypes, 
-    metatags, 
+    pageTypes,
+    metatags,
     // prepareSearchCode,
     // renderHtmlFromJson,
     // scrollToTop
@@ -28,14 +29,15 @@ import ImageSwicher from '../../components/helpers/ui/imageSwicher/ImageSwicher'
 import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/ShowTitleWithBadge';
 
 const Wishlist = props => {
-    const { title, Wishlist, seo, language, showVisual, cookiesDisplayKeys, wishlistMultiUrl } = useSelector(state => ({
+    const { title, Wishlist, seo, language, showVisual, cookiesDisplayKeys, wishlistMultiUrl, ssr } = useSelector(state => ({
         title: state.PublicConfig.translation.wishlist,
         Wishlist: state.Wishlist,
         seo: state.PublicConfig.config.seo,
         language: state.User.language,
         showVisual: state.Display.showVisual,
         cookiesDisplayKeys: state.SystemConfig.cookies_keys.display,
-        wishlistMultiUrl: state.SystemConfig.special_pages_urls[pageTypes.wishlist]
+        wishlistMultiUrl: state.SystemConfig.special_pages_urls[pageTypes.wishlist],
+        ssr: state.PublicConfig.ssr,
     })
     );
     const { location } = props;
@@ -51,22 +53,33 @@ const Wishlist = props => {
                 type: pageTypes.specialPage
             }
         }
-        dispatch(pageActions.setPageData({ data: wishlistPageObj }));
+        !ssr && dispatch(pageActions.setPageData({ data: wishlistPageObj }));
         return () => {
             return dispatch(pageActions.clearPageData());
         }
-    },[]);
+    }, []);
 
     const showProducts = wishlistData => {
         const products = wishlistData && wishlistData.products ? wishlistData.products : null;
         if (products) {
             return (Object.entries(products).map(
                 ([key, val]) => {
-                    return <ProductItem product={val.productData} key={val.v} imagesInRootVariant={true} wishlistPage={true}/>
+                    return <ProductItem
+                        product={val.productData}
+                        key={val.v}
+                        imagesInRootVariant={true}
+                        wishlistPage={true}
+                        wishlistVariantId={val.v}
+                    />
                 })
             );
         }
     }
+
+    useEffect(() => {
+        ssr && dispatch(publicConfigActions.disableSrr());
+    }, [])
+
     return (
         <ContentCointainer miltirow={multirow}>
             {metatags(null, null, seo, url, language, null)}
