@@ -5,6 +5,7 @@ import styles from './staticpage.scss';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { getPage } from '../../redux/actions/actionCreators';
 import { pageActions } from '../../redux/slices/pageSlice';
+import { publicConfigActions } from '../../redux/slices/publicConfigSlice';
 import { pageTypes, metatags, prepareSearchCode, renderHtmlFromJson, scrollToTop } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
@@ -45,7 +46,11 @@ const StaticPage = props => {
             axiosAbortController.abort();
             return dispatch(pageActions.clearPageData());
         }
-    },[location.pathname]);
+    }, [location.pathname]);
+
+    useEffect(() => {
+        ssr && dispatch(publicConfigActions.disableSrr());
+    }, [])
 
     return (
         <div>

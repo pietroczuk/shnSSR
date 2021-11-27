@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { renderRoutes } from 'react-router-config';
 import { useSelector, 
-    useDispatch, 
+    // useDispatch, 
     shallowEqual } from 'react-redux';
 // import { getGlobalConfig } from '../../redux/actions/actionCreators';
 import withStyles from 'isomorphic-style-loader/withStyles';
@@ -10,7 +10,7 @@ import styles from './rootapp.scss';
 import { setCookie, getCookie } from '../../utils/utilsFrondend';
 // actions
 // import { checkWishlist } from '../../redux/actions/actionCreators';
-import { publicConfigActions } from '../../redux/slices/publicConfigSlice';
+// import { publicConfigActions } from '../../redux/slices/publicConfigSlice';
 
 // components
 // import Header from '../../components/header/Header';
@@ -44,14 +44,14 @@ const RootApp = ({ route, location }) => {
             // initLocalstorageWishlistKey: state.SystemConfig.localstorage_keys.wishlist,
         }), shallowEqual
     )
-    const dispach = useDispatch()
+    // const dispach = useDispatch()
     useEffect(() => {
         const cookieLang = getCookie(cookieLanguageKey);
         language && (language !== cookieLang) && setCookie(cookieLanguageKey, language);
 
         // const cookieCurr = getCookie(cookieCurrencyKey);
         // currency && (currency !== cookieCurr) && setCookie(cookieCurrencyKey, currency);
-        dispach(publicConfigActions.disableSrr());
+        // dispach(publicConfigActions.disableSrr());
         // dispatch(checkWishlist(initLocalstorageWishlistKey, null, api, language));
     }, [])
     return (

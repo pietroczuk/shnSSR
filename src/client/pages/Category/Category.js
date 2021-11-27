@@ -5,6 +5,7 @@ import styles from './category.scss';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { getPage } from '../../redux/actions/actionCreators';
 import { pageActions } from '../../redux/slices/pageSlice';
+import { publicConfigActions } from '../../redux/slices/publicConfigSlice';
 import {
     pageTypes, metatags, prepareSearchCode,
     renderHtmlFromJson,
@@ -84,6 +85,10 @@ const Category = props => {
             return dispatch(pageActions.clearPageData());
         }
     }, [location.pathname]);
+
+    useEffect(() => {
+        ssr && dispatch(publicConfigActions.disableSrr());
+    },[])
 
     const showProducts = category => {
         const products = category && category.products ? category.products : null;
