@@ -25,45 +25,30 @@ const SingleFeature = props => {
             const active = currentVariationCode[featureKey] && currentVariationCode[featureKey].atrib_id == att_key ? true : false;
             let matchCode = '';
             const new_variant = { ...currentVariationCode };
-            // active ? setActiveCodeValue(att_val.attrib_title): null;
-            // return;
-            // console.log('currentVariationCode', currentVariationCode, new_variant);
+ 
             if (!active) {
                 new_variant[featureKey] = { ...new_variant[featureKey], 'code': att_val.code, 'atrib_id': att_val.id }
             } else {
                 bgPossition = index;
                 setActiveCodeValueHandler(att_val.attrib_title);
-                // console.log(att_val.attrib_title);
             }
-            // console.log('single', allProductVariation);
-            allProductVariation && Object.entries(allProductVariation).forEach(([variant_key, variant_val]) => {
-                /**********
-                     new_variant - input data
-                        - key = attrib_key
-                                - varian code
-                    variant_key - my link
-                    variant_val: Object 
-                        - variation_code - object with keys
-                            - key = attrib_key
-                                - varian code
-                  */
-                let match = true;
-                // console.log('new_variant', new_variant);
-                Object.entries(new_variant).forEach(([new_v_key, new_v_val]) => {
-                    if (variant_val.variation_code[new_v_key]) {
-                        // console.log('c',variant_val.variation_code[new_v_key]);
-                        if (variant_val.variation_code[new_v_key].atrib_id !== new_v_val.atrib_id) {
+
+            if (allProductVariation) {
+                for (const variant in allProductVariation) {
+                    let match = true;
+                    for (const searchVariant in new_variant) {
+                        const variant_code = allProductVariation[variant].variation_code;
+                        if (variant_code[searchVariant].atrib_id !== new_variant[searchVariant].atrib_id) {
                             match = false;
+                            break;
                         }
-                    } else {
-                        match = false;
                     }
-                })
-                if (match) {
-                    matchCode = variant_key;
+                    if(match) {
+                        matchCode = variant;
+                        break;
+                    }
                 }
-                // console.log(matchCode);
-            });
+            }
 
             switch (displayType) {
                 case 'color':
