@@ -20,15 +20,15 @@ const Colors = props => {
     const dispatch = useDispatch();
 
     const clickMe = () => {
-        if (globalChange) {
-            const codeObj = {
-                code: code,
-                atrib_id: id
-            }
-            dispatch(setGlobalDefaultVariantcode(featureKey, codeObj));
-            dispatch(setProductRandomColors(random_variant, false));
-            // console.log('klick', codeObj, attrib);
-        } else {
+
+        const codeObj = {
+            code: code,
+            atrib_id: id
+        }
+        dispatch(setGlobalDefaultVariantcode(featureKey, codeObj));
+        dispatch(setProductRandomColors(random_variant, false));
+        // console.log('klick', codeObj, attrib);
+        if (!globalChange) {
             dispatch(setProductCurrVarId(link, variations));
         }
     }

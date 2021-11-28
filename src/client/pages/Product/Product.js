@@ -76,6 +76,7 @@ const Product = (props) => {
                 <AllFeaturesDisplay
                     currentVariationCode={product.variations[current_variation_id].variation_code}
                     allProductVariation={product.variations}
+                    // globalChange={true}
                 />
             }
         </div>

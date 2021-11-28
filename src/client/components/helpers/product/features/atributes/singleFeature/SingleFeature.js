@@ -27,14 +27,9 @@ const SingleFeature = props => {
             const new_variant = { ...currentVariationCode };
             // active ? setActiveCodeValue(att_val.attrib_title): null;
             // return;
+            // console.log('currentVariationCode', currentVariationCode, new_variant);
             if (!active) {
-                Object.entries(currentVariationCode).forEach(([new_cur_key, new_cur_val]) => {
-                    if (new_cur_val.feature == featureKey) {
-                        // remove att_key from object
-                        delete new_variant[new_cur_key];
-                        new_variant[att_val.id] = { ...new_cur_val, 'code': att_val.code, 'atrib_id': att_val.id };
-                    }
-                })
+                new_variant[featureKey] = { ...new_variant[featureKey], 'code': att_val.code, 'atrib_id': att_val.id }
             } else {
                 bgPossition = index;
                 setActiveCodeValueHandler(att_val.attrib_title);
@@ -53,9 +48,14 @@ const SingleFeature = props => {
                                 - varian code
                   */
                 let match = true;
-
+                // console.log('new_variant', new_variant);
                 Object.entries(new_variant).forEach(([new_v_key, new_v_val]) => {
-                    if (!variant_val.variation_code[new_v_key]) {
+                    if (variant_val.variation_code[new_v_key]) {
+                        // console.log('c',variant_val.variation_code[new_v_key]);
+                        if (variant_val.variation_code[new_v_key].atrib_id !== new_v_val.atrib_id) {
+                            match = false;
+                        }
+                    } else {
                         match = false;
                     }
                 })
