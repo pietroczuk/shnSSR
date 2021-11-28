@@ -67,6 +67,11 @@ export const rednderHtml = (req, server_store, context, new_routes_config, user_
 
   // <link rel="stylesheet" href="/css/minireset.min.css" />
   // <script defer src="`+ hash + `"></script> 
+
+  // prefetch
+  // ${webExtractor.getLinkTags()} 
+
+
   const server_helmet = Helmet.renderStatic();
   const html = `
   <!DOCTYPE html>
@@ -92,6 +97,9 @@ export const rednderHtml = (req, server_store, context, new_routes_config, user_
               <link rel="apple-touch-icon" href="/images/shineposters_favicon_dark_black.png" sizes="152x152">
               <link rel="apple-touch-icon" href="/images/shineposters_favicon_dark_black.png" sizes="180x180">
               <link rel="preconnect" href="https://cdn.shineposters.com" />
+              <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
               <meta name="msapplication-TileImage" content="/images/shineposters_favicon_dark_black.png">
               <meta name="msapplication-TileColor" content="#fff">
               <meta name="theme-color" content="#000000">
@@ -99,13 +107,14 @@ export const rednderHtml = (req, server_store, context, new_routes_config, user_
                   window.__INITIAL_STATE__ = ${serialize(server_store.getState())};
                   window.__CONFIG__ = ${serialize(new_routes_config)};
               </script>
-              ${webExtractor.getLinkTags()}
+              
               ${webExtractor.getStyleTags()}
               <style>${[...css].join('')}</style>
             </head>
             <body>
                 <div id="root">${content}</div>
-                ${webExtractor.getScriptTags()}
+                ${webExtractor.getScriptTags().replace(/async/g, "defer")}
+                <link async href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
             </body>
            
         </html>
