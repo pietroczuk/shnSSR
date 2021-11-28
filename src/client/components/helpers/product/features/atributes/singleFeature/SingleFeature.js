@@ -18,7 +18,7 @@ const SingleFeature = props => {
         featureKey, 
         allProductVariation, 
         globalChange,
-        disableClick
+        onClickFunction
     } = props;
     const width = atributes ? getObjectLength(atributes) : 'auto';
 
@@ -69,7 +69,7 @@ const SingleFeature = props => {
                         link={matchCode}
                         globalChange={globalChange}
                         featureKey={featureKey}
-                        disableClick={disableClick}
+                        onClickFunction={onClickFunction}
                     />
                 case 'text':
                     return <Text
@@ -80,7 +80,7 @@ const SingleFeature = props => {
                         link={matchCode}
                         globalChange={globalChange}
                         featureKey={featureKey}
-                        disableClick={disableClick}
+                        onClickFunction={onClickFunction}
                     />
             }
         })

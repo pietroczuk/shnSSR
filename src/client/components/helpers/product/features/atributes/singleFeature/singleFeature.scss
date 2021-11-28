@@ -21,7 +21,9 @@
         letter-spacing: 0.05em;
     }
 }
-.featureColor {}
+.featureColor {
+    font-size: inherit;
+}
 
 .featureAttribs {
     display: flex;

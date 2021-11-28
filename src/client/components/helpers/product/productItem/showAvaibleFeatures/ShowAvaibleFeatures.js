@@ -5,7 +5,7 @@ import HoverPopupContainer from "../hoverPopupContainer/HoverPopupContainer";
 import AllFeaturesDisplay from "../../features/AllFeaturesDisplay";
 
 const ShowAvaibleFeatures = props => {
-    const { active, currentVariationCode } = props;
+    const { active, currentVariationCode, onClickFunction } = props;
     return <HoverPopupContainer active={active}>
         <AllFeaturesDisplay
             currentVariationCode={currentVariationCode}
@@ -13,7 +13,7 @@ const ShowAvaibleFeatures = props => {
             wishlistAvaible={true}
             displayInline={true}
             // globalChange={true}
-            disableClick={true}
+            onClickFunction={onClickFunction}
             disableOpacity={true}
         />
     </HoverPopupContainer>;

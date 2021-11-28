@@ -14,7 +14,7 @@ const AllFeaturesDisplay = props => {
         displayInline, 
         globalChange, 
         disableOpacity,
-        disableClick
+        onClickFunction
     } = props;
     // from redux
     const { features, showRandom } = useSelector(state => ({
@@ -38,7 +38,7 @@ const AllFeaturesDisplay = props => {
                         currentVariationCode={currentVariationCode}
                         allProductVariation={allProductVariation}
                         globalChange={globalChange}
-                        disableClick={disableClick}
+                        onClickFunction={onClickFunction}
                     />
                 </div>
             }
