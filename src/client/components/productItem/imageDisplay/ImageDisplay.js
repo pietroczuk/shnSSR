@@ -18,6 +18,7 @@ const ImageDisplay = props => {
     }), shallowEqual);
 
     const img_base = imagesConfig.url + '/';
+    // const img_size = imagesConfig.medium; 
     const img_size = imagesConfig.large;
 
     const simple = !placeholder && imagesHolderUrl ? img_base + imagesHolderUrl.variation_image.poster + img_size : null;
