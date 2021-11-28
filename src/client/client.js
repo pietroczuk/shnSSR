@@ -50,11 +50,10 @@ const userLanguage = initialState.User.language;
 const multilanguage = initialState.SystemConfig.multilanguage;
 
 const insertCss = (...styles) => {
-
     const removeCss = styles.map(style => style._insertCss());
-    return () =>
-        removeCss.forEach(dispose => dispose());
+    return () =>removeCss.forEach(dispose => dispose());
 };
+
 // const css = new Set();
 // const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
 

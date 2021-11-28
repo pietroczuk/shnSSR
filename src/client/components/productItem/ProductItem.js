@@ -12,9 +12,10 @@ import ShowPrice from '../helpers/display/showPrice/ShowPrice';
 import ImageDisplay from './imageDisplay/ImageDisplay';
 
 import loadable from '@loadable/component';
+import ShowAvaibleFeatures from '../helpers/product/productItem/showAvaibleFeatures/ShowAvaibleFeatures';
 
-const ShowSelectedAttributes = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/showSelectedAttributes/ShowSelectedAttributes'), {});
-const ShowAddToCartVariants = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/showAddToCartVariants/ShowAddToCartVariants'), {});
+const ShowSelectedAttributes = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showSelectedAttributes/ShowSelectedAttributes'), {});
+const ShowAddToCartVariants = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showAddToCartVariants/ShowAddToCartVariants'), {});
 
 const ProductItem = props => {
     const { product, forceVisual, index = 0, imagesInRootVariant, wishlistPage, wishlistVariantId } = props;
@@ -97,6 +98,10 @@ const ProductItem = props => {
     const productUrl = prepUrlFromConfigSlug(language, slug_urls, pageTypes.productPage, null, url, multilanguage, variantId);
     const imagesHolderUrl = imagesInRootVariant ? product : variations ? variations[variantId] : null;
 
+    const currentVariationCode = variations && variantId ? variations[variantId].variation_code : null;
+
+    // console.log('variantcode:', currentVariationCode, default_variant_code)
+
     return <div className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}
         onMouseEnter={onHoverHandler} onMouseLeave={onLeaveHandler}
     >
@@ -115,6 +120,12 @@ const ProductItem = props => {
             avaibleVariations={variations}
             active={onHover}
             productId={productId}
+        />}
+        {!wishlistPage && !placeholder &&<ShowAvaibleFeatures
+            // active={onHover}
+            active={true}
+            currentVariationCode={currentVariationCode}
+            
         />}
         <DivNavLink to={productUrl}>
             <div className={styles.productDataContainer}>

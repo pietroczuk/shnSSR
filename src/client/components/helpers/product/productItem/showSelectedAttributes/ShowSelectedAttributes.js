@@ -1,12 +1,12 @@
 import React from "react";
 import { useSelector, shallowEqual } from "react-redux";
 
-import { isObjectEmpty } from "../../../../utils/utilsFrondend";
+import { isObjectEmpty } from "../../../../../utils/utilsFrondend";
 
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './showSelectedAttributes.scss';
 
-import ColorCircle from "../features/atributes/colors/colorCircle/ColorCircle";
+import ColorCircle from "../../features/atributes/colors/colorCircle/ColorCircle";
 
 const ShowSelectedAttributes = props => {
     const { selectedVariantId, avaibleVariations } = props;

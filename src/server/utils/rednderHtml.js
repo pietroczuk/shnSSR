@@ -41,6 +41,7 @@ export const rednderHtml = (req, server_store, context, new_routes_config, user_
   const css = new Set(); // CSS for all rendered React components
   // console.log(...styles);
   const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
+
   const content = renderToString(
     webExtractor.collectChunks(
       <Provider store={server_store}>

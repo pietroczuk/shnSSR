@@ -3,12 +3,13 @@ import { useSelector, shallowEqual } from "react-redux";
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './showAddToCartVariants.scss';
 
-import BlackButton from "../../ui/blackButton/BlackButton";
-import ShowSizesText from "../../display/showSizesText/ShowSizesText";
-import PopupTitle from '../../display/popupTitle/PopupTitle';
-import ShowPrice from "../../display/showPrice/ShowPrice";
+import BlackButton from "../../../ui/blackButton/BlackButton";
+import ShowSizesText from "../../../display/showSizesText/ShowSizesText";
+import PopupTitle from '../../../display/popupTitle/PopupTitle';
+import ShowPrice from "../../../display/showPrice/ShowPrice";
 
-import { getObjectLength, isObjectEmpty } from "../../../../utils/utilsFrondend";
+import { getObjectLength, isObjectEmpty } from "../../../../../utils/utilsFrondend";
+import HoverPopupContainer from "../hoverPopupContainer/HoverPopupContainer";
 
 const ShowAddToCartVariants = props => {
     const { active, avaibleVariations, productId } = props;
@@ -35,7 +36,6 @@ const ShowAddToCartVariants = props => {
         console.log('add to cart product id:', productId);
     }
 
-
     const showRestVariants = avaibleVariations => {
         if (!getObjectLength(avaibleVariations) || isObjectEmpty(features)) {
             return;
@@ -51,13 +51,8 @@ const ShowAddToCartVariants = props => {
                     {Object.keys(avaibleVariations).map(variantId => {
                         const variant = avaibleVariations[variantId];
                         const variantCode = variant.variation_code;
-                        const attribId = variantCode[featureIdForSelect].atrib_id; 
-                        // Object.keys(variantCode).find(featureId => variantCode[attribId].feature === featureIdForSelect);
-                        
-                        // console.log(variantCode[featureIdForSelect], featureIdForSelect);
+                        const attribId = variantCode[featureIdForSelect].atrib_id;
 
-                        // const featureId = featureIdForSelect;//attribId ? variantCode[attribId].feature : null;
-                        // console.log(features[featureId], attribId, featureIdForSelect);
                         const attribTitle = featureIdForSelect ? features[featureIdForSelect].atributes[attribId].attrib_title : null;
                         const attribTooltip = featureIdForSelect ? features[featureIdForSelect].atributes[attribId].attrib_tooltip : null;
 
@@ -73,13 +68,13 @@ const ShowAddToCartVariants = props => {
         </div>
     }
 
-    return <div className={`${styles.container} ${active ? styles.active : ''}`}>
+    return <HoverPopupContainer active={active}>
         {showSubmenu && showRestVariants(avaibleVariations)}
         <BlackButton
             label={add_to_cart}
             clickHandler={onClickHandler}
         />
-    </div>
+    </HoverPopupContainer>
 }
 
 export default withStyles(styles)(ShowAddToCartVariants);

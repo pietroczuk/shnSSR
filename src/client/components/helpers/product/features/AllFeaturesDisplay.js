@@ -7,14 +7,22 @@ import SingleFeature from './atributes/singleFeature/SingleFeature';
 import { useSelector, shallowEqual } from 'react-redux';
 
 const AllFeaturesDisplay = props => {
-    const { currentVariationCode, allProductVariation, wishlistAvaible, displayInline, globalChange } = props;
+    const { 
+        currentVariationCode, 
+        allProductVariation, 
+        wishlistAvaible, 
+        displayInline, 
+        globalChange, 
+        disableOpacity,
+        disableClick
+    } = props;
     // from redux
     const { features, showRandom } = useSelector(state => ({
         features: state.PublicConfig.features,
         showRandom: state.Display.showRandom
     }), shallowEqual);
     return (
-        <div className={`${styles.featureRootContainer} ${displayInline ? styles.inline : ''} ${showRandom && displayInline ? styles.halfvisible: ''}`}>
+        <div className={`${styles.featureRootContainer} ${displayInline ? styles.inline : ''} ${showRandom && displayInline && !disableOpacity ? styles.halfvisible : ''}`}>
             {Object.entries(features).map(([featureKey, feature]) => {
                 if (wishlistAvaible) {
                     if (!feature.wishlist) {
@@ -30,6 +38,7 @@ const AllFeaturesDisplay = props => {
                         currentVariationCode={currentVariationCode}
                         allProductVariation={allProductVariation}
                         globalChange={globalChange}
+                        disableClick={disableClick}
                     />
                 </div>
             }

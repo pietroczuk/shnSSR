@@ -10,7 +10,7 @@ import DivNavLink from '../../../../../DivNavLink/DivNavLink';
 
 const Colors = props => {
 
-    const { attrib, active, link, globalChange, featureKey } = props;
+    const { attrib, active, link, globalChange, featureKey, disableClick } = props;
     const { glow_color, attrib_title, attrib_tooltip, code, id } = attrib;
 
     const { variations, random_variant } = useSelector(state => ({
@@ -20,16 +20,17 @@ const Colors = props => {
     const dispatch = useDispatch();
 
     const clickMe = () => {
-
-        const codeObj = {
-            code: code,
-            atrib_id: id
-        }
-        dispatch(setGlobalDefaultVariantcode(featureKey, codeObj));
-        dispatch(setProductRandomColors(random_variant, false));
-        // console.log('klick', codeObj, attrib);
-        if (!globalChange) {
-            dispatch(setProductCurrVarId(link, variations));
+        if (!disableClick) {
+            const codeObj = {
+                code: code,
+                atrib_id: id
+            }
+            dispatch(setGlobalDefaultVariantcode(featureKey, codeObj));
+            dispatch(setProductRandomColors(random_variant, false));
+            // console.log('klick', codeObj, attrib);
+            if (!globalChange) {
+                dispatch(setProductCurrVarId(link, variations));
+            }
         }
     }
 

@@ -10,7 +10,16 @@ import { getObjectLength } from '../../../../../../utils/utilsFrondend';
 
 
 const SingleFeature = props => {
-    const { title, atributes, displayType, currentVariationCode, featureKey, allProductVariation, globalChange } = props;
+    const { 
+        title, 
+        atributes, 
+        displayType, 
+        currentVariationCode, 
+        featureKey, 
+        allProductVariation, 
+        globalChange,
+        disableClick
+    } = props;
     const width = atributes ? getObjectLength(atributes) : 'auto';
 
     const [activeCodeValue, setActiveCodeValue] = useState('');
@@ -21,7 +30,7 @@ const SingleFeature = props => {
         activeCodeValue != codeValue && setActiveCodeValue(codeValue); // : null;
     }
     const displaySingleFeature = () => {
-        return Object.entries(atributes).map(([att_key, att_val], index) => {
+        return currentVariationCode && Object.entries(atributes).map(([att_key, att_val], index) => {
             const active = currentVariationCode[featureKey] && currentVariationCode[featureKey].atrib_id == att_key ? true : false;
             let matchCode = '';
             const new_variant = { ...currentVariationCode };
@@ -60,6 +69,7 @@ const SingleFeature = props => {
                         link={matchCode}
                         globalChange={globalChange}
                         featureKey={featureKey}
+                        disableClick={disableClick}
                     />
                 case 'text':
                     return <Text
@@ -70,6 +80,7 @@ const SingleFeature = props => {
                         link={matchCode}
                         globalChange={globalChange}
                         featureKey={featureKey}
+                        disableClick={disableClick}
                     />
             }
         })
