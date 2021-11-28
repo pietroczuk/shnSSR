@@ -32,7 +32,7 @@ const ShowAddToCartVariants = props => {
     }, [active]);
 
     const addToCartClickHandler = () => {
-        console.log('add to cart');
+        console.log('add to cart product id:', productId);
     }
 
 
@@ -47,14 +47,19 @@ const ShowAddToCartVariants = props => {
             <div className={styles.selectOptionsCointainerChild}>
                 <PopupTitle text={choise + ' ' + featureTitle} underline={true} />
                 <div className={styles.selectOptionsCointainer}>
+                    {/* {console.log(avaibleVariations)} */}
                     {Object.keys(avaibleVariations).map(variantId => {
                         const variant = avaibleVariations[variantId];
                         const variantCode = variant.variation_code;
-                        const attribId = Object.keys(variantCode).find(attribId => variantCode[attribId].feature === featureIdForSelect);
-                        const featureId = attribId ? variantCode[attribId].feature : null;
-                        // console.log(attribId, variantCode[attribId], variantCode);
-                        const attribTitle = featureId ? features[featureId].atributes[attribId].attrib_title : null;
-                        const attribTooltip = featureId ? features[featureId].atributes[attribId].attrib_tooltip : null;
+                        const attribId = variantCode[featureIdForSelect].atrib_id; 
+                        // Object.keys(variantCode).find(featureId => variantCode[attribId].feature === featureIdForSelect);
+                        
+                        // console.log(variantCode[featureIdForSelect], featureIdForSelect);
+
+                        // const featureId = featureIdForSelect;//attribId ? variantCode[attribId].feature : null;
+                        // console.log(features[featureId], attribId, featureIdForSelect);
+                        const attribTitle = featureIdForSelect ? features[featureIdForSelect].atributes[attribId].attrib_title : null;
+                        const attribTooltip = featureIdForSelect ? features[featureIdForSelect].atributes[attribId].attrib_tooltip : null;
 
                         return (
                             <div className={styles.selectOption} onClick={addToCartClickHandler} key={variantId}>

@@ -72,7 +72,12 @@ const Product = (props) => {
             {current_variation_id && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[current_variation_id].variation_image.poster + images_url.medium} />}
             {current_variation_id && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[current_variation_id].variation_image.wall + images_url.medium} />}
 
-            {product && current_variation_id && <AllFeaturesDisplay currentVariationCode={product.variations[current_variation_id].variation_code} allProductVariation={product.variations} />}
+            {product && current_variation_id &&
+                <AllFeaturesDisplay
+                    currentVariationCode={product.variations[current_variation_id].variation_code}
+                    allProductVariation={product.variations}
+                />
+            }
         </div>
     )
 }

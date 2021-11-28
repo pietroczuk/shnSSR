@@ -9,7 +9,7 @@ import Blank from "../../svg/blank/Blank";
 
 const ImageDisplay = props => {
     const multiplyMesurment = 100;
-    const { titlekey, imagesHolderUrl, forceVisual, onHover, placeholder } = props;
+    const { title, imagesHolderUrl, forceVisual, onHover, placeholder } = props;
     const { showVisual, imagesConfig, image_width, image_height } = useSelector(state => ({
         showVisual: !forceVisual ? state.Display.showVisual : forceVisual,
         imagesConfig: state.SystemConfig.images,
@@ -29,7 +29,7 @@ const ImageDisplay = props => {
             <div className={styles.imageContainerRelative}>
                 <div className={`${styles.imagePicture} ${showVisual ? styles.noPadding : ''} ${onHover ? styles.slideTop : ''}`}>
                     {placeholder && <LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={3} customBorderTopColor={'#f3f3f3'} />}
-                    {!placeholder && <img className={styles.single} alt={titlekey} src={image_url} />}
+                    {!placeholder && <img className={styles.single} alt={title} src={image_url} />}
                 </div>
                 <div className={styles.imagePlaceholder} >
                     <Blank width={image_width} height={image_height} />
