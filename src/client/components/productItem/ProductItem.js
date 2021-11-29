@@ -70,7 +70,7 @@ const ProductItem = props => {
     const [localVariantCode, setLocalVariantCode] = useState(default_variant_code);
 
     useEffect(() => {    
-        !ssr && !wishlistPage && setLocalVariantCode(default_variant_code);
+        !ssr && !wishlistPage && !showRandom && setLocalVariantCode(default_variant_code);
     }, [default_variant_code, showRandom]);
 
    
@@ -78,16 +78,16 @@ const ProductItem = props => {
         if (isObjectEmpty(obj) || !featureId || !obj.atrib_id) {
             return;
         }
-        console.log(featureId, obj, localVariantCode[featureId]);
+        // console.log(featureId, obj, localVariantCode[featureId]);
         const atrib_id = obj.atrib_id;
-        if (localVariantCode[featureId] && localVariantCode[featureId].atrib_id !== atrib_id) {
+        if (localVariantCode[featureId] && localVariantCode[featureId].atrib_id !== atrib_id && localVariantCode[featureId].wishlist) {
             const newFeatObj = { ...localVariantCode }
             newFeatObj[featureId] = obj;
             newFeatObj[featureId].wishlist = localVariantCode[featureId].wishlist;
             setDisableLocalRandom(true);
             setLocalVariantCode(newFeatObj);
-
-            console.log(localVariantCode[featureId], newFeatObj);
+            // console.log('change', newFeatObj);
+            // console.log(localVariantCode[featureId], newFeatObj);
         }
     }
 
@@ -108,29 +108,53 @@ const ProductItem = props => {
             variantFound[0] && changeVariantId(variantFound[0]);
         }
         // if (showRandom && !disableLocalRandom) {
-        if (showRandom && !disableLocalRandom) {
+        
+    }
+
+    const changeLocalVariantOnRandom = () => {
+        if (showRandom && !disableLocalRandom && variations) {
             let newVariantIndexStyle = index < getObjectLength(variations) ? index : index % getObjectLength(variations);
             newVariantIndexStyle = newVariantIndexStyle == 1 ? 4 : newVariantIndexStyle == 4 ? 1 : newVariantIndexStyle;
             newVariantIndexStyle = productId && variations[Object.keys(variations)[newVariantIndexStyle]] ? variations[Object.keys(variations)[newVariantIndexStyle]].id : null
-            newVariantIndexStyle && changeVariantId(newVariantIndexStyle) 
+            newVariantIndexStyle && changeVariantId(newVariantIndexStyle);
+            
+            const newFeatObj = { ...localVariantCode }
+            let foundChange = false;
+            for(const featureId in variations[newVariantIndexStyle].variation_code){
+                const atrib_id = variations[newVariantIndexStyle].variation_code[featureId].atrib_id;
+
+                if(newFeatObj[featureId].atrib_id !== atrib_id) {
+                    newFeatObj[featureId] = variations[newVariantIndexStyle].variation_code[featureId];
+                    newFeatObj[featureId] = {...newFeatObj[featureId], wishlist : localVariantCode[featureId].wishlist};
+                    foundChange = true;
+                }
+                // changeLocalVariantCode(featureIdInVariantCodes, {...variations[newVariantIndexStyle].variation_code[featureIdInVariantCodes]});
+                // console.log(featureIdInVariantCodes, {...variations[newVariantIndexStyle].variation_code[featureIdInVariantCodes]});
+            }
+            // isObjectEmpty()
+            foundChange && setLocalVariantCode(newFeatObj);
+            // console.log(newFeatObj);
+
         }
     }
-
+    useEffect(() => {
+        !ssr && !wishlistPage && showRandom && changeLocalVariantOnRandom()
+    }, [showRandom]);
     useEffect(() => {
         !ssr && !wishlistPage && setupVariantIdOnHashmap();
-    }, [localVariantCode, showRandom]);
+    }, [localVariantCode]);
 
     useEffect(() => {
         wishlistVariantId && changeVariantId(wishlistVariantId);
     }, [wishlistPage, wishlistVariantId])
 
-
+    ssr && !wishlistPage && showRandom && changeLocalVariantOnRandom();
     ssr && !wishlistPage && setupVariantIdOnHashmap();
 
     const productUrl = prepUrlFromConfigSlug(language, slug_urls, pageTypes.productPage, null, url, multilanguage, variantId);
     const imagesHolderUrl = imagesInRootVariant ? product : variations ? variations[variantId] : null;
 
-    const currentVariationCode = variations && variantId ? variations[variantId].variation_code : null;
+    // const currentVariationCode = variations && variantId ? variations[variantId].variation_code : null;
 
     return <div className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}
         onMouseEnter={onHoverHandler} onMouseLeave={onLeaveHandler}
@@ -153,10 +177,10 @@ const ProductItem = props => {
             productId={productId}
         />}
         {!wishlistPage && !placeholder && <ShowAvaibleFeatures
-            // active={onHover}
-            active={true}
-            currentVariationCode={currentVariationCode}
-            // currentVariationCode={localVariantCode}
+            active={onHover}
+            // active={true}
+            // currentVariationCode={currentVariationCode}
+            currentVariationCode={localVariantCode}
             onClickFunction={changeLocalVariantCode}
 
         />}
