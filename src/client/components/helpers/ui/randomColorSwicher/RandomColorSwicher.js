@@ -8,9 +8,10 @@ import { setProductRandomColors } from '../../../../redux/actions/actionCreators
 
 const RandomColorSwicher = () => {
 
-    const { showRandom, random_variant } = useSelector(state => ({
+    const { showRandom, random_variant, translation } = useSelector(state => ({
         showRandom: state.Display.showRandom,
-        random_variant: state.SystemConfig.cookies_keys.display.random_variant
+        random_variant: state.SystemConfig.cookies_keys.display.random_variant,
+        translation: state.PublicConfig.translation
     }), shallowEqual)
     const dispatch = useDispatch();
 
@@ -19,12 +20,12 @@ const RandomColorSwicher = () => {
     }
     const options = [
         {
-            title: "Losowy blask i papier",
+            title: translation && translation.show_random ? translation.show_random : '',
             clickHandler: clickHandlerFunction,
             default: showRandom ? true : false,
         },
         {
-            title: "Twój osobisty wybór",
+            title: translation && translation.hide_random ? translation.hide_random : '',
             clickHandler: clickHandlerFunction,
             default: !showRandom ? true : false,
         },

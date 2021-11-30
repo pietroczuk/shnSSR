@@ -8,9 +8,10 @@ import { setProductVisual } from '../../../../redux/actions/actionCreators';
 
 const ImageSwicher = () => {
 
-    const { showVisual, visual_mode } = useSelector(state => ({
+    const { showVisual, visual_mode, translation } = useSelector(state => ({
         showVisual: state.Display.showVisual,
-        visual_mode: state.SystemConfig.cookies_keys.display.visual_mode
+        visual_mode: state.SystemConfig.cookies_keys.display.visual_mode,
+        translation: state.PublicConfig.translation
     }), shallowEqual)
     const dispatch = useDispatch();
 
@@ -19,12 +20,12 @@ const ImageSwicher = () => {
     }
     const options = [
         {
-            title: "Pokaż aranżację",
+            title: translation && translation.show_arrangement ? translation.show_arrangement : '',
             clickHandler: clickHandlerFunction,
             default: showVisual ? true : false
         },
         {
-            title: "Schowaj aranżację",
+            title: translation && translation.show_arrangement ? translation.hide_arrangement : '',
             clickHandler: clickHandlerFunction,
             default: !showVisual ? true : false
         },
