@@ -15,8 +15,13 @@ const config = {
 
     // Tell webpack the root file of our
     // server app
-    entry: './src/server/server.js',
-
+    // entry: path.resolve(__dirname, '../src/server/server.tsx'),
+    entry: path.resolve(__dirname, '../src/server/server.js'),
+    // entry: './src/server/server.js',
+    // simply import files with this extensions (webpack search ext. in this array)
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
+    },
     // tell webpack where to put the generate file
     output: {
         filename: 'server.js',
@@ -61,4 +66,11 @@ const config = {
 
 };
 
-module.exports = merge(baseConfig, config);
+
+module.exports = (envVars) => {
+    const { env } = envVars; // dev | prod
+    const envConfig = require(`./webpack.${env}.js`)
+    return merge(baseConfig, config, envConfig);
+}
+
+// module.exports = merge(baseConfig, config);

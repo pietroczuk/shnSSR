@@ -7,7 +7,11 @@ const LoadablePlugin = require('@loadable/webpack-plugin');
 const config = {
     // Tell webpack the root file of our
     // client app
-    entry: './src/client/client.js',
+    // entry: path.resolve(__dirname, '../src/client/client.tsx'),
+    entry: path.resolve(__dirname, '../src/client/client.js'),
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
+    },
     // devtool: 'source-map',
     // tell webpack where to put the generate file
     output: {
@@ -42,4 +46,8 @@ const config = {
     // },
 }
 
-module.exports = merge(baseConfig, config);
+module.exports = (envVars) => {
+    const { env } = envVars; // dev | prod
+    const envConfig = require(`./webpack.${env}.js`)
+    return merge(baseConfig, config, envConfig);
+}

@@ -8,7 +8,13 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js?$/,
+                test: /\.(ts|js)x?$/,
+                // test: /\.js?$/,
+                // use: [
+                //     {
+                //         loader: 'babel-loader',
+                //     },
+                // ],
                 loader: 'babel-loader',
                 exclude: /node_modules/,
                 options: {
@@ -60,7 +66,15 @@ module.exports = {
                     { loader: "sass-loader" },  // to convert SASS to CSS
                     // { loader: "postcss-loader" }
                 ]
-            }
+            },
+            {
+                test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+                type: 'asset/resource',
+            },
+            {
+                test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
+                type: 'asset/inline',
+            },
         ]
     },
     // stats: {
@@ -111,7 +125,7 @@ module.exports = {
     //     react: path.resolve('./node_modules/react')
     //   },
 
-    mode: 'development' //development | production
+    // mode: 'development' //development | production
     // mode: 'production'
 };
 
