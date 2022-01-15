@@ -16,7 +16,7 @@ const config = {
 
         chunkFilename: '[contenthash].client.js',
         // current folder, destiny folder name -> build
-        path: path.resolve(__dirname, './public_html/public'),
+        path: path.resolve(__dirname, '../public_html/public'),
         pathinfo: false,
         publicPath: `/`,
     },

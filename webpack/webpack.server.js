@@ -22,7 +22,7 @@ const config = {
         filename: 'server.js',
         // current folder, destiny folder name -> build
         // chunkFilename: '[contenthash].server.js',
-        path: path.resolve(__dirname, './public_html/server'),
+        path: path.resolve(__dirname, '../public_html/server'),
         pathinfo: false
     },
     // optimization: {
