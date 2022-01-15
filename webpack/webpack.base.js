@@ -10,24 +10,25 @@ module.exports = {
             {
                 test: /\.(ts|js)x?$/,
                 // test: /\.js?$/,
-                // use: [
-                //     {
-                //         loader: 'babel-loader',
-                //     },
-                // ],
-                loader: 'babel-loader',
+                use: [
+                    {
+                        loader: 'babel-loader',
+                    },
+                ],
+                // loader: 'babel-loader',
                 exclude: /node_modules/,
-                options: {
-                    presets: [
-                        '@babel/react',
-                        ['@babel/env', {
-                            targets: {
-                                browsers: ['last 2 versions']
-                            }
-                        }]
-                    ],
-                    plugins: ['@loadable/babel-plugin']
-                }
+                // options: {
+                //     presets: [
+                //         '@babel/react',
+                //         ['@babel/env', {
+                //             targets: {
+                //                 browsers: ['last 2 versions']
+                //             }
+                //         }]
+                //     ],
+                //     // plugins: ['@loadable/babel-plugin', "react-refresh/babel"]
+                //     plugins: ['@loadable/babel-plugin']
+                // }
             },
             {
                 test: /\.(sa|sc|c)ss$/,

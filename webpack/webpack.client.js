@@ -8,6 +8,7 @@ const config = {
     // Tell webpack the root file of our
     // client app
     // entry: path.resolve(__dirname, '../src/client/client.tsx'),
+    target: 'web',
     entry: path.resolve(__dirname, '../src/client/client.js'),
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
