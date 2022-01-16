@@ -1,5 +1,11 @@
 import React from "react";
-const Blank = ({ width, height }) => {
+
+interface BlankProps {
+    width: number;
+    height: number;
+}
+
+const Blank: React.FC<BlankProps> = ({ width, height }) => {
     const viewBoxWidth = width ? width : 300;
     const viewBoxHeight = height ? height : 300;
  

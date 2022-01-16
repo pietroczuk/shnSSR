@@ -1,5 +1,5 @@
 import React from 'react';
-const HeartFull = () => {
+const HeartFull: React.FC = () => {
     return (
         <svg viewBox="0 0 471.702 414.701">
             <g>

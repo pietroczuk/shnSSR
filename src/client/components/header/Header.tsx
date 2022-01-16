@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './header.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
-import Topbar from './topbar/Topbar.js';
+import Topbar from './topbar/Topbar';
 import Logo from '../svg/logo/Logo';
 import InteractiveIcon from '../InteractiveIcon/InteractiveIcon';
 import CartIcon from '../svg/icons/CartIcon';
@@ -19,7 +19,12 @@ import { useSelector, shallowEqual } from 'react-redux';
 
 import { pageTypes } from '../../utils/utilsFrondend';
 
-const Header = ({ white, whiteTopbar }) => {
+interface HeaderProps {
+    white: boolean;
+    whiteTopbar: boolean;
+}
+
+const Header: React.FC<HeaderProps> = ({ white, whiteTopbar }) => {
     const [topbarOpen, setTopbarOpen] = useState(true);
 
     const { all_config_languages, all_config_currencies, } = useSelector(state => ({

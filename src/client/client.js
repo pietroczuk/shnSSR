@@ -44,11 +44,14 @@ const store_client = configureStore({
     // devTools: false, //process.env.NODE_ENV !== 'production',
 });
 
+export type RootState = ReturnType<typeof store_client.getState>
+
 const new_routes_config = window.__CONFIG__;
 const initialState = store_client.getState();
 const userLanguage = initialState.User.language;
 const multilanguage = initialState.SystemConfig.multilanguage;
 
+// const insertCss = (...styles:any[]) => {
 const insertCss = (...styles) => {
     const removeCss = styles.map(style => style._insertCss());
     return () =>removeCss.forEach(dispose => dispose());
@@ -72,7 +75,6 @@ loadableReady(() => {
                 </BrowserRouter>
             </StyleContext.Provider>
         </Provider>
-
         , document.getElementById('root')
     );
 });

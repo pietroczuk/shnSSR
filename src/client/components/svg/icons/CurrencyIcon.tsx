@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CurrencyIcon = () => {
+const CurrencyIcon: React.FC = () => {
 	return (
 
 		<svg viewBox="0 0 841.889 1190.551">

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import DivNavLink from '../DivNavLink/DivNavLink';
+import DivNavLink from '../divNavLink/DivNavLink';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './interactiveIcon.scss';
 
@@ -10,8 +10,29 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { checkWishlist } from '../../redux/actions/actionCreators';
 import AssitiveText from '../helpers/display/assitiveText/AssitiveText';
 
-const InteractiveIcon = (props) => {
-    const { language, multilanguage, special_pages_urls, translation } = useSelector(state => ({
+import { RootState } from '../../client';
+
+interface InteractiveIconProps {
+    white: boolean
+    hoverBg: string
+    hoverOpacity: boolean
+    customWidth: number
+    customSvgSize: number
+    onMouseEnter: Function
+    onMouseLeave: Function
+    onClick: Function
+    type: string
+}
+
+type stateTypes = {
+    language: string,
+    multilanguage: boolean,
+    special_pages_urls: object,
+    translation: object
+}
+
+const InteractiveIcon: React.FC <InteractiveIconProps> = (props) => {
+    const { language, multilanguage, special_pages_urls, translation } = useSelector<RootState, stateTypes>(state => ({
         language: state.User.language,
         multilanguage: state.SystemConfig.multilanguage,
         special_pages_urls: state.SystemConfig.special_pages_urls,
@@ -37,8 +58,8 @@ const InteractiveIcon = (props) => {
     const link_url = link_url_type ? prepUrlFromConfigSlug(language, null, null, null, link_url_type, multilanguage) : null;
 
     if (type === pageTypes.wishlist) {
-        badgeNumberDisplay = useSelector(state => state.Wishlist.length, shallowEqual);
-        const { api, initLocalstorageWishlistKey } = useSelector(state => ({
+        badgeNumberDisplay = useSelector<RootState>(state => state.Wishlist.length, shallowEqual);
+        const { api, initLocalstorageWishlistKey } = useSelector<RootState>(state => ({
             api: state.SystemConfig.api,
             initLocalstorageWishlistKey: state.SystemConfig.localstorage_keys.wishlist,
         }), shallowEqual);
@@ -63,7 +84,7 @@ const InteractiveIcon = (props) => {
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >
-           <AssitiveText>{translation[type]}</AssitiveText>
+            <AssitiveText>{translation[type]}</AssitiveText>
             <div className={styles.svgContener}
                 style={{
                     maxWidth: svgSize + 'px',

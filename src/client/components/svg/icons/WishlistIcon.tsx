@@ -1,5 +1,5 @@
 import React from 'react';
-const WishlistIcon = () => {
+const WishlistIcon: React.FC = () => {
     return (
         <svg viewBox="0 0 471.701 471.701">
             <path d="M433.601,67.001c-24.7-24.7-57.4-38.2-92.3-38.2s-67.7,13.6-92.4,38.3l-12.9,12.9l-13.1-13.1

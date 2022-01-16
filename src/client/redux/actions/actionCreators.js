@@ -83,7 +83,7 @@ export const setGlobalDefaultVariantcode = (featureKey, value) => dispatch => {
 
 export const setUserCurrency = (currency_code, all_currencies, cookieCurrencyKey) => dispatch => {
   if (all_currencies[currency_code]) {
-    const actionPayload = { currency_code, cookieCurrencyKey };
+    const actionPayload = { currency_code, cookieCurrencyKey};
     dispatch(userActions.setUserCurrency(actionPayload));
   }
 }

@@ -5,7 +5,12 @@ import styles from './topbar.scss';
 import InteractiveIcon from '../../InteractiveIcon/InteractiveIcon';
 import CloseIcon from '../../svg/icons/CloseIcon';
 
-const Topbar = ({ white, closeHandler }) => {
+type TopbarProps = {
+    white: boolean;
+    closeHandler: () => void
+}
+
+const Topbar: React.FC<TopbarProps> = ({ white, closeHandler }) => {
     return (
         <div className={`${styles.topbar} ${white ? styles.whiteTopbar : ''}`} >
             <span>jakies info o topbarze</span>
@@ -15,8 +20,8 @@ const Topbar = ({ white, closeHandler }) => {
                 hoverOpacity={true}
                 customWidth={30}
                 customSvgSize={15}
-                >
-                <CloseIcon />
+            >
+                <CloseIcon/>
             </InteractiveIcon>
         </div>
     )

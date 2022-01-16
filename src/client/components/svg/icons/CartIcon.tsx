@@ -1,5 +1,5 @@
 import React from 'react';
-const CartIcon = () => {
+const CartIcon: React.FC = () => {
     return (
         <svg viewBox="0 0 489 489">
             <path d="M440.1,422.7l-28-315.3c-0.6-7-6.5-12.3-13.4-12.3h-57.6C340.3,42.5,297.3,0,244.5,0s-95.8,42.5-96.6,95.1H90.3
