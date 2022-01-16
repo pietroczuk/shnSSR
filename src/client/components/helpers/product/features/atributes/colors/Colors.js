@@ -6,7 +6,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { setGlobalDefaultVariantcode, setProductCurrVarId, setProductRandomColors } from '../../../../../../redux/actions/actionCreators';
 
 import ColorCircle from './colorCircle/ColorCircle';
-import DivNavLink from '../../../../../DivNavLink/DivNavLink';
+import DivNavLink from '../../../../../divNavLink/DivNavLink';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './colors.scss'

@@ -1,7 +1,7 @@
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './logo.scss';
-import DivNavLink from '../../DivNavLink/DivNavLink';
+import DivNavLink from '../../divNavLink/DivNavLink';
 import { prepUrlFromConfigSlug, pageTypes } from '../../../utils/utilsFrondend';
 import { useSelector, shallowEqual } from 'react-redux';
 import AssitiveText from '../../helpers/display/assitiveText/AssitiveText';

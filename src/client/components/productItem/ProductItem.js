@@ -5,7 +5,7 @@ import { prepUrlFromConfigSlug, pageTypes, getObjectLength, cutText, intersectAr
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './productItem.scss';
 
-import DivNavLink from '../DivNavLink/DivNavLink';
+import DivNavLink from '../divNavLink/DivNavLink';
 import Placeholder from '../placeholder/Placeholder';
 import AddToWishlistSticker from '../helpers/ui/addToWishlistSticker/AddToWishlistSticker';
 import ShowPrice from '../helpers/display/showPrice/ShowPrice';

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import DivNavLink from '../DivNavLink/DivNavLink';
+import DivNavLink from '../divNavLink/DivNavLink';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './interactiveIcon.scss';
 
