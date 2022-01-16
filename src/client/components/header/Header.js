@@ -20,7 +20,7 @@ import { useSelector, shallowEqual } from 'react-redux';
 import { pageTypes } from '../../utils/utilsFrondend';
 
 const Header = ({ white, whiteTopbar }) => {
-    const [topbarOpen, setTopbarOpen] = useState(false);
+    const [topbarOpen, setTopbarOpen] = useState(true);
 
     const { all_config_languages, all_config_currencies, } = useSelector(state => ({
         all_config_languages: state.SystemConfig.language,
