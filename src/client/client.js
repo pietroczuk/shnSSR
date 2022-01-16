@@ -44,6 +44,8 @@ const store_client = configureStore({
     // devTools: false, //process.env.NODE_ENV !== 'production',
 });
 
+delete window.__INITIAL_STATE__
+
 export type RootState = ReturnType<typeof store_client.getState>
 
 const new_routes_config = window.__CONFIG__;
