@@ -1,5 +1,5 @@
-const TerserPlugin = require('terser-webpack-plugin');
-const path = require('path');
+
+// const path = require('path');
 // const autoprefixer = require('autoprefixer');
 
 module.exports = {
@@ -84,32 +84,7 @@ module.exports = {
     //     reasons: true,
     //     errorDetails: true
     // },
-    optimization: {
-        minimize: true,
-        minimizer: [
-            new TerserPlugin({
-                terserOptions: {
-                    format: {
-                        comments: false,
-                    },
-                },
-                extractComments: false,
-            }),
-        ],
-        // splitChunks: {
-        //     cacheGroups: {
-        //         default: false,
-        //         vendors: false,
-        //     }
-        // }
-
-        // runtimeChunk: false,
-        // splitChunks: {
-        //   chunks(chunk) {
-        //     return false
-        //   },
-        // },
-    },
+    
     // devtool: 'source-map',
     // performance: {
     //     hints: false,

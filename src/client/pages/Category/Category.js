@@ -94,7 +94,6 @@ const Category = props => {
                 </StickySidebar>
             }
             <MainContent>
-                elo
                 <ShowTitleWithBadge title={title} badgeNumber={badgeNumber} customWidth={20} />
                 <div>
                     <FixedBar>
