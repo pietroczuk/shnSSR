@@ -10,13 +10,14 @@ const initialState: SystemConfig = {
 }
 
 type Action = {
-    payload: any
+    payload: SystemConfig
 }
 
 const systemConfigSlice = createSlice({ 
     name: 'SystemConfig',
     initialState,
     reducers: {
+        // setSystemConfig(state:SystemConfig, action: {payload: any}) {
         setSystemConfig(state:SystemConfig, action: Action) {
             return action.payload;
         }
