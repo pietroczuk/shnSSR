@@ -40,21 +40,24 @@ import StyleContext from 'isomorphic-style-loader/StyleContext';
 
 const store_client = configureStore({
     reducer: allReducers,
-    preloadedState: window.__INITIAL_STATE__,
+    preloadedState: (window as any).__INITIAL_STATE__,
     // devTools: false, //process.env.NODE_ENV !== 'production',
 });
 
-delete window.__INITIAL_STATE__
+
 
 export type RootState = ReturnType<typeof store_client.getState>
 
-const new_routes_config = window.__CONFIG__;
+const new_routes_config = (window as any).__CONFIG__;
 const initialState = store_client.getState();
 const userLanguage = initialState.User.language;
 const multilanguage = initialState.SystemConfig.multilanguage;
 
-// const insertCss = (...styles:any[]) => {
-const insertCss = (...styles) => {
+delete (window as any).__INITIAL_STATE__;
+delete (window as any).__CONFIG__;
+
+const insertCss = (...styles:any[]) => {
+// const insertCss = (...styles) => {
     const removeCss = styles.map(style => style._insertCss());
     return () =>removeCss.forEach(dispose => dispose());
 };

@@ -9,7 +9,7 @@ const config = {
     // client app
     // entry: path.resolve(__dirname, '../src/client/client.tsx'),
     target: 'web',
-    entry: path.resolve(__dirname, '../src/client/client.js'),
+    entry: path.resolve(__dirname, '../src/client/client.tsx'),
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
     },
