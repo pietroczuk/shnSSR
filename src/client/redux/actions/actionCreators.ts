@@ -13,7 +13,7 @@ loads global config
 - api urls
 - awaible languages, currencies
 */
-export const getGlobalConfig = (api_config, lang) => async dispatch => {
+export const getGlobalConfig = (api_config, lang:string) => async dispatch => {
   if (api_config) {
     dispatch(systemConfigActions.setSystemConfig(api_config));
     const page_url = '?lang=' + lang;

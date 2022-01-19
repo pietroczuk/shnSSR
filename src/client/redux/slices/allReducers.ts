@@ -5,11 +5,6 @@ import userSlice from './userSlice';
 import displaySlice from './displaySlice';
 import wishlistSlice from './wishlistSlice';
 
-/**
- * @typedef {Object}
- * 
- */
-
 const allReducers = {
     SystemConfig: systemConfigSlice.reducer,
     PublicConfig: publicConfigSlice.reducer,

@@ -13,15 +13,15 @@ import AssitiveText from '../helpers/display/assitiveText/AssitiveText';
 import { RootState } from '../../client';
 
 interface InteractiveIconProps {
-    white: boolean
-    hoverBg: string
-    hoverOpacity: boolean
-    customWidth: number
-    customSvgSize: number
-    onMouseEnter: Function
-    onMouseLeave: Function
-    onClick: Function
-    type: string
+    white?: boolean
+    hoverBg?: string
+    hoverOpacity?: boolean
+    customWidth?: number
+    customSvgSize?: number
+    onMouseEnter?: Function
+    onMouseLeave?: Function
+    onClick?: Function
+    type?: string
 }
 
 type stateTypes = {
@@ -58,8 +58,8 @@ const InteractiveIcon: React.FC <InteractiveIconProps> = (props) => {
     const link_url = link_url_type ? prepUrlFromConfigSlug(language, null, null, null, link_url_type, multilanguage) : null;
 
     if (type === pageTypes.wishlist) {
-        badgeNumberDisplay = useSelector<RootState>(state => state.Wishlist.length, shallowEqual);
-        const { api, initLocalstorageWishlistKey } = useSelector<RootState>(state => ({
+        badgeNumberDisplay = useSelector<RootState,number>(state => state.Wishlist.length, shallowEqual);
+        const { api, initLocalstorageWishlistKey } = useSelector<RootState, {api:object, initLocalstorageWishlistKey:string}>(state => ({
             api: state.SystemConfig.api,
             initLocalstorageWishlistKey: state.SystemConfig.localstorage_keys.wishlist,
         }), shallowEqual);

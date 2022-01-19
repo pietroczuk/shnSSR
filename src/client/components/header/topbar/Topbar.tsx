@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './topbar.scss';
 
@@ -10,7 +10,7 @@ type TopbarProps = {
     closeHandler: () => void
 }
 
-const Topbar: React.FC<TopbarProps> = ({ white, closeHandler }) => {
+const Topbar: FC<TopbarProps> = ({ white, closeHandler }) => {
     return (
         <div className={`${styles.topbar} ${white ? styles.whiteTopbar : ''}`} >
             <span>jakies info o topbarze</span>
@@ -21,7 +21,7 @@ const Topbar: React.FC<TopbarProps> = ({ white, closeHandler }) => {
                 customWidth={30}
                 customSvgSize={15}
             >
-                <CloseIcon/>
+                <CloseIcon />
             </InteractiveIcon>
         </div>
     )

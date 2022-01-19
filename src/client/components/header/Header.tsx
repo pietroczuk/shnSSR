@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
 import styles from './header.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
@@ -19,15 +19,17 @@ import { useSelector, shallowEqual } from 'react-redux';
 
 import { pageTypes } from '../../utils/utilsFrondend';
 
+import { RootState } from '../../client';
+
 interface HeaderProps {
     white: boolean;
     whiteTopbar: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ white, whiteTopbar }) => {
+const Header: FC<HeaderProps> = ({ white, whiteTopbar }) => {
     const [topbarOpen, setTopbarOpen] = useState(true);
 
-    const { all_config_languages, all_config_currencies, } = useSelector(state => ({
+    const { all_config_languages, all_config_currencies } = useSelector<RootState, {all_config_languages:string, all_config_currencies: string}>(state => ({
         all_config_languages: state.SystemConfig.language,
         all_config_currencies: state.SystemConfig.currency,
     }), shallowEqual);
