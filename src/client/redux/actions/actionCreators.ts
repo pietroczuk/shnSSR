@@ -128,7 +128,7 @@ export const addToStoreWishlist = (api, lang, productId, variantId, localstorage
  * Get wishlist from localstorage  
  */
 
-export const checkWishlist = (initLocalstorageWishlistKey = null, wishlistState = null, api, language, productUrl = null) => dispatch => {
+export const checkWishlist = (initLocalstorageWishlistKey:string|null = null, wishlistState = null, api, language, productUrl = null) => dispatch => {
   const localstorageData = initLocalstorageWishlistKey ? getLocalStorage(initLocalstorageWishlistKey) : null;
   const wishlistData = localstorageData ? localstorageData : wishlistState && wishlistState.products ? wishlistState.products : null;
   if (wishlistData) {

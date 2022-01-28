@@ -2,7 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface SystemConfig {
     multilanguage: boolean,
-    special_pages_urls: object,
+    special_pages_urls: {
+        [key: string]:
+        {
+            [key: string]: string
+        }
+    },
     api: object,
     localstorage_keys: {
         wishlist: string,
@@ -29,12 +34,12 @@ type Action = {
     payload: SystemConfig
 }
 
-const systemConfigSlice = createSlice({ 
+const systemConfigSlice = createSlice({
     name: 'SystemConfig',
     initialState,
     reducers: {
         // setSystemConfig(state:SystemConfig, action: {payload: any}) {
-        setSystemConfig(state:SystemConfig, action: Action) {
+        setSystemConfig(state: SystemConfig, action: Action) {
             return action.payload;
         }
     }

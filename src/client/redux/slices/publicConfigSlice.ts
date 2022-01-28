@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 interface PublicConfig {
     default_variant_code: object,
     ssr: boolean,
-    translation: object,
+    translation: {[key: string]: string},
 }
 
 const initialState: PublicConfig = {

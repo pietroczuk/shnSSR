@@ -21,7 +21,7 @@ const Topbar: FC<TopbarProps> = ({ white, closeHandler }) => {
                 customWidth={30}
                 customSvgSize={15}
             >
-                <CloseIcon />
+                <CloseIcon/>
             </InteractiveIcon>
         </div>
     )

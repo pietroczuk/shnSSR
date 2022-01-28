@@ -13,7 +13,7 @@ import AssitiveText from '../helpers/display/assitiveText/AssitiveText';
 import { RootState } from '../../client';
 
 interface InteractiveIconProps {
-    white?: boolean
+    white: boolean
     hoverBg?: string
     hoverOpacity?: boolean
     customWidth?: number
@@ -24,15 +24,18 @@ interface InteractiveIconProps {
     type?: string
 }
 
-type stateTypes = {
-    language: string,
-    multilanguage: boolean,
-    special_pages_urls: object,
-    translation: object
-}
+// type stateTypes = {
+//     language: string,
+//     multilanguage: boolean,
+//     special_pages_urls: object,
+//     translation: object
+// }
 
 const InteractiveIcon: React.FC <InteractiveIconProps> = (props) => {
-    const { language, multilanguage, special_pages_urls, translation } = useSelector<RootState, stateTypes>(state => ({
+    const { language, multilanguage, special_pages_urls, translation } = 
+    //  useSelector<RootState, stateTypes>(state => ({
+    //  useSelector<RootState>(state => ({
+     useSelector((state: RootState) => ({
         language: state.User.language,
         multilanguage: state.SystemConfig.multilanguage,
         special_pages_urls: state.SystemConfig.special_pages_urls,
@@ -58,8 +61,8 @@ const InteractiveIcon: React.FC <InteractiveIconProps> = (props) => {
     const link_url = link_url_type ? prepUrlFromConfigSlug(language, null, null, null, link_url_type, multilanguage) : null;
 
     if (type === pageTypes.wishlist) {
-        badgeNumberDisplay = useSelector<RootState,number>(state => state.Wishlist.length, shallowEqual);
-        const { api, initLocalstorageWishlistKey } = useSelector<RootState, {api:object, initLocalstorageWishlistKey:string}>(state => ({
+        badgeNumberDisplay = useSelector((state: RootState) => state.Wishlist.length, shallowEqual);
+        const { api, initLocalstorageWishlistKey } = useSelector((state: RootState) => ({
             api: state.SystemConfig.api,
             initLocalstorageWishlistKey: state.SystemConfig.localstorage_keys.wishlist,
         }), shallowEqual);
@@ -84,7 +87,7 @@ const InteractiveIcon: React.FC <InteractiveIconProps> = (props) => {
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >
-            <AssitiveText>{translation[type]}</AssitiveText>
+            <AssitiveText>{type && translation[type]}</AssitiveText>
             <div className={styles.svgContener}
                 style={{
                     maxWidth: svgSize + 'px',
