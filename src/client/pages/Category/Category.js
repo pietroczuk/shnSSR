@@ -37,7 +37,8 @@ const Category = props => {
         url_prefix,
         category_products,
         language,
-        default_variant_code
+        default_variant_code,
+        isMobile
     } = useSelector(
         state => ({
             seo: state.PublicConfig.config.seo,
@@ -47,7 +48,8 @@ const Category = props => {
             api: state.SystemConfig.api,
             category_products: state.SystemConfig.placeholder.category_products,
             language: state.User.language,
-            default_variant_code: state.PublicConfig.default_variant_code
+            default_variant_code: state.PublicConfig.default_variant_code,
+            isMobile: state.Display.isMobile
         })
         , shallowEqual
     )
@@ -59,7 +61,8 @@ const Category = props => {
     const { url } = props.match.params;
     const { location } = props;
     // multirow
-    const multirow = true;
+    // const multirow = true;
+    const multirow = !isMobile;
     const title = category ? category.title : null;
     const badgeNumber = null;
 

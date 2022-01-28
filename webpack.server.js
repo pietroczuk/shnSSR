@@ -1,7 +1,7 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
 const baseConfig = require('./webpack.base.js');
-const nodeExternals = require('webpack-node-externals');
+// const nodeExternals = require('webpack-node-externals');
 // const LoadablePlugin = require('@loadable/webpack-plugin');
 const webpack = require('webpack');
 
@@ -9,9 +9,21 @@ const config = {
     // inform webpack taht we're building a bundle
     // for nodeJS, not for the browser
     target: 'node',
+    // externalsPresets: { node: true },
 
     // for view.js error
-    externals: [nodeExternals()],
+    // externals: [nodeExternals(
+    //     {
+    //     allowlist: [
+    //         'babel-polyfill', 
+    //         'express', 
+    //         'compression',
+    //         'axios',
+    //         // 'react-router-config'
+    //     ]
+    // }
+    // )
+// ],
 
     // Tell webpack the root file of our
     // server app

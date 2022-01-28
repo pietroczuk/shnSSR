@@ -3,11 +3,13 @@ const { merge } = require('webpack-merge');
 const baseConfig = require('./webpack.base.js');
 // const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const LoadablePlugin = require('@loadable/webpack-plugin');
+// const nodeExternals = require('webpack-node-externals');
 
 const config = {
     // Tell webpack the root file of our
     // client app
     entry: './src/client/client.js',
+    // externals: [nodeExternals()],
     // devtool: 'source-map',
     // tell webpack where to put the generate file
     output: {

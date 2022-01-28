@@ -20,7 +20,7 @@ import { Helmet } from 'react-helmet';
 
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 
-import { minify } from 'html-minifier';
+// import { minify } from 'html-minifier';
 
 // export default (req, server_store, context, css, insertCss) => {
 
@@ -111,20 +111,42 @@ export const rednderHtml = (req, server_store, context, new_routes_config, user_
               
               ${webExtractor.getStyleTags()}
               <style>${[...css].join('')}</style>
+              <link rel="preconnect"
+                    href="https://fonts.gstatic.com"
+                    crossorigin />
+
+              <!-- [2] -->
+              <link rel="preload"
+                    as="style"
+                    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" />
+
+              <!-- [3] -->
+              <link rel="stylesheet"
+                    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+                    media="print" onload="this.media='all'" />
+
+              <!-- [4] -->
+              <noscript>
+                <link rel="stylesheet"
+                      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" />
+              </noscript>
+
             </head>
             <body>
                 <div id="root">${content}</div>
                 ${webExtractor.getScriptTags().replace(/async/g, "defer")}
-                <link async href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-            </body>
+                
+                </body>
            
         </html>
     `;
-  const html_mini = minify(html, {
-    collapseWhitespace: true,
-    collapseInlineTagWhitespace: true,
-    minifyCSS: true,
-  });
+    // <link async href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+           
+  // const html_mini = minify(html, {
+  //   collapseWhitespace: true,
+  //   collapseInlineTagWhitespace: true,
+  //   minifyCSS: true,
+  // });
   // return html_mini;
   return html;
 }

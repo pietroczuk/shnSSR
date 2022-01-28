@@ -27,6 +27,10 @@ import {
 /** CACHE */
 // const cache = require('node-file-cache').create();
 
+import MobileDetect from 'mobile-detect';
+
+// var MobileDetect = require('mobile-detect'),
+    
 
 const app = express();
 app.disable('x-powered-by');
@@ -67,6 +71,19 @@ app.get('*', (req, res) => {
         .catch(err => {
             console.error('❌ Error get config file', err);
         }).then(api_config => {
+            const mobileDetect = new MobileDetect(req.headers['user-agent']);
+            const isMobile = mobileDetect.mobile() || mobileDetect.phone() || mobileDetect.tablet() ? true : false;
+            // console.log( mobileDetect.mobile() );          // 'Sony'
+            // console.log( mobileDetect.phone() );           // 'Sony'
+            // console.log( mobileDetect.tablet() );          // null
+            // console.log( mobileDetect.userAgent() );       // 'Safari'
+            // console.log( mobileDetect.os() );              // 'AndroidOS'
+            // console.log( mobileDetect.is('iPhone') );      // false
+            // console.log( mobileDetect.is('bot') );         // false
+            // console.log( mobileDetect.version('Webkit') );         // 534.3
+            // console.log( mobileDetect.versionStr('Build') );       // '4.1.A.0.562'
+            // console.log( mobileDetect.match('playstation|xbox') ); // false
+
             const multilanguage = api_config.multilanguage;
             const languages = api_config.language;
             const urlData = url_data_from_path(req.path, languages, multilanguage);
@@ -102,7 +119,7 @@ app.get('*', (req, res) => {
 
                 // get display cookies
                 const display_options = get_display_cookies(req.headers.cookie, api_config.cookies_keys.display);
-
+                display_options.isMobile = isMobile;
                 // console.log('server', user_language);
 
                 const server_store = createServerInitStore(user_language, user_currency, display_options);

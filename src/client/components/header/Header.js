@@ -22,9 +22,10 @@ import { pageTypes } from '../../utils/utilsFrondend';
 const Header = ({ white, whiteTopbar }) => {
     const [topbarOpen, setTopbarOpen] = useState(false);
 
-    const { all_config_languages, all_config_currencies, } = useSelector(state => ({
+    const { all_config_languages, all_config_currencies, isMobile } = useSelector(state => ({
         all_config_languages: state.SystemConfig.language,
         all_config_currencies: state.SystemConfig.currency,
+        isMobile: state.Display.isMobile
     }), shallowEqual);
 
     const setTopbarOpenHandler = () => {
@@ -36,9 +37,9 @@ const Header = ({ white, whiteTopbar }) => {
             {console.log('render header')}
             {topbarOpen && <Topbar closeHandler={setTopbarOpenHandler} white={whiteTopbar} />}
             <div className={styles.headerContent}>
-                <Logo white={!white} miniLogo={false} />
+                <Logo white={!white} miniLogo={isMobile} />
                 {/* <div onClick={setTopbarOpenHandler}>moj header</div> */}
-                <MenuTop />
+                {!isMobile && <MenuTop />}
                 <div className={styles.headerRight}>
                     {all_config_languages && getObjectLength(all_config_languages) > 1 && <LanguageSwitcher />}
                     {all_config_currencies && getObjectLength(all_config_currencies) > 1 && <CurrencySwitcher />}
