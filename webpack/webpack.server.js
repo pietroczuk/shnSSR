@@ -11,7 +11,7 @@ const config = {
     target: 'node',
 
     // for view.js error
-    externals: [nodeExternals()],
+    // externals: [nodeExternals()],
 
     // Tell webpack the root file of our
     // server app

@@ -20,7 +20,7 @@ import { Helmet } from 'react-helmet';
 
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 
-import { minify } from 'html-minifier';
+// import { minify } from 'html-minifier';
 
 // export default (req, server_store, context, css, insertCss) => {
 
@@ -120,11 +120,11 @@ export const rednderHtml = (req, server_store, context, new_routes_config, user_
            
         </html>
     `;
-  const html_mini = minify(html, {
-    collapseWhitespace: true,
-    collapseInlineTagWhitespace: true,
-    minifyCSS: true,
-  });
+  // const html_mini = minify(html, {
+  //   collapseWhitespace: true,
+  //   collapseInlineTagWhitespace: true,
+  //   minifyCSS: true,
+  // });
   // return html_mini;
   return html;
 }
