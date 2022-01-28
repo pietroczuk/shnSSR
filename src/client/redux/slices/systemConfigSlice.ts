@@ -15,7 +15,8 @@ interface SystemConfig {
         visited: string
     },
     language: string,
-    currency: string
+    currency: string,
+    urls: { [key: string]: string }
 }
 const initialState: SystemConfig = {
     multilanguage: false,
@@ -27,7 +28,8 @@ const initialState: SystemConfig = {
         visited: '',
     },
     language: '',
-    currency: ''
+    currency: '',
+    urls: {},
 }
 
 type Action = {

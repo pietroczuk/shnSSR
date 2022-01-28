@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './header.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
@@ -26,10 +26,10 @@ interface HeaderProps {
     whiteTopbar: boolean;
 }
 
-const Header: FC<HeaderProps> = ({ white, whiteTopbar }) => {
+const Header: React.FC<HeaderProps> = ({ white, whiteTopbar }) => {
     const [topbarOpen, setTopbarOpen] = useState(true);
 
-    const { all_config_languages, all_config_currencies } = useSelector<RootState, {all_config_languages:string, all_config_currencies: string}>(state => ({
+    const { all_config_languages, all_config_currencies } = useSelector((state: RootState) => ({
         all_config_languages: state.SystemConfig.language,
         all_config_currencies: state.SystemConfig.currency,
     }), shallowEqual);
@@ -40,7 +40,7 @@ const Header: FC<HeaderProps> = ({ white, whiteTopbar }) => {
     // console.log('header location', location);
     return (
         <header id="root_header" className={`${styles.rootHeader} ${!white ? styles.darkHeader : ''}`}>
-            {console.log('render header')}
+            {/* {console.log('render header')} */}
             {topbarOpen && <Topbar closeHandler={setTopbarOpenHandler} white={whiteTopbar} />}
             <div className={styles.headerContent}>
                 <Logo white={!white} miniLogo={false} />

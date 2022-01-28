@@ -30,7 +30,9 @@ const TR = loadable(() => import(/* webpackPrefetch: true */ '../svg/flags/TR'),
 const ZH = loadable(() => import(/* webpackPrefetch: true */ '../svg/flags/ZH'), {});
 const JA = loadable(() => import(/* webpackPrefetch: true */ '../svg/flags/JA'), {});
 
-const LanguageSwitcher = (props) => {
+import { RootState } from '../../client';
+
+const LanguageSwitcher:React.FC = () => {
     const [searchParams, setSearchParams] = useState('');
     const { search } = useLocation();
 
@@ -43,7 +45,7 @@ const LanguageSwitcher = (props) => {
         setOpenSubmenu(false);
     }
 
-    const { all_config_languages, urls, page, user_language } = useSelector(state => ({
+    const { all_config_languages, urls, page, user_language } = useSelector((state: RootState) => ({
         all_config_languages: state.SystemConfig.language,
         urls: state.SystemConfig.urls,
         page: state.Page,
@@ -56,7 +58,7 @@ const LanguageSwitcher = (props) => {
         setSearchParams(search);
     }, [search]);
 
-    const showLanguageFlag = (language) => {
+    const showLanguageFlag = (language: string) => {
         switch (language) {
             case 'pl': return <PL />;
             case 'en': return <EN />;

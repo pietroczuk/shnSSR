@@ -18,30 +18,21 @@ interface InteractiveIconProps {
     hoverOpacity?: boolean
     customWidth?: number
     customSvgSize?: number
-    onMouseEnter?: Function
-    onMouseLeave?: Function
-    onClick?: Function
+    onMouseEnter?: React.MouseEventHandler<HTMLAnchorElement | HTMLDivElement>,
+    onMouseLeave?: React.MouseEventHandler<HTMLAnchorElement | HTMLDivElement>,
+    onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLDivElement>,
     type?: string
 }
 
-// type stateTypes = {
-//     language: string,
-//     multilanguage: boolean,
-//     special_pages_urls: object,
-//     translation: object
-// }
+const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
+    const { language, multilanguage, special_pages_urls, translation } =
+        useSelector((state: RootState) => ({
+            language: state.User.language,
+            multilanguage: state.SystemConfig.multilanguage,
+            special_pages_urls: state.SystemConfig.special_pages_urls,
+            translation: state.PublicConfig.translation
 
-const InteractiveIcon: React.FC <InteractiveIconProps> = (props) => {
-    const { language, multilanguage, special_pages_urls, translation } = 
-    //  useSelector<RootState, stateTypes>(state => ({
-    //  useSelector<RootState>(state => ({
-     useSelector((state: RootState) => ({
-        language: state.User.language,
-        multilanguage: state.SystemConfig.multilanguage,
-        special_pages_urls: state.SystemConfig.special_pages_urls,
-        translation: state.PublicConfig.translation
-
-    }), shallowEqual);
+        }), shallowEqual);
     const {
         white,
         hoverBg,

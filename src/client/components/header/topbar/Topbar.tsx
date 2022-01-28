@@ -7,7 +7,7 @@ import CloseIcon from '../../svg/icons/CloseIcon';
 
 type TopbarProps = {
     white: boolean;
-    closeHandler: () => void
+    closeHandler: VoidFunction
 }
 
 const Topbar: FC<TopbarProps> = ({ white, closeHandler }) => {
@@ -19,7 +19,7 @@ const Topbar: FC<TopbarProps> = ({ white, closeHandler }) => {
                 onClick={closeHandler}
                 hoverOpacity={true}
                 customWidth={30}
-                customSvgSize={15}
+                customSvgSize={15}           
             >
                 <CloseIcon/>
             </InteractiveIcon>
