@@ -1,7 +1,7 @@
 /* ---------------- Main server file ----------------- */
 
 // import async await - babel-polyfil
-// import 'babel-polyfill';
+import 'babel-polyfill';
 
 import express from 'express';
 import compression from 'compression';
@@ -34,17 +34,22 @@ app.disable('x-powered-by');
 app.use(compression());
 app.use(express.static('public_html/public', { maxAge: '1y' }));
 
-const dotenv = require('dotenv').config({ path: 'public_html/server/.env' });
+// const dotenv = require('dotenv').config({ path: 'public_html/server/.env' });
 
-if (!process.env.API_URL) {
-    console.error('❌ Error load env file!')
-} else {
-    console.log('🗂  Local env config file load Success!');
-}
+// if (!process.env.API_URL) {
+//     console.error('❌ Error load env file!')
+// } else {
+//     console.log('🗂  Local env config file load Success!');
+// }
+// const api =
+// {
+//     'url': process.env.API_URL,
+//     'config': process.env.API_CONFIG_URL,
+// }
 const api =
 {
-    'url': process.env.API_URL,
-    'config': process.env.API_CONFIG_URL,
+    'url': "https://api.shineposters.com/2021/",
+    'config': "get_config.php"
 }
 const apiUrl = api.url;
 
@@ -181,7 +186,8 @@ app.get('*', (req, res) => {
 
 });
 
-const port = process.env.SERVER_PORT;
+// const port = process.env.SERVER_PORT;
+const port = 8081;
 
 app.listen(port, () => {
     console.log('📟 Listening on port:', port);
