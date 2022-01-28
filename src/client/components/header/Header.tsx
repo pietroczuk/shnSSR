@@ -21,7 +21,7 @@ import { pageTypes } from '../../utils/utilsFrondend';
 
 import { RootState } from '../../client';
 
-interface HeaderProps {
+type HeaderProps = {
     white: boolean;
     whiteTopbar: boolean;
 }

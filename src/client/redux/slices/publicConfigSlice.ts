@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface PublicConfig {
+type PublicConfig = {
     default_variant_code: object,
     ssr: boolean,
     translation: {[key: string]: string},

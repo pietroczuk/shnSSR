@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface SystemConfig {
+type SystemConfig = {
     multilanguage: boolean,
     special_pages_urls: {
         [key: string]:

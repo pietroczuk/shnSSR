@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { setCookie } from '../../utils/utilsFrondend';
 
-interface User {
+type User = {
     language: string,
     currency: string,
     today: string,
