@@ -16,7 +16,7 @@ const config = {
     // Tell webpack the root file of our
     // server app
     // entry: path.resolve(__dirname, '../src/server/server.tsx'),
-    entry: path.resolve(__dirname, '../src/server/server.js'),
+    entry: path.resolve(__dirname, '../src/server/server.ts'),
     // entry: './src/server/server.js',
     // simply import files with this extensions (webpack search ext. in this array)
     resolve: {

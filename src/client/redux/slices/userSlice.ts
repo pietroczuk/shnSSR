@@ -1,16 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { setCookie } from '../../utils/utilsFrondend';
-
-type User = {
-    language: string,
-    currency: string,
-    today: string,
-}
+import { User } from '../types/user.types';
 
 const initialState: User = {
     language: '',
     currency: '',
-    today: '',
+    today: { date: '' },
 }
 
 type Action = {

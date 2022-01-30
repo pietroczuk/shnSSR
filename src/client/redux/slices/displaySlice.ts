@@ -1,10 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { setCookie } from '../../utils/utilsFrondend';
-
-interface Display {
-    showVisual: boolean,
-    showRandom: boolean
-}
+import { Display } from '../types/display.types';
 
 const initialState: Display = {
     showVisual: false,

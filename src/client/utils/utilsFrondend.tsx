@@ -1,4 +1,3 @@
-import React from 'react';
 import Cookies from 'universal-cookie';
 // SEO
 import { Helmet } from 'react-helmet';
@@ -23,11 +22,6 @@ export const setCookie = (type: string, value: string) => {
     const cookies = new Cookies();
     const current = new Date();
     const nextYear = current.setFullYear(current.getFullYear() + 1);
-
-    // new Date(Date.now()+2592000)}
-
-    // option expires is invalid
-    // console.log('coockies', nextYear);
     cookies.set(type, value, { expires: new Date(nextYear), path: '/' }); // sameSite:true, secure: true});
 }
 export const getCookie = (type: string) => {
@@ -44,16 +38,19 @@ interface metatagsArgs {
             title: string,
             description: string,
             og: {
-                url: string
+                url: string,
+                type: string,
+                image: string,
+                site_name: string
             }
         },
         url: string,
         lang: string,
         url_prefix: string
-    ): React.FC
+    ): JSX.Element
 }
-/*
-export const metatags : metatagsArgs = (page_title, page_description, seo, url, lang, url_prefix) => {
+
+export const metatags: metatagsArgs = (page_title, page_description, seo, url, lang, url_prefix) => {
     const title = page_title ? page_title : seo.title;
     const description = page_description ? page_description : seo.description;
     const { og } = seo;
@@ -62,47 +59,47 @@ export const metatags : metatagsArgs = (page_title, page_description, seo, url, 
 
     return (
         <Helmet
-            title= { title }
-    link = {
-        [
-            { rel: 'canonical', href: link }
-        ]}
-    meta = {
-        [
-            {
-                name: 'description',
-                content: description,
-            },
-            {
-                name: 'og:title',
-                content: title,
-            },
-            {
-                name: 'og:description',
-                content: description,
-            },
-            {
-                name: 'og:type',
-                content: og.type,
-            },
-            {
-                name: 'og:image',
-                content: og.image,
-            },
-            {
-                name: 'og:url',
-                content: og.url,
-            },
-            {
-                name: 'og:site_name',
-                content: og.site_name
-            },
-            ]}
+            title={title}
+            link={
+                [
+                    { rel: 'canonical', href: link }
+                ]}
+            meta={
+                [
+                    {
+                        name: 'description',
+                        content: description,
+                    },
+                    {
+                        name: 'og:title',
+                        content: title,
+                    },
+                    {
+                        name: 'og:description',
+                        content: description,
+                    },
+                    {
+                        name: 'og:type',
+                        content: og.type,
+                    },
+                    {
+                        name: 'og:image',
+                        content: og.image,
+                    },
+                    {
+                        name: 'og:url',
+                        content: og.url,
+                    },
+                    {
+                        name: 'og:site_name',
+                        content: og.site_name
+                    },
+                ]}
         />
     );
 }
 
-*/
+
 
 // -------- end seo
 
@@ -155,31 +152,32 @@ export const renderHtmlFromJson = (json: object) => {
             textAlign: textAlign,
             color: color,
         }
-        const childText = Array.isArray(text_object.text) ? renderHtmlFromJson(text_object.text, true) : text_object.text;
+        const childText: string = Array.isArray(text_object.text) ? renderHtmlFromJson(text_object.text) : text_object.text;
         switch (text_object.tag) {
-            case 'p': return <p key={ index } style = { styleObject } > { childText } < /p>;
-            case 'span': return <span key={ index } style = { styleObject } > { childText } < /span>;
-            case 'h1': return <h1 key={ index } style = { styleObject } > { childText } < /h1>;
-            case 'h2': return <h2 key={ index } style = { styleObject } > { childText } < /h2>;
-            case 'h3': return <h3 key={ index } style = { styleObject } > { childText } < /h3>;
-            case 'h4': return <h4 key={ index } style = { styleObject } > { childText } < /h4>;
-            case 'h5': return <h5 key={ index } style = { styleObject } > { childText } < /h5>;
-            case 'h6': return <h6 key={ index } style = { styleObject } > { childText } < /h6>;
-            case 'ul': return <ul key={ index } style = { styleObject } > { childText } < /ul>;
-            case 'ol': return <ol key={ index } style = { styleObject } > { childText } < /ol>;
-            case 'li': return <li key={ index } style = { styleObject } > { childText } < /li>;
-            case 'sup': return <sup key={ index } style = { styleObject } > { childText } < /sup>;
-            case 'sub': return <sub key={ index } style = { styleObject } > { childText } < /sub>;
-            case 'strong': return <strong key={ index } style = { styleObject } > { childText } < /strong>;
-            case 'u': return <u key={ index } style = { styleObject } > { childText } < /u>;
-            case 'i': return <i key={ index } style = { styleObject } > { childText } < /i>;
-            case 's': return <s key={ index } style = { styleObject } > { childText } < /s>;
-            case 'a': return <a href={ href } target = { target } rel = { rel } key = { index } style = { styleObject } > { childText } < /a>;
+            case 'p': return <p key={index} style={styleObject} > {childText} </p>;
+            case 'span': return <span key={index} style={styleObject} > {childText} </span>;
+            case 'h1': return <h1 key={index} style={styleObject} > {childText} </h1>;
+            case 'h2': return <h2 key={index} style={styleObject} > {childText} </h2>;
+            case 'h3': return <h3 key={index} style={styleObject} > {childText} </h3>;
+            case 'h4': return <h4 key={index} style={styleObject} > {childText} </h4>;
+            case 'h5': return <h5 key={index} style={styleObject} > {childText} </h5>;
+            case 'h6': return <h6 key={index} style={styleObject} > {childText} </h6>;
+            case 'ul': return <ul key={index} style={styleObject} > {childText} </ul>;
+            case 'ol': return <ol key={index} style={styleObject} > {childText} </ol>;
+            case 'li': return <li key={index} style={styleObject} > {childText} </li>;
+            case 'sup': return <sup key={index} style={styleObject} > {childText} </sup>;
+            case 'sub': return <sub key={index} style={styleObject} > {childText} </sub>;
+            case 'strong': return <strong key={index} style={styleObject} > {childText} </strong>;
+            case 'u': return <u key={index} style={styleObject} > {childText} </u>;
+            case 'i': return <i key={index} style={styleObject} > {childText} </i>;
+            case 's': return <s key={index} style={styleObject} > {childText} </s>;
+            case 'a': return <a href={href} target={target} rel={rel} key={index} style={styleObject} > {childText} </a>;
             default:
                 return childText;
         }
     }) : json : '';
 }
+
 
 // ----------- prepare url links in menu based on array slug from config
 
@@ -252,7 +250,7 @@ export const scrollToTop = (window: any) => {
  * Check if object is empty or not
  */
 export const isObjectEmpty = (obj: object) => {
-    for (const i in obj) return false;
+    for (const _i in obj) return false;
     return true;
 }
 

@@ -4,14 +4,19 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import allReducers from '../../client/redux/slices/allReducers';
+import { Display } from '../../client/redux/types/display.types';
+import { User } from '../../client/redux/types/user.types';
 
-export default (language = null, currency = null, display_options = null) => {
-    const store_init_data = {
+export const createServerInitStore = (language: string, currency: string, display_options: Display) => {
+    const store_init_data: {
+        User: User,
+        Display: Display
+    } = {
         User: {
             language: language,
             currency: currency,
             today: {
-                date: new Date().toLocaleString("pl-PL", {timeZone: 'Europe/Warsaw'})
+                date: new Date().toLocaleString("pl-PL", { timeZone: 'Europe/Warsaw' })
             },
         },
         Display: display_options

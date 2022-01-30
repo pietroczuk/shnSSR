@@ -15,23 +15,30 @@ import serialize from 'serialize-javascript';
 // SEO
 import { Helmet } from 'react-helmet';
 
-// import client_hash from '../../../public_html/server/client_hash';
-// const hash = client_hash['main.js'];
-
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 
 // import { minify } from 'html-minifier';
 
-// export default (req, server_store, context, css, insertCss) => {
-
 import { ChunkExtractor } from '@loadable/server';
-// import { ServerStyleSheet } from 'styled-components';
 
 import path from 'path';
+import { EnhancedStore } from '@reduxjs/toolkit';
+import { NewRoutesConfig } from '../types/newRoutesConfig.types';
 
+interface renderHtml {
+  (
+    req: {
+      path: string
+    },
+    server_store: EnhancedStore,
+    context: object,
+    new_routes_config: NewRoutesConfig,
+    user_language: string,
+    multilanguage: boolean
+  ): string
+}
 
-
-export const rednderHtml = (req, server_store, context, new_routes_config, user_language, multilanguage) => {
+export const rednderHtml: renderHtml = (req, server_store, context, new_routes_config, user_language, multilanguage) => {
   const webStats = path.resolve(
     __dirname,
     '../../public_html/server/loadable-stats.json',
@@ -40,7 +47,7 @@ export const rednderHtml = (req, server_store, context, new_routes_config, user_
 
   const css = new Set(); // CSS for all rendered React components
   // console.log(...styles);
-  const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
+  const insertCss = (...styles:any[]) => styles.forEach(style => css.add(style._getCss()));
 
   const content = renderToString(
     webExtractor.collectChunks(
