@@ -1,15 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { setCookie } from '../../utils/utilsFrondend';
-import { Display } from '../types/display.types';
-
-const initialState: Display = {
-    showVisual: false,
-    showRandom: false,
-}
+import { setCookie } from '../../../utils/utilsFrondend';
+import { DisplayInitialState } from './displayInitialState';
 
 const displaySlice = createSlice({
     name: 'Display',
-    initialState,
+    initialState: DisplayInitialState,
     reducers: {
         setProductVisual(state, action) {
             const cookieKey = action.payload;

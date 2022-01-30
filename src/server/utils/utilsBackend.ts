@@ -38,7 +38,6 @@ export const urlDataFromPath = (full_path: string, languages: Language, multilan
     }
     const pathCriticalIndex = 2;
     const real_path_arr = full_path.split('/');
-    console.log(real_path_arr);
     if (real_path_arr.length >= pathCriticalIndex) {
         if (!languages[real_path_arr[1]] && languages[Object.keys(languages)[0]]['code']) {
             pathData.languageCode = languages[Object.keys(languages)[0]]['code'];

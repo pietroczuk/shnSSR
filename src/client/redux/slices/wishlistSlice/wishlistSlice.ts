@@ -1,22 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { setLocalStorage, clearLocalStorage, isObjectEmpty, getObjectLength } from '../../utils/utilsFrondend';
-import { Wishlist_Products } from '../types/wishlist.types';
+import { setLocalStorage, clearLocalStorage, isObjectEmpty, getObjectLength } from '../../../utils/utilsFrondend';
+import { Wishlist, WishlistProducts } from '../../types/wishlist.types';
+import WishlistInitialState from './wishlistInitialState';
 
-interface Wishlist {
-    length: number,
-    products: Wishlist_Products
-}
-
-const initialState: Wishlist = {
-    length: 0,
-    products: {}
-}
 
 const wishlistSlice = createSlice({
     name: 'Wishlist',
-    initialState,
+    initialState: WishlistInitialState,
     reducers: {
-        updateWishlist(state, action) {
+        updateWishlist(state: Wishlist, action) {
             const productsData = action.payload;
             state.products = productsData;
             state.length = getObjectLength(productsData);
@@ -48,7 +40,7 @@ const wishlistSlice = createSlice({
             if (isObjectEmpty(state.products)) {
                 clearLocalStorage(localstorageWishlistKey);
             } else {
-                const localStorageWishlist: Wishlist_Products = {};
+                const localStorageWishlist: WishlistProducts = {};
                 Object.entries(state.products).forEach(([key, value]) => {
                     localStorageWishlist[key] = {
                         p: value.p,

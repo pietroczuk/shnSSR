@@ -1,19 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Page_Data } from '../types/page.types';
-
-interface Page {
-    type: string,
-    data: Page_Data
-}
-
-const initialState : Page = {
-    type : '',
-    data: {}
-}
+import { PageInitialState } from './pageInitialState';
 
 const pageSlice = createSlice({
     name: 'Page',
-    initialState,
+    initialState: PageInitialState,
     reducers: {
         setPageData(state, action) {
             const { data, query } = action.payload;
@@ -23,7 +13,7 @@ const pageSlice = createSlice({
             return state = data;
         },
         clearPageData() {
-            return initialState;
+            return PageInitialState;
         },
         setProductCurrentVariantId(state, action) {
             state.data.current_variation_id = action.payload;

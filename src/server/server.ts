@@ -69,7 +69,6 @@ if (!process.env.API_URL) {
                 const languageFromUrl = urlData.languageCode;
                 const real_path = urlData.realPath;
                 const blankUrl = req.path === '/' || urlData.blankPath ? true : false;
-                // console.log('blankUrl', blankUrl, urlData);
                 const user_language =
                     multilanguage ?
                         blankUrl ?
@@ -78,49 +77,31 @@ if (!process.env.API_URL) {
                             languageFromUrl
                         :
                         Object.values(languages)[0]['code'];
-                // console.log('user_language: ', user_language, 'blankUrl', blankUrl);
                 if (blankUrl && user_language) {
                     const homepageUrl =
                         api_config.special_pages_urls &&
                             api_config.special_pages_urls.homepage ?
-                            // api_config.special_pages_urls.homepage[user_language] ?
                             multilanguage ?
                                 user_language + '/' + api_config.special_pages_urls.homepage[user_language]
                                 : api_config.special_pages_urls.homepage[user_language]
                             : user_language;
-                    // console.log('redirect:', homepageUrl, multilanguage, urlData);
                     res.redirect('/' + homepageUrl);
                 } else {
-                    // const css = new Set(); // CSS for all rendered React components
-                    // const insertCss = (...styles) =>
-                    //     styles.forEach((style) => css.add(style._getCss()));
                     const user_currency = getCurrencyCookie(req.headers.cookie, api_config.currency, api_config.cookies_keys.user_currency);
-
                     // get display cookies
                     const display_options = getDisplayCookies(req.headers.cookie, api_config.cookies_keys.display);
-
-                    // console.log('server', user_language);
-
                     const server_store = createServerInitStore(user_language, user_currency, display_options);
                     // preapre system pages uls
                     // api_config.urls.wishlist = api_config.special_pages_urls.wishlist[user_language];
                     // api_config.urls.homepage = api_config.special_pages_urls.homepage[user_language];
                     // api_config.urls.cart = api_config.special_pages_urls.cart[user_language];
-                    const new_routes_config : NewRoutesConfig = {
+                    const new_routes_config: NewRoutesConfig = {
                         language: languages,
                         urls: api_config.urls,
                         special_pages_urls: api_config.special_pages_urls
                     }
-                    // console.log('server multilanguage: ', multilanguage);
                     const new_Routes = prepareRoutesConfig(new_routes_config, user_language, multilanguage);
-                    // console.log(new_Routes[0].routes);
                     const load_data_promises = matchRoutes(new_Routes, req.path).map(({ route }) => {
-                        // console.log(req);
-                        // const real_path = req.path.split('/').pop();
-                        // const real_path = get_reques_slug(req.path);
-
-                        // console.log(real_path);
-
                         const i = req.url.indexOf('?');
                         const q = req.url.indexOf('&');
                         let query = null;
@@ -131,10 +112,8 @@ if (!process.env.API_URL) {
                                 query = req.url.substr(i + 1);
                             }
                         }
-                        // console.log('server q: ', query);
                         return route.loadDataOnInit ? route.loadDataOnInit(route.type, server_store, api_config, user_language, real_path, query) : null;
                     }).map(promise => {
-                        // console.log('serverstore', server_store.getState());
                         // for fail promises, continue fetch data and resolve promises
                         // double primise (outer)
                         if (promise) {
@@ -145,11 +124,8 @@ if (!process.env.API_URL) {
                         return;
                     });
 
-                    // console.log(api_config);
                     Promise.all(load_data_promises).then(() => {
                         const server_context: { url?: any, notFound?: any } = {};
-                        // const content = rednderHtml(req, server_store, server_context, css, insertCss);
-                        // console.log('serverstore', server_store.dispatch);
                         const content = rednderHtml(req, server_store, server_context, new_routes_config, user_language, multilanguage);
                         if (server_context.url) {
                             return res.redirect(301, server_context.url);

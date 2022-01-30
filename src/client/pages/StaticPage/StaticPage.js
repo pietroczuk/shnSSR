@@ -4,8 +4,8 @@ import styles from './staticpage.scss';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { getPage } from '../../redux/actions/actionCreators';
-import { pageActions } from '../../redux/slices/pageSlice';
-import { publicConfigActions } from '../../redux/slices/publicConfigSlice';
+import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
+import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
 import { pageTypes, metatags, prepareSearchCode, renderHtmlFromJson, scrollToTop } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';

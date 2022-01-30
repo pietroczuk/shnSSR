@@ -3,7 +3,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 // import { get_global_config } from '../redux/actions/all_actions';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { publicConfigActions } from '../../redux/slices/publicConfigSlice';
+import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
 
 // import Colors from '../../components/atributes/colors/Colors';
 

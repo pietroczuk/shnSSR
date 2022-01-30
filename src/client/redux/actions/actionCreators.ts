@@ -1,19 +1,20 @@
 import axios from 'axios';
 import { pageTypes, isObjectEmpty, getLocalStorage } from '../../utils/utilsFrondend';
 
-import { systemConfigActions } from '../slices/systemConfigSlice';
-import { publicConfigActions } from '../slices/publicConfigSlice';
-import { pageActions } from '../slices/pageSlice';
-import { userActions } from '../slices/userSlice';
-import { displayActions } from '../slices/displaySlice';
-import { wishlistActions } from '../slices/wishlistSlice';
+import { systemConfigActions } from '../slices/systemConfigSlice/systemConfigSlice';
+import { publicConfigActions } from '../slices/publicConfigSlice/publicConfigSlice';
+import { pageActions } from '../slices/pageSlice/pageSlice';
+import { userActions } from '../slices/userSlice/userSlice';
+import { displayActions } from '../slices/displaySlice/displaySlice';
+import { wishlistActions } from '../slices/wishlistSlice/wishlistSlice';
+import { SystemConfig } from '../types/systemConfig.types';
 
 /* --------------------- CONFIG 
 loads global config
 - api urls
 - awaible languages, currencies
 */
-export const getGlobalConfig = (api_config, lang:string) => async dispatch => {
+export const getGlobalConfig = (api_config: SystemConfig, lang:string) => async dispatch => {
   if (api_config) {
     dispatch(systemConfigActions.setSystemConfig(api_config));
     const page_url = '?lang=' + lang;
@@ -65,7 +66,7 @@ export const setProductCurrVarId = (product_variant_id: string, variations) => d
   }
 }
 
-export const setGlobalDefaultVariantcode = (featureKey, value) => dispatch => {
+export const setGlobalDefaultVariantcode = (featureKey: string, value: string) => dispatch => {
   /**
    * todo: check if feature key exist and attrib id in public config data
    */

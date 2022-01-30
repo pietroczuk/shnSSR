@@ -4,8 +4,8 @@ import styles from './wishlist.scss';
 
 import { useSelector, useDispatch } from 'react-redux';
 // import { getPage , serpa } from '../../redux/actions/actionCreators';
-import { pageActions } from '../../redux/slices/pageSlice';
-import { publicConfigActions } from '../../redux/slices/publicConfigSlice';
+import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
+import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
 import {
     pageTypes,
     metatags,

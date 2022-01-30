@@ -1,9 +1,9 @@
-import systemConfigSlice from './systemConfigSlice';
-import publicConfigSlice from './publicConfigSlice';
-import pageSlice from './pageSlice';
-import userSlice from './userSlice';
-import displaySlice from './displaySlice';
-import wishlistSlice from './wishlistSlice';
+import systemConfigSlice from './systemConfigSlice/systemConfigSlice';
+import publicConfigSlice from './publicConfigSlice/publicConfigSlice';
+import pageSlice from './pageSlice/pageSlice';
+import userSlice from './userSlice/userSlice';
+import displaySlice from './displaySlice/displaySlice';
+import wishlistSlice from './wishlistSlice/wishlistSlice';
 
 const allReducers = {
     SystemConfig: systemConfigSlice.reducer,

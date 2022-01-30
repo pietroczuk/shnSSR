@@ -1,12 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { setCookie } from '../../utils/utilsFrondend';
-import { User } from '../types/user.types';
+import { setCookie } from '../../../utils/utilsFrondend';
+import { User } from '../../types/user.types';
+import { UserInitialState } from './userInitialState';
 
-const initialState: User = {
-    language: '',
-    currency: '',
-    today: { date: '' },
-}
 
 type Action = {
     payload: {
@@ -17,7 +13,7 @@ type Action = {
 
 const userSlice = createSlice({
     name: 'User',
-    initialState,
+    initialState: UserInitialState,
     reducers: {
         // setUserLanguage(state, action, cookieKey) {
         //     setCookie(cookieKey, action.payload);

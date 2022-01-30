@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import styles from './notFoundPage.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
-import { publicConfigActions } from '../../redux/slices/publicConfigSlice';
+import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
 import { useSelector, shallowEqual } from 'react-redux';
 
 const NotFoundPage = ({ staticContext = {} }) => {

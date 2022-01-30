@@ -1,24 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { SystemConfig } from '../types/systemConfig.types';
-
-const initialState: SystemConfig = {
-    product_sliders: {
-        visited_count: 0
-    },
-    localstorage_keys: null,
-    urls: null,
-    cookies_keys: null,
-    special_pages_urls: null,
-    multicurrency: false,
-    currency: null,
-    multilanguage: false,
-    placeholder: {
-        category_products: 0
-    },
-    images: null,
-    language: null,
-    api: null
-}
+import { SystemConfig } from '../../types/systemConfig.types';
+import { SystemConfigInitialState } from './systemConfigInitialState';
 
 type Action = {
     payload: SystemConfig
@@ -26,7 +8,7 @@ type Action = {
 
 const systemConfigSlice = createSlice({
     name: 'SystemConfig',
-    initialState,
+    initialState: SystemConfigInitialState,
     reducers: {
         // setSystemConfig(state:SystemConfig, action: {payload: any}) {
         setSystemConfig(state: SystemConfig, action: Action) {

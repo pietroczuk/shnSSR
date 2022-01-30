@@ -1,21 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { PublicConfig_DefaultVariantCode, PublicConfig_Translation } from '../types/publicConfig.types';
+import { PublicConfig } from '../../types/publicConfig.types';
+import { PublicConfigInitialState } from './publicConfigInitialState';
 
-interface PublicConfig {
-    default_variant_code: PublicConfig_DefaultVariantCode,
-    ssr: boolean,
-    translation: PublicConfig_Translation
-}
-
-const initialState: PublicConfig = {
-    default_variant_code: {},
-    ssr: true,
-    translation: {}
-}
 
 const publicConfigSlice = createSlice({
     name: 'PublicConfig',
-    initialState,
+    initialState: PublicConfigInitialState,
     reducers: {
         setPublicConfig(state: PublicConfig, action) {
             const data = state = action.payload;
