@@ -1,10 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { Page_Data } from '../types/page.types';
 
 interface Page {
     type: string,
-    data: {
-        current_variation_id?: object
-    }
+    data: Page_Data
 }
 
 const initialState : Page = {

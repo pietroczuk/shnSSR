@@ -121,7 +121,7 @@ app.get('*', (req, res) => {
                     special_pages_urls: api_config.special_pages_urls
                 }
                 // console.log('server multilanguage: ', multilanguage);
-                const new_Routes = prepareRoutesConfig(new_routes_config, user_language, multilanguage, true);
+                const new_Routes = prepareRoutesConfig(new_routes_config, user_language, multilanguage);
                 // console.log(new_Routes[0].routes);
                 const load_data_promises = matchRoutes(new_Routes, req.path).map(({ route }) => {
                     // console.log(req);

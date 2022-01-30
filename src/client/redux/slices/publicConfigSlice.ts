@@ -1,18 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { PublicConfig_DefaultVariantCode, PublicConfig_Translation } from '../types/publicConfig.types';
 
 interface PublicConfig {
-    default_variant_code: {
-        [key: string]: {
-            code: string,
-            atrib_id: string,
-            wishlist: boolean
-        }
-    },
+    default_variant_code: PublicConfig_DefaultVariantCode,
     ssr: boolean,
-    translation: {
-        [key: string]: string
-    },
-
+    translation: PublicConfig_Translation
 }
 
 const initialState: PublicConfig = {

@@ -18,13 +18,13 @@ const displaySlice = createSlice({
         setProductVisual(state, action) {
             const cookieKey = action.payload;
             state.showVisual = !state.showVisual;
-            setCookie(cookieKey, state.showVisual);
+            setCookie(cookieKey, state.showVisual.toString());
             return state;
         },
         setProductRandomColors(state, action) {
             const { cookieKey, randomValue } = action.payload;
             state.showRandom = randomValue !== null ? randomValue : !state.showRandom;
-            setCookie(cookieKey, state.showRandom);
+            setCookie(cookieKey, state.showRandom.toString());
             return state;
         }
     }

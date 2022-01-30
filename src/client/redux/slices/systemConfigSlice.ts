@@ -1,36 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
+import {
+    SystemConfig_Currency,
+    SystemConfig_LocalstorageKeys,
+    SystemConfig_SpecialPagesUrls,
+    SystemConfig_Urls
+} from '../types/systemConfig.types';
+
 
 interface SystemConfig {
     multilanguage: boolean,
-    special_pages_urls: {
-        [key: string]:
-        {
-            [key: string]: string
-        }
-    },
+    special_pages_urls: SystemConfig_SpecialPagesUrls,
     api: object,
-    localstorage_keys: {
-        wishlist: string,
-        cart: string,
-        visited: string
-    },
+    localstorage_keys: SystemConfig_LocalstorageKeys,
     language: string,
-    currency: string,
-    urls: {
-        [key: string]: string
-    }
+    currency: SystemConfig_Currency,
+    urls: SystemConfig_Urls
 }
 const initialState: SystemConfig = {
     multilanguage: false,
     special_pages_urls: {},
     api: {},
-    localstorage_keys: {
-        wishlist: '',
-        cart: '',
-        visited: '',
-    },
+    localstorage_keys: {},
     language: '',
-    currency: '',
+    currency: {},
     urls: {},
 }
 

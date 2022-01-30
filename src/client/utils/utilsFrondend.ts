@@ -2,6 +2,7 @@ import React from 'react';
 import Cookies from 'universal-cookie';
 // SEO
 import { Helmet } from 'react-helmet';
+import { SystemConfig_Currency } from '../redux/types/systemConfig.types';
 
 // import base64 from 'base-64';
 
@@ -18,7 +19,7 @@ export const pageTypes = {
 // ---------- end get page
 
 // --------- coockies
-export const setCookie = (type, value) => {
+export const setCookie = (type: string, value: string) => {
     const cookies = new Cookies();
     const current = new Date();
     const nextYear = current.setFullYear(current.getFullYear() + 1);
@@ -29,13 +30,30 @@ export const setCookie = (type, value) => {
     // console.log('coockies', nextYear);
     cookies.set(type, value, { expires: new Date(nextYear), path: '/' }); // sameSite:true, secure: true});
 }
-export const getCookie = type => {
+export const getCookie = (type: string) => {
     return new Cookies().get(type);
 }
 // -------- end coockies
 
 // --------- SEO
-export const metatags = (page_title, page_description, seo, url, lang, url_prefix) => {
+interface metatagsArgs {
+    (
+        page_title: string,
+        page_description: string,
+        seo: {
+            title: string,
+            description: string,
+            og: {
+                url: string
+            }
+        },
+        url: string,
+        lang: string,
+        url_prefix: string
+    ): React.FC
+}
+/*
+export const metatags : metatagsArgs = (page_title, page_description, seo, url, lang, url_prefix) => {
     const title = page_title ? page_title : seo.title;
     const description = page_description ? page_description : seo.description;
     const { og } = seo;
@@ -44,43 +62,48 @@ export const metatags = (page_title, page_description, seo, url, lang, url_prefi
 
     return (
         <Helmet
-            title={title}
-            link={[
-                { rel: 'canonical', href: link }
-            ]}
-            meta={[
-                {
-                    name: 'description',
-                    content: description,
-                },
-                {
-                    name: 'og:title',
-                    content: title,
-                },
-                {
-                    name: 'og:description',
-                    content: description,
-                },
-                {
-                    name: 'og:type',
-                    content: og.type,
-                },
-                {
-                    name: 'og:image',
-                    content: og.image,
-                },
-                {
-                    name: 'og:url',
-                    content: og.url,
-                },
-                {
-                    name: 'og:site_name',
-                    content: og.site_name
-                },
+            title= { title }
+    link = {
+        [
+            { rel: 'canonical', href: link }
+        ]}
+    meta = {
+        [
+            {
+                name: 'description',
+                content: description,
+            },
+            {
+                name: 'og:title',
+                content: title,
+            },
+            {
+                name: 'og:description',
+                content: description,
+            },
+            {
+                name: 'og:type',
+                content: og.type,
+            },
+            {
+                name: 'og:image',
+                content: og.image,
+            },
+            {
+                name: 'og:url',
+                content: og.url,
+            },
+            {
+                name: 'og:site_name',
+                content: og.site_name
+            },
             ]}
         />
     );
 }
+
+*/
+
 // -------- end seo
 
 // -------- variantcode in url / ?serach attribute 
@@ -91,8 +114,8 @@ export const metatags = (page_title, page_description, seo, url, lang, url_prefi
 //     return null;
 // }
 
-export const prepareSearchCode = search => {
-    search = search.substr(1); // remove ? char
+export const prepareSearchCode = (search: string) => {
+    search = search.substring(1); // remove ? char
     const query = search.indexOf('&');
     query > 0 ? search = search.substring(0, query) : '';
     return search;
@@ -116,7 +139,7 @@ export const prepareSearchCode = search => {
 
 // ----------- static page html
 
-export const renderHtmlFromJson = json => {
+export const renderHtmlFromJson = (json: object) => {
     return json ? Array.isArray(json) ? json.map((text_object, index) => {
         const textAlign = text_object.align === 'left' ||
             text_object.align === 'right' ||
@@ -134,24 +157,24 @@ export const renderHtmlFromJson = json => {
         }
         const childText = Array.isArray(text_object.text) ? renderHtmlFromJson(text_object.text, true) : text_object.text;
         switch (text_object.tag) {
-            case 'p': return <p key={index} style={styleObject}>{childText}</p>;
-            case 'span': return <span key={index} style={styleObject}>{childText}</span>;
-            case 'h1': return <h1 key={index} style={styleObject}>{childText}</h1>;
-            case 'h2': return <h2 key={index} style={styleObject}>{childText}</h2>;
-            case 'h3': return <h3 key={index} style={styleObject}>{childText}</h3>;
-            case 'h4': return <h4 key={index} style={styleObject}>{childText}</h4>;
-            case 'h5': return <h5 key={index} style={styleObject}>{childText}</h5>;
-            case 'h6': return <h6 key={index} style={styleObject}>{childText}</h6>;
-            case 'ul': return <ul key={index} style={styleObject}>{childText}</ul>;
-            case 'ol': return <ol key={index} style={styleObject}>{childText}</ol>;
-            case 'li': return <li key={index} style={styleObject}>{childText}</li>;
-            case 'sup': return <sup key={index} style={styleObject}>{childText}</sup>;
-            case 'sub': return <sub key={index} style={styleObject}>{childText}</sub>;
-            case 'strong': return <strong key={index} style={styleObject}>{childText}</strong>;
-            case 'u': return <u key={index} style={styleObject}>{childText}</u>;
-            case 'i': return <i key={index} style={styleObject}>{childText}</i>;
-            case 's': return <s key={index} style={styleObject}>{childText}</s>;
-            case 'a': return <a href={href} target={target} rel={rel} key={index} style={styleObject}>{childText}</a>;
+            case 'p': return <p key={ index } style = { styleObject } > { childText } < /p>;
+            case 'span': return <span key={ index } style = { styleObject } > { childText } < /span>;
+            case 'h1': return <h1 key={ index } style = { styleObject } > { childText } < /h1>;
+            case 'h2': return <h2 key={ index } style = { styleObject } > { childText } < /h2>;
+            case 'h3': return <h3 key={ index } style = { styleObject } > { childText } < /h3>;
+            case 'h4': return <h4 key={ index } style = { styleObject } > { childText } < /h4>;
+            case 'h5': return <h5 key={ index } style = { styleObject } > { childText } < /h5>;
+            case 'h6': return <h6 key={ index } style = { styleObject } > { childText } < /h6>;
+            case 'ul': return <ul key={ index } style = { styleObject } > { childText } < /ul>;
+            case 'ol': return <ol key={ index } style = { styleObject } > { childText } < /ol>;
+            case 'li': return <li key={ index } style = { styleObject } > { childText } < /li>;
+            case 'sup': return <sup key={ index } style = { styleObject } > { childText } < /sup>;
+            case 'sub': return <sub key={ index } style = { styleObject } > { childText } < /sub>;
+            case 'strong': return <strong key={ index } style = { styleObject } > { childText } < /strong>;
+            case 'u': return <u key={ index } style = { styleObject } > { childText } < /u>;
+            case 'i': return <i key={ index } style = { styleObject } > { childText } < /i>;
+            case 's': return <s key={ index } style = { styleObject } > { childText } < /s>;
+            case 'a': return <a href={ href } target = { target } rel = { rel } key = { index } style = { styleObject } > { childText } < /a>;
             default:
                 return childText;
         }
@@ -160,7 +183,21 @@ export const renderHtmlFromJson = json => {
 
 // ----------- prepare url links in menu based on array slug from config
 
-export const prepUrlFromConfigSlug = (language, slug_urls, url_type, slug_prefix, url, multilanguage, search = null) => {
+interface prepUrlFromConfigSlugArgs {
+    (
+        language: string,
+        slug_urls: {
+            [key: string]: string
+        },
+        url_type: string,
+        slug_prefix: string,
+        url: string,
+        multilanguage: boolean,
+        search: string | null
+    ): string
+}
+
+export const prepUrlFromConfigSlug: prepUrlFromConfigSlugArgs = (language, slug_urls, url_type, slug_prefix, url, multilanguage, search = null) => {
     let url_link = '/';
     language && multilanguage ? url_link += language + '/' : null;
     url_type && slug_urls ? url_link += slug_urls[url_type] + '/' : null;
@@ -178,7 +215,17 @@ export const prepUrlFromConfigSlug = (language, slug_urls, url_type, slug_prefix
 //     return url_link;
 // }
 
-export const getPriceByCurrency = (productPrices, userCurrency, currency) => {
+interface getPriceByCurrencyArgs {
+    (
+        productPrices: {
+            [key: string]: number
+        },
+        userCurrency: string,
+        currency: SystemConfig_Currency
+    ): string | null
+}
+
+export const getPriceByCurrency: getPriceByCurrencyArgs = (productPrices, userCurrency, currency) => {
     const price = productPrices &&
         userCurrency &&
         currency &&
@@ -194,7 +241,7 @@ export const getPriceByCurrency = (productPrices, userCurrency, currency) => {
  * Just scroll to top of main window
  */
 
-export const scrollToTop = window => {
+export const scrollToTop = (window: any) => {
     if (window !== undefined) {
         window.scrollTo(0, 0);
     }
@@ -204,12 +251,12 @@ export const scrollToTop = window => {
 /**
  * Check if object is empty or not
  */
-export const isObjectEmpty = obj => {
+export const isObjectEmpty = (obj: object) => {
     for (const i in obj) return false;
     return true;
 }
 
-export const getObjectLength = obj => {
+export const getObjectLength = (obj: object) => {
     return obj !== undefined && obj !== null ? Object.keys(obj).length : 0;
 }
 
@@ -227,7 +274,7 @@ export const getObjectLength = obj => {
  *  Localstorage 
  */
 
-export const setLocalStorage = (value, key) => {
+export const setLocalStorage = (value: object, key: string) => {
     if (typeof window !== 'undefined') {
         if (localStorage) {
             localStorage.setItem(key, JSON.stringify(value));
@@ -237,7 +284,7 @@ export const setLocalStorage = (value, key) => {
     return false;
 };
 
-export const getLocalStorage = key => {
+export const getLocalStorage = (key: string) => {
     if (typeof window !== 'undefined') {
         const storageValue = localStorage ? localStorage.getItem(key) : null;
         // console.log(JSON.parse(storageValue));
@@ -245,7 +292,7 @@ export const getLocalStorage = key => {
     }
     return null;
 };
-export const clearLocalStorage = key => {
+export const clearLocalStorage = (key: string) => {
     if (typeof window !== 'undefined') {
         localStorage.removeItem(key);
         return true;
@@ -253,7 +300,7 @@ export const clearLocalStorage = key => {
     return false;
 }
 
-export const cutText = (text, cutLenght = 50) => {
+export const cutText = (text: string, cutLenght = 50) => {
     return text && text.length > cutLenght ?
         text.substr(0, cutLenght).substr(0, Math.min(text.length, text.lastIndexOf(" "))) + '...' :
         text ? text : null;
@@ -263,10 +310,10 @@ export const cutText = (text, cutLenght = 50) => {
  * find the same value in multiple arrays
  */
 
-export const intersectArray = arrayOfArrays => {
+export const intersectArray = (arrayOfArrays: Array<any>) => {
     // data = [array1, array2, array3, array4],
     return arrayOfArrays ?
         arrayOfArrays.length > 1 ?
-            arrayOfArrays.reduce((a, b) => a.filter(c => b.includes(c))) :
+            arrayOfArrays.reduce((a, b) => a.filter((c: any) => b.includes(c))) :
             arrayOfArrays : null;
 }
