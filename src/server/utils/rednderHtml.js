@@ -2,7 +2,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 
-import { prepare_routes_config } from '../../client/utils/config';
+import { prepareRoutesConfig } from '../../client/utils/config';
 
 import { Provider } from 'react-redux';
 // <Routes/> teraz są jako array []
@@ -48,7 +48,7 @@ export const rednderHtml = (req, server_store, context, new_routes_config, user_
         <StyleContext.Provider value={{ insertCss }}>
           <StaticRouter location={req.path} context={context}>
             <React.Fragment>
-              {renderRoutes(prepare_routes_config(new_routes_config, user_language, multilanguage))}
+              {renderRoutes(prepareRoutesConfig(new_routes_config, user_language, multilanguage))}
             </React.Fragment>
           </StaticRouter>
         </StyleContext.Provider>

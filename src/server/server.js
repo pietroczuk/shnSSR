@@ -11,8 +11,8 @@ import createServerInitStore from './utils/serverInitStore';
 import { matchRoutes } from 'react-router-config';
 
 import axios from 'axios';
-// Zamiast routes prepare_routes_config - modyfikujemy dynamicznie z api
-import { prepare_routes_config } from '../client/utils/config';
+// Zamiast routes prepareRoutesConfig - modyfikujemy dynamicznie z api
+import { prepareRoutesConfig } from '../client/utils/config';
 
 // user language init
 import {
@@ -43,8 +43,8 @@ if (!process.env.API_URL) {
 }
 const api =
 {
-    'url': process.env.API_URL,
-    'config': process.env.API_CONFIG_URL,
+    url: process.env.API_URL,
+    config: process.env.API_CONFIG_URL,
 }
 // const api =
 // {
@@ -121,7 +121,7 @@ app.get('*', (req, res) => {
                     special_pages_urls: api_config.special_pages_urls
                 }
                 // console.log('server multilanguage: ', multilanguage);
-                const new_Routes = prepare_routes_config(new_routes_config, user_language, multilanguage, true);
+                const new_Routes = prepareRoutesConfig(new_routes_config, user_language, multilanguage, true);
                 // console.log(new_Routes[0].routes);
                 const load_data_promises = matchRoutes(new_Routes, req.path).map(({ route }) => {
                     // console.log(req);

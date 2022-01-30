@@ -1,9 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-type PublicConfig = {
-    default_variant_code: object,
+interface PublicConfig {
+    default_variant_code: {
+        [key: string]: {
+            code: string,
+            atrib_id: string,
+            wishlist: boolean
+        }
+    },
     ssr: boolean,
-    translation: {[key: string]: string},
+    translation: {
+        [key: string]: string
+    },
+
 }
 
 const initialState: PublicConfig = {
@@ -17,7 +26,7 @@ const publicConfigSlice = createSlice({
     initialState,
     reducers: {
         setPublicConfig(state: PublicConfig, action) {
-            const data = action.payload;
+            const data = state = action.payload;
             data.ssr = true;
             return data;
         },

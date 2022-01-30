@@ -6,7 +6,7 @@
 import React from 'react';
 import { hydrate } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { prepare_routes_config } from './utils/config';
+import { prepareRoutesConfig } from './utils/config';
 
 import { configureStore } from '@reduxjs/toolkit';
 
@@ -75,7 +75,7 @@ loadableReady(() => {
             <StyleContext.Provider value={{ insertCss }}>
                 <BrowserRouter>
                     <React.Fragment>
-                        {renderRoutes(prepare_routes_config(new_routes_config, userLanguage, multilanguage))}
+                        {renderRoutes(prepareRoutesConfig(new_routes_config, userLanguage, multilanguage))}
                     </React.Fragment>
                 </BrowserRouter>
             </StyleContext.Provider>

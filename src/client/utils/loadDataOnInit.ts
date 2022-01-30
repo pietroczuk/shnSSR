@@ -1,6 +1,17 @@
 import { getPage, getGlobalConfig } from '../redux/actions/actionCreators';
 
-export const loadDataOnInit = (pageType, server_store, api_config, language, url, query) => {
+interface loadData {  
+        (pageType: string,
+        server_store: object,
+        api_config: {
+            api?: object
+        },
+        language: string,
+        url: string,
+        query: string): Promise<any>
+}
+
+export const loadDataOnInit:loadData = (pageType, server_store, api_config, language, url, query) => {
     const my_promise = pageType ?
         server_store.dispatch(
             getPage(api_config.api, pageType, language, url, query)

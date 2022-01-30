@@ -5,7 +5,7 @@ import styles from './topbar.scss';
 import InteractiveIcon from '../../InteractiveIcon/InteractiveIcon';
 import CloseIcon from '../../svg/icons/CloseIcon';
 
-type TopbarProps = {
+interface TopbarProps {
     white: boolean;
     closeHandler: VoidFunction
 }

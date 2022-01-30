@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-type SystemConfig = {
+interface SystemConfig {
     multilanguage: boolean,
     special_pages_urls: {
         [key: string]:
@@ -16,7 +16,9 @@ type SystemConfig = {
     },
     language: string,
     currency: string,
-    urls: { [key: string]: string }
+    urls: {
+        [key: string]: string
+    }
 }
 const initialState: SystemConfig = {
     multilanguage: false,
@@ -42,7 +44,7 @@ const systemConfigSlice = createSlice({
     reducers: {
         // setSystemConfig(state:SystemConfig, action: {payload: any}) {
         setSystemConfig(state: SystemConfig, action: Action) {
-            return action.payload;
+            return state = action.payload;
         }
     }
 });

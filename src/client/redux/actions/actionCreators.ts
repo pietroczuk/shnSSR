@@ -59,7 +59,7 @@ export const getPage = (api, type, lang, url, query, axiosAbortController = null
   }
 }
 
-export const setProductCurrVarId = (product_variant_id, variations) => dispatch => {
+export const setProductCurrVarId = (product_variant_id: string, variations) => dispatch => {
   if (product_variant_id && variations[product_variant_id]) {
     dispatch(pageActions.setProductCurrentVariantId(product_variant_id))
   }

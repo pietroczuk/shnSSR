@@ -1,12 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { setCookie } from '../../utils/utilsFrondend';
 
+interface Display {
+    showVisual: boolean,
+    showRandom: boolean
+}
+
+const initialState: Display = {
+    showVisual: false,
+    showRandom: false,
+}
+
 const displaySlice = createSlice({
     name: 'Display',
-    initialState: {
-        showVisual: false,
-        showRandom: false,
-    },
+    initialState,
     reducers: {
         setProductVisual(state, action) {
             const cookieKey = action.payload;

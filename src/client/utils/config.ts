@@ -6,7 +6,10 @@
 //     }
 // };
 import { getRoutes } from '../Routes';
-export const prepare_routes_config = (api_config, lang, multilanguage, fromServer = false) => {
+
+
+
+export const prepareRoutesConfig = (api_config, lang, multilanguage, fromServer = false) => {
   // const api_config_language = Object.keys(api_config.language);
   const multilang_path = multilanguage ? '/:lang(' + lang + ')/': '/';
   // '/:lang(' + api_config_language.join('|') + ')';

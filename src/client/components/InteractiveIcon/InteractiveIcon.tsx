@@ -12,7 +12,7 @@ import AssitiveText from '../helpers/display/assitiveText/AssitiveText';
 
 import { RootState } from '../../client';
 
-type InteractiveIconProps = {
+interface InteractiveIconProps {
     white: boolean
     hoverBg?: string
     hoverOpacity?: boolean
