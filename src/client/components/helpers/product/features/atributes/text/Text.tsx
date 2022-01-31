@@ -5,26 +5,31 @@ import { Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setProductCurrVarId } from '../../../../../../redux/actions/actionCreators';
+import { RootState } from '../../../../../../client';
 // import base64 from 'base-64';
 // import { prepareAttribLink } from '../../../../utils/utilsFrondend';
 
-const Text = props => {
-    const { attrib, width, feat_id, active, default_variant, link, onClickFunction } = props;
+interface Props {
+    attrib: { [key: string]: string },
+    link: string,
+    width: number | null,
+    active: boolean
+    onClickFunction: () => void
+}
+
+const Text: React.FC<Props> = props => {
+    const { attrib, width, active, link, onClickFunction } = props;
     const { attrib_title, code } = attrib;
     const textWidth = width ? (100 / width) - 2 + '%' : 'auto';
-    // let variant_code_url = current_variant ? current_variant : default_variant;
-    // variant_code_url = prepareAttribLink(variant_code_url, code, feat_id);
 
-    // const redirectUrl = base64.encode(JSON.stringify(variant_code_url));
-
-    const variations = useSelector(state => state.Page.data.variations);
+    const variations = useSelector((state: RootState) => state.Page.data.variations);
     const dispatch = useDispatch();
 
     const clickMe = () => {
-        if(onClickFunction) {
+        if (onClickFunction) {
             onClickFunction();
-        }else{
-            dispatch(setProductCurrVarId(link, variations));
+        } else {
+            variations && dispatch(setProductCurrVarId(link, variations));
         }
     }
     return (

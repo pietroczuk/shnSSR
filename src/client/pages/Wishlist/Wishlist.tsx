@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './wishlist.scss';
 
@@ -27,11 +27,13 @@ import ImageSwicher from '../../components/helpers/ui/imageSwicher/ImageSwicher'
 // import LoadingSpinner from '../../components/ui/loadingSpinner/LoadingSpinner';
 
 import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/ShowTitleWithBadge';
+import { RootState } from '../../client';
+import { Wishlist as WishlistType } from '../../redux/types/wishlist.types';
 
-const Wishlist = props => {
-    const { title, Wishlist, seo, language, showVisual, cookiesDisplayKeys, wishlistMultiUrl, ssr } = useSelector(state => ({
+const Wishlist: FC = props => {
+    const { title, wishlist, seo, language, showVisual, cookiesDisplayKeys, wishlistMultiUrl, ssr } = useSelector((state: RootState) => ({
         title: state.PublicConfig.translation.wishlist,
-        Wishlist: state.Wishlist,
+        wishlist: state.Wishlist,
         seo: state.PublicConfig.config.seo,
         language: state.User.language,
         showVisual: state.Display.showVisual,
@@ -43,7 +45,7 @@ const Wishlist = props => {
     const { location } = props;
     const { url } = props.match.params;
     const multirow = true;
-    const badgeNumber = Wishlist.length;
+    const badgeNumber = wishlist.length;
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -59,11 +61,11 @@ const Wishlist = props => {
         }
     }, []);
 
-    const showProducts = wishlistData => {
+    const showProducts = (wishlistData : WishlistType) => {
         const products = wishlistData && wishlistData.products ? wishlistData.products : null;
         if (products) {
             return (Object.entries(products).map(
-                ([key, val]) => {
+                ([_key, val]) => {
                     return <ProductItem
                         product={val.productData}
                         key={val.v}
@@ -74,6 +76,7 @@ const Wishlist = props => {
                 })
             );
         }
+        return null
     }
 
     useEffect(() => {
@@ -95,7 +98,7 @@ const Wishlist = props => {
                         <ImageSwicher showVisual={showVisual} cookieKey={cookiesDisplayKeys.visual_mode} />
                         {/* <RandomColorSwicher showRandom={showRandom} cookieKey={cookiesDisplayKeys.random_variant} /> */}
                     </FixedBar>
-                    <div className={styles.productsGrid}>{showProducts(Wishlist)}</div>
+                    <div className={styles.productsGrid}>{showProducts(wishlist)}</div>
                     {/* <div className={styles.categroryLoadMore}><LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={2} /></div> */}
                     {/* {category ? <div className={styles.categoryDescription} >{renderHtmlFromJson(category.description)}</div> : <div><Placeholder /></div>} */}
 

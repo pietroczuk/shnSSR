@@ -1,10 +1,10 @@
-import React from 'react';
+import { FC } from 'react';
 import styles from './contentCointainer.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
 import { ContenerContextProvider } from './contenerContext/contenerContext';
 
-const ContentCointainer = props => {
+const ContentCointainer: FC<{ miltirow: boolean }> = props => {
     const { miltirow } = props;
     return (
         <ContenerContextProvider>

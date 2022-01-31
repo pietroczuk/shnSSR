@@ -121,7 +121,7 @@ if (!process.env.API_URL) {
                                 promise.then(resolve).catch(resolve);
                             })
                         }
-                        return;
+                        return null;
                     });
 
                     Promise.all(load_data_promises).then(() => {

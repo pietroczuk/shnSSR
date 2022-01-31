@@ -11,8 +11,8 @@ const systemConfigSlice = createSlice({
     initialState: SystemConfigInitialState,
     reducers: {
         // setSystemConfig(state:SystemConfig, action: {payload: any}) {
-        setSystemConfig(state: SystemConfig, action: Action) {
-            return state = action.payload;
+        setSystemConfig(_state: SystemConfig, action: Action) {
+            return action.payload;
         }
     }
 });

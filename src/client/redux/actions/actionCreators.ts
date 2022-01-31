@@ -61,7 +61,7 @@ export const getPage = (api: Api, type: string, lang: string, url: string, query
         console.error('❌ Error get data from DB', err);
       });
   }
-  return;
+  return null;
 }
 
 export const setProductCurrVarId = (product_variant_id: string, variations: Variations) => (dispatch: Dispatch) => {
@@ -70,7 +70,7 @@ export const setProductCurrVarId = (product_variant_id: string, variations: Vari
   }
 }
 
-export const setGlobalDefaultVariantcode = (featureKey: string, value: string) => (dispatch: Dispatch) => {
+export const setGlobalDefaultVariantcode = (featureKey: string, value: object) => (dispatch: Dispatch) => {
   /**
    * todo: check if feature key exist and attrib id in public config data
    */
@@ -117,7 +117,7 @@ export const addToStoreWishlist = (api: Api, lang: string, productId: string, va
         if (!isObjectEmpty(productData)) {
           return dispatch(wishlistActions.addToWishlist({ product: productData, variantId, localstorageWishlistKey }))
         }
-        return;
+        return null;
       }
       )
       .catch(err => {

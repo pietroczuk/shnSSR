@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './addToWishlistSticker.scss';
 import WishlistIcon from '../../../svg/icons/WishlistIcon';
@@ -6,11 +6,19 @@ import HeartFull from '../../../svg/icons/HeartFull';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { addToStoreWishlist } from '../../../../redux/actions/actionCreators';
+import { RootState } from '../../../../client';
 
-const AddToWishlistSticker = props => {
+interface Props {
+    showLikes: boolean,
+    likes: number,
+    variantId: string,
+    productId: string
+}
+
+const AddToWishlistSticker: FC<Props> = props => {
     const { showLikes = false, likes, variantId, productId } = props;
     const dispatch = useDispatch();
-    const { api, lang, localstorageWishlistKey, wishlistProducts, showVisual } = useSelector(state => ({
+    const { api, lang, localstorageWishlistKey, wishlistProducts, showVisual } = useSelector((state: RootState) => ({
         api: state.SystemConfig.api,
         lang: state.User.language,
         localstorageWishlistKey: state.SystemConfig.localstorage_keys.wishlist,

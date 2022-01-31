@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 interface DivNavLinkProps {
     to: string | null,
     className: string,
-    style: React.CSSProperties,
+    style?: React.CSSProperties,
     onMouseEnter?: React.MouseEventHandler<HTMLAnchorElement | HTMLDivElement>,
     onMouseLeave?: React.MouseEventHandler<HTMLAnchorElement | HTMLDivElement>,
     onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLDivElement>,

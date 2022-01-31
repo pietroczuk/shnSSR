@@ -1,14 +1,15 @@
-import React from 'react';
+import { FC } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './imageSwicher.scss';
 
 import NiceSwicher from '../niceSwitcher/NiceSwicher';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { setProductVisual } from '../../../../redux/actions/actionCreators';
+import { RootState } from '../../../../client';
 
-const ImageSwicher = () => {
+const ImageSwicher: FC = () => {
 
-    const { showVisual, visual_mode, translation } = useSelector(state => ({
+    const { showVisual, visual_mode, translation } = useSelector((state: RootState) => ({
         showVisual: state.Display.showVisual,
         visual_mode: state.SystemConfig.cookies_keys.display.visual_mode,
         translation: state.PublicConfig.translation

@@ -1,8 +1,8 @@
-import React from 'react';
+import { FC } from 'react';
 import styles from './selectedbg.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
-const SelectedBg = ({ width, position }) => {
+const SelectedBg: FC<{width: number, position: number}> = ({ width, position }) => {
     const percent_width = width ? 100 / width : 0;
     const divWidth = percent_width ? percent_width + '%' : 'auto';
     let x_pos_left = '0px';

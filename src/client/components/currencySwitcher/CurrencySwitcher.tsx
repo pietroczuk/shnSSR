@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { FC, useState, useEffect } from 'react';
 // import styles from './currencySwitcher.scss';
 import styles from '../languageSwitcher/languageSwitcher.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
@@ -10,9 +10,10 @@ import { setUserCurrency } from '../../redux/actions/actionCreators';
 import { getCookie, setCookie } from '../../utils/utilsFrondend';
 
 import CurrencyIcon from '../svg/icons/CurrencyIcon';
+import { RootState } from '../../client';
 
-const CurrencySwitcher = () => {
-    const { currency, cookieCurrencyKey, all_config_currencies } = useSelector(state => ({
+const CurrencySwitcher: FC = () => {
+    const { currency, cookieCurrencyKey, all_config_currencies } = useSelector((state: RootState) => ({
         currency: state.User.currency,
         cookieCurrencyKey: state.SystemConfig.cookies_keys.user_currency,
         all_config_currencies: state.SystemConfig.currency,
@@ -35,7 +36,7 @@ const CurrencySwitcher = () => {
         currency && (currency !== cookieCurr) && setCookie(cookieCurrencyKey, currency);
     })
 
-    const currencyClickHandler = (currency, cookieCurrencyKey) => {
+    const currencyClickHandler = (currency: string, cookieCurrencyKey: string) => {
         closeSubmenuHandler();
         dispatch(setUserCurrency(currency, all_config_currencies, cookieCurrencyKey));
     }

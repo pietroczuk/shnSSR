@@ -15,5 +15,11 @@ export const PublicConfigInitialState: PublicConfig = {
         show_random: '',
         hide_random: '',
     },
+    config: {
+        seo: {
+            title: '',
+            description: ''
+        }
+    },
     features: {}
 }

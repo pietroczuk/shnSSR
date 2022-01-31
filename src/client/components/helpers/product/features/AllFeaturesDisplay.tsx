@@ -1,12 +1,13 @@
-import React from 'react';
+import { FC } from 'react';
 import styles from './allFeaturesDisplay.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
 import SingleFeature from './atributes/singleFeature/SingleFeature';
 
 import { useSelector, shallowEqual } from 'react-redux';
+import { RootState } from '../../../../client';
 
-const AllFeaturesDisplay = props => {
+const AllFeaturesDisplay: FC = props => {
     const { 
         currentVariationCode, 
         allProductVariation, 
@@ -17,7 +18,7 @@ const AllFeaturesDisplay = props => {
         onClickFunction
     } = props;
     // from redux
-    const { features, showRandom } = useSelector(state => ({
+    const { features, showRandom } = useSelector((state : RootState) => ({
         features: state.PublicConfig.features,
         showRandom: state.Display.showRandom
     }), shallowEqual);

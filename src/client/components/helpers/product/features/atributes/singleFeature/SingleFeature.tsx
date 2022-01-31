@@ -7,16 +7,23 @@ import Text from '../text/Text';
 import SelectedBg from '../text/selectedBg/SelectedBg';
 
 import { getObjectLength } from '../../../../../../utils/utilsFrondend';
+import { Atributes } from '../../../../../../redux/types/publicConfig.types';
 
+interface Props {
+    title: string,
+    atributes: Atributes,
+    displayType: string,
 
-const SingleFeature = props => {
-    const { 
-        title, 
-        atributes, 
-        displayType, 
-        currentVariationCode, 
-        featureKey, 
-        allProductVariation, 
+}
+
+const SingleFeature: React.FC<Props> = props => {
+    const {
+        title,
+        atributes,
+        displayType,
+        currentVariationCode,
+        featureKey,
+        allProductVariation,
         globalChange,
         onClickFunction
     } = props;
@@ -26,7 +33,7 @@ const SingleFeature = props => {
 
     let bgPossition = 0;
 
-    const setActiveCodeValueHandler = codeValue => {
+    const setActiveCodeValueHandler = (codeValue: string) => {
         activeCodeValue != codeValue && setActiveCodeValue(codeValue); // : null;
     }
     const displaySingleFeature = () => {
@@ -34,7 +41,7 @@ const SingleFeature = props => {
             const active = currentVariationCode[featureKey] && currentVariationCode[featureKey].atrib_id == att_key ? true : false;
             let matchCode = '';
             const new_variant = { ...currentVariationCode };
- 
+
             if (!active) {
                 new_variant[featureKey] = { ...new_variant[featureKey], 'code': att_val.code, 'atrib_id': att_val.id }
             } else {
@@ -52,7 +59,7 @@ const SingleFeature = props => {
                             break;
                         }
                     }
-                    if(match) {
+                    if (match) {
                         matchCode = variant;
                         break;
                     }
@@ -82,6 +89,7 @@ const SingleFeature = props => {
                         featureKey={featureKey}
                         onClickFunction={onClickFunction}
                     />
+                default: return null;
             }
         })
     }

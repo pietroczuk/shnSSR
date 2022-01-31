@@ -7,8 +7,8 @@ const publicConfigSlice = createSlice({
     name: 'PublicConfig',
     initialState: PublicConfigInitialState,
     reducers: {
-        setPublicConfig(state: PublicConfig, action) {
-            const data = state = action.payload;
+        setPublicConfig(_state: PublicConfig, action) {
+            const data =  action.payload;
             data.ssr = true;
             return data;
         },

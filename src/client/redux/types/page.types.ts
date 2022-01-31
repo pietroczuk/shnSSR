@@ -3,12 +3,8 @@ export type PageData = {
     seo_title: string | null,
     seo_description: string | null
     title: string,
-    description: string
-}
-
-export interface Page {
-    type: string,
-    data: PageData
+    description: string,
+    variations?: Variations
 }
 
 export type Variation = {
@@ -41,4 +37,9 @@ export type VariationCode = {
 
 export type Variations = {
     [key: string]: Variation
+}
+
+export interface Page {
+    type: string,
+    data: PageData
 }
