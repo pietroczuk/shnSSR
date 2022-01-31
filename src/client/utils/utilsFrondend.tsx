@@ -1,11 +1,11 @@
 import Cookies from 'universal-cookie';
 // SEO
 import { Helmet } from 'react-helmet';
-import { SystemConfig_Currency } from '../redux/types/systemConfig.types';
-
-// import base64 from 'base-64';
+import { Currency } from '../redux/types/systemConfig.types';
+import { Seo } from '../redux/types/publicConfig.types';
 
 // ---------- get page
+
 export const pageTypes = {
     productPage: 'product',
     homePage: 'homepage',
@@ -32,21 +32,12 @@ export const getCookie = (type: string) => {
 // --------- SEO
 interface metatagsArgs {
     (
-        page_title: string,
-        page_description: string,
-        seo: {
-            title: string,
-            description: string,
-            og: {
-                url: string,
-                type: string,
-                image: string,
-                site_name: string
-            }
-        },
+        page_title: string | null,
+        page_description: string | null,
+        seo: Seo,
         url: string,
         lang: string,
-        url_prefix: string
+        url_prefix: string | null
     ): JSX.Element
 }
 
@@ -136,7 +127,7 @@ export const prepareSearchCode = (search: string) => {
 
 // ----------- static page html
 
-export const renderHtmlFromJson = (json: object) => {
+export const renderHtmlFromJson = (json: object | string) => {
     return json ? Array.isArray(json) ? json.map((text_object, index) => {
         const textAlign = text_object.align === 'left' ||
             text_object.align === 'right' ||
@@ -186,12 +177,12 @@ interface prepUrlFromConfigSlugArgs {
         language: string,
         slug_urls: {
             [key: string]: string
-        },
-        url_type: string,
-        slug_prefix: string,
+        } | null,
+        url_type: string | null,
+        slug_prefix: string | null,
         url: string,
         multilanguage: boolean,
-        search: string | null
+        search?: string | null
     ): string
 }
 
@@ -219,7 +210,7 @@ interface getPriceByCurrencyArgs {
             [key: string]: number
         },
         userCurrency: string,
-        currency: SystemConfig_Currency
+        currency: Currency
     ): string | null
 }
 

@@ -2,7 +2,7 @@ import React from "react";
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './showSizesText.scss'
 
-const ShowSizesText = props => {
+const ShowSizesText: React.FC<{text: string, minitext: string}> = props => {
     const { text, minitext } = props;
     return (
         <span className={styles.label}>

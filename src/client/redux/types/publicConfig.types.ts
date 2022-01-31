@@ -9,17 +9,17 @@ export type Menu = {
 }
 
 export type Config = {
-    review_points: {
+    review_points?: {
         points: number,
         title: string
     }[],
-    seo: Seo
+    seo: Seo 
 }
 
 export type Seo = {
     title: string,
     description: string,
-    og: Og
+    og?: Og
 
 }
 export type Og = {
@@ -71,8 +71,10 @@ export type DefaultVariantCode = {
 
 export interface PublicConfig {
     menu?: Menu,
-    config?: Config,
-    translation: Translation,
+    config: Config,
+    translation: {
+        [key: string] : string, //Translation,
+    }
     features: Features,
     default_variant_code: {
         [key: string]: DefaultVariantCode

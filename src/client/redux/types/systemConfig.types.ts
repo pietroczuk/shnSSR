@@ -1,7 +1,7 @@
 export type LocalstorageKeys = {
-    wishlist?: string,
-    cart?: string,
-    visited?: string
+    wishlist: string,
+    cart: string,
+    visited: string
 }
 
 export type Urls = {

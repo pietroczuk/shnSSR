@@ -4,7 +4,11 @@ export const SystemConfigInitialState: SystemConfig = {
     product_sliders: {
         visited_count: 0
     },
-    localstorage_keys: {},
+    localstorage_keys: {
+        wishlist: '',
+        cart: '',
+        visited: ''
+    },
     urls: {},
     cookies_keys: {
         user_country: '',

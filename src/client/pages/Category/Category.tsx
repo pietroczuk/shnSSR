@@ -26,8 +26,9 @@ import LoadingSpinner from '../../components/helpers/ui/loadingSpinner/LoadingSp
 import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/ShowTitleWithBadge';
 
 import AllFeaturesDisplay from '../../components/helpers/product/features/AllFeaturesDisplay';
+import { RootState } from '../../client';
 
-const Category = props => {
+const Category: React.FC = props => {
     // from redux
     const {
         seo,
@@ -39,7 +40,7 @@ const Category = props => {
         language,
         default_variant_code
     } = useSelector(
-        state => ({
+        (state : RootState) => ({
             seo: state.PublicConfig.config.seo,
             ssr: state.PublicConfig.ssr,
             category: state.Page.data,
