@@ -3,8 +3,15 @@ import styles from './showAvaibleFeatures.scss';
 import withStyles from "isomorphic-style-loader/withStyles";
 import HoverPopupContainer from "../hoverPopupContainer/HoverPopupContainer";
 import AllFeaturesDisplay from "../../features/AllFeaturesDisplay";
+import { DefaultVariantCode } from "../../../../../redux/types/publicConfig.types";
 
-const ShowAvaibleFeatures = props => {
+interface ShowAvaibleFeaturesProps {
+    active: boolean;
+    currentVariationCode: DefaultVariantCode;
+    onClickFunction: (featureId: any, obj: any) => void;
+}
+
+const ShowAvaibleFeatures:React.FC<ShowAvaibleFeaturesProps> = props => {
     const { active, currentVariationCode, onClickFunction } = props;
     return <HoverPopupContainer active={active}>
         <AllFeaturesDisplay
@@ -15,6 +22,7 @@ const ShowAvaibleFeatures = props => {
             // globalChange={true}
             onClickFunction={onClickFunction}
             disableOpacity={true}
+            
         />
     </HoverPopupContainer>;
 }

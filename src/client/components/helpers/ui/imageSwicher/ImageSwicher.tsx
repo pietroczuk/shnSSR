@@ -33,6 +33,5 @@ const ImageSwicher: FC = () => {
     ]
 
     return <div className={styles.barSwicher}><NiceSwicher options={options} size={0.8} /></div>;
-    // return <NiceSwicher options={options} size={0.8}/>
 }
 export default withStyles(styles)(ImageSwicher);

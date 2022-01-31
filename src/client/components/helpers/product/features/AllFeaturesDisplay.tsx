@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import styles from './allFeaturesDisplay.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
@@ -18,7 +18,7 @@ interface AllFeaturesDisplayProps {
     onClickFunction: (featureId: string, obj: object) => void
 }
 
-const AllFeaturesDisplay: FC<AllFeaturesDisplayProps> = props => {
+const AllFeaturesDisplay: React.FC<AllFeaturesDisplayProps> = props => {
     const {
         currentVariationCode,
         allProductVariation,
@@ -38,7 +38,7 @@ const AllFeaturesDisplay: FC<AllFeaturesDisplayProps> = props => {
             {Object.entries(features).map(([featureKey, feature]) => {
                 if (wishlistAvaible) {
                     if (!feature.wishlist) {
-                        return;
+                        return null;
                     }
                 }
                 return <div key={featureKey} className={styles.featureContainer}>

@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './niceSwicher.scss';
 
-const NiceSwicher = ({ options, size }) => {
+interface NiceSwicherProps {
+    options: { default: boolean }[];
+    size?: number
+}
+
+const NiceSwicher: React.FC<NiceSwicherProps> = props => {
+    const { options, size } = props;
     const width = options ? (100 / options.length) : 0;
     const sizeSwicher = size ? size : 1;
     const [postion, setPosition] = useState(-1);
@@ -13,6 +19,7 @@ const NiceSwicher = ({ options, size }) => {
                 setPosition(index);
                 return true;
             }
+            return false;
         });
     }, [options]);
 

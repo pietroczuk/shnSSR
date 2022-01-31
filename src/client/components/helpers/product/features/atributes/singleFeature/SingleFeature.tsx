@@ -7,13 +7,17 @@ import Text from '../text/Text';
 import SelectedBg from '../text/selectedBg/SelectedBg';
 
 import { getObjectLength } from '../../../../../../utils/utilsFrondend';
-import { Atributes } from '../../../../../../redux/types/publicConfig.types';
+import { Atributes, DefaultVariantCode } from '../../../../../../redux/types/publicConfig.types';
 
 interface Props {
     title: string,
     atributes: Atributes,
     displayType: string,
-
+    currentVariationCode: DefaultVariantCode,
+    featureKey: string,
+    allProductVariation: any,
+    globalChange: boolean,
+    onClickFunction : (featureId: string, obj: object) => void
 }
 
 const SingleFeature: React.FC<Props> = props => {
@@ -39,6 +43,8 @@ const SingleFeature: React.FC<Props> = props => {
     const displaySingleFeature = () => {
         return currentVariationCode && Object.entries(atributes).map(([att_key, att_val], index) => {
             const active = currentVariationCode[featureKey] && currentVariationCode[featureKey].atrib_id == att_key ? true : false;
+            // const att_val = atributes[att_key];
+
             let matchCode = '';
             const new_variant = { ...currentVariationCode };
 

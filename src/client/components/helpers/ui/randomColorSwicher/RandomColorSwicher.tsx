@@ -5,10 +5,11 @@ import styles from './randomColorSwicher.scss';
 import NiceSwicher from '../niceSwitcher/NiceSwicher';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { setProductRandomColors } from '../../../../redux/actions/actionCreators';
+import { RootState } from '../../../../client';
 
-const RandomColorSwicher = () => {
+const RandomColorSwicher: React.FC = () => {
 
-    const { showRandom, random_variant, translation } = useSelector(state => ({
+    const { showRandom, random_variant, translation } = useSelector((state: RootState) => ({
         showRandom: state.Display.showRandom,
         random_variant: state.SystemConfig.cookies_keys.display.random_variant,
         translation: state.PublicConfig.translation

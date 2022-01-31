@@ -10,8 +10,15 @@ import ShowPrice from "../../../display/showPrice/ShowPrice";
 
 import { getObjectLength, isObjectEmpty } from "../../../../../utils/utilsFrondend";
 import HoverPopupContainer from "../hoverPopupContainer/HoverPopupContainer";
+import { RootState } from "../../../../../client";
 
-const ShowAddToCartVariants = props => {
+interface ShowAddToCartVariantsProps {
+    active: boolean,
+    avaibleVariations: object
+    productId: string
+}
+
+const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
     const { active, avaibleVariations, productId } = props;
     const [showSubmenu, setShowSubmenu] = useState(false);
 
@@ -22,7 +29,7 @@ const ShowAddToCartVariants = props => {
             addToCartClickHandler();
         }
     }
-    const { add_to_cart, choise, features } = useSelector(state => ({
+    const { add_to_cart, choise, features } = useSelector((state: RootState) => ({
         add_to_cart: state.PublicConfig.translation && state.PublicConfig.translation.add_to_cart ? state.PublicConfig.translation.add_to_cart : null,
         choise: state.PublicConfig.translation && state.PublicConfig.translation.choise ? state.PublicConfig.translation.choise : null,
         features: state.PublicConfig.features,

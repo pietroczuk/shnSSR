@@ -2,7 +2,11 @@ import React from "react";
 import styles from './hoverPopupContainer.scss';
 import withStyles from "isomorphic-style-loader/withStyles";
 
-const HoverPopupContainer = props => {
+interface HoverPopupContainerProps {
+    active: boolean
+}
+
+const HoverPopupContainer: React.FC<HoverPopupContainerProps> = props => {
     const { active, children } = props;
     return <div className={`${styles.container} ${active ? styles.active : ''}`}>{children}</div>
 }
