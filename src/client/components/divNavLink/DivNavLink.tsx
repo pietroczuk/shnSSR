@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 interface DivNavLinkProps {
-    to: string | null,
+    to?: string,
     className?: string,
     style?: React.CSSProperties,
     onMouseEnter?: React.MouseEventHandler<HTMLAnchorElement | HTMLDivElement>,
@@ -12,7 +12,7 @@ interface DivNavLinkProps {
 
 const DivNavLink: React.FC<DivNavLinkProps> = props => {
     const { to, className, style, onMouseEnter, onMouseLeave, onClick } = props;
-    if (to && to !== '?') {
+    if (to !== undefined && to !== '?') {
         return <NavLink
             to={to}
             className={className}

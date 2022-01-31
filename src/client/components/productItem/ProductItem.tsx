@@ -18,7 +18,13 @@ import { RootState } from '../../client';
 const ShowSelectedAttributes = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showSelectedAttributes/ShowSelectedAttributes'), {});
 const ShowAddToCartVariants = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showAddToCartVariants/ShowAddToCartVariants'), {});
 
-const ProductItem: FC = props => {
+interface ProductItemProps {
+    product: any,
+    forceVisual?: boolean,
+    index? : number
+}
+
+const ProductItem: FC<ProductItemProps> = props => {
     const { product, forceVisual, index = 0, imagesInRootVariant, wishlistPage, wishlistVariantId } = props;
 
     const placeholder = product ? false : true;
@@ -92,7 +98,7 @@ const ProductItem: FC = props => {
         }
     }
 
-    const [variantId, setVariantId] = useState<null | string>(null);
+    const [variantId, setVariantId] = useState<string>('');
     const changeVariantId = (vId: string) => {
         vId !== variantId && setVariantId(vId);
     }
@@ -154,8 +160,6 @@ const ProductItem: FC = props => {
 
     const productUrl = prepUrlFromConfigSlug(language, slug_urls, pageTypes.productPage, null, url, multilanguage, variantId);
     const imagesHolderUrl = imagesInRootVariant ? product : variations ? variations[variantId] : null;
-
-    // const currentVariationCode = variations && variantId ? variations[variantId].variation_code : null;
 
     return <div className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}
         onMouseEnter={onHoverHandler} onMouseLeave={onLeaveHandler}

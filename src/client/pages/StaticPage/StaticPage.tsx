@@ -38,7 +38,8 @@ const StaticPage: FC<RouteComponentProps<{ url: string }>> = props => {
         scrollToTop(window);
         return () => {
             axiosAbortController.abort();
-            return dispatch(pageActions.clearPageData());
+            dispatch(pageActions.clearPageData());
+            // return dispatch(pageActions.clearPageData());
         }
     }, [location.pathname]);
 

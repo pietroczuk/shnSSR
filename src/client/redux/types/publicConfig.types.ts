@@ -1,10 +1,28 @@
-export type Menu = {
-    top: {
+// export type MenuItem ={
+//     label: string,
+//     url?: string,
+//     image?: number,
+//     type?: string,
+//     color?: string,
+// }
+
+export type MenuItem = {
+    label: string,
+    url?: string,
+    image?: number,
+    type?: string,
+    color?: string,
+    items?: {
         label: string,
-        url: string,
-        image: number,
-        type: string
-    }[],
+        url?: string,
+        image?: number,
+        type?: string,
+        color?: string,
+    }[]
+}
+
+export type Menu = {
+    top: MenuItem[],
     side: string
 }
 
@@ -13,7 +31,7 @@ export type Config = {
         points: number,
         title: string
     }[],
-    seo: Seo 
+    seo: Seo
 }
 
 export type Seo = {
@@ -63,21 +81,21 @@ export type Atributes = {
     default: boolean
 }
 
-export type DefaultVariantCode = {
+export type SingleDefaultVariantCode = {
     atrib_id: string,
     code: string,
     wishlist: boolean
 }
-
+export type DefaultVariantCode = {
+    [key: string]: SingleDefaultVariantCode
+}
 export interface PublicConfig {
     menu?: Menu,
     config: Config,
     translation: {
-        [key: string] : string, //Translation,
+        [key: string]: string, //Translation,
     }
     features: Features,
-    default_variant_code: {
-        [key: string]: DefaultVariantCode
-    },
+    default_variant_code: DefaultVariantCode,
     ssr: boolean
 }

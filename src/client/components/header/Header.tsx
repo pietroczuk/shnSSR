@@ -37,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({ white, whiteTopbar }) => {
     const setTopbarOpenHandler = () => {
         setTopbarOpen(prevstate => !prevstate);
     }
-    // console.log('header location', location);
+
     return (
         <header id="root_header" className={`${styles.rootHeader} ${!white ? styles.darkHeader : ''}`}>
             {/* {console.log('render header')} */}

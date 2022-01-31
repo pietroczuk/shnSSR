@@ -49,7 +49,7 @@ const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
     const svgSize = customSvgSize ? customSvgSize : 20;
     // console.log(special_pages_urls, type);
     const link_url_type = type && special_pages_urls[type][language]
-    const link_url = link_url_type ? prepUrlFromConfigSlug(language, null, null, null, link_url_type, multilanguage) : null;
+    const link_url = link_url_type ? prepUrlFromConfigSlug(language, null, null, null, link_url_type, multilanguage) : undefined;
 
     if (type === pageTypes.wishlist) {
         badgeNumberDisplay = useSelector((state: RootState) => state.Wishlist.length, shallowEqual);

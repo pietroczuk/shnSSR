@@ -31,8 +31,6 @@ const Colors: React.FC<Props> = props => {
     const dispatch = useDispatch();
 
     const clickMe = () => {
-        // console.log('featureKey', featureKey, 'code', code, 'id', id);
-
         const codeObj = {
             code: code,
             atrib_id: id
@@ -52,7 +50,6 @@ const Colors: React.FC<Props> = props => {
     return (
         <DivNavLink to={"?" + link}
             onClick={clickMe}
-            // onMouseEnter={ onClickFunction ? clickMe : null}
             aria-label={attrib_title}
             className={styles.color}
         >

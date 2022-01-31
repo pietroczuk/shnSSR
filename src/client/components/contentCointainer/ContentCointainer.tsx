@@ -4,7 +4,11 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 
 import { ContenerContextProvider } from './contenerContext/contenerContext';
 
-const ContentCointainer: FC<{ miltirow: boolean }> = props => {
+interface ContentCointainerProps {
+    miltirow: boolean
+}
+
+const ContentCointainer: FC<ContentCointainerProps> = props => {
     const { miltirow } = props;
     return (
         <ContenerContextProvider>

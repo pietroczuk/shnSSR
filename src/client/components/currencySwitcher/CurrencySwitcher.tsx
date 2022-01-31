@@ -1,9 +1,7 @@
 import { FC, useState, useEffect } from 'react';
-// import styles from './currencySwitcher.scss';
+
 import styles from '../languageSwitcher/languageSwitcher.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
-
-// import { Link } from 'react-router-dom';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { setUserCurrency } from '../../redux/actions/actionCreators';

@@ -10,7 +10,7 @@ interface loadDataOnInit_Args {
         language: string,
         url: string,
         query: string
-    ): AnyAction
+     ): AnyAction
 }
 
 export const loadDataOnInit: loadDataOnInit_Args = (pageType, server_store, api_config, language, url, query) => {

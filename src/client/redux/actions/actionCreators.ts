@@ -61,7 +61,7 @@ export const getPage = (api: Api, type: string, lang: string, url: string, query
         console.error('❌ Error get data from DB', err);
       });
   }
-  return null;
+  return undefined;
 }
 
 export const setProductCurrVarId = (product_variant_id: string, variations: Variations) => (dispatch: Dispatch) => {

@@ -58,7 +58,8 @@ const Wishlist: FC<RouteComponentProps<{ url: string }>> = props => {
         }
         !ssr && dispatch(pageActions.setPageData({ data: wishlistPageObj }));
         return () => {
-            return dispatch(pageActions.clearPageData());
+            dispatch(pageActions.clearPageData());
+            // return dispatch(pageActions.clearPageData());
         }
     }, []);
 

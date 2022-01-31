@@ -1,18 +1,25 @@
-import React, { useEffect, useState, useRef, useContext } from 'react';
+import { FC, useEffect, useState, useRef, useContext } from 'react';
 import styles from '../contentCointainer.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import ContenerContext from '../contenerContext/contenerContext';
+import { RouteComponentProps } from 'react-router-dom';
 
-const StickySidebar = props => {
+type Styles = {
+    position: string,
+    top: string,
+    bottom: string
+}
+
+const StickySidebar: FC<RouteComponentProps> = props => {
 
     const [forcePosition, setForcePosition] = useState(true);
-    const setForcePositionHandler = force => {
+    const setForcePositionHandler = (force: boolean) => {
         setForcePosition(force);
     }
     // read context for main ref
     const contenerContext = useContext(ContenerContext);
     const main_ref = contenerContext.mainContentRef;
-    const sidebar_ref = useRef();
+    const sidebar_ref = useRef<HTMLDivElement>(null);
 
     const { location } = props;
     const pathname = location ? location.pathname : null;
@@ -20,7 +27,7 @@ const StickySidebar = props => {
     let isUserScrolling = false;
     let prev_window_scroll = 0;
     let stickyBottom = false;
-    let prevStyle = null;
+    let prevStyle: null | string = null;
 
     const setPosition = (forceStatic = false) => {
         // init scroll direction
@@ -29,14 +36,14 @@ const StickySidebar = props => {
         prev_window_scroll = window_scroll;
         // init containers
         const container = sidebar_ref.current;
-        if(!container) {
+        if (!container) {
             isUserScrolling = false;
             return;
         }
         const cointanerViewport = container.getBoundingClientRect();
         const windowHeight = window.innerHeight;
-        const main_height = main_ref.current.getBoundingClientRect().height;
-        const topHeadline = main_ref.current.offsetTop;
+        const main_height = main_ref!.current!.getBoundingClientRect().height;
+        const topHeadline = main_ref!.current!.offsetTop;
         const bottomHeadline = main_height + topHeadline;
         const maxScroll = bottomHeadline - windowHeight;
         // isRoomForScrolling for tells is room to scroll
@@ -56,27 +63,28 @@ const StickySidebar = props => {
         const goingUp = scroll_offset < 0 && window_scroll > 0 ? true : false;
         const goingDown = scroll_offset > 0 && window_scroll > 0 ? true : false;
         // styles
-        const staticStyle = {
+
+        const staticStyle: Styles = {
             position: 'static',
-            top: null,
-            bottom: null
+            top: '',
+            bottom: ''
         }
-        const stickyStyle = {
+        const stickyStyle: Styles = {
             position: 'sticky',
-            top: 0,
-            bottom: null
+            top: '0px',
+            bottom: ''
         }
-        const absoluteStyle = {
+        const absoluteStyle: Styles = {
             position: 'absolute',
             top: currentAbsoluteStickyPossition + 'px',
-            bottom: null
+            bottom: ''
         }
-        const fixedBottomStyle = {
+        const fixedBottomStyle: Styles = {
             position: 'fixed',
-            top: null,
-            bottom: 0
+            top: '',
+            bottom: '0px'
         }
-        let newStyles = null;
+        let newStyles: Styles | null = null;
 
         if (forceStatic || safetyBottomTrigger) {
             if (safetyBottomTrigger) {
@@ -164,7 +172,10 @@ const StickySidebar = props => {
             return () => {
                 window.removeEventListener('scroll', handleScroll)
             }
+        } else {
+            return () => {};
         }
+
     }, [main_ref]);
     useEffect(() => {
         if (main_ref && main_ref.current !== undefined) {

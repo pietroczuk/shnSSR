@@ -5,7 +5,13 @@ import { useSelector, shallowEqual } from "react-redux";
 import { getPriceByCurrency } from "../../../../utils/utilsFrondend";
 import { RootState } from "../../../../client";
 
-const ShowPrice: React.FC<{ allPrices: {} }> = (props) => {
+interface ShowPriceProps {
+    allPrices: {
+        [key: string]: number
+    }
+}
+
+const ShowPrice: React.FC<ShowPriceProps> = (props) => {
     const { allPrices } = props;
 
     const { userCurrency, currency } = useSelector((state: RootState) => ({

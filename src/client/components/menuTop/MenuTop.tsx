@@ -1,4 +1,4 @@
-import React from 'react';
+import { CSSProperties, FC } from 'react';
 import styles from './menuTop.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
@@ -8,10 +8,12 @@ import { NavLink } from 'react-router-dom';
 import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 
 import SubMenu from './submenu/SubMenu';
+import { RootState } from '../../client';
+import { MenuItem } from '../../redux/types/publicConfig.types';
 
-const MenuTop = () => {
-    const { menu_items, slug_urls, multilanguage, language } = useSelector(state => ({
-        menu_items: state.PublicConfig.menu.top,
+const MenuTop: FC = () => {
+    const { menu_items, slug_urls, multilanguage, language } = useSelector((state: RootState) => ({
+        menu_items: state.PublicConfig.menu ? state.PublicConfig.menu.top : null,
         slug_urls: state.SystemConfig.urls,
         multilanguage: state.SystemConfig.multilanguage,
         language: state.User.language,
@@ -20,7 +22,7 @@ const MenuTop = () => {
     const prepareSubmenu = elem => {
         return <SubMenu elem={elem} prepareLabelMenu={prepareLabelMenu} prepareMenuLink={prepareMenuLink} />
     }
-    const prepareMenuLink = (elem, clickHandler = null) => {
+    const prepareMenuLink = (elem: MenuItem, clickHandler = null) => {
         const { type, url, label, items, color } = elem;
 
         if (url) {
@@ -32,7 +34,7 @@ const MenuTop = () => {
             return items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color);
         }
     }
-    const prepareLabelMenu = (label, color = null) => {
+    const prepareLabelMenu = (label: string, color = null) => {
         const customColor = !color ? color : { color: color };
         return <div className={styles.label} style={customColor}>{label}</div>
     }

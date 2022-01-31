@@ -178,7 +178,7 @@ interface prepUrlFromConfigSlugArgs {
         slug_urls: {
             [key: string]: string
         } | null,
-        url_type: string | null,
+        url_type: string | undefined,
         slug_prefix: string | null,
         url: string,
         multilanguage: boolean,
@@ -230,7 +230,7 @@ export const getPriceByCurrency: getPriceByCurrencyArgs = (productPrices, userCu
  * Just scroll to top of main window
  */
 
-export const scrollToTop = (window: any) => {
+export const scrollToTop = (window: Window) => { 
     if (window !== undefined) {
         window.scrollTo(0, 0);
     }

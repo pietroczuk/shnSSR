@@ -2,23 +2,34 @@ import { FC } from 'react';
 import styles from './allFeaturesDisplay.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
-import SingleFeature from './atributes/singleFeature/SingleFeature';
-
 import { useSelector, shallowEqual } from 'react-redux';
 import { RootState } from '../../../../client';
+import { DefaultVariantCode } from '../../../../redux/types/publicConfig.types';
 
-const AllFeaturesDisplay: FC = props => {
-    const { 
-        currentVariationCode, 
-        allProductVariation, 
-        wishlistAvaible, 
-        displayInline, 
-        globalChange, 
+import SingleFeature from './atributes/singleFeature/SingleFeature';
+
+interface AllFeaturesDisplayProps {
+    currentVariationCode: DefaultVariantCode,
+    allProductVariation: any,
+    wishlistAvaible: boolean,
+    displayInline: boolean,
+    globalChange: boolean,
+    disableOpacity: boolean,
+    onClickFunction: (featureId: string, obj: object) => void
+}
+
+const AllFeaturesDisplay: FC<AllFeaturesDisplayProps> = props => {
+    const {
+        currentVariationCode,
+        allProductVariation,
+        wishlistAvaible,
+        displayInline,
+        globalChange,
         disableOpacity,
         onClickFunction
     } = props;
     // from redux
-    const { features, showRandom } = useSelector((state : RootState) => ({
+    const { features, showRandom } = useSelector((state: RootState) => ({
         features: state.PublicConfig.features,
         showRandom: state.Display.showRandom
     }), shallowEqual);
