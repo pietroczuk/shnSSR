@@ -5,8 +5,20 @@ import styles from '../leftMenuLinks.scss';
 import { prepUrlFromConfigSlug } from '../../../utils/utilsFrondend';
 
 import ArrowDown from '../../svg/icons/ArrowDown';
+import { MenuItem } from '../../../redux/types/publicConfig.types';
+import { Urls } from '../../../redux/types/systemConfig.types';
 
-const LeftMenuSubmenu = props => {
+interface LeftMenuSubmenuProps {
+    elem: MenuItem;
+    prepareLabelMenu: (label: string, color?: string, expand?: boolean, bolder?: boolean) => JSX.Element;
+    prepareMenuLink: (elem: MenuItem) => JSX.Element;
+    pathname: string;
+    language: string;
+    slug_urls: Urls;
+    multilanguage: boolean;
+}
+
+const LeftMenuSubmenu: React.FC<LeftMenuSubmenuProps> = props => {
     const { elem, prepareLabelMenu, prepareMenuLink, pathname, language, slug_urls, multilanguage } = props;
     const { items, label, color } = elem;
 
@@ -15,16 +27,17 @@ const LeftMenuSubmenu = props => {
     const toogleSubmenuHandler = () => {
         setOpenSubmenu(prevstate => !prevstate);
     }
-    const openSubmenuHandler = (open) => {
+    const openSubmenuHandler = (open: boolean) => {
         setOpenSubmenu(open);
     }
     useEffect(() => {
-        const foudmatch = items.some(item => {
+        const foudmatch = Array.isArray(items) ? items.some(item => {
             if (item.url && pathname === prepUrlFromConfigSlug(language, slug_urls, item.type, null, item.url, multilanguage)) {
                 openSubmenuHandler(true);
                 return true;
             }
-        });
+            return false;
+        }) : false;
         if (!foudmatch && openSubmenu) {
             openSubmenuHandler(false);
         }
@@ -39,7 +52,7 @@ const LeftMenuSubmenu = props => {
             <div className={`${styles.submenu + ' ' + (openSubmenu ? styles.open_submenu : '')}`}>
                 <ul>
                     {
-                        items.map((it, index) =>
+                        Array.isArray(items) && items.map((it, index) =>
                             <li key={index}>
                                 {prepareMenuLink(it)}
                             </li>

@@ -7,11 +7,11 @@ import Text from '../text/Text';
 import SelectedBg from '../text/selectedBg/SelectedBg';
 
 import { getObjectLength } from '../../../../../../utils/utilsFrondend';
-import { Atributes, DefaultVariantCode } from '../../../../../../redux/types/publicConfig.types';
+import { AllAtributes, DefaultVariantCode } from '../../../../../../redux/types/publicConfig.types';
 
 interface Props {
     title: string,
-    atributes: Atributes,
+    atributes: AllAtributes,
     displayType: string,
     currentVariationCode: DefaultVariantCode,
     featureKey: string,

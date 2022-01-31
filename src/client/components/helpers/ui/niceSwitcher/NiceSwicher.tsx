@@ -2,8 +2,14 @@ import React, { useState, useEffect } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './niceSwicher.scss';
 
+type OptionObj = {
+    title: string
+    clickHandler: VoidFunction
+    default: boolean
+}
+
 interface NiceSwicherProps {
-    options: { default: boolean }[];
+    options: OptionObj[];
     size?: number
 }
 
@@ -23,13 +29,13 @@ const NiceSwicher: React.FC<NiceSwicherProps> = props => {
         });
     }, [options]);
 
-    const clickHandlerOption = (index, clickFn) => {
+    const clickHandlerOption = (index: number, clickFn: VoidFunction) => {
         clickFn();
         setPosition(index);
     }
 
 
-    const showOptions = (options) => {
+    const showOptions = (options: OptionObj[]) => {
         return options.map((elem, index) => {
             return <div
                 key={index}
@@ -63,6 +69,6 @@ const NiceSwicher: React.FC<NiceSwicherProps> = props => {
                 <div className={styles.selectedBg} style={{ borderRadius: sizeSwicher * 3 + 'em' }}></div>
             </div>
             }
-        </div> : '';
+        </div> : <React.Fragment />;
 }
 export default withStyles(styles)(NiceSwicher);

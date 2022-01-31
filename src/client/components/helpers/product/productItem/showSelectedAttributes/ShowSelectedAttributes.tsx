@@ -19,16 +19,16 @@ const ShowSelectedAttributes: React.FC<ShowSelectedAttributesProps> = props => {
     const { selectedVariantId, avaibleVariations } = props;
     const features = useSelector((state: RootState) => state.PublicConfig.features, shallowEqual);
     const productFeatData = avaibleVariations && avaibleVariations[selectedVariantId] && avaibleVariations[selectedVariantId].variation_code ? avaibleVariations[selectedVariantId].variation_code : null;
-    if (isObjectEmpty(productFeatData) || isObjectEmpty(features)) {
+    if ((productFeatData && isObjectEmpty(productFeatData)) || isObjectEmpty(features)) {
         return null;
     }
     return <div className={styles.featDataCont}>{
-        Object.keys(productFeatData).map(attribId => {
+        productFeatData && Object.keys(productFeatData).map(attribId => {
             const variantFeature = productFeatData[attribId];
             const foundFeature = features[variantFeature.feature] && features[variantFeature.feature] !== undefined ? features[variantFeature.feature] : null;
             const attribInWishlist = foundFeature && foundFeature.wishlist !== null && foundFeature.wishlist !== undefined ? foundFeature.wishlist : null;
             if (!attribInWishlist) {
-                return;
+                return null;
             }
             const title = foundFeature && foundFeature.feature_title ? foundFeature.feature_title : null;
             const attribData = foundFeature && foundFeature.atributes ? foundFeature.atributes[variantFeature.atrib_id] : null;

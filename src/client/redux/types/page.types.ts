@@ -1,11 +1,15 @@
 export type SingleProductVariation = {
     variation_price: VariationPrice,
     variation_image: VariationImage,
-    variation_code: SingleProductAllVariations
+    variation_code: AllVariationCodes
+}
+
+export type AllVariationCodes = {
+    [key: string]: VariationCode
 }
 
 export type SingleProductAllVariations = {
-    [key: string]: VariationCode
+    [key: string]: SingleProductVariation
 }
 
 export type Product = {
@@ -14,9 +18,7 @@ export type Product = {
     title: string,
     titlekey: string,
     url: string,
-    variations: {
-        [key: string]: SingleProductVariation
-    }
+    variations: SingleProductAllVariations,
     min_price: {
         [key: string]: string
     }
@@ -26,14 +28,16 @@ export type Product = {
 }
 
 export type PageData = {
-    current_variation_id?: string,
-    seo_title: string | null,
-    seo_description: string | null
-    title: string,
-    description: string,
-    variations?: Variations,
-    body?: string,
-    products?: Product[]
+    current_variation_id?: string;
+    seo_title: string | null;
+    seo_description: string | null;
+    title: string;
+    description: string;
+    variations?: Variations;
+    body?: string;
+    products?: Product[];
+    url?: { [key: string]: string };
+    type?: string;
 }
 
 export type VariationImage = {

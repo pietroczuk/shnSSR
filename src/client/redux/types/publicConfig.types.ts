@@ -66,13 +66,13 @@ export type Features = {
         feature_title: string,
         feature_display: string,
         wishlist: boolean,
-        atributes: {
-            [key: string]: Atributes
-        }
+        atributes: AllAtributes
     }
 }
-
-export type Atributes = {
+export type AllAtributes = {
+    [key: string]: Atribute
+}
+export type Atribute = {
     id: string,
     color: string,
     code: string,

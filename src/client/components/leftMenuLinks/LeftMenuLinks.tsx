@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import React from 'react';
 import styles from './leftMenuLinks.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 

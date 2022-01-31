@@ -100,7 +100,7 @@ export const setUserCurrency = (currency_code: string, all_currencies: Currency,
 export const setProductVisual = (cookieKey: string) => (dispatch: Dispatch) => {
   dispatch(displayActions.setProductVisual(cookieKey));
 }
-export const setProductRandomColors = (cookieKey: string, randomValue: boolean) => (dispatch: Dispatch) => {
+export const setProductRandomColors = (cookieKey: string, randomValue?: boolean) => (dispatch: Dispatch) => {
   dispatch(displayActions.setProductRandomColors({ cookieKey: cookieKey, randomValue: randomValue }));
 }
 /**
