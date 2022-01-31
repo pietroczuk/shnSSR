@@ -29,8 +29,9 @@ import ImageSwicher from '../../components/helpers/ui/imageSwicher/ImageSwicher'
 import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/ShowTitleWithBadge';
 import { RootState } from '../../client';
 import { Wishlist as WishlistType } from '../../redux/types/wishlist.types';
+import { RouteComponentProps } from 'react-router-dom';
 
-const Wishlist: FC = props => {
+const Wishlist: FC<RouteComponentProps<{ url: string }>> = props => {
     const { title, wishlist, seo, language, showVisual, cookiesDisplayKeys, wishlistMultiUrl, ssr } = useSelector((state: RootState) => ({
         title: state.PublicConfig.translation.wishlist,
         wishlist: state.Wishlist,
@@ -61,7 +62,7 @@ const Wishlist: FC = props => {
         }
     }, []);
 
-    const showProducts = (wishlistData : WishlistType) => {
+    const showProducts = (wishlistData: WishlistType) => {
         const products = wishlistData && wishlistData.products ? wishlistData.products : null;
         if (products) {
             return (Object.entries(products).map(

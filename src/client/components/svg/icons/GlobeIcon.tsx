@@ -1,6 +1,6 @@
-import React from 'react';
+import { FC } from 'react';
 
-const GlobeIcon: React.FC = () => {
+const GlobeIcon: FC = () => {
     return (
         <svg viewBox="0 0 50 50">
             <path d="M25,0C11.215,0,0,11.215,0,25s11.215,25,25,25s25-11.215,25-25S38.785,0,25,0z M26,14.972

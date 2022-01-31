@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './product.scss';
 
@@ -13,13 +13,15 @@ import Placeholder from '../../components/placeholder/Placeholder';
 
 // import AllFeaturesDisplay from ' ../../components/features/AllFeaturesDisplay';
 import AllFeaturesDisplay from '../../components/helpers/product/features/AllFeaturesDisplay';
+import { RootState } from '../../client';
+import { RouteComponentProps } from 'react-router-dom';
 
-const Product = (props) => {
+const Product: FC<RouteComponentProps<{ url: string, lang: string }>> = (props) => {
     // from redux
     const { seo, product,
         // type, 
         api, url_prefix, images_url, all_config_currencies, user_currency_code, ssr } = useSelector(
-            state => ({
+            (state: RootState) => ({
                 seo: state.PublicConfig.config.seo,
                 product: state.Page.data ? state.Page.data : null,
                 api: state.SystemConfig.api,
@@ -61,22 +63,22 @@ const Product = (props) => {
             {product ?
                 <h1>{product.title}</h1> : <h1><Placeholder /></h1>
             }
-            {current_variation_id && product.variations[current_variation_id].name}
+            {current_variation_id && product !== undefined && product && product.variations && product.variations[current_variation_id].name}
             <br />
-            {current_variation_id && <p>
+            {current_variation_id && product && product.variations &&<p>
                 {product.variations[current_variation_id].variation_price[user_currency_code]} {all_config_currencies[user_currency_code].sign}
             </p>}
             <br />
             {current_variation_id}
             <br />
-            {current_variation_id && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[current_variation_id].variation_image.poster + images_url.medium} />}
-            {current_variation_id && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[current_variation_id].variation_image.wall + images_url.medium} />}
+            {current_variation_id && product && product.variations && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[current_variation_id].variation_image.poster + images_url.medium} />}
+            {current_variation_id && product && product.variations && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[current_variation_id].variation_image.wall + images_url.medium} />}
 
-            {product && current_variation_id &&
+            {product && current_variation_id && product.variations &&
                 <AllFeaturesDisplay
                     currentVariationCode={product.variations[current_variation_id].variation_code}
                     allProductVariation={product.variations}
-                    // globalChange={true}
+                // globalChange={true}
                 />
             }
         </div>

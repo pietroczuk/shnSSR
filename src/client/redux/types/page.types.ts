@@ -1,10 +1,14 @@
 export type PageData = {
-    current_variation_id?: object,
+    current_variation_id?: string,
     seo_title: string | null,
     seo_description: string | null
     title: string,
     description: string,
-    variations?: Variations
+    variations?: Variations,
+    body?: string,
+    products?: [
+        { id: string }
+    ]
 }
 
 export type Variation = {

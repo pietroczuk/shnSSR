@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './staticpage.scss';
 
@@ -9,11 +9,13 @@ import { publicConfigActions } from '../../redux/slices/publicConfigSlice/public
 import { pageTypes, metatags, prepareSearchCode, renderHtmlFromJson, scrollToTop } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
+import { RootState } from '../../client';
+import { RouteComponentProps } from 'react-router-dom';
 
-const StaticPage = props => {
+const StaticPage: FC<RouteComponentProps<{ url: string }>> = props => {
     // from redux
     const { seo, staticpage, url_prefix, api, language, ssr } = useSelector(
-        state => ({
+        (state: RootState) => ({
             seo: state.PublicConfig.config.seo,
             ssr: state.PublicConfig.ssr,
             staticpage: state.Page.data,
@@ -50,7 +52,7 @@ const StaticPage = props => {
             {metatags(seo_title, seo_description, seo, url, language, url_prefix)}
             {staticpage ? <h1>{staticpage.title}</h1> : <h1><Placeholder /></h1>}
             <div>
-                {staticpage && renderHtmlFromJson(staticpage.body)}
+                {staticpage && staticpage.body && renderHtmlFromJson(staticpage.body)}
             </div>
         </div>
     )

@@ -1,15 +1,22 @@
-import React from 'react';
+import { FC } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './logo.scss';
 import DivNavLink from '../../divNavLink/DivNavLink';
 import { prepUrlFromConfigSlug, pageTypes } from '../../../utils/utilsFrondend';
 import { useSelector, shallowEqual } from 'react-redux';
 import AssitiveText from '../../helpers/display/assitiveText/AssitiveText';
+import { RootState } from '../../../client';
 
-const Logo = props => {
+interface Props {
+    white: boolean,
+    miniLogo: boolean,
+    customWidth: number
+}
+
+const Logo: FC<Props> = props => {
     const { white, miniLogo, customWidth } = props;
 
-    const { language, multilanguage, special_pages_urls, homepage } = useSelector(state => ({
+    const { language, multilanguage, special_pages_urls, homepage } = useSelector((state: RootState) => ({
         language: state.User.language,
         multilanguage: state.SystemConfig.multilanguage,
         special_pages_urls: state.SystemConfig.special_pages_urls,

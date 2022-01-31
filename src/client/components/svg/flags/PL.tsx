@@ -1,5 +1,5 @@
-import React from "react";
-const PL = () => {
+import { FC } from "react";
+const PL: FC = () => {
     return (
         <svg viewBox="0 0 640 480">
             <g>

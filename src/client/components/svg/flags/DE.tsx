@@ -1,5 +1,5 @@
-import React from "react";
-const DE = () => {
+import { FC } from "react";
+const DE: FC = () => {
     return (
         <svg viewBox="0 0 640 480">
             <path fill="#FFCE00" d="M0,320h640v160H0V320z" />

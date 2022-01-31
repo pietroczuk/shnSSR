@@ -1,5 +1,5 @@
-import React from "react";
-const NL = () => {
+import { FC } from "react";
+const NL: FC = () => {
     return (
         <svg viewBox="0 0 640 480">
             <g transform="scale(1.25 .9375)">

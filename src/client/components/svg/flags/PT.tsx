@@ -1,5 +1,5 @@
-import React from "react";
-const PT = () => {
+import { FC } from "react";
+const PT: FC = () => {
     return (
         <svg viewBox="0 0 640 480">
             <path fill="#FF0000" d="M256,0h384v480H256V0z" />

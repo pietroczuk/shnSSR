@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import { prepUrlFromConfigSlug, pageTypes, getObjectLength, cutText, intersectArray, isObjectEmpty } from '../../utils/utilsFrondend';
 
@@ -13,11 +13,12 @@ import ImageDisplay from './imageDisplay/ImageDisplay';
 
 import loadable from '@loadable/component';
 import ShowAvaibleFeatures from '../helpers/product/productItem/showAvaibleFeatures/ShowAvaibleFeatures';
+import { RootState } from '../../client';
 
 const ShowSelectedAttributes = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showSelectedAttributes/ShowSelectedAttributes'), {});
 const ShowAddToCartVariants = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showAddToCartVariants/ShowAddToCartVariants'), {});
 
-const ProductItem = props => {
+const ProductItem: FC = props => {
     const { product, forceVisual, index = 0, imagesInRootVariant, wishlistPage, wishlistVariantId } = props;
 
     const placeholder = product ? false : true;
@@ -42,7 +43,7 @@ const ProductItem = props => {
         multilanguage,
         default_variant_code,
         ssr,
-    } = useSelector(state => ({
+    } = useSelector((state: RootState) => ({
         language: state.User.language,
         showRandom: state.Display.showRandom,
         slug_urls: state.SystemConfig.urls,
@@ -63,17 +64,17 @@ const ProductItem = props => {
 
     const [disableLocalRandom, setDisableLocalRandom] = useState(false);
 
-    useEffect(()=>{
+    useEffect(() => {
         !ssr && !wishlistPage && setDisableLocalRandom(false);
-    },[showRandom, default_variant_code])
+    }, [showRandom, default_variant_code])
 
     const [localVariantCode, setLocalVariantCode] = useState(default_variant_code);
 
-    useEffect(() => {    
+    useEffect(() => {
         !ssr && !wishlistPage && !showRandom && setLocalVariantCode(default_variant_code);
     }, [default_variant_code, showRandom]);
 
-   
+
     const changeLocalVariantCode = (featureId, obj) => {
         if (isObjectEmpty(obj) || !featureId || !obj.atrib_id) {
             return;
@@ -91,8 +92,8 @@ const ProductItem = props => {
         }
     }
 
-    const [variantId, setVariantId] = useState(null);
-    const changeVariantId = vId => {
+    const [variantId, setVariantId] = useState<null | string>(null);
+    const changeVariantId = (vId: string) => {
         vId !== variantId && setVariantId(vId);
     }
 
@@ -108,7 +109,7 @@ const ProductItem = props => {
             variantFound[0] && changeVariantId(variantFound[0]);
         }
         // if (showRandom && !disableLocalRandom) {
-        
+
     }
 
     const changeLocalVariantOnRandom = () => {
@@ -117,15 +118,15 @@ const ProductItem = props => {
             newVariantIndexStyle = newVariantIndexStyle == 1 ? 4 : newVariantIndexStyle == 4 ? 1 : newVariantIndexStyle;
             newVariantIndexStyle = productId && variations[Object.keys(variations)[newVariantIndexStyle]] ? variations[Object.keys(variations)[newVariantIndexStyle]].id : null
             newVariantIndexStyle && changeVariantId(newVariantIndexStyle);
-            
+
             const newFeatObj = { ...localVariantCode }
             let foundChange = false;
-            for(const featureId in variations[newVariantIndexStyle].variation_code){
+            for (const featureId in variations[newVariantIndexStyle].variation_code) {
                 const atrib_id = variations[newVariantIndexStyle].variation_code[featureId].atrib_id;
 
-                if(newFeatObj[featureId].atrib_id !== atrib_id) {
+                if (newFeatObj[featureId].atrib_id !== atrib_id) {
                     newFeatObj[featureId] = variations[newVariantIndexStyle].variation_code[featureId];
-                    newFeatObj[featureId] = {...newFeatObj[featureId], wishlist : localVariantCode[featureId].wishlist};
+                    newFeatObj[featureId] = { ...newFeatObj[featureId], wishlist: localVariantCode[featureId].wishlist };
                     foundChange = true;
                 }
                 // changeLocalVariantCode(featureIdInVariantCodes, {...variations[newVariantIndexStyle].variation_code[featureIdInVariantCodes]});

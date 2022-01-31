@@ -1,8 +1,19 @@
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from '../menuTop.scss';
 
-const SubMenu = ({ elem, prepareLabelMenu, prepareMenuLink }) => {
+interface Props {
+    elem : {
+        items: [],
+        label: string,
+        color: string,
+        columns: number
+    },
+    prepareLabelMenu: Function,
+    prepareMenuLink: Function
+}
+
+const SubMenu: FC<Props> = ({ elem, prepareLabelMenu, prepareMenuLink }) => {
 
     const [openSubmenu, setOpenSubmenu] = useState(false);
 

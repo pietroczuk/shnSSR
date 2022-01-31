@@ -1,5 +1,5 @@
-import React from "react";
-const ZH = () => {
+import { FC } from "react";
+const ZH: FC = () => {
     return (
         <svg viewBox="0 0 640 480">
             <path fill="#DE2910" d="M0,0h640v480H0V0z" />

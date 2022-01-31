@@ -1,5 +1,5 @@
-import React from "react";
-const KO = () => {
+import { FC } from "react";
+const KO: FC = () => {
     return (
         <svg viewBox="0 0 640 480">
             <path fill="#FFFFFF" d="M641.738,480.025H3.175v-480h638.562V480.025z" />

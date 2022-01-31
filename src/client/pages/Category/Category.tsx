@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './category.scss';
 
@@ -27,8 +27,10 @@ import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/S
 
 import AllFeaturesDisplay from '../../components/helpers/product/features/AllFeaturesDisplay';
 import { RootState } from '../../client';
+import { RouteComponentProps } from 'react-router-dom';
+import { PageData } from '../../redux/types/page.types';
 
-const Category: React.FC = props => {
+const Category: FC<RouteComponentProps<{ url: string, lang: string }>> = props => {
     // from redux
     const {
         seo,
@@ -40,7 +42,7 @@ const Category: React.FC = props => {
         language,
         default_variant_code
     } = useSelector(
-        (state : RootState) => ({
+        (state: RootState) => ({
             seo: state.PublicConfig.config.seo,
             ssr: state.PublicConfig.ssr,
             category: state.Page.data,
@@ -79,12 +81,12 @@ const Category: React.FC = props => {
         ssr && dispatch(publicConfigActions.disableSrr());
     }, [])
 
-    const showProducts = category => {
+    const showProducts = (category: PageData) => {
         const products = category && category.products ? category.products : null;
         if (products) {
             return products.map((p, index) => <ProductItem product={p} key={p.id} index={index} />);
         }
-        return [...Array(category_products)].map((el, index) => <ProductItem key={index} />);
+        return [...Array(category_products)].map((_el, index) => <ProductItem key={index} />);
     }
     return (
         <ContentCointainer miltirow={multirow}>

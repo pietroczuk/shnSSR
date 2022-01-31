@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { renderRoutes } from 'react-router-config';
-import {useSelector, shallowEqual} from 'react-redux';
+import React, { FC, useEffect } from 'react';
+import { renderRoutes, RouteConfig } from 'react-router-config';
+import { useSelector, shallowEqual } from 'react-redux';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './rootapp.scss';
@@ -8,6 +8,7 @@ import styles from './rootapp.scss';
 import { setCookie, getCookie } from '../../utils/utilsFrondend';
 
 import loadable from '@loadable/component';
+import { RootState } from '../../client';
 
 const Header = loadable(() => import(/* webpackPrefetch: true */ '../../components/header/Header'),
     {
@@ -16,10 +17,15 @@ const Header = loadable(() => import(/* webpackPrefetch: true */ '../../componen
     });
 const Footer = loadable(() => import(/* webpackPrefetch: true */ '../../components/footer/Footer'), {});
 
+interface Props {
+    route: { 
+        routes: RouteConfig[] 
+    }
+}
 
-const RootApp = ({ route }) => {
+const RootApp: FC<Props> = ({ route }) => {
     const { language, cookieLanguageKey } = useSelector(
-        state => ({
+        (state: RootState) => ({
             language: state.User.language,
             cookieLanguageKey: state.SystemConfig.cookies_keys.user_language,
         }), shallowEqual

@@ -1,35 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 // import { get_global_config } from '../redux/actions/all_actions';
-import { Helmet } from 'react-helmet';
+// import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
+import { RootState } from '../../client';
 
 // import Colors from '../../components/atributes/colors/Colors';
 
-const HomePage = () => {
-    const { config, ssr } = useSelector(state => ({
-        config : state.SystemConfig,
+const HomePage: FC = () => {
+    const { ssr } = useSelector((state : RootState) => ({
+        // config : state.SystemConfig,
         ssr: state.PublicConfig.ssr,
     })
         , shallowEqual);
-    useEffect(() => {
-        if (!config) {
-            // props.get_global_config();
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (!config) {
+    //         // props.get_global_config();
+    //     }
+    // }, []);
     const dispatch = useDispatch();
     useEffect(() => {
         ssr && dispatch(publicConfigActions.disableSrr());
     },[])
-    const SeoHead = () => {
-        return (
-            <Helmet>
-                <title>{`${config.length} Home page`}</title>
-                <meta property="og:title" content="My home page" />
-            </Helmet>
-        )
-    }
+    // const SeoHead = () => {
+    //     return (
+    //         <Helmet>
+    //             <title>{`${config.length} Home page`}</title>
+    //             <meta property="og:title" content="My home page" />
+    //         </Helmet>
+    //     )
+    // }
     return (
         <React.Fragment>
             {/* { SeoHead() } */}

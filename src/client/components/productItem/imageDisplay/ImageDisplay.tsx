@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './imageDisplay.scss';
 
@@ -6,11 +6,20 @@ import { useSelector, shallowEqual } from "react-redux";
 
 import LoadingSpinner from "../../helpers/ui/loadingSpinner/LoadingSpinner";
 import Blank from "../../svg/blank/Blank";
+import { RootState } from "../../../client";
 
-const ImageDisplay = props => {
+interface Props {
+    title: string,
+    imagesHolderUrl: object,
+    forceVisual: boolean
+    onHover: boolean
+    placeholder: boolean
+}
+
+const ImageDisplay: FC<Props> = props => {
     const multiplyMesurment = 100;
     const { title, imagesHolderUrl, forceVisual, onHover, placeholder } = props;
-    const { showVisual, imagesConfig, image_width, image_height } = useSelector(state => ({
+    const { showVisual, imagesConfig, image_width, image_height } = useSelector((state: RootState) => ({
         showVisual: !forceVisual ? state.Display.showVisual : forceVisual,
         imagesConfig: state.SystemConfig.images,
         image_width: state.SystemConfig.images.aspect_ratio.width * multiplyMesurment,
@@ -21,8 +30,8 @@ const ImageDisplay = props => {
     // const img_size = imagesConfig.medium; 
     const img_size = imagesConfig.large;
 
-    const simple = !placeholder && imagesHolderUrl ? img_base + imagesHolderUrl.variation_image.poster + img_size : null;
-    const visual = !placeholder && imagesHolderUrl ? img_base + imagesHolderUrl.variation_image.wall + img_size : null;
+    const simple = !placeholder && imagesHolderUrl ? img_base + imagesHolderUrl.variation_image.poster + img_size : '';
+    const visual = !placeholder && imagesHolderUrl ? img_base + imagesHolderUrl.variation_image.wall + img_size : '';
     const image_url = showVisual ? visual : simple;
 
     return (
