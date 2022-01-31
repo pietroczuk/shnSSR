@@ -7,10 +7,17 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './showSelectedAttributes.scss';
 
 import ColorCircle from "../../features/atributes/colors/colorCircle/ColorCircle";
+import { RootState } from "../../../../../client";
+import { SingleProductAllVariations } from "../../../../../redux/types/page.types";
 
-const ShowSelectedAttributes = props => {
+interface ShowSelectedAttributesProps {
+    selectedVariantId: string;
+    avaibleVariations: SingleProductAllVariations;
+}
+
+const ShowSelectedAttributes: React.FC<ShowSelectedAttributesProps> = props => {
     const { selectedVariantId, avaibleVariations } = props;
-    const features = useSelector(state => state.PublicConfig.features, shallowEqual);
+    const features = useSelector((state: RootState) => state.PublicConfig.features, shallowEqual);
     const productFeatData = avaibleVariations && avaibleVariations[selectedVariantId] && avaibleVariations[selectedVariantId].variation_code ? avaibleVariations[selectedVariantId].variation_code : null;
     if (isObjectEmpty(productFeatData) || isObjectEmpty(features)) {
         return null;
@@ -23,15 +30,15 @@ const ShowSelectedAttributes = props => {
             if (!attribInWishlist) {
                 return;
             }
-            const title = foundFeature.feature_title ? foundFeature.feature_title : null;
-            const attribData = foundFeature.atributes ? foundFeature.atributes[variantFeature.atrib_id] : null;
+            const title = foundFeature && foundFeature.feature_title ? foundFeature.feature_title : null;
+            const attribData = foundFeature && foundFeature.atributes ? foundFeature.atributes[variantFeature.atrib_id] : null;
             const glow_color = attribData && attribData.glow_color ? attribData.glow_color : null;
             const attrib_title = attribData && attribData.attrib_title ? attribData.attrib_title : null;
             return <div key={variantFeature.feature} className={styles.attribContener}>
                 <span className={styles.title}>{title}:</span>
                 <span className={styles.attribTitle}>{attrib_title}</span>
                 <span className={styles.attribColor}>
-                    <ColorCircle glow_color={glow_color} mini={true}/>
+                    <ColorCircle glow_color={glow_color} mini={true} />
                 </span>
             </div>
 

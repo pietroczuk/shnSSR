@@ -12,6 +12,7 @@ export type MenuItem = {
     image?: number,
     type?: string,
     color?: string,
+    columns? : number,
     items?: {
         label: string,
         url?: string,

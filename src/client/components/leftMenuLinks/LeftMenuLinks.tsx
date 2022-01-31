@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import styles from './leftMenuLinks.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
 import { useSelector, shallowEqual } from 'react-redux';
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, RouteComponentProps } from 'react-router-dom';
 import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 
 import LeftMenuSubmenu from './leftMenuSubmenu/LeftMenuSubmenu';
+import { RootState } from '../../client';
+import { MenuItem } from '../../redux/types/publicConfig.types';
 
-const LeftMenuLinks = (props) => {
+const LeftMenuLinks: React.FC<RouteComponentProps> = props => {
 
-    const { menu_items, language, slug_urls, multilanguage} = useSelector(state => ({
-        menu_items: state.PublicConfig.menu.side === 'top' ? state.PublicConfig.menu.top : state.PublicConfig.menu.side,
+    const { menu_items, language, slug_urls, multilanguage } = useSelector((state: RootState) => ({
+        menu_items: state.PublicConfig.menu!.side === 'top' ? state.PublicConfig.menu!.top : state.PublicConfig.menu!.side,
         language: state.User.language,
         slug_urls: state.SystemConfig.urls,
         multilanguage: state.SystemConfig.multilanguage
@@ -22,7 +24,7 @@ const LeftMenuLinks = (props) => {
     const pathname = location !== undefined ? location.pathname : '';
 
 
-    const prepareSubmenu = (elem) => {
+    const prepareSubmenu = (elem: MenuItem) => {
         return <LeftMenuSubmenu
             elem={elem}
             pathname={pathname}
@@ -33,13 +35,13 @@ const LeftMenuLinks = (props) => {
             multilanguage={multilanguage}
         />
     }
-    const prepareMenuLink = (elem, clickHandler = null) => {
+    const prepareMenuLink = (elem: MenuItem) => {
         const { type, url, label, items, color } = elem;
 
         if (url) {
             const new_url = prepUrlFromConfigSlug(language, slug_urls, type, null, url, multilanguage);
             return (
-                <NavLink to={new_url} activeClassName={styles.active} className={styles.side_link_container} onClick={clickHandler}>
+                <NavLink to={new_url} activeClassName={styles.active} className={styles.side_link_container}>
                     {items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color)}
                 </NavLink>
             )
@@ -47,14 +49,14 @@ const LeftMenuLinks = (props) => {
             return items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color);
         }
     }
-    const prepareLabelMenu = (label, color = null, expand = false, bolder = false) => {
-        const customColor = !color ? color : { color: color };
+    const prepareLabelMenu = (label: string, color?: string, expand = false, bolder = false) => {
+        const customColor = color === undefined ? {} : { color: color };
         return <div style={customColor} className={`${styles.side_label} ${expand ? styles.side_link_container : ''} ${bolder ? styles.bolder : ''}`}>{label}</div>
     }
 
     return <nav className={styles.container}>
         <ul className={styles.side_list}>
-            {menu_items && menu_items.map((elem, index) =>
+            {Array.isArray(menu_items) && menu_items.map((elem, index) =>
                 <li key={index}>
                     {prepareMenuLink(elem)}
                 </li>

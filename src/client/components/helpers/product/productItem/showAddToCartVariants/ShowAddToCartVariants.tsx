@@ -11,10 +11,11 @@ import ShowPrice from "../../../display/showPrice/ShowPrice";
 import { getObjectLength, isObjectEmpty } from "../../../../../utils/utilsFrondend";
 import HoverPopupContainer from "../hoverPopupContainer/HoverPopupContainer";
 import { RootState } from "../../../../../client";
+import { SingleProductVariation } from "../../../../../redux/types/page.types";
 
 interface ShowAddToCartVariantsProps {
-    active: boolean,
-    avaibleVariations: object
+    active: boolean;
+    avaibleVariations: SingleProductVariation;
     productId: string
 }
 
@@ -43,9 +44,9 @@ const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
         console.log('add to cart product id:', productId);
     }
 
-    const showRestVariants = avaibleVariations => {
+    const showRestVariants = (avaibleVariations: SingleProductVariation) => {
         if (!getObjectLength(avaibleVariations) || isObjectEmpty(features)) {
-            return;
+            return null;
         }
         const featureIdForSelect = Object.keys(features).find(featId => !features[featId].wishlist);
         const featureTitle = featureIdForSelect ? features[featureIdForSelect].feature_title : '';

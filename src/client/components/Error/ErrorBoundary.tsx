@@ -1,11 +1,19 @@
-import React, { Component } from "react";
+import React, { ReactNode } from "react";
 
-export class ErrorBoundary extends Component {
-    constructor(props) {
+interface Props {
+    children: ReactNode;
+}
+
+interface State {
+    hasError: boolean;
+}
+
+export class ErrorBoundary extends React.Component<Props, State> {
+    constructor(props: Props) {
         super(props);
         this.state = { hasError: false };
     }
-    static getDerivedStateFromError(error) {
+    static getDerivedStateFromError(_: Error): State {
         // Update state so the next render will show the fallback UI.
         return { hasError: true };
     }
@@ -18,10 +26,10 @@ export class ErrorBoundary extends Component {
 
     render() {
         if (this.state.hasError) {
-            if(this.props.errorComponent) {
-                return this.props.errorComponent;
-            }
-            // You can render any custom fallback UI
+            // if (this.props.errorComponent) {
+            //     return this.props.errorComponent;
+            // }
+            // You can render any custom fallback U I
             return <h1>Something went wrong.</h1>;
         }
 

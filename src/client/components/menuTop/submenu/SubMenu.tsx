@@ -1,16 +1,12 @@
 import { FC, useState } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from '../menuTop.scss';
+import { MenuItem } from '../../../redux/types/publicConfig.types';
 
 interface Props {
-    elem : {
-        items: [],
-        label: string,
-        color: string,
-        columns: number
-    },
-    prepareLabelMenu: Function,
-    prepareMenuLink: Function
+    elem : MenuItem;
+    prepareLabelMenu: Function;
+    prepareMenuLink: Function;
 }
 
 const SubMenu: FC<Props> = ({ elem, prepareLabelMenu, prepareMenuLink }) => {
@@ -49,7 +45,7 @@ const SubMenu: FC<Props> = ({ elem, prepareLabelMenu, prepareMenuLink }) => {
             <div className={`${styles.submenu + ' ' + (openSubmenu ? styles.open_submenu : '')}`} style={submenuStyle}>
                 <ul className={styles.sub_list} style={columnsStyle}>
                     {
-                        items.map((it, index) =>
+                        items !== undefined && items.map((it, index) =>
                             <li key={index}>
                                 {prepareMenuLink(it, closeSubmenuHandler)}
                             </li>

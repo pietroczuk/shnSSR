@@ -1,4 +1,4 @@
-import { CSSProperties, FC } from 'react';
+import { FC } from 'react';
 import styles from './menuTop.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
@@ -19,23 +19,23 @@ const MenuTop: FC = () => {
         language: state.User.language,
     }), shallowEqual)
 
-    const prepareSubmenu = elem => {
+    const prepareSubmenu = (elem: MenuItem) => {
         return <SubMenu elem={elem} prepareLabelMenu={prepareLabelMenu} prepareMenuLink={prepareMenuLink} />
     }
-    const prepareMenuLink = (elem: MenuItem, clickHandler = null) => {
+    const prepareMenuLink = (elem: MenuItem) => {
         const { type, url, label, items, color } = elem;
 
         if (url) {
             const new_url = prepUrlFromConfigSlug(language, slug_urls, type, null, url, multilanguage);
-            return <NavLink to={new_url} activeClassName={styles.active} className={styles.link_container} onClick={clickHandler}>
+            return <NavLink to={new_url} activeClassName={styles.active} className={styles.link_container}>
                 {items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color)}
             </NavLink>
         } else {
             return items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color);
         }
     }
-    const prepareLabelMenu = (label: string, color = null) => {
-        const customColor = !color ? color : { color: color };
+    const prepareLabelMenu = (label: string, color?: string) => {
+        const customColor = color === undefined ? {} : { color: color };
         return <div className={styles.label} style={customColor}>{label}</div>
     }
     return <nav className={styles.main_menu}>

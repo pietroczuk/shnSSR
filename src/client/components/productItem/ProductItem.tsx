@@ -14,12 +14,13 @@ import ImageDisplay from './imageDisplay/ImageDisplay';
 import loadable from '@loadable/component';
 import ShowAvaibleFeatures from '../helpers/product/productItem/showAvaibleFeatures/ShowAvaibleFeatures';
 import { RootState } from '../../client';
+import { Product } from '../../redux/types/page.types';
 
 const ShowSelectedAttributes = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showSelectedAttributes/ShowSelectedAttributes'), {});
 const ShowAddToCartVariants = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showAddToCartVariants/ShowAddToCartVariants'), {});
 
 interface ProductItemProps {
-    product: any,
+    product?: Product,
     forceVisual?: boolean,
     index? : number
 }
@@ -27,7 +28,7 @@ interface ProductItemProps {
 const ProductItem: FC<ProductItemProps> = props => {
     const { product, forceVisual, index = 0, imagesInRootVariant, wishlistPage, wishlistVariantId } = props;
 
-    const placeholder = product ? false : true;
+    const placeholder = product !== undefined ? false : true;
 
     const { title, titlekey, variations, url, min_price, likes, id, hashmap } = product ? product : {
         title: null,
