@@ -25,17 +25,17 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ isDarkBackground, isWhiteTopbar }) => {
     const [isTopbarOpen, setIsTopbarOpen] = useState(true);
 
-    const { all_config_languages, all_config_currencies } = useSelector((state: RootState) => ({
-        all_config_languages: state.SystemConfig.language,
-        all_config_currencies: state.SystemConfig.currency,
+    const { allLanguages, allCurrencies } = useSelector((state: RootState) => ({
+        allLanguages: state.SystemConfig.allLanguages,
+        allCurrencies: state.SystemConfig.allCurrencies,
     }), shallowEqual);
 
     const setIsTopbarOpenHandler = () => {
         setIsTopbarOpen(prevstate => !prevstate);
     }
 
-    const showLanguageSwitcher = all_config_languages && getObjectLength(all_config_languages) > 1;
-    const showCurrencySwitcher = all_config_currencies && getObjectLength(all_config_currencies) > 1;
+    const showLanguageSwitcher = allLanguages && getObjectLength(allLanguages) > 1;
+    const showCurrencySwitcher = allCurrencies && getObjectLength(allCurrencies) > 1;
 
     return (
         <header id="root_header" className={`${styles.rootHeader} ${isDarkBackground ? styles.darkHeader : ''}`}>

@@ -29,12 +29,12 @@ const AllFeaturesDisplay: React.FC<AllFeaturesDisplayProps> = props => {
         onClickFunction
     } = props;
     // from redux
-    const { features, showRandom, default_variant_code } = useSelector((state: RootState) => ({
+    const { features, showRandom, defaultVariantCode } = useSelector((state: RootState) => ({
         features: state.PublicConfig.features,
         showRandom: state.Display.showRandom,
-        default_variant_code: state.PublicConfig.default_variant_code
+        defaultVariantCode: state.PublicConfig.defaultVariantCode
     }), shallowEqual);
-    const localCurrentVariationCode = currentVariationCode ? currentVariationCode : default_variant_code
+    const localCurrentVariationCode = currentVariationCode ? currentVariationCode : defaultVariantCode
     return (
         <div className={`${styles.featureRootContainer} ${displayInline ? styles.inline : ''} ${showRandom && displayInline && !disableOpacity ? styles.halfvisible : ''}`}>
             {Object.entries(features).map(([featureKey, feature]) => {

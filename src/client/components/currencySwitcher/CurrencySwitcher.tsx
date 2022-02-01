@@ -11,11 +11,10 @@ import CurrencyIcon from '../svg/icons/CurrencyIcon';
 import { RootState } from '../../client';
 
 const CurrencySwitcher: FC = () => {
-    const { currency, cookieCurrencyKey, all_config_currencies } = useSelector((state: RootState) => ({
+    const { currency, cookieCurrencyKey, allCurrencies } = useSelector((state: RootState) => ({
         currency: state.User.currency,
-        cookieCurrencyKey: state.SystemConfig.cookies_keys.user_currency,
-        all_config_currencies: state.SystemConfig.currency,
-        // user_currency: state.User.currency,
+        cookieCurrencyKey: state.SystemConfig.cookiesKeys.userCurrency,
+        allCurrencies: state.SystemConfig.allCurrencies,
     }), shallowEqual);
 
     const [openSubmenu, setOpenSubmenu] = useState(false);
@@ -36,7 +35,7 @@ const CurrencySwitcher: FC = () => {
 
     const currencyClickHandler = (currency: string, cookieCurrencyKey: string) => {
         closeSubmenuHandler();
-        dispatch(setUserCurrency(currency, all_config_currencies, cookieCurrencyKey));
+        dispatch(setUserCurrency(currency, allCurrencies, cookieCurrencyKey));
     }
     return <div className={styles.switcher}
         onMouseOver={openSubmenuHandler}
@@ -46,7 +45,7 @@ const CurrencySwitcher: FC = () => {
         <span className={styles.chosenLabel}>{currency}</span>
         {openSubmenu && <div className={styles.submenu}>
             <ul className={styles.list}>
-                {Object.entries(all_config_currencies).map(
+                {Object.entries(allCurrencies).map(
                     ([curr_key, curr_val]) =>
                         <li
                             key={curr_key}

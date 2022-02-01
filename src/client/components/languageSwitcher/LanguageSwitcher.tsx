@@ -45,11 +45,11 @@ const LanguageSwitcher:React.FC = () => {
         setOpenSubmenu(false);
     }
 
-    const { all_config_languages, urls, page, user_language } = useSelector((state: RootState) => ({
-        all_config_languages: state.SystemConfig.language,
-        urls: state.SystemConfig.urls,
+    const { allLanguages, pageTypePrefixUrls, page, language } = useSelector((state: RootState) => ({
+        allLanguages: state.SystemConfig.allLanguages,
+        pageTypePrefixUrls: state.SystemConfig.pageTypePrefixUrls,
         page: state.Page,
-        user_language: state.User.language
+        language: state.User.language
     }), shallowEqual);
     const page_ulrs = page.data ? page.data.url : null;
     const page_type = page && page.data.type ? page.data.type : null;
@@ -83,18 +83,18 @@ const LanguageSwitcher:React.FC = () => {
         onMouseLeave={closeSubmenuHandler}
     >
         <GlobeIcon />
-        <span className={styles.chosenLabel}>{user_language}</span>
+        <span className={styles.chosenLabel}>{language}</span>
         {openSubmenu && page_ulrs && <div className={styles.submenu}>
             <ul className={styles.list}>
-                {page_ulrs && Object.entries(all_config_languages).map(
+                {page_ulrs && Object.entries(allLanguages).map(
                     ([lang_key, lang_val]) => {
                         let languageLink = '/' + lang_val.code;
-                        page_type !== pageTypes.specialPage ? languageLink += ('/' + urls[page.type]) : null;
+                        page_type !== pageTypes.specialPage ? languageLink += ('/' + pageTypePrefixUrls[page.type]) : null;
                         languageLink += '/' + page_ulrs[lang_val.code] + searchParams;
                         return (
                             <li
                                 key={lang_key}
-                                className={`${(lang_val.code === user_language ? styles.active : '')}`}
+                                className={`${(lang_val.code === language ? styles.active : '')}`}
                             >
                                 <a href={languageLink}>
                                     <div className={styles.flagContainer} >

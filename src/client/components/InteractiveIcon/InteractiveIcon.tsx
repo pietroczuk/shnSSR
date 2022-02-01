@@ -25,12 +25,12 @@ interface InteractiveIconProps {
 }
 
 const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
-    const { language, isMultilanguage, specialPagesUrlsArray, translation } =
+    const { language, isMultilanguage, specialPagesUrlsArray, translations } =
         useSelector((state: RootState) => ({
             language: state.User.language,
-            isMultilanguage: state.SystemConfig.multilanguage,
-            specialPagesUrlsArray: state.SystemConfig.special_pages_urls,
-            translation: state.PublicConfig.translation
+            isMultilanguage: state.SystemConfig.isMultilanguage,
+            specialPagesUrlsArray: state.SystemConfig.specialPagesUrlsArray,
+            translations: state.PublicConfig.translations
         }), shallowEqual);
     const {
         isDarkBackground,
@@ -57,7 +57,7 @@ const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
         badgeNumber = useSelector((state: RootState) => state.Wishlist.length, shallowEqual);
         const { api, initLocalstorageWishlistKey } = useSelector((state: RootState) => ({
             api: state.SystemConfig.api,
-            initLocalstorageWishlistKey: state.SystemConfig.localstorage_keys.wishlist,
+            initLocalstorageWishlistKey: state.SystemConfig.localstorageKeys.wishlist,
         }), shallowEqual);
         const dispatch = useDispatch();
         useEffect(() => {
@@ -82,7 +82,7 @@ const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >
-            <AssitiveText>{linkPageType && translation[linkPageType]}</AssitiveText>
+            <AssitiveText>{linkPageType && translations[linkPageType]}</AssitiveText>
 
             <div className={styles.svgContener}
                 style={{

@@ -18,11 +18,11 @@ const publicConfigSlice = createSlice({
         },
         setSelectedVariantCode(state: PublicConfig, action) {
             const { key, val } = action.payload;
-            if (state.default_variant_code[key]) {
-                if (state.default_variant_code[key].atrib_id !== val.atrib_id) {
-                    const wishlist = state.default_variant_code[key].wishlist
-                    state.default_variant_code[key] = val;
-                    state.default_variant_code[key].wishlist = wishlist;
+            if (state.defaultVariantCode[key]) {
+                if (state.defaultVariantCode[key].atrib_id !== val.atrib_id) {
+                    const wishlist = state.defaultVariantCode[key].wishlist
+                    state.defaultVariantCode[key] = val;
+                    state.defaultVariantCode[key].wishlist = wishlist;
                 }
             }
             return state;

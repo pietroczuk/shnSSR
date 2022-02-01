@@ -13,11 +13,11 @@ import { MenuItem } from '../../redux/types/publicConfig.types';
 
 const LeftMenuLinks: React.FC<RouteComponentProps> = props => {
 
-    const { menu_items, language, slug_urls, multilanguage } = useSelector((state: RootState) => ({
+    const { menu_items, language, slug_urls, isMultilanguage } = useSelector((state: RootState) => ({
         menu_items: state.PublicConfig.menu!.side === 'top' ? state.PublicConfig.menu!.top : state.PublicConfig.menu!.side,
         language: state.User.language,
-        slug_urls: state.SystemConfig.urls,
-        multilanguage: state.SystemConfig.multilanguage
+        slug_urls: state.SystemConfig.pageTypePrefixUrls,
+        isMultilanguage: state.SystemConfig.isMultilanguage
     }), shallowEqual)
 
     const { location } = props;
@@ -32,14 +32,14 @@ const LeftMenuLinks: React.FC<RouteComponentProps> = props => {
             language={language}
             prepareLabelMenu={prepareLabelMenu}
             prepareMenuLink={prepareMenuLink}
-            multilanguage={multilanguage}
+            isMultilanguage={isMultilanguage}
         />
     }
     const prepareMenuLink = (elem: MenuItem) => {
         const { type, url, label, items, color } = elem;
 
         if (url) {
-            const new_url = prepUrlFromConfigSlug(language, slug_urls, type, null, url, multilanguage);
+            const new_url = prepUrlFromConfigSlug(language, slug_urls, type, null, url, isMultilanguage);
             return (
                 <NavLink to={new_url} activeClassName={styles.active} className={styles.side_link_container}>
                     {items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color)}

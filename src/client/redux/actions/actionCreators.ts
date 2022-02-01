@@ -14,8 +14,8 @@ import { Wishlist, WishlistProducts } from '../types/wishlist.types';
 
 /* --------------------- CONFIG 
 loads global config
-- api urls
-- awaible languages, currencies
+- api pageTypePrefixUrls
+- awaible allLanguages, allCurrencies
 */
 export const getGlobalConfig = (api_config: SystemConfig, lang: string) => async (dispatch: Dispatch) => {
   // if (api_config) {
@@ -82,7 +82,7 @@ export const setGlobalDefaultVariantcode = (featureKey: string, value: object) =
 
 /*** ----------------------- USER
  * 
- * currencies
+ * allCurrencies
  * language etc
  */
 

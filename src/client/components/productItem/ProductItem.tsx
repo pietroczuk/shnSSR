@@ -48,18 +48,18 @@ const ProductItem: FC<ProductItemProps> = props => {
     const {
         language,
         slug_urls,
-        translation,
+        translations,
         showRandom,
-        multilanguage,
-        default_variant_code,
+        isMultilanguage,
+        defaultVariantCode,
         ssr,
     } = useSelector((state: RootState) => ({
         language: state.User.language,
         showRandom: state.Display.showRandom,
-        slug_urls: state.SystemConfig.urls,
-        translation: state.PublicConfig.translation,
-        multilanguage: state.SystemConfig.multilanguage,
-        default_variant_code: state.PublicConfig.default_variant_code,
+        slug_urls: state.SystemConfig.pageTypePrefixUrls,
+        translations: state.PublicConfig.translations,
+        isMultilanguage: state.SystemConfig.isMultilanguage,
+        defaultVariantCode: state.PublicConfig.defaultVariantCode,
         ssr: state.PublicConfig.ssr,
     }), shallowEqual);
 
@@ -76,13 +76,13 @@ const ProductItem: FC<ProductItemProps> = props => {
 
     useEffect(() => {
         !ssr && !wishlistPage && setDisableLocalRandom(false);
-    }, [showRandom, default_variant_code])
+    }, [showRandom, defaultVariantCode])
 
-    const [localVariantCode, setLocalVariantCode] = useState(default_variant_code);
+    const [localVariantCode, setLocalVariantCode] = useState(defaultVariantCode);
 
     useEffect(() => {
-        !ssr && !wishlistPage && !showRandom && setLocalVariantCode(default_variant_code);
-    }, [default_variant_code, showRandom]);
+        !ssr && !wishlistPage && !showRandom && setLocalVariantCode(defaultVariantCode);
+    }, [defaultVariantCode, showRandom]);
 
 
     const changeLocalVariantCode = (featureId : string, obj : any) => {
@@ -164,7 +164,7 @@ const ProductItem: FC<ProductItemProps> = props => {
     ssr && !wishlistPage && showRandom && changeLocalVariantOnRandom();
     ssr && !wishlistPage && setupVariantIdOnHashmap();
 
-    const productUrl = prepUrlFromConfigSlug(language, slug_urls, pageTypes.productPage, null, url, multilanguage, variantId);
+    const productUrl = prepUrlFromConfigSlug(language, slug_urls, pageTypes.productPage, null, url, isMultilanguage, variantId);
     const imagesHolderUrl = imagesInRootVariant ? product : variations ? variations[variantId] : null;
 
     return <div className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}
@@ -210,7 +210,7 @@ const ProductItem: FC<ProductItemProps> = props => {
                 </div>
                 <div className={styles.priceContainer}>
                     <div className={styles.label}>
-                        {!placeholder && translation && translation.price_from ? translation.price_from : ''}
+                        {!placeholder && translations && translations.price_from ? translations.price_from : ''}
                     </div>
                     <ShowPrice allPrices={min_price} />
                 </div>

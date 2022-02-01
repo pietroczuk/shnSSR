@@ -19,7 +19,7 @@ const StaticPage: FC<RouteComponentProps<{ url: string }>> = props => {
             seo: state.PublicConfig.config.seo,
             ssr: state.PublicConfig.ssr,
             staticpage: state.Page.data,
-            url_prefix: state.SystemConfig.urls[pageTypes.staticPage],
+            url_prefix: state.SystemConfig.pageTypePrefixUrls[pageTypes.staticPage],
             api: state.SystemConfig.api,
             language: state.User.language
         }), shallowEqual

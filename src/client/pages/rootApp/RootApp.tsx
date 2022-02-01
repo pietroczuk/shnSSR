@@ -24,7 +24,7 @@ interface Props {
 const RootApp: FC<Props> = ({ route }) => {
     const { language, cookieLanguageKey } = useSelector((state: RootState) => ({
         language: state.User.language,
-        cookieLanguageKey: state.SystemConfig.cookies_keys.user_language,
+        cookieLanguageKey: state.SystemConfig.cookiesKeys.userLanguage,
     }), shallowEqual);
 
     useEffect(() => {

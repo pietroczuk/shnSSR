@@ -33,12 +33,12 @@ interface renderHtml {
     server_store: EnhancedStore,
     context: object,
     new_routes_config: NewRoutesConfig,
-    user_language: string,
-    multilanguage: boolean
+    language: string,
+    isMultilanguage: boolean
   ): string
 }
 
-export const rednderHtml: renderHtml = (req, server_store, context, new_routes_config, user_language, multilanguage) => {
+export const rednderHtml: renderHtml = (req, server_store, context, new_routes_config, language, isMultilanguage) => {
   const webStats = path.resolve(
     __dirname,
     '../../public_html/server/loadable-stats.json',
@@ -55,7 +55,7 @@ export const rednderHtml: renderHtml = (req, server_store, context, new_routes_c
         <StyleContext.Provider value={{ insertCss }}>
           <StaticRouter location={req.path} context={context}>
             <React.Fragment>
-              {renderRoutes(prepareRoutesConfig(new_routes_config, user_language, multilanguage))}
+              {renderRoutes(prepareRoutesConfig(new_routes_config, language, isMultilanguage))}
             </React.Fragment>
           </StaticRouter>
         </StyleContext.Provider>
@@ -83,7 +83,7 @@ export const rednderHtml: renderHtml = (req, server_store, context, new_routes_c
   const server_helmet = Helmet.renderStatic();
   const html = `
   <!DOCTYPE html>
-        <html lang="${user_language}">
+        <html lang="${language}">
             <head>
               ${server_helmet.title.toString()}
               ${server_helmet.meta.toString()}

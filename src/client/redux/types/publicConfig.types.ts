@@ -22,7 +22,7 @@ export type Menu = {
 }
 
 export type Config = {
-    review_points?: {
+    reviewPoints?: {
         points: number,
         title: string
     }[],
@@ -87,10 +87,10 @@ export type DefaultVariantCode = {
 export interface PublicConfig {
     menu?: Menu,
     config: Config,
-    translation: {
+    translations: {
         [key: string]: string, //Translation,
     }
     features: Features,
-    default_variant_code: DefaultVariantCode,
+    defaultVariantCode: DefaultVariantCode,
     ssr: boolean
 }

@@ -49,7 +49,7 @@ const Category: FC<RouteComponentProps<CategoryProps>> = props => {
             seo: state.PublicConfig.config.seo,
             ssr: state.PublicConfig.ssr,
             category: state.Page.data,
-            url_prefix: state.SystemConfig.urls[pageTypes.categoryPage],
+            url_prefix: state.SystemConfig.pageTypePrefixUrls[pageTypes.categoryPage],
             api: state.SystemConfig.api,
             category_products: state.SystemConfig.placeholder.category_products,
             language: state.User.language,
@@ -99,7 +99,7 @@ const Category: FC<RouteComponentProps<CategoryProps>> = props => {
                         <ImageSwicher />
                         <RandomColorSwicher />
                         <AllFeaturesDisplay
-                            // currentVariationCode={default_variant_code}
+                            // currentVariationCode={defaultVariantCode}
                             allProductVariation={null}
                             wishlistAvaible={true}
                             displayInline={true}

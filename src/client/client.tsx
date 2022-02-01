@@ -53,7 +53,7 @@ export type RootStateDispatch = typeof store_client.dispatch;
 const new_routes_config = (window as any).__CONFIG__;
 const initialState = store_client.getState();
 const userLanguage = initialState.User.language;
-const multilanguage = initialState.SystemConfig.multilanguage;
+const isMultilanguage = initialState.SystemConfig.isMultilanguage;
 
 delete (window as any).__INITIAL_STATE__;
 delete (window as any).__CONFIG__;
@@ -70,14 +70,14 @@ const insertCss = (...styles:any[]) => {
 // const css = new Set();
 // const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
 // const insertCss = null;
-// console.log('client multilanguage:', multilanguage);
+// console.log('client isMultilanguage:', isMultilanguage);
 loadableReady(() => {
     hydrate( 
         <Provider store={store_client}>
             <StyleContext.Provider value={{ insertCss }}>
                 <BrowserRouter>
                     <React.Fragment>
-                        {renderRoutes(prepareRoutesConfig(new_routes_config, userLanguage, multilanguage))}
+                        {renderRoutes(prepareRoutesConfig(new_routes_config, userLanguage, isMultilanguage))}
                     </React.Fragment>
                 </BrowserRouter>
             </StyleContext.Provider>

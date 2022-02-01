@@ -21,7 +21,7 @@ const AddToWishlistSticker: FC<Props> = props => {
     const { api, lang, localstorageWishlistKey, wishlistProducts, showVisual } = useSelector((state: RootState) => ({
         api: state.SystemConfig.api,
         lang: state.User.language,
-        localstorageWishlistKey: state.SystemConfig.localstorage_keys.wishlist,
+        localstorageWishlistKey: state.SystemConfig.localstorageKeys.wishlist,
         wishlistProducts: state.Wishlist.products,
         showVisual: state.Display.showVisual
     }), shallowEqual)

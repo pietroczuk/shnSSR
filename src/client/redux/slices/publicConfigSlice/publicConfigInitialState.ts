@@ -1,9 +1,9 @@
 import { PublicConfig } from "../../types/publicConfig.types";
 
 export const PublicConfigInitialState: PublicConfig = {
-    default_variant_code: {},
+    defaultVariantCode: {},
     ssr: true,
-    translation: {
+    translations: {
         add_to_cart: '',
         price_from: '',
         wishlist: '',

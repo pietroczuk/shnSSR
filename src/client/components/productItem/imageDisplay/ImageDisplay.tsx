@@ -23,8 +23,8 @@ const ImageDisplay: FC<Props> = props => {
     const { showVisual, imagesConfig, image_width, image_height } = useSelector((state: RootState) => ({
         showVisual: !forceVisual ? state.Display.showVisual : forceVisual,
         imagesConfig: state.SystemConfig.images,
-        image_width: state.SystemConfig.images.aspect_ratio.width * multiplyMesurment,
-        image_height: state.SystemConfig.images.aspect_ratio.height * multiplyMesurment,
+        image_width: state.SystemConfig.images.aspectRatioConfig.width * multiplyMesurment,
+        image_height: state.SystemConfig.images.aspectRatioConfig.height * multiplyMesurment,
     }), shallowEqual);
 
     const img_base = imagesConfig.url + '/';

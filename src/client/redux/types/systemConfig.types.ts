@@ -9,14 +9,14 @@ export type Urls = {
 }
 
 export type CookiesKeys = {
-    user_country: string,
-    user_language: string,
-    user_currency: string,
-    display: CookiesKeysDisplay
+    userCountry: string,
+    userLanguage: string,
+    userCurrency: string,
+    displayKeys: CookiesKeysDisplay
 }
 export type CookiesKeysDisplay = {
-    visual_mode: string,
-    random_variant: string
+    visualMode: string,
+    randomVariant: string
 }
 
 export type SpecialPagesUrls = {
@@ -31,7 +31,7 @@ export type Currency = {
             code: string,
             label: string,
             sign: string,
-            displayLeft: boolean,
+            isDisplayLeft: boolean,
             default: boolean
         }
     }
@@ -40,13 +40,13 @@ export type Currency = {
 export type Images = {
     big: string,
     small: string,
-    pack_size: string,
-    pack_filename: string,
+    packSize: string,
+    packFilename: string,
     url: string,
-    small_less: string,
+    smallLess: string,
     medium: string,
     large: string,
-    aspect_ratio: {
+    aspectRatioConfig: {
         width: number,
         height: number
     },
@@ -83,20 +83,20 @@ export type Api = {
 }
 
 export interface SystemConfig {
-    product_sliders: {
-        visited_count: number
+    productSlidersConfig: {
+        visitedCount: number
     }
-    localstorage_keys: LocalstorageKeys
-    urls: Urls
-    cookies_keys: CookiesKeys,
-    special_pages_urls: SpecialPagesUrls
-    multicurrency: boolean
-    currency: Currency,
-    multilanguage: boolean,
+    localstorageKeys: LocalstorageKeys
+    pageTypePrefixUrls: Urls
+    cookiesKeys: CookiesKeys,
+    specialPagesUrlsArray: SpecialPagesUrls
+    isMulticurrency: boolean
+    allCurrencies: Currency,
+    isMultilanguage: boolean,
     placeholder: {
         category_products: number
     },
     images: Images,
-    language: Language,
+    allLanguages: Language,
     api: Api
 }

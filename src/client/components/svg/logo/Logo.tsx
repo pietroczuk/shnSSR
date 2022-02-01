@@ -18,15 +18,15 @@ const Logo: FC<Props> = props => {
 
     const { language, isMultilanguage, specialPagesUrlsArray, homepageTranslation } = useSelector((state: RootState) => ({
         language: state.User.language,
-        isMultilanguage: state.SystemConfig.multilanguage,
-        specialPagesUrlsArray: state.SystemConfig.special_pages_urls,
-        homepageTranslation: state.PublicConfig.translation.homepage,
+        isMultilanguage: state.SystemConfig.isMultilanguage,
+        specialPagesUrlsArray: state.SystemConfig.specialPagesUrlsArray,
+        homepageTranslation: state.PublicConfig.translations.homepage,
     }), shallowEqual)
 
     const svgWidth = customWidth ? customWidth : 220;
     const logoWidth = isMiniLogo ? 54 : svgWidth;
     const rawSlug = specialPagesUrlsArray[pageTypes.homePage][language];
-    const linkUrl = rawSlug ? prepUrlFromConfigSlug(language, undefined, undefined, undefined, rawSlug, isMultilanguage) : undefined;
+    const linkUrl = rawSlug ? prepUrlFromConfigSlug(language, null, null, null, rawSlug, isMultilanguage) : undefined;
     return (
         <div className={styles.logoContener} style={{ width: logoWidth + 'px', minWidth: (logoWidth + 50) + 'px' }}>
             <DivNavLink to={linkUrl}>

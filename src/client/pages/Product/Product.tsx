@@ -20,15 +20,15 @@ const Product: FC<RouteComponentProps<{ url: string, lang: string }>> = (props) 
     // from redux
     const { seo, product,
         // type, 
-        api, url_prefix, images_url, all_config_currencies, user_currency_code, ssr } = useSelector(
+        api, url_prefix, images_url, allCurrencies, userCurrency_code, ssr } = useSelector(
             (state: RootState) => ({
                 seo: state.PublicConfig.config.seo,
                 product: state.Page.data ? state.Page.data : null,
                 api: state.SystemConfig.api,
-                url_prefix: state.SystemConfig.urls[pageTypes.productPage],
+                url_prefix: state.SystemConfig.pageTypePrefixUrls[pageTypes.productPage],
                 images_url: state.SystemConfig.images,
-                all_config_currencies: state.SystemConfig.currency,
-                user_currency_code: state.User.currency,
+                allCurrencies: state.SystemConfig.allCurrencies,
+                userCurrency_code: state.User.currency,
                 ssr: state.PublicConfig.ssr
             }), shallowEqual
         )
@@ -66,7 +66,7 @@ const Product: FC<RouteComponentProps<{ url: string, lang: string }>> = (props) 
             {current_variation_id && product && product.variations && product.variations[current_variation_id].name}
             <br />
             {current_variation_id && product && product.variations &&<p>
-                {product.variations[current_variation_id].variation_price[user_currency_code]} {all_config_currencies[user_currency_code].sign}
+                {product.variations[current_variation_id].variation_price[userCurrency_code]} {allCurrencies[userCurrency_code].sign}
             </p>}
             <br />
             {current_variation_id}

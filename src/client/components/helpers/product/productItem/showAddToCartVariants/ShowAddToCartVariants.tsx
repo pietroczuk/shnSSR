@@ -31,8 +31,8 @@ const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
         }
     }
     const { add_to_cart, choise, features } = useSelector((state: RootState) => ({
-        add_to_cart: state.PublicConfig.translation && state.PublicConfig.translation.add_to_cart ? state.PublicConfig.translation.add_to_cart : null,
-        choise: state.PublicConfig.translation && state.PublicConfig.translation.choise ? state.PublicConfig.translation.choise : null,
+        add_to_cart: state.PublicConfig.translations && state.PublicConfig.translations.add_to_cart ? state.PublicConfig.translations.add_to_cart : null,
+        choise: state.PublicConfig.translations && state.PublicConfig.translations.choise ? state.PublicConfig.translations.choise : null,
         features: state.PublicConfig.features,
     }), shallowEqual);
 

@@ -8,25 +8,25 @@ interface CheckUserLanguage_Args {
     (
         cookie_header: CoockieHeader,
         browser_language: CoockieHeader,
-        languages: Language,
+        allLanguages: Language,
         cookie_key: string
     ) : string
 }
-export const checkUserLanguage : CheckUserLanguage_Args = (cookie_header, browser_language, languages, cookie_key) => {
+export const checkUserLanguage : CheckUserLanguage_Args = (cookie_header, browser_language, allLanguages, cookie_key) => {
     let cookie_lang = new Cookies(cookie_header).get(cookie_key);
-    if (!languages[cookie_lang]) {
+    if (!allLanguages[cookie_lang]) {
         // browser
         if (browser_language) {
             cookie_lang = browser_language.substring(0, 2);
         }
-        if (!languages[cookie_lang]) {
-            return languages[Object.keys(languages)[0]]['code'];
+        if (!allLanguages[cookie_lang]) {
+            return allLanguages[Object.keys(allLanguages)[0]]['code'];
         }
     }
     return cookie_lang;
 }
 
-export const urlDataFromPath = (full_path: string, languages: Language, multilanguage: boolean) => {
+export const urlDataFromPath = (full_path: string, allLanguages: Language, isMultilanguage: boolean) => {
     const pathData: {
         languageCode: string,
         blankPath: boolean,
@@ -39,12 +39,12 @@ export const urlDataFromPath = (full_path: string, languages: Language, multilan
     const pathCriticalIndex = 2;
     const real_path_arr = full_path.split('/');
     if (real_path_arr.length >= pathCriticalIndex) {
-        if (!languages[real_path_arr[1]] && languages[Object.keys(languages)[0]]['code']) {
-            pathData.languageCode = languages[Object.keys(languages)[0]]['code'];
+        if (!allLanguages[real_path_arr[1]] && allLanguages[Object.keys(allLanguages)[0]]['code']) {
+            pathData.languageCode = allLanguages[Object.keys(allLanguages)[0]]['code'];
         } else {
             pathData.languageCode = real_path_arr[1];
         }
-        if (!real_path_arr[pathCriticalIndex] && multilanguage) {
+        if (!real_path_arr[pathCriticalIndex] && isMultilanguage) {
             pathData.blankPath = true;
         }
         for (let index = real_path_arr.length - 1; index >= 0; index--) {
@@ -62,15 +62,15 @@ export const urlDataFromPath = (full_path: string, languages: Language, multilan
 interface GetCurrencyCookie_Args {
     (
         cookie_header: CoockieHeader,
-        currencies: Currency,
+        allCurrencies: Currency,
         cookie_key: string
     ) : string
 }
 
-export const getCurrencyCookie : GetCurrencyCookie_Args = (cookie_header, currencies, cookie_key) => {
+export const getCurrencyCookie : GetCurrencyCookie_Args = (cookie_header, allCurrencies, cookie_key) => {
     const cookie_currency = new Cookies(cookie_header).get(cookie_key);
-    if (!currencies[cookie_currency]) {
-        return Object.keys(currencies)[0];
+    if (!allCurrencies[cookie_currency]) {
+        return Object.keys(allCurrencies)[0];
     }
     return cookie_currency;
 }
@@ -85,7 +85,7 @@ interface getDisplayCookies_Args {
 }
 
 export const getDisplayCookies: getDisplayCookies_Args = (cookie_header, display_cookie_key_obj) => {
-    const visual = new Cookies(cookie_header).get(display_cookie_key_obj['visual_mode']) === "true" ? true : false;
-    const random = new Cookies(cookie_header).get(display_cookie_key_obj['random_variant']) === "true" ? true : false;
+    const visual = new Cookies(cookie_header).get(display_cookie_key_obj['visualMode']) === "true" ? true : false;
+    const random = new Cookies(cookie_header).get(display_cookie_key_obj['randomVariant']) === "true" ? true : false;
     return { showVisual: visual, showRandom: random }
 }

@@ -9,24 +9,24 @@ import { RootState } from '../../../../client';
 
 const ImageSwicher: FC = () => {
 
-    const { showVisual, visual_mode, translation } = useSelector((state: RootState) => ({
+    const { showVisual, visualMode, translations } = useSelector((state: RootState) => ({
         showVisual: state.Display.showVisual,
-        visual_mode: state.SystemConfig.cookies_keys.display.visual_mode,
-        translation: state.PublicConfig.translation
+        visualMode: state.SystemConfig.cookiesKeys.displayKeys.visualMode,
+        translations: state.PublicConfig.translations
     }), shallowEqual)
     const dispatch = useDispatch();
 
     const clickHandlerFunction = () => {
-        dispatch(setProductVisual(visual_mode));
+        dispatch(setProductVisual(visualMode));
     }
     const options = [
         {
-            title: translation && translation.show_arrangement ? translation.show_arrangement : '',
+            title: translations && translations.show_arrangement ? translations.show_arrangement : '',
             clickHandler: clickHandlerFunction,
             default: showVisual ? true : false
         },
         {
-            title: translation && translation.show_arrangement ? translation.hide_arrangement : '',
+            title: translations && translations.show_arrangement ? translations.hide_arrangement : '',
             clickHandler: clickHandlerFunction,
             default: !showVisual ? true : false
         },

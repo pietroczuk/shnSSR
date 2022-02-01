@@ -9,24 +9,24 @@ import { RootState } from '../../../../client';
 
 const RandomColorSwicher: React.FC = () => {
 
-    const { showRandom, random_variant, translation } = useSelector((state: RootState) => ({
+    const { showRandom, randomVariant, translations } = useSelector((state: RootState) => ({
         showRandom: state.Display.showRandom,
-        random_variant: state.SystemConfig.cookies_keys.display.random_variant,
-        translation: state.PublicConfig.translation
+        randomVariant: state.SystemConfig.cookiesKeys.displayKeys.randomVariant,
+        translations: state.PublicConfig.translations
     }), shallowEqual)
     const dispatch = useDispatch();
 
     const clickHandlerFunction = () => {
-        dispatch(setProductRandomColors(random_variant));
+        dispatch(setProductRandomColors(randomVariant));
     }
     const options = [
         {
-            title: translation && translation.show_random ? translation.show_random : '',
+            title: translations && translations.show_random ? translations.show_random : '',
             clickHandler: clickHandlerFunction,
             default: showRandom ? true : false,
         },
         {
-            title: translation && translation.hide_random ? translation.hide_random : '',
+            title: translations && translations.hide_random ? translations.hide_random : '',
             clickHandler: clickHandlerFunction,
             default: !showRandom ? true : false,
         },

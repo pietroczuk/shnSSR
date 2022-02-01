@@ -15,11 +15,11 @@ interface LeftMenuSubmenuProps {
     pathname: string;
     language: string;
     slug_urls: Urls;
-    multilanguage: boolean;
+    isMultilanguage: boolean;
 }
 
 const LeftMenuSubmenu: React.FC<LeftMenuSubmenuProps> = props => {
-    const { elem, prepareLabelMenu, prepareMenuLink, pathname, language, slug_urls, multilanguage } = props;
+    const { elem, prepareLabelMenu, prepareMenuLink, pathname, language, slug_urls, isMultilanguage } = props;
     const { items, label, color } = elem;
 
     const [openSubmenu, setOpenSubmenu] = useState(false);
@@ -32,7 +32,7 @@ const LeftMenuSubmenu: React.FC<LeftMenuSubmenuProps> = props => {
     }
     useEffect(() => {
         const foudmatch = Array.isArray(items) ? items.some(item => {
-            if (item.url && pathname === prepUrlFromConfigSlug(language, slug_urls, item.type, null, item.url, multilanguage)) {
+            if (item.url && pathname === prepUrlFromConfigSlug(language, slug_urls, item.type, null, item.url, isMultilanguage)) {
                 openSubmenuHandler(true);
                 return true;
             }

@@ -182,14 +182,14 @@ interface prepUrlFromConfigSlugArgs {
         url_type: string | undefined | null,
         slug_prefix: string | undefined | null,
         url: string | undefined | null,
-        multilanguage: boolean,
+        isMultilanguage: boolean,
         search?: string | undefined | null
     ): string
 }
 
-export const prepUrlFromConfigSlug: prepUrlFromConfigSlugArgs = (language, slug_urls, url_type, slug_prefix, url, multilanguage, search) => {
+export const prepUrlFromConfigSlug: prepUrlFromConfigSlugArgs = (language, slug_urls, url_type, slug_prefix, url, isMultilanguage, search) => {
     let url_link = '/';
-    language && multilanguage ? url_link += language + '/' : null;
+    language && isMultilanguage ? url_link += language + '/' : null;
     url_type && slug_urls ? url_link += slug_urls[url_type] + '/' : null;
     slug_prefix ? url_link += slug_prefix + '/' : null;
     url ? url_link += url + '/' : null;
@@ -197,9 +197,9 @@ export const prepUrlFromConfigSlug: prepUrlFromConfigSlugArgs = (language, slug_
     return url_link;
 }
 
-// export const prepareLink = (language, slug_prefix, url, multilanguage) => {
+// export const prepareLink = (language, slug_prefix, url, isMultilanguage) => {
 //     let url_link = '/';
-//     language && multilanguage ? url_link += language + '/' : null;
+//     language && isMultilanguage ? url_link += language + '/' : null;
 //     slug_prefix ? url_link += slug_prefix + '/' : null;
 //     url ? url_link += url + '/' : null;
 //     return url_link;
@@ -222,8 +222,8 @@ export const getPriceByCurrency: getPriceByCurrencyArgs = (productPrices, userCu
         currency[userCurrency] &&
         currency[userCurrency].sign &&
         productPrices[userCurrency] ? productPrices[userCurrency] : null;
-    return price && currency[userCurrency].displayLeft ?
-        currency[userCurrency].displayLeft ?
+    return price && currency[userCurrency].isDisplayLeft ?
+        currency[userCurrency].isDisplayLeft ?
             currency[userCurrency].sign + ' ' + price : price + ' ' + currency[userCurrency].sign : null;
 }
 

@@ -33,13 +33,13 @@ import { RouteComponentProps } from 'react-router-dom';
 
 const Wishlist: FC<RouteComponentProps<{ url: string }>> = props => {
     const { title, wishlist, seo, language, showVisual, cookiesDisplayKeys, wishlistMultiUrl, ssr } = useSelector((state: RootState) => ({
-        title: state.PublicConfig.translation.wishlist,
+        title: state.PublicConfig.translations.wishlist,
         wishlist: state.Wishlist,
         seo: state.PublicConfig.config.seo,
         language: state.User.language,
         showVisual: state.Display.showVisual,
-        cookiesDisplayKeys: state.SystemConfig.cookies_keys.display,
-        wishlistMultiUrl: state.SystemConfig.special_pages_urls[pageTypes.wishlist],
+        cookiesDisplayKeys: state.SystemConfig.cookiesKeys.displayKeys,
+        wishlistMultiUrl: state.SystemConfig.specialPagesUrlsArray[pageTypes.wishlist],
         ssr: state.PublicConfig.ssr,
     })
     );
@@ -97,8 +97,8 @@ const Wishlist: FC<RouteComponentProps<{ url: string }>> = props => {
                 <ShowTitleWithBadge title={title} badgeNumber={badgeNumber} customWidth={20} />
                 <div>
                     <FixedBar>
-                        <ImageSwicher showVisual={showVisual} cookieKey={cookiesDisplayKeys.visual_mode} />
-                        {/* <RandomColorSwicher showRandom={showRandom} cookieKey={cookiesDisplayKeys.random_variant} /> */}
+                        <ImageSwicher showVisual={showVisual} cookieKey={cookiesDisplayKeys.visualMode} />
+                        {/* <RandomColorSwicher showRandom={showRandom} cookieKey={cookiesDisplayKeys.randomVariant} /> */}
                     </FixedBar>
                     <div className={styles.productsGrid}>{showProducts(wishlist)}</div>
                     {/* <div className={styles.categroryLoadMore}><LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={2} /></div> */}

@@ -63,45 +63,45 @@ if (!process.env.API_URL) {
             .catch(err => {
                 console.error('❌ Error get config file', err);
             }).then((api_config: SystemConfig) => {
-                const multilanguage = api_config.multilanguage;
-                const languages = api_config.language;
-                const urlData = urlDataFromPath(req.path, languages, multilanguage);
+                const isMultilanguage = api_config.isMultilanguage;
+                const allLanguages = api_config.allLanguages;
+                const urlData = urlDataFromPath(req.path, allLanguages, isMultilanguage);
                 const languageFromUrl = urlData.languageCode;
                 const real_path = urlData.realPath;
                 const blankUrl = req.path === '/' || urlData.blankPath ? true : false;
-                const user_language =
-                    multilanguage ?
+                const language =
+                isMultilanguage ?
                         blankUrl ?
-                            checkUserLanguage(req.headers.cookie, req.headers['accept-language'], languages, api_config.cookies_keys.user_language)
+                            checkUserLanguage(req.headers.cookie, req.headers['accept-language'], allLanguages, api_config.cookiesKeys.userLanguage)
                             :
                             languageFromUrl
                         :
-                        Object.values(languages)[0]['code'];
-                if (blankUrl && user_language) {
+                        Object.values(allLanguages)[0]['code'];
+                if (blankUrl && language) {
                     const homepageUrl =
-                        api_config.special_pages_urls &&
-                            api_config.special_pages_urls.homepage ?
-                            multilanguage ?
-                                user_language + '/' + api_config.special_pages_urls.homepage[user_language]
-                                : api_config.special_pages_urls.homepage[user_language]
-                            : user_language;
+                        api_config.specialPagesUrlsArray &&
+                            api_config.specialPagesUrlsArray.homepage ?
+                            isMultilanguage ?
+                                language + '/' + api_config.specialPagesUrlsArray.homepage[language]
+                                : api_config.specialPagesUrlsArray.homepage[language]
+                            : language;
                     res.redirect('/' + homepageUrl);
                 } else {
-                    const user_currency = getCurrencyCookie(req.headers.cookie, api_config.currency, api_config.cookies_keys.user_currency);
+                    const userCurrency = getCurrencyCookie(req.headers.cookie, api_config.allCurrencies, api_config.cookiesKeys.userCurrency);
                     // get display cookies
-                    const display_options = getDisplayCookies(req.headers.cookie, api_config.cookies_keys.display);
-                    const server_store = createServerInitStore(user_language, user_currency, display_options);
+                    const display_options = getDisplayCookies(req.headers.cookie, api_config.cookiesKeys.displayKeys);
+                    const server_store = createServerInitStore(language, userCurrency, display_options);
 
                     // preapre system pages uls
-                    // api_config.urls.wishlist = api_config.special_pages_urls.wishlist[user_language];
-                    // api_config.urls.homepage = api_config.special_pages_urls.homepage[user_language];
-                    // api_config.urls.cart = api_config.special_pages_urls.cart[user_language];
+                    // api_config.pageTypePrefixUrls.wishlist = api_config.specialPagesUrlsArray.wishlist[language];
+                    // api_config.pageTypePrefixUrls.homepage = api_config.specialPagesUrlsArray.homepage[language];
+                    // api_config.pageTypePrefixUrls.cart = api_config.specialPagesUrlsArray.cart[language];
                     const new_routes_config: NewRoutesConfig = {
-                        language: languages,
-                        urls: api_config.urls,
-                        special_pages_urls: api_config.special_pages_urls
+                        allLanguages: allLanguages,
+                        pageTypePrefixUrls: api_config.pageTypePrefixUrls,
+                        specialPagesUrlsArray: api_config.specialPagesUrlsArray
                     }
-                    const new_Routes = prepareRoutesConfig(new_routes_config, user_language, multilanguage);
+                    const new_Routes = prepareRoutesConfig(new_routes_config, language, isMultilanguage);
                     const load_data_promises = matchRoutes(new_Routes, req.path).map(({ route }) => {
                         const i = req.url.indexOf('?');
                         const q = req.url.indexOf('&');
@@ -113,7 +113,7 @@ if (!process.env.API_URL) {
                                 query = req.url.substring(i + 1);
                             }
                         }
-                        return route.loadDataOnInit ? route.loadDataOnInit(route.type, server_store, api_config, user_language, real_path, query) : null;
+                        return route.loadDataOnInit ? route.loadDataOnInit(route.type, server_store, api_config, language, real_path, query) : null;
                     }).map(promise => {
                         // for fail promises, continue fetch data and resolve promises
                         // double primise (outer)
@@ -127,7 +127,7 @@ if (!process.env.API_URL) {
 
                     Promise.all(load_data_promises).then(() => {
                         const server_context: { url?: any, notFound?: any } = {};
-                        const content = rednderHtml(req, server_store, server_context, new_routes_config, user_language, multilanguage);
+                        const content = rednderHtml(req, server_store, server_context, new_routes_config, language, isMultilanguage);
                         if (server_context.url) {
                             return res.redirect(301, server_context.url);
                         }

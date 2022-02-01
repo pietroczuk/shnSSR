@@ -14,12 +14,12 @@ interface ShowPriceProps {
 const ShowPrice: React.FC<ShowPriceProps> = (props) => {
     const { allPrices } = props;
 
-    const { userCurrency, currency } = useSelector((state: RootState) => ({
-        userCurrency: state.User.currency,
-        currency: state.SystemConfig.currency,
+    const { currency, allCurrencies } = useSelector((state: RootState) => ({
+        currency: state.User.currency,
+        allCurrencies: state.SystemConfig.allCurrencies,
     }), shallowEqual);
 
-    const price = getPriceByCurrency(allPrices, userCurrency, currency);
+    const price = getPriceByCurrency(allPrices, currency, allCurrencies);
 
     return <div className={styles.price}>{price}</div>
 }

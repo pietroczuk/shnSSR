@@ -1,46 +1,46 @@
 import { SystemConfig } from "../../types/systemConfig.types";
 
 export const SystemConfigInitialState: SystemConfig = {
-    product_sliders: {
-        visited_count: 0
+    productSlidersConfig: {
+        visitedCount: 0
     },
-    localstorage_keys: {
+    localstorageKeys: {
         wishlist: '',
         cart: '',
         visited: ''
     },
-    urls: {},
-    cookies_keys: {
-        user_country: '',
-        user_language: '',
-        user_currency: '',
-        display: {
-            visual_mode: '',
-            random_variant: ''
+    pageTypePrefixUrls: {},
+    cookiesKeys: {
+        userCountry: '',
+        userLanguage: '',
+        userCurrency: '',
+        displayKeys: {
+            visualMode: '',
+            randomVariant: ''
         }
     },
-    special_pages_urls: {},
-    multicurrency: false,
-    currency: {},
-    multilanguage: false,
+    specialPagesUrlsArray: {},
+    isMulticurrency: false,
+    allCurrencies: {},
+    isMultilanguage: false,
     placeholder: {
         category_products: 0
     },
     images: {
         big: '',
         small: '',
-        pack_size: '',
-        pack_filename: '',
+        packSize: '',
+        packFilename: '',
         url: '',
-        small_less: '',
+        smallLess: '',
         medium: '',
         large: '',
-        aspect_ratio: {
+        aspectRatioConfig: {
             width: 0,
             height: 0,
         },
     },
-    language: {},
+    allLanguages: {},
     api: {
         similarvisit: '',
         global: '',

@@ -12,10 +12,10 @@ import { RootState } from '../../client';
 import { MenuItem } from '../../redux/types/publicConfig.types';
 
 const MenuTop: FC = () => {
-    const { menu_items, slug_urls, multilanguage, language } = useSelector((state: RootState) => ({
+    const { menu_items, slug_urls, isMultilanguage, language } = useSelector((state: RootState) => ({
         menu_items: state.PublicConfig.menu ? state.PublicConfig.menu.top : null,
-        slug_urls: state.SystemConfig.urls,
-        multilanguage: state.SystemConfig.multilanguage,
+        slug_urls: state.SystemConfig.pageTypePrefixUrls,
+        isMultilanguage: state.SystemConfig.isMultilanguage,
         language: state.User.language,
     }), shallowEqual)
 
@@ -26,7 +26,7 @@ const MenuTop: FC = () => {
         const { type, url, label, items, color } = elem;
 
         if (url) {
-            const new_url = prepUrlFromConfigSlug(language, slug_urls, type, null, url, multilanguage);
+            const new_url = prepUrlFromConfigSlug(language, slug_urls, type, null, url, isMultilanguage);
             return <NavLink to={new_url} activeClassName={styles.active} className={styles.link_container}>
                 {items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color)}
             </NavLink>
