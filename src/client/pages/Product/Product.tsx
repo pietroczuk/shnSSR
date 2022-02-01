@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './product.scss';
 
@@ -6,44 +6,44 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { getPage } from '../../redux/actions/actionCreators';
 import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
-import { pageTypes, metatags, prepareSearchCode, scrollToTop } from '../../utils/utilsFrondend';
+import { pageTypes, prepareSearchCode, scrollToTop } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
-// import FixedBar from '../../components/fixedbar/FixedBar';
-
-// import AllFeaturesDisplay from ' ../../components/features/AllFeaturesDisplay';
 import AllFeaturesDisplay from '../../components/helpers/product/features/AllFeaturesDisplay';
 import { RootState } from '../../client';
 import { RouteComponentProps } from 'react-router-dom';
+import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
 
-const Product: FC<RouteComponentProps<{ url: string, lang: string }>> = (props) => {
-    // from redux
-    const { seo, product,
-        // type, 
-        api, url_prefix, images_url, allCurrencies, userCurrency_code, ssr } = useSelector(
-            (state: RootState) => ({
-                seo: state.PublicConfig.config.seo,
-                product: state.Page.data ? state.Page.data : null,
-                api: state.SystemConfig.api,
-                url_prefix: state.SystemConfig.pageTypePrefixUrls[pageTypes.productPage],
-                images_url: state.SystemConfig.images,
-                allCurrencies: state.SystemConfig.allCurrencies,
-                userCurrency_code: state.User.currency,
-                ssr: state.PublicConfig.ssr
-            }), shallowEqual
-        )
+interface ProductProps {
+    url: string;
+    lang: string;
+}
+
+const Product: React.FC<RouteComponentProps<ProductProps>> = (props) => {
+    const pageType = pageTypes.productPage;
+    const { product, api, images_url, allCurrencies, currency, language, ssr } = useSelector(
+        (state: RootState) => ({
+            product: state.Page.data,
+            api: state.SystemConfig.api,
+            images_url: state.SystemConfig.images,
+            allCurrencies: state.SystemConfig.allCurrencies,
+            currency: state.User.currency,
+            language: state.User.language,
+            ssr: state.PublicConfig.ssr
+        }), shallowEqual
+    )
     const dispatch = useDispatch();
-    // seo
-    const seo_title = product ? product.seo_title : null;
-    const seo_description = product ? product.seo_description : null;
+
     const current_variation_id = product ? product.current_variation_id : null;
     // from props
-    const { url, lang } = props.match.params;
+    const { url, 
+        // lang 
+    } = props.match.params;
     const { location } = props;
 
     useEffect(() => {
         const axiosAbortController = new AbortController();
-        dispatch(getPage(api, pageTypes.productPage, lang, url, prepareSearchCode(location.search), axiosAbortController));
+        dispatch(getPage(api, pageType, language, url, prepareSearchCode(location.search), axiosAbortController));
         scrollToTop(window);
         return () => {
             axiosAbortController.abort();
@@ -57,7 +57,7 @@ const Product: FC<RouteComponentProps<{ url: string, lang: string }>> = (props) 
 
     return (
         <div>
-            {metatags(seo_title, seo_description, seo, url, lang, url_prefix)}
+            {<SeoMetaTags language={language} pageType={pageType} url={url} />}
             Product page
             {/* <FixedBar /> */}
             {product ?
@@ -65,8 +65,8 @@ const Product: FC<RouteComponentProps<{ url: string, lang: string }>> = (props) 
             }
             {current_variation_id && product && product.variations && product.variations[current_variation_id].name}
             <br />
-            {current_variation_id && product && product.variations &&<p>
-                {product.variations[current_variation_id].variation_price[userCurrency_code]} {allCurrencies[userCurrency_code].sign}
+            {current_variation_id && product && product.variations && <p>
+                {product.variations[current_variation_id].variation_price[currency]} {allCurrencies[currency].sign}
             </p>}
             <br />
             {current_variation_id}

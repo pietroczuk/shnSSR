@@ -1,18 +1,18 @@
-import { FC } from 'react';
+import React from 'react';
 import styles from './contentCointainer.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
 import { ContenerContextProvider } from './contenerContext/contenerContext';
 
 interface ContentCointainerProps {
-    miltirow: boolean
+    isMultirow: boolean
 }
 
-const ContentCointainer: FC<ContentCointainerProps> = props => {
-    const { miltirow } = props;
+const ContentCointainer: React.FC<ContentCointainerProps> = props => {
+    const { isMultirow } = props;
     return (
         <ContenerContextProvider>
-            <main className={`${styles.page_container} ${miltirow ? styles.multirow : ''}`}>
+            <main className={`${styles.page_container} ${isMultirow ? styles.multirow : ''}`}>
                 {props.children}
             </main>
         </ContenerContextProvider>

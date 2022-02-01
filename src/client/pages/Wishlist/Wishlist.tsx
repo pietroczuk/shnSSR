@@ -1,20 +1,12 @@
-import { FC, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './wishlist.scss';
 
 import { useSelector, useDispatch } from 'react-redux';
-// import { getPage , serpa } from '../../redux/actions/actionCreators';
 import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
-import {
-    pageTypes,
-    metatags,
-    // prepareSearchCode,
-    // renderHtmlFromJson,
-    // scrollToTop
-} from '../../utils/utilsFrondend';
+import { pageTypes } from '../../utils/utilsFrondend';
 
-// import Placeholder from '../../components/placeholder/Placeholder';
 import ContentCointainer from '../../components/contentCointainer/ContentCointainer';
 import StickySidebar from '../../components/contentCointainer/stickySidebar/StickySidebar';
 import MainContent from '../../components/contentCointainer/mainContent/MainContent';
@@ -22,46 +14,52 @@ import LeftMenuLinks from '../../components/leftMenuLinks/LeftMenuLinks';
 import ProductItem from '../../components/productItem/ProductItem';
 import FixedBar from '../../components/fixedbar/FixedBar';
 import ImageSwicher from '../../components/helpers/ui/imageSwicher/ImageSwicher';
-// import RandomColorSwicher from '../../components/ui/randomColorSwicher/RandomColorSwicher';
-
-// import LoadingSpinner from '../../components/ui/loadingSpinner/LoadingSpinner';
 
 import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/ShowTitleWithBadge';
 import { RootState } from '../../client';
 import { Wishlist as WishlistType } from '../../redux/types/wishlist.types';
 import { RouteComponentProps } from 'react-router-dom';
+import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
 
-const Wishlist: FC<RouteComponentProps<{ url: string }>> = props => {
-    const { title, wishlist, seo, language, showVisual, cookiesDisplayKeys, wishlistMultiUrl, ssr } = useSelector((state: RootState) => ({
+interface WishlistProps {
+    url: string;
+}
+
+const Wishlist: React.FC<RouteComponentProps<WishlistProps>> = props => {
+    const pageType = pageTypes.wishlist;
+
+    const { title, wishlist, language, wishlistMultilanguageUrls, ssr } = useSelector((state: RootState) => ({
         title: state.PublicConfig.translations.wishlist,
         wishlist: state.Wishlist,
-        seo: state.PublicConfig.config.seo,
         language: state.User.language,
-        showVisual: state.Display.showVisual,
-        cookiesDisplayKeys: state.SystemConfig.cookiesKeys.displayKeys,
-        wishlistMultiUrl: state.SystemConfig.specialPagesUrlsArray[pageTypes.wishlist],
+        wishlistMultilanguageUrls: state.SystemConfig.specialPagesUrlsArray[pageType],
         ssr: state.PublicConfig.ssr,
     })
     );
     const { location } = props;
     const { url } = props.match.params;
-    const multirow = true;
+    const isMultirow = true;
     const badgeNumber = wishlist.length;
 
     const dispatch = useDispatch();
     useEffect(() => {
         const wishlistPageObj = {
             data: {
-                url: wishlistMultiUrl,
+                url: wishlistMultilanguageUrls,
                 type: pageTypes.specialPage
             }
         }
         !ssr && dispatch(pageActions.setPageData({ data: wishlistPageObj }));
         return () => {
             dispatch(pageActions.clearPageData());
-            // return dispatch(pageActions.clearPageData());
         }
     }, []);
+
+    useEffect(() => {
+        // We need disable ssr for special pages
+        // because we dont get any data from Api
+        ssr && dispatch(publicConfigActions.disableSrr());
+    }, [])
 
     const showProducts = (wishlistData: WishlistType) => {
         const products = wishlistData && wishlistData.products ? wishlistData.products : null;
@@ -81,24 +79,22 @@ const Wishlist: FC<RouteComponentProps<{ url: string }>> = props => {
         return null
     }
 
-    useEffect(() => {
-        ssr && dispatch(publicConfigActions.disableSrr());
-    }, [])
 
     return (
-        <ContentCointainer miltirow={multirow}>
-            {metatags(null, null, seo, url, language, null)}
-            {
-                multirow && <StickySidebar location={location}>
+        <ContentCointainer isMultirow={isMultirow}>
+            {<SeoMetaTags url={url} language={language} pageType={pageType}/>}
+
+            {isMultirow &&
+                <StickySidebar location={location}>
                     <LeftMenuLinks location={location} />
                 </StickySidebar>
             }
+
             <MainContent>
                 <ShowTitleWithBadge title={title} badgeNumber={badgeNumber} customWidth={20} />
                 <div>
                     <FixedBar>
-                        <ImageSwicher showVisual={showVisual} cookieKey={cookiesDisplayKeys.visualMode} />
-                        {/* <RandomColorSwicher showRandom={showRandom} cookieKey={cookiesDisplayKeys.randomVariant} /> */}
+                        <ImageSwicher />
                     </FixedBar>
                     <div className={styles.productsGrid}>{showProducts(wishlist)}</div>
                     {/* <div className={styles.categroryLoadMore}><LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={2} /></div> */}

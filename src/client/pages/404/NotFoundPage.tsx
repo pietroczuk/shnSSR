@@ -6,30 +6,24 @@ import { publicConfigActions } from '../../redux/slices/publicConfigSlice/public
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { RootState } from '../../client';
 
-const NotFoundPage: React.FC<{staticContext: any}> = ({ staticContext = {} }) => {
+interface NotFoundPageProps {
+    staticContext: any;
+}
+
+const NotFoundPage: React.FC<NotFoundPageProps> = ({ staticContext = {} }) => {
     const ssr = useSelector((state: RootState) => state.PublicConfig.ssr, shallowEqual);
 
     const dispatch = useDispatch();
     useEffect(() => {
+        // We need disable ssr for special pages
+        // because we dont get any data from Api
         ssr && dispatch(publicConfigActions.disableSrr());
     }, [])
 
-    // useEffect(()=>{
-    //     console.log('404');
-    // },[]);
-    // useStyles(s);
     staticContext.notFound = true;
     return (
         <div className={styles.notfound}>404</div>
     )
 }
-
-// export default {
-//     component:  NotFoundPage
-// }
-
-// export default {
-//     component:  withStyles(styles)(NotFoundPage)
-// }
 
 export default withStyles(styles)(NotFoundPage);

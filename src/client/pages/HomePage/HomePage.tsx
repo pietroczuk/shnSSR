@@ -11,6 +11,8 @@ const HomePage: React.FC = () => {
     
     const dispatch = useDispatch();
     useEffect(() => {
+        // We need disable ssr for special pages
+        // because we dont get any data from Api
         ssr && dispatch(publicConfigActions.disableSrr());
     }, [])
     // const SeoHead = () => {

@@ -7,7 +7,7 @@ import { getPage } from '../../redux/actions/actionCreators';
 import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
 import {
-    pageTypes, metatags, prepareSearchCode,
+    pageTypes, prepareSearchCode,
     renderHtmlFromJson,
     scrollToTop
 } from '../../utils/utilsFrondend';
@@ -28,6 +28,7 @@ import AllFeaturesDisplay from '../../components/helpers/product/features/AllFea
 import { RootState } from '../../client';
 import { RouteComponentProps } from 'react-router-dom';
 import ProductsGrid from '../../components/productsGrid/ProductsGrid';
+import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
 
 interface CategoryProps {
     url: string;
@@ -35,42 +36,28 @@ interface CategoryProps {
 }
 
 const Category: FC<RouteComponentProps<CategoryProps>> = props => {
-    // from redux
-    const {
-        seo,
-        ssr,
-        category,
-        api,
-        url_prefix,
-        category_products,
-        language,
-    } = useSelector(
-        (state : RootState) => ({
-            seo: state.PublicConfig.config.seo,
+    const pageType = pageTypes.categoryPage;
+    const { ssr, category, api, category_products, language, } = useSelector(
+        (state: RootState) => ({
             ssr: state.PublicConfig.ssr,
             category: state.Page.data,
-            url_prefix: state.SystemConfig.pageTypePrefixUrls[pageTypes.categoryPage],
             api: state.SystemConfig.api,
             category_products: state.SystemConfig.placeholder.category_products,
             language: state.User.language,
-        })
-        , shallowEqual
-    )
+        }), shallowEqual)
+
     const dispatch = useDispatch();
-    // seo
-    const seo_title = category ? category.seo_title : null;
-    const seo_description = category ? category.seo_description : null;
     // from props
     const { url } = props.match.params;
     const { location } = props;
-    // multirow
-    const multirow = true;
+
+    const isMultirow = true;
     const title = category ? category.title : undefined;
 
     useEffect(() => {
         const axiosAbortController = new AbortController();
         console.log('category ssr:', ssr);
-        !ssr && dispatch(getPage(api, pageTypes.categoryPage, language, url, prepareSearchCode(location.search), axiosAbortController));
+        !ssr && dispatch(getPage(api, pageType, language, url, prepareSearchCode(location.search), axiosAbortController));
         scrollToTop(window);
         return () => {
             axiosAbortController.abort();
@@ -84,11 +71,10 @@ const Category: FC<RouteComponentProps<CategoryProps>> = props => {
     }, [])
 
     return (
-        <ContentCointainer miltirow={multirow}>
-            {console.log('category render')}
-            {metatags(seo_title, seo_description, seo, url, language, url_prefix)}
+        <ContentCointainer isMultirow={isMultirow} >
+            {<SeoMetaTags language={language} pageType={pageType} url={url}/>}
             {
-                multirow && <StickySidebar location={location}>
+                isMultirow && <StickySidebar location={location}>
                     <LeftMenuLinks location={location} />
                 </StickySidebar>
             }
@@ -106,7 +92,7 @@ const Category: FC<RouteComponentProps<CategoryProps>> = props => {
                             globalChange={true}
                         />
                     </FixedBar>
-                    <ProductsGrid category={category} category_products={category_products}/>
+                    <ProductsGrid category={category} category_products={category_products} />
                     <div className={styles.categroryLoadMore}><LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={2} /></div>
                     {category ? <div className={styles.categoryDescription} >{renderHtmlFromJson(category.description)}</div> : <div><Placeholder /></div>}
                 </div>

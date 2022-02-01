@@ -1,8 +1,5 @@
 import Cookies from 'universal-cookie';
-// SEO
-import { Helmet } from 'react-helmet';
 import { Currency } from '../redux/types/systemConfig.types';
-import { Seo } from '../redux/types/publicConfig.types';
 
 // ---------- get page
 
@@ -28,72 +25,6 @@ export const getCookie = (type: string) => {
     return new Cookies().get(type);
 }
 // -------- end coockies
-
-// --------- SEO
-interface metatagsArgs {
-    (
-        page_title: string | null,
-        page_description: string | null,
-        seo: Seo,
-        url: string,
-        lang: string,
-        url_prefix: string | null
-    ): JSX.Element
-}
-
-export const metatags: metatagsArgs = (page_title, page_description, seo, url, lang, url_prefix) => {
-    const title = page_title ? page_title : seo.title;
-    const description = page_description ? page_description : seo.description;
-    const { og } = seo;
-    const url_char = url_prefix ? url_prefix + '/' : '';
-    const ogUlr = og ? og.url + '/' : '';
-    const link = ogUlr + lang + '/' + url_char + url;
-
-    return (
-        <Helmet
-            title={title}
-            link={
-                [
-                    { rel: 'canonical', href: link }
-                ]}
-            meta={
-                [
-                    {
-                        name: 'description',
-                        content: description,
-                    },
-                    {
-                        name: 'og:title',
-                        content: title,
-                    },
-                    {
-                        name: 'og:description',
-                        content: description,
-                    },
-                    {
-                        name: 'og:type',
-                        content: og ? og.type : '',
-                    },
-                    {
-                        name: 'og:image',
-                        content: og ? og.image : '',
-                    },
-                    {
-                        name: 'og:url',
-                        content: og ? og.url : '',
-                    },
-                    {
-                        name: 'og:site_name',
-                        content: og ? og.site_name : ''
-                    },
-                ]}
-        />
-    );
-}
-
-
-
-// -------- end seo
 
 // -------- variantcode in url / ?serach attribute 
 // export const decodeParameters = param => {
