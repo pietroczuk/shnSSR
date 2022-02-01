@@ -15,8 +15,6 @@ const NotFoundPage: React.FC<NotFoundPageProps> = ({ staticContext = {} }) => {
 
     const dispatch = useDispatch();
     useEffect(() => {
-        // We need disable ssr for special pages
-        // because we dont get any data from Api
         ssr && dispatch(publicConfigActions.disableSrr());
     }, [])
 

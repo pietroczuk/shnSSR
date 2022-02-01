@@ -78,7 +78,7 @@ const Wishlist: React.FC<RouteComponentProps<WishlistProps>> = props => {
         }
         return null
     }
-
+ 
 
     return (
         <ContentCointainer isMultirow={isMultirow}>

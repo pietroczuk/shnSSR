@@ -27,7 +27,7 @@ import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/S
 import AllFeaturesDisplay from '../../components/helpers/product/features/AllFeaturesDisplay';
 import { RootState } from '../../client';
 import { RouteComponentProps } from 'react-router-dom';
-import ProductsGrid from '../../components/productsGrid/ProductsGrid';
+import ProductsCategoryGridProps from '../../components/productsCategoryGrid/productsCategoryGrid';
 import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
 
 interface CategoryProps {
@@ -37,12 +37,11 @@ interface CategoryProps {
 
 const Category: FC<RouteComponentProps<CategoryProps>> = props => {
     const pageType = pageTypes.categoryPage;
-    const { ssr, category, api, category_products, language, } = useSelector(
+    const { ssr, category, api, language, } = useSelector(
         (state: RootState) => ({
             ssr: state.PublicConfig.ssr,
             category: state.Page.data,
             api: state.SystemConfig.api,
-            category_products: state.SystemConfig.placeholder.category_products,
             language: state.User.language,
         }), shallowEqual)
 
@@ -92,7 +91,7 @@ const Category: FC<RouteComponentProps<CategoryProps>> = props => {
                             globalChange={true}
                         />
                     </FixedBar>
-                    <ProductsGrid category={category} category_products={category_products} />
+                    <ProductsCategoryGridProps />
                     <div className={styles.categroryLoadMore}><LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={2} /></div>
                     {category ? <div className={styles.categoryDescription} >{renderHtmlFromJson(category.description)}</div> : <div><Placeholder /></div>}
                 </div>

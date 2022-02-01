@@ -93,8 +93,8 @@ export interface SystemConfig {
     isMulticurrency: boolean
     allCurrencies: Currency,
     isMultilanguage: boolean,
-    placeholder: {
-        category_products: number
+    placeholders: {
+        categoryProducts: number
     },
     images: Images,
     allLanguages: Language,

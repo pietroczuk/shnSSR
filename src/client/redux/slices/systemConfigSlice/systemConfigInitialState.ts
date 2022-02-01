@@ -23,8 +23,8 @@ export const SystemConfigInitialState: SystemConfig = {
     isMulticurrency: false,
     allCurrencies: {},
     isMultilanguage: false,
-    placeholder: {
-        category_products: 0
+    placeholders: {
+        categoryProducts: 0
     },
     images: {
         big: '',

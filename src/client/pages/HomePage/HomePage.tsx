@@ -11,21 +11,10 @@ const HomePage: React.FC = () => {
     
     const dispatch = useDispatch();
     useEffect(() => {
-        // We need disable ssr for special pages
-        // because we dont get any data from Api
         ssr && dispatch(publicConfigActions.disableSrr());
     }, [])
-    // const SeoHead = () => {
-    //     return (
-    //         <Helmet>
-    //             <title>{`${config.length} Home page`}</title>
-    //             <meta property="og:title" content="My home page" />
-    //         </Helmet>
-    //     )
-    // }
     return (
         <React.Fragment>
-            {/* { SeoHead() } */}
             <div>home component</div>
             <button onClick={() => { console.log('cklik me') }}>kliknij</button>
             <Link to='/gowno'>gowno</Link><br />
