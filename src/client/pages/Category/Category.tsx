@@ -26,11 +26,17 @@ import LoadingSpinner from '../../components/helpers/ui/loadingSpinner/LoadingSp
 import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/ShowTitleWithBadge';
 
 import AllFeaturesDisplay from '../../components/helpers/product/features/AllFeaturesDisplay';
-import { RootState } from '../../client';
+import { ClientAppDispatch, RootState } from '../../client';
 import { RouteComponentProps } from 'react-router-dom';
 import { PageData } from '../../redux/types/page.types';
+import ProductsGrid from '../../components/productsGrid/ProductsGrid';
 
-const Category: FC<RouteComponentProps<{ url: string, lang: string }>> = props => {
+interface CategoryProps {
+    url: string;
+    lang: string;
+}
+
+const Category: FC<RouteComponentProps<CategoryProps>> = props => {
     // from redux
     const {
         seo,
@@ -40,9 +46,8 @@ const Category: FC<RouteComponentProps<{ url: string, lang: string }>> = props =
         url_prefix,
         category_products,
         language,
-        default_variant_code
     } = useSelector(
-        (state: RootState) => ({
+        (state : RootState) => ({
             seo: state.PublicConfig.config.seo,
             ssr: state.PublicConfig.ssr,
             category: state.Page.data,
@@ -50,11 +55,10 @@ const Category: FC<RouteComponentProps<{ url: string, lang: string }>> = props =
             api: state.SystemConfig.api,
             category_products: state.SystemConfig.placeholder.category_products,
             language: state.User.language,
-            default_variant_code: state.PublicConfig.default_variant_code
         })
         , shallowEqual
     )
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<ClientAppDispatch>();
     // seo
     const seo_title = category ? category.seo_title : null;
     const seo_description = category ? category.seo_description : null;
@@ -81,15 +85,9 @@ const Category: FC<RouteComponentProps<{ url: string, lang: string }>> = props =
         ssr && dispatch(publicConfigActions.disableSrr());
     }, [])
 
-    const showProducts = (category: PageData) => {
-        const products = category && category.products ? category.products : null;
-        if (products) {
-            return products.map((p, index) => <ProductItem product={p} key={p.id} index={index} />);
-        }
-        return [...Array(category_products)].map((_el, index) => <ProductItem key={index} />);
-    }
     return (
         <ContentCointainer miltirow={multirow}>
+            {console.log('category render')}
             {metatags(seo_title, seo_description, seo, url, language, url_prefix)}
             {
                 multirow && <StickySidebar location={location}>
@@ -103,14 +101,14 @@ const Category: FC<RouteComponentProps<{ url: string, lang: string }>> = props =
                         <ImageSwicher />
                         <RandomColorSwicher />
                         <AllFeaturesDisplay
-                            currentVariationCode={default_variant_code}
+                            // currentVariationCode={default_variant_code}
                             allProductVariation={null}
                             wishlistAvaible={true}
                             displayInline={true}
                             globalChange={true}
                         />
                     </FixedBar>
-                    <div className={styles.productsGrid}>{showProducts(category)}</div>
+                    <ProductsGrid category={category} category_products={category_products}/>
                     <div className={styles.categroryLoadMore}><LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={2} /></div>
                     {category ? <div className={styles.categoryDescription} >{renderHtmlFromJson(category.description)}</div> : <div><Placeholder /></div>}
                 </div>

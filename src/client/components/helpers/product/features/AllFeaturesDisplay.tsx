@@ -9,7 +9,7 @@ import { DefaultVariantCode } from '../../../../redux/types/publicConfig.types';
 import SingleFeature from './atributes/singleFeature/SingleFeature';
 
 interface AllFeaturesDisplayProps {
-    currentVariationCode: DefaultVariantCode,
+    currentVariationCode?: DefaultVariantCode,
     allProductVariation: any,
     wishlistAvaible: boolean,
     displayInline: boolean,
@@ -29,10 +29,12 @@ const AllFeaturesDisplay: React.FC<AllFeaturesDisplayProps> = props => {
         onClickFunction
     } = props;
     // from redux
-    const { features, showRandom } = useSelector((state: RootState) => ({
+    const { features, showRandom, default_variant_code } = useSelector((state: RootState) => ({
         features: state.PublicConfig.features,
-        showRandom: state.Display.showRandom
+        showRandom: state.Display.showRandom,
+        default_variant_code: state.PublicConfig.default_variant_code
     }), shallowEqual);
+    const localCurrentVariationCode = currentVariationCode ? currentVariationCode : default_variant_code
     return (
         <div className={`${styles.featureRootContainer} ${displayInline ? styles.inline : ''} ${showRandom && displayInline && !disableOpacity ? styles.halfvisible : ''}`}>
             {Object.entries(features).map(([featureKey, feature]) => {
@@ -47,7 +49,7 @@ const AllFeaturesDisplay: React.FC<AllFeaturesDisplayProps> = props => {
                         atributes={feature.atributes}
                         displayType={feature.feature_display}
                         featureKey={featureKey}
-                        currentVariationCode={currentVariationCode}
+                        currentVariationCode={localCurrentVariationCode}
                         allProductVariation={allProductVariation}
                         globalChange={globalChange}
                         onClickFunction={onClickFunction}

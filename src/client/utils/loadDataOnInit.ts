@@ -33,7 +33,7 @@ export const loadDataOnInit : loadDataOnInit_Args = (
     // const dispatch = useDispatch()
 
     // type ConfiguredStore = ReturnType<typeof server_store>;
-    type RootState = ReturnType<typeof server_store.getState>
+    type RootState = ReturnType<typeof server_store.getState> 
   
     const my_promise : Promise<any> = pageType ?
         server_store.dispatch<RootState>(
