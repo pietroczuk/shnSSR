@@ -11,15 +11,14 @@ import ContentCointainer from '../../components/contentCointainer/ContentCointai
 import StickySidebar from '../../components/contentCointainer/stickySidebar/StickySidebar';
 import MainContent from '../../components/contentCointainer/mainContent/MainContent';
 import LeftMenuLinks from '../../components/leftMenuLinks/LeftMenuLinks';
-import ProductItem from '../../components/productItem/ProductItem';
 import FixedBar from '../../components/fixedbar/FixedBar';
 import ImageSwicher from '../../components/helpers/ui/imageSwicher/ImageSwicher';
 
 import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/ShowTitleWithBadge';
 import { RootState } from '../../client';
-import { Wishlist as WishlistType } from '../../redux/types/wishlist.types';
 import { RouteComponentProps } from 'react-router-dom';
 import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
+import ProductsWishlistGrid from '../../components/productsGrid/productsWishlistGrid/productsWishlistGrid';
 
 interface WishlistProps {
     url: string;
@@ -61,25 +60,6 @@ const Wishlist: React.FC<RouteComponentProps<WishlistProps>> = props => {
         ssr && dispatch(publicConfigActions.disableSrr());
     }, [])
 
-    const showProducts = (wishlistData: WishlistType) => {
-        const products = wishlistData && wishlistData.products ? wishlistData.products : null;
-        if (products) {
-            return (Object.entries(products).map(
-                ([_key, val]) => {
-                    return <ProductItem
-                        product={val.productData}
-                        key={val.v}
-                        imagesInRootVariant={true}
-                        wishlistPage={true}
-                        wishlistVariantId={val.v}
-                    />
-                })
-            );
-        }
-        return null
-    }
- 
-
     return (
         <ContentCointainer isMultirow={isMultirow}>
             {<SeoMetaTags url={url} language={language} pageType={pageType}/>}
@@ -96,7 +76,7 @@ const Wishlist: React.FC<RouteComponentProps<WishlistProps>> = props => {
                     <FixedBar>
                         <ImageSwicher />
                     </FixedBar>
-                    <div className={styles.productsGrid}>{showProducts(wishlist)}</div>
+                    <ProductsWishlistGrid/>
                     {/* <div className={styles.categroryLoadMore}><LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={2} /></div> */}
                     {/* {category ? <div className={styles.categoryDescription} >{renderHtmlFromJson(category.description)}</div> : <div><Placeholder /></div>} */}
 

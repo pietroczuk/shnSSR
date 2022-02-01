@@ -27,7 +27,7 @@ import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/S
 import AllFeaturesDisplay from '../../components/helpers/product/features/AllFeaturesDisplay';
 import { RootState } from '../../client';
 import { RouteComponentProps } from 'react-router-dom';
-import ProductsCategoryGridProps from '../../components/productsCategoryGrid/productsCategoryGrid';
+import ProductsCategoryGridProps from '../../components/productsGrid/productsCategoryGrid/productsCategoryGrid';
 import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
 
 interface CategoryProps {

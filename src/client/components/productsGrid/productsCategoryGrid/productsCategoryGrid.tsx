@@ -1,9 +1,9 @@
 import React from "react";
-import styles from './productsCategoryGrid.scss';
+import styles from '../productsGrid.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import ProductItem from "../productItem/ProductItem";
+import ProductItem from "../../productItem/ProductItem";
 import { useSelector } from "react-redux";
-import { RootState } from "../../client";
+import { RootState } from "../../../client";
 
 const ProductsCategoryGrid: React.FC = () => {
     const { products, placeholderNumber } = useSelector((state: RootState) => ({
