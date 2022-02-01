@@ -85,7 +85,7 @@ export type Atribute = {
 export type SingleDefaultVariantCode = {
     atrib_id: string,
     code: string,
-    wishlist: boolean
+    wishlist?: boolean
 }
 export type DefaultVariantCode = {
     [key: string]: SingleDefaultVariantCode

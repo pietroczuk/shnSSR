@@ -63,8 +63,7 @@ const Category: FC<RouteComponentProps<{ url: string, lang: string }>> = props =
     const { location } = props;
     // multirow
     const multirow = true;
-    const title = category ? category.title : null;
-    const badgeNumber = null;
+    const title = category ? category.title : undefined;
 
     useEffect(() => {
         const axiosAbortController = new AbortController();
@@ -98,7 +97,7 @@ const Category: FC<RouteComponentProps<{ url: string, lang: string }>> = props =
                 </StickySidebar>
             }
             <MainContent>
-                <ShowTitleWithBadge title={title} badgeNumber={badgeNumber} customWidth={20} />
+                <ShowTitleWithBadge title={title} customWidth={20} />
                 <div>
                     <FixedBar>
                         <ImageSwicher />

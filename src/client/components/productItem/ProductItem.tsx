@@ -20,9 +20,12 @@ const ShowSelectedAttributes = loadable(() => import(/* webpackPrefetch: true */
 const ShowAddToCartVariants = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showAddToCartVariants/ShowAddToCartVariants'), {});
 
 interface ProductItemProps {
-    product?: Product,
-    forceVisual?: boolean,
-    index? : number
+    product?: Product;
+    forceVisual?: boolean;
+    index?: number;
+    imagesInRootVariant?: boolean;
+    wishlistPage?: boolean;
+    wishlistVariantId?: string
 }
 
 const ProductItem: FC<ProductItemProps> = props => {
@@ -82,7 +85,7 @@ const ProductItem: FC<ProductItemProps> = props => {
     }, [default_variant_code, showRandom]);
 
 
-    const changeLocalVariantCode = (featureId, obj) => {
+    const changeLocalVariantCode = (featureId : string, obj : any) => {
         if (isObjectEmpty(obj) || !featureId || !obj.atrib_id) {
             return;
         }
@@ -121,23 +124,25 @@ const ProductItem: FC<ProductItemProps> = props => {
 
     const changeLocalVariantOnRandom = () => {
         if (showRandom && !disableLocalRandom && variations) {
-            let newVariantIndexStyle = index < getObjectLength(variations) ? index : index % getObjectLength(variations);
+            let newVariantIndexStyle: string | number | null = index < getObjectLength(variations) ? index : index % getObjectLength(variations);
             newVariantIndexStyle = newVariantIndexStyle == 1 ? 4 : newVariantIndexStyle == 4 ? 1 : newVariantIndexStyle;
             newVariantIndexStyle = productId && variations[Object.keys(variations)[newVariantIndexStyle]] ? variations[Object.keys(variations)[newVariantIndexStyle]].id : null
             newVariantIndexStyle && changeVariantId(newVariantIndexStyle);
 
             const newFeatObj = { ...localVariantCode }
             let foundChange = false;
-            for (const featureId in variations[newVariantIndexStyle].variation_code) {
-                const atrib_id = variations[newVariantIndexStyle].variation_code[featureId].atrib_id;
+            if (newVariantIndexStyle !== null) {
+                for (const featureId in variations[newVariantIndexStyle].variation_code) {
+                    const atrib_id = variations[newVariantIndexStyle].variation_code[featureId].atrib_id;
 
-                if (newFeatObj[featureId].atrib_id !== atrib_id) {
-                    newFeatObj[featureId] = variations[newVariantIndexStyle].variation_code[featureId];
-                    newFeatObj[featureId] = { ...newFeatObj[featureId], wishlist: localVariantCode[featureId].wishlist };
-                    foundChange = true;
+                    if (newFeatObj[featureId].atrib_id !== atrib_id) {
+                        newFeatObj[featureId] = variations[newVariantIndexStyle].variation_code[featureId];
+                        newFeatObj[featureId] = { ...newFeatObj[featureId], wishlist: localVariantCode[featureId].wishlist };
+                        foundChange = true;
+                    }
+                    // changeLocalVariantCode(featureIdInVariantCodes, {...variations[newVariantIndexStyle].variation_code[featureIdInVariantCodes]});
+                    // console.log(featureIdInVariantCodes, {...variations[newVariantIndexStyle].variation_code[featureIdInVariantCodes]});
                 }
-                // changeLocalVariantCode(featureIdInVariantCodes, {...variations[newVariantIndexStyle].variation_code[featureIdInVariantCodes]});
-                // console.log(featureIdInVariantCodes, {...variations[newVariantIndexStyle].variation_code[featureIdInVariantCodes]});
             }
             // isObjectEmpty()
             foundChange && setLocalVariantCode(newFeatObj);
@@ -199,7 +204,7 @@ const ProductItem: FC<ProductItemProps> = props => {
                     </div>
                     <div className={styles.subtitle}>
                         {placeholder && <Placeholder customWidth={'50%'} />}
-                        {!placeholder && cutText(title)}
+                        {!placeholder && title && cutText(title)}
                     </div>
                     {wishlistPage && <ShowSelectedAttributes selectedVariantId={variantId} avaibleVariations={variations} />}
                 </div>

@@ -91,6 +91,7 @@ if (!process.env.API_URL) {
                     // get display cookies
                     const display_options = getDisplayCookies(req.headers.cookie, api_config.cookies_keys.display);
                     const server_store = createServerInitStore(user_language, user_currency, display_options);
+
                     // preapre system pages uls
                     // api_config.urls.wishlist = api_config.special_pages_urls.wishlist[user_language];
                     // api_config.urls.homepage = api_config.special_pages_urls.homepage[user_language];
@@ -109,7 +110,7 @@ if (!process.env.API_URL) {
                             if (q > 0) {
                                 query = req.url.substring(i + 1, q);
                             } else {
-                                query = req.url.substr(i + 1);
+                                query = req.url.substring(i + 1);
                             }
                         }
                         return route.loadDataOnInit ? route.loadDataOnInit(route.type, server_store, api_config, user_language, real_path, query) : null;

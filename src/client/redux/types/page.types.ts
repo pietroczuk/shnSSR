@@ -1,7 +1,8 @@
 export type SingleProductVariation = {
     variation_price: VariationPrice,
     variation_image: VariationImage,
-    variation_code: AllVariationCodes
+    variation_code: AllVariationCodes,
+    id: string,
 }
 
 export type AllVariationCodes = {
@@ -23,7 +24,9 @@ export type Product = {
         [key: string]: string
     }
     hashmap: {
-        [key: string]: object
+        [key: string]: {
+            [key: string]: object
+        }
     }
 }
 
@@ -68,7 +71,8 @@ export type Variation = {
 export type VariationCode = {
     feature: string,
     code: string,
-    atrib_id: string
+    atrib_id: string,
+    wishlist? : boolean
 }
 
 export type Variations = {

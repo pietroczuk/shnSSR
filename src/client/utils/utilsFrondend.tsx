@@ -46,7 +46,8 @@ export const metatags: metatagsArgs = (page_title, page_description, seo, url, l
     const description = page_description ? page_description : seo.description;
     const { og } = seo;
     const url_char = url_prefix ? url_prefix + '/' : '';
-    const link = og.url + '/' + lang + '/' + url_char + url;
+    const ogUlr = og !== undefined ? og.url + '/' : '';
+    const link = ogUlr + lang + '/' + url_char + url;
 
     return (
         <Helmet
@@ -71,19 +72,19 @@ export const metatags: metatagsArgs = (page_title, page_description, seo, url, l
                     },
                     {
                         name: 'og:type',
-                        content: og.type,
+                        content: og !== undefined ? og.type : '',
                     },
                     {
                         name: 'og:image',
-                        content: og.image,
+                        content: og !== undefined ? og.image : '',
                     },
                     {
                         name: 'og:url',
-                        content: og.url,
+                        content: og !== undefined ? og.url : '',
                     },
                     {
                         name: 'og:site_name',
-                        content: og.site_name
+                        content: og !== undefined ? og.site_name : ''
                     },
                 ]}
         />
@@ -180,7 +181,7 @@ interface prepUrlFromConfigSlugArgs {
         } | null,
         url_type: string | undefined,
         slug_prefix: string | null,
-        url: string,
+        url: string | null,
         multilanguage: boolean,
         search?: string | null
     ): string
@@ -230,7 +231,7 @@ export const getPriceByCurrency: getPriceByCurrencyArgs = (productPrices, userCu
  * Just scroll to top of main window
  */
 
-export const scrollToTop = (window: Window) => { 
+export const scrollToTop = (window: Window) => {
     if (window !== undefined) {
         window.scrollTo(0, 0);
     }

@@ -18,25 +18,25 @@ loads global config
 - awaible languages, currencies
 */
 export const getGlobalConfig = (api_config: SystemConfig, lang: string) => async (dispatch: Dispatch) => {
-  if (api_config) {
-    dispatch(systemConfigActions.setSystemConfig(api_config));
-    const page_url = '?lang=' + lang;
-    const axios_endpoint = api_config.api.global + page_url;
-    return axios.get(api_config.api.url + '/' + axios_endpoint)
-      .then(res =>
-        dispatch(publicConfigActions.setPublicConfig(res.data))
-      )
-      .catch(err => {
-        console.error('❌ Error get global variables', err);
-      });
-  }
+  // if (api_config) {
+  dispatch(systemConfigActions.setSystemConfig(api_config));
+  const page_url = '?lang=' + lang;
+  const axios_endpoint = api_config.api.global + page_url;
+  return axios.get(api_config.api.url + '/' + axios_endpoint)
+    .then(res =>
+      dispatch(publicConfigActions.setPublicConfig(res.data))
+    )
+    .catch(err => {
+      console.error('❌ Error get global variables', err);
+    });
+  // }
 }
 /* --------------------- PAGE 
 load page based on type
 - PRODUCT
 */
 
-export const getPage = (api: Api, type: string, lang: string, url: string, query: string, axiosAbortController?: AbortController) => (dispatch: Dispatch) => {
+export const getPage = (api: Api, type: string, lang: string, url: string, query: string, axiosAbortController?: AbortController) => async (dispatch: Dispatch) => {
   const page_url = '?url=' + url + '&lang=' + lang;
   let axios_endpoint = null;
   switch (type) {
@@ -138,7 +138,7 @@ export const checkWishlist = (initLocalstorageWishlistKey: string, wishlistState
   const localstorageData = initLocalstorageWishlistKey ? getLocalStorage(initLocalstorageWishlistKey) : null;
   const wishlistData: WishlistProducts | null = localstorageData ? localstorageData : wishlistState && wishlistState.products ? wishlistState.products : null;
   if (wishlistData) {
-    const wishlistProducts : WishlistProducts = {};
+    const wishlistProducts: WishlistProducts = {};
     Promise.all(Object.entries(wishlistData).map(
       ([_key, val]) => {
         const variantId = val.v;
@@ -157,7 +157,7 @@ export const checkWishlist = (initLocalstorageWishlistKey: string, wishlistState
           });
       }
     )).then(res => {
-      res.forEach((r : any) => {
+      res.forEach((r: any) => {
         if (r.responseData.status == 200 && !isObjectEmpty(r.responseData.data.data)) {
           wishlistProducts[r.variantId] = {
             p: r.responseData.data.data.id,

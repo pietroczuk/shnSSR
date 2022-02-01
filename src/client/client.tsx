@@ -70,7 +70,7 @@ const insertCss = (...styles:any[]) => {
 // const insertCss = null;
 // console.log('client multilanguage:', multilanguage);
 loadableReady(() => {
-    hydrate(
+    hydrate( 
         <Provider store={store_client}>
             <StyleContext.Provider value={{ insertCss }}>
                 <BrowserRouter>
