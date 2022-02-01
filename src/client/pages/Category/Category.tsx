@@ -61,7 +61,6 @@ const Category: FC<RouteComponentProps<CategoryProps>> = props => {
         return () => {
             axiosAbortController.abort();
             dispatch(pageActions.clearPageData());
-            // return dispatch(pageActions.clearPageData());
         }
     }, [location.pathname]);
 
@@ -84,11 +83,10 @@ const Category: FC<RouteComponentProps<CategoryProps>> = props => {
                         <ImageSwicher />
                         <RandomColorSwicher />
                         <AllFeaturesDisplay
-                            // currentVariationCode={defaultVariantCode}
-                            allProductVariation={null}
-                            wishlistAvaible={true}
+                            // allProductVariation={null}
+                            onlyWishlistFeatures={true}
                             displayInline={true}
-                            globalChange={true}
+                            isGlobalChange={true}
                         />
                     </FixedBar>
                     <ProductsCategoryGridProps />
@@ -96,7 +94,6 @@ const Category: FC<RouteComponentProps<CategoryProps>> = props => {
                     {category ? <div className={styles.categoryDescription} >{renderHtmlFromJson(category.description)}</div> : <div><Placeholder /></div>}
                 </div>
             </MainContent>
-            {/* <StickySidebar>dupa</StickySidebar> */}
         </ContentCointainer>
     )
 }

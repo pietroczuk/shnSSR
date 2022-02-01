@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { renderRoutes, RouteConfig } from 'react-router-config';
 import { useSelector, shallowEqual } from 'react-redux';
 
@@ -17,11 +17,11 @@ const Header = loadable(() => import(/* webpackPrefetch: true */ '../../componen
     });
 const Footer = loadable(() => import(/* webpackPrefetch: true */ '../../components/footer/Footer'), {});
 
-interface Props {
+interface RootAppProps {
     route: { routes: RouteConfig[] }
 }
 
-const RootApp: FC<Props> = ({ route }) => {
+const RootApp: React.FC<RootAppProps> = ({ route }) => {
     const { language, cookieLanguageKey } = useSelector((state: RootState) => ({
         language: state.User.language,
         cookieLanguageKey: state.SystemConfig.cookiesKeys.userLanguage,

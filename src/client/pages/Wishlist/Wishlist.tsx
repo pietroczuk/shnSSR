@@ -55,8 +55,6 @@ const Wishlist: React.FC<RouteComponentProps<WishlistProps>> = props => {
     }, []);
 
     useEffect(() => {
-        // We need disable ssr for special pages
-        // because we dont get any data from Api
         ssr && dispatch(publicConfigActions.disableSrr());
     }, [])
 
@@ -77,13 +75,10 @@ const Wishlist: React.FC<RouteComponentProps<WishlistProps>> = props => {
                         <ImageSwicher />
                     </FixedBar>
                     <ProductsWishlistGrid/>
-                    {/* <div className={styles.categroryLoadMore}><LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={2} /></div> */}
-                    {/* {category ? <div className={styles.categoryDescription} >{renderHtmlFromJson(category.description)}</div> : <div><Placeholder /></div>} */}
-
+                    
                     <div><h2>Ostatnio ogladane</h2></div>
                 </div>
             </MainContent>
-            {/* <StickySidebar>dupa</StickySidebar> */}
         </ContentCointainer>
     )
 }

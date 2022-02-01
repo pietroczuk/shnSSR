@@ -9,22 +9,22 @@ import { DefaultVariantCode } from '../../../../redux/types/publicConfig.types';
 import SingleFeature from './atributes/singleFeature/SingleFeature';
 
 interface AllFeaturesDisplayProps {
-    currentVariationCode?: DefaultVariantCode,
-    allProductVariation: any,
-    wishlistAvaible: boolean,
-    displayInline: boolean,
-    globalChange: boolean,
-    disableOpacity: boolean,
-    onClickFunction: (featureId: string, obj: object) => void
+    currentVariationCode?: DefaultVariantCode;
+    allProductVariation?: any;
+    onlyWishlistFeatures?: boolean;
+    displayInline?: boolean;
+    isGlobalChange?: boolean;
+    disableOpacity?: boolean;
+    onClickFunction?: (featureId: string, obj: object) => void;
 }
 
 const AllFeaturesDisplay: React.FC<AllFeaturesDisplayProps> = props => {
     const {
         currentVariationCode,
         allProductVariation,
-        wishlistAvaible,
+        onlyWishlistFeatures,
         displayInline,
-        globalChange,
+        isGlobalChange,
         disableOpacity,
         onClickFunction
     } = props;
@@ -34,11 +34,13 @@ const AllFeaturesDisplay: React.FC<AllFeaturesDisplayProps> = props => {
         showRandom: state.Display.showRandom,
         defaultVariantCode: state.PublicConfig.defaultVariantCode
     }), shallowEqual);
+
+    // If we dont pass local variantcodes, we still operate on global like local
     const localCurrentVariationCode = currentVariationCode ? currentVariationCode : defaultVariantCode
     return (
         <div className={`${styles.featureRootContainer} ${displayInline ? styles.inline : ''} ${showRandom && displayInline && !disableOpacity ? styles.halfvisible : ''}`}>
             {Object.entries(features).map(([featureKey, feature]) => {
-                if (wishlistAvaible) {
+                if (onlyWishlistFeatures) {
                     if (!feature.wishlist) {
                         return null;
                     }
@@ -51,7 +53,7 @@ const AllFeaturesDisplay: React.FC<AllFeaturesDisplayProps> = props => {
                         featureKey={featureKey}
                         currentVariationCode={localCurrentVariationCode}
                         allProductVariation={allProductVariation}
-                        globalChange={globalChange}
+                        isGlobalChange={isGlobalChange}
                         onClickFunction={onClickFunction}
                     />
                 </div>

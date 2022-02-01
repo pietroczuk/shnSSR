@@ -14,7 +14,7 @@ const displaySlice = createSlice({
         },
         setProductRandomColors(state, action) {
             const { cookieKey, randomValue } = action.payload;
-            state.showRandom = randomValue ? randomValue : !state.showRandom;
+            state.showRandom = randomValue !== undefined ? randomValue : !state.showRandom;
             setCookie(cookieKey, state.showRandom.toString());
             return state;
         }

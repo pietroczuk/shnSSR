@@ -14,14 +14,14 @@ interface Props {
     attrib: { [key: string]: string },
     active: boolean,
     link: string,
-    globalChange: boolean,
+    isGlobalChange: boolean,
     featureKey: string,
     onClickFunction: (featureKey: string, codeObj: object) => void
 }
 
 const Colors: React.FC<Props> = props => {
 
-    const { attrib, active, link, globalChange, featureKey, onClickFunction } = props;
+    const { attrib, active, link, isGlobalChange, featureKey, onClickFunction } = props;
     const { glow_color, attrib_title, code, id } = attrib;
 
     const { variations, randomVariant } = useSelector((state: RootState) => ({
@@ -42,7 +42,7 @@ const Colors: React.FC<Props> = props => {
 
         dispatch(setGlobalDefaultVariantcode(featureKey, codeObj));
         dispatch(setProductRandomColors(randomVariant, false));
-        if (!globalChange && variations) {
+        if (!isGlobalChange && variations) {
             dispatch(setProductCurrVarId(link, variations));
         }
     }

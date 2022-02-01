@@ -15,8 +15,9 @@ interface NiceSwicherProps {
 
 const NiceSwicher: React.FC<NiceSwicherProps> = props => {
     const { options, size } = props;
-    const width = options ? (100 / options.length) : 0;
+    const width =  100 / options.length;
     const sizeSwicher = size ? size : 1;
+    
     const [postion, setPosition] = useState(-1);
 
     useEffect(() => {

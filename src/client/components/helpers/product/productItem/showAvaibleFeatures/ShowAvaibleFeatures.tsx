@@ -11,15 +11,15 @@ interface ShowAvaibleFeaturesProps {
     onClickFunction: (featureId: any, obj: any) => void;
 }
 
-const ShowAvaibleFeatures:React.FC<ShowAvaibleFeaturesProps> = props => {
+const ShowAvaibleFeatures: React.FC<ShowAvaibleFeaturesProps> = props => {
     const { active, currentVariationCode, onClickFunction } = props;
     return <HoverPopupContainer active={active}>
         <AllFeaturesDisplay
             currentVariationCode={currentVariationCode}
             allProductVariation={null}
-            wishlistAvaible={true}
+            onlyWishlistFeatures={true}
             displayInline={true}
-            // globalChange={true}
+            isGlobalChange={true}
             onClickFunction={onClickFunction}
             disableOpacity={true}
             

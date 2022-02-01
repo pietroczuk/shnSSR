@@ -78,7 +78,7 @@ const Product: React.FC<RouteComponentProps<ProductProps>> = (props) => {
                 <AllFeaturesDisplay
                     currentVariationCode={product.variations[current_variation_id].variation_code}
                     allProductVariation={product.variations}
-                // globalChange={true}
+                // isGlobalChange={true}
                 />
             }
         </div>
