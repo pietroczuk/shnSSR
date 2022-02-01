@@ -1,4 +1,4 @@
-// export type MenuItem ={
+// export type SingleMenuItem ={
 //     label: string,
 //     url?: string,
 //     image?: number,
@@ -13,13 +13,7 @@ export type MenuItem = {
     type?: string,
     color?: string,
     columns? : number,
-    items?: {
-        label: string,
-        url?: string,
-        image?: number,
-        type?: string,
-        color?: string,
-    }[]
+    items?: MenuItem[]
 }
 
 export type Menu = {

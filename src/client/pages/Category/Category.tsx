@@ -17,7 +17,6 @@ import ContentCointainer from '../../components/contentCointainer/ContentCointai
 import StickySidebar from '../../components/contentCointainer/stickySidebar/StickySidebar';
 import MainContent from '../../components/contentCointainer/mainContent/MainContent';
 import LeftMenuLinks from '../../components/leftMenuLinks/LeftMenuLinks';
-import ProductItem from '../../components/productItem/ProductItem';
 import FixedBar from '../../components/fixedbar/FixedBar';
 import ImageSwicher from '../../components/helpers/ui/imageSwicher/ImageSwicher';
 import RandomColorSwicher from '../../components/helpers/ui/randomColorSwicher/RandomColorSwicher';
@@ -28,7 +27,6 @@ import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/S
 import AllFeaturesDisplay from '../../components/helpers/product/features/AllFeaturesDisplay';
 import { ClientAppDispatch, RootState } from '../../client';
 import { RouteComponentProps } from 'react-router-dom';
-import { PageData } from '../../redux/types/page.types';
 import ProductsGrid from '../../components/productsGrid/ProductsGrid';
 
 interface CategoryProps {
