@@ -45,7 +45,7 @@ const SubMenu: FC<Props> = ({ elem, prepareLabelMenu, prepareMenuLink }) => {
             <div className={`${styles.submenu + ' ' + (openSubmenu ? styles.open_submenu : '')}`} style={submenuStyle}>
                 <ul className={styles.sub_list} style={columnsStyle}>
                     {
-                        items !== undefined && items.map((it, index) =>
+                        items && items.map((it, index) =>
                             <li key={index}>
                                 {prepareMenuLink(it, closeSubmenuHandler)}
                             </li>

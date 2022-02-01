@@ -31,7 +31,7 @@ interface ProductItemProps {
 const ProductItem: FC<ProductItemProps> = props => {
     const { product, forceVisual, index = 0, imagesInRootVariant, wishlistPage, wishlistVariantId } = props;
 
-    const placeholder = product !== undefined ? false : true;
+    const placeholder = product ? false : true;
 
     const { title, titlekey, variations, url, min_price, likes, id, hashmap } = product ? product : {
         title: null,

@@ -25,8 +25,8 @@ const ShowSelectedAttributes: React.FC<ShowSelectedAttributesProps> = props => {
     return <div className={styles.featDataCont}>{
         productFeatData && Object.keys(productFeatData).map(attribId => {
             const variantFeature = productFeatData[attribId];
-            const foundFeature = features[variantFeature.feature] && features[variantFeature.feature] !== undefined ? features[variantFeature.feature] : null;
-            const attribInWishlist = foundFeature && foundFeature.wishlist !== null && foundFeature.wishlist !== undefined ? foundFeature.wishlist : null;
+            const foundFeature = features[variantFeature.feature] && features[variantFeature.feature] ? features[variantFeature.feature] : null;
+            const attribInWishlist = foundFeature && foundFeature.wishlist !== null && foundFeature.wishlist ? foundFeature.wishlist : null;
             if (!attribInWishlist) {
                 return null;
             }

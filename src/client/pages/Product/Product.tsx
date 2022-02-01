@@ -63,7 +63,7 @@ const Product: FC<RouteComponentProps<{ url: string, lang: string }>> = (props) 
             {product ?
                 <h1>{product.title}</h1> : <h1><Placeholder /></h1>
             }
-            {current_variation_id && product !== undefined && product && product.variations && product.variations[current_variation_id].name}
+            {current_variation_id && product && product.variations && product.variations[current_variation_id].name}
             <br />
             {current_variation_id && product && product.variations &&<p>
                 {product.variations[current_variation_id].variation_price[user_currency_code]} {all_config_currencies[user_currency_code].sign}

@@ -160,7 +160,7 @@ const StickySidebar: FC<RouteComponentProps> = props => {
         isUserScrolling = false;
     }
     useEffect(() => {
-        if (main_ref && main_ref.current !== undefined) {
+        if (main_ref && main_ref.current) {
             const handleScroll = () => {
                 if (!isUserScrolling) {
                     isUserScrolling = true;
@@ -178,7 +178,7 @@ const StickySidebar: FC<RouteComponentProps> = props => {
 
     }, [main_ref]);
     useEffect(() => {
-        if (main_ref && main_ref.current !== undefined) {
+        if (main_ref && main_ref.current) {
             setPosition(!forcePosition);
             if (forcePosition) {
                 setForcePositionHandler(false);

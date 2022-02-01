@@ -46,7 +46,7 @@ export const metatags: metatagsArgs = (page_title, page_description, seo, url, l
     const description = page_description ? page_description : seo.description;
     const { og } = seo;
     const url_char = url_prefix ? url_prefix + '/' : '';
-    const ogUlr = og !== undefined ? og.url + '/' : '';
+    const ogUlr = og ? og.url + '/' : '';
     const link = ogUlr + lang + '/' + url_char + url;
 
     return (
@@ -72,19 +72,19 @@ export const metatags: metatagsArgs = (page_title, page_description, seo, url, l
                     },
                     {
                         name: 'og:type',
-                        content: og !== undefined ? og.type : '',
+                        content: og ? og.type : '',
                     },
                     {
                         name: 'og:image',
-                        content: og !== undefined ? og.image : '',
+                        content: og ? og.image : '',
                     },
                     {
                         name: 'og:url',
-                        content: og !== undefined ? og.url : '',
+                        content: og ? og.url : '',
                     },
                     {
                         name: 'og:site_name',
-                        content: og !== undefined ? og.site_name : ''
+                        content: og ? og.site_name : ''
                     },
                 ]}
         />
@@ -222,7 +222,7 @@ export const getPriceByCurrency: getPriceByCurrencyArgs = (productPrices, userCu
         currency[userCurrency] &&
         currency[userCurrency].sign &&
         productPrices[userCurrency] ? productPrices[userCurrency] : null;
-    return price && currency[userCurrency].displayLeft !== undefined ?
+    return price && currency[userCurrency].displayLeft ?
         currency[userCurrency].displayLeft ?
             currency[userCurrency].sign + ' ' + price : price + ' ' + currency[userCurrency].sign : null;
 }
@@ -232,7 +232,7 @@ export const getPriceByCurrency: getPriceByCurrencyArgs = (productPrices, userCu
  */
 
 export const scrollToTop = (window: Window) => {
-    if (window !== undefined) {
+    if (window) {
         window.scrollTo(0, 0);
     }
 }
@@ -247,7 +247,7 @@ export const isObjectEmpty = (obj: object) => {
 }
 
 export const getObjectLength = (obj: object) => {
-    return obj !== undefined && obj !== null ? Object.keys(obj).length : 0;
+    return obj ? Object.keys(obj).length : 0;
 }
 
 // get search params from url

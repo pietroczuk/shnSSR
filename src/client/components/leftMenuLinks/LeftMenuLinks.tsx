@@ -21,7 +21,7 @@ const LeftMenuLinks: React.FC<RouteComponentProps> = props => {
     }), shallowEqual)
 
     const { location } = props;
-    const pathname = location !== undefined ? location.pathname : '';
+    const pathname = location ? location.pathname : '';
 
 
     const prepareSubmenu = (elem: MenuItem) => {
@@ -50,7 +50,7 @@ const LeftMenuLinks: React.FC<RouteComponentProps> = props => {
         }
     }
     const prepareLabelMenu = (label: string, color?: string, expand = false, bolder = false) => {
-        const customColor = color === undefined ? {} : { color: color };
+        const customColor = !color ? {} : { color: color };
         return <div style={customColor} className={`${styles.side_label} ${expand ? styles.side_link_container : ''} ${bolder ? styles.bolder : ''}`}>{label}</div>
     }
 

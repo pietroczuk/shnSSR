@@ -16,7 +16,7 @@ export const checkUserLanguage : CheckUserLanguage_Args = (cookie_header, browse
     let cookie_lang = new Cookies(cookie_header).get(cookie_key);
     if (!languages[cookie_lang]) {
         // browser
-        if (browser_language !== undefined) {
+        if (browser_language) {
             cookie_lang = browser_language.substring(0, 2);
         }
         if (!languages[cookie_lang]) {

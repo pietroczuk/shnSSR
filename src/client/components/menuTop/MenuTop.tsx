@@ -35,7 +35,7 @@ const MenuTop: FC = () => {
         }
     }
     const prepareLabelMenu = (label: string, color?: string) => {
-        const customColor = color === undefined ? {} : { color: color };
+        const customColor = !color ? {} : { color: color };
         return <div className={styles.label} style={customColor}>{label}</div>
     }
     return <nav className={styles.main_menu}>

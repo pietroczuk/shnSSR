@@ -12,7 +12,7 @@ interface DivNavLinkProps {
 
 const DivNavLink: React.FC<DivNavLinkProps> = props => {
     const { to, className, style, onMouseEnter, onMouseLeave, onClick } = props;
-    if (to !== undefined && to !== '?') {
+    if (to && to !== '?') {
         return <NavLink
             to={to}
             className={className}
