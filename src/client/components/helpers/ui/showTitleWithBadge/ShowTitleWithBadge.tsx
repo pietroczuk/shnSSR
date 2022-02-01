@@ -12,7 +12,8 @@ interface ShowTitleWithBadgeProps {
 
 const ShowTitleWithBadge: React.FC<ShowTitleWithBadgeProps> = props => {
     const { title, badgeNumber, customWidth } = props;
-    if (title === undefined) {
+    // console.log('title', title);
+    if (title === undefined || title === '') {
         return <h1 className={styles.title}><Placeholder customWidth={customWidth !== undefined ? customWidth + '%' : null} /></h1>
     }
     return (
