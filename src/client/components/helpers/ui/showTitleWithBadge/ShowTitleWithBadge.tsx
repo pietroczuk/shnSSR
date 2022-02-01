@@ -12,14 +12,15 @@ interface ShowTitleWithBadgeProps {
 
 const ShowTitleWithBadge: React.FC<ShowTitleWithBadgeProps> = props => {
     const { title, badgeNumber, customWidth } = props;
-    // console.log('title', title);
-    if (!title || title === '') {
-        return <h1 className={styles.title}><Placeholder customWidth={customWidth ? customWidth + '%' : null} /></h1>
-    }
+
+    const showTitle = !!title;
+    const showBadge = !!badgeNumber && badgeNumber > 0 && showTitle;
+
     return (
         <h1 className={styles.title}>
-            {title}
-            {badgeNumber && badgeNumber > 0 && <span className={styles.titleBagde}>{badgeNumber}</span>}
+            {!showTitle && <Placeholder customWidth={customWidth ? customWidth + '%' : null} />}
+            {showTitle && title}
+            {showBadge && <span className={styles.titleBagde}>{badgeNumber}</span>}
         </h1>
     )
 
