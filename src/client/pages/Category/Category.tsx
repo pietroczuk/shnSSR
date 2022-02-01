@@ -25,7 +25,7 @@ import LoadingSpinner from '../../components/helpers/ui/loadingSpinner/LoadingSp
 import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/ShowTitleWithBadge';
 
 import AllFeaturesDisplay from '../../components/helpers/product/features/AllFeaturesDisplay';
-import { ClientAppDispatch, RootState } from '../../client';
+import { RootState } from '../../client';
 import { RouteComponentProps } from 'react-router-dom';
 import ProductsGrid from '../../components/productsGrid/ProductsGrid';
 
@@ -56,7 +56,7 @@ const Category: FC<RouteComponentProps<CategoryProps>> = props => {
         })
         , shallowEqual
     )
-    const dispatch = useDispatch<ClientAppDispatch>();
+    const dispatch = useDispatch();
     // seo
     const seo_title = category ? category.seo_title : null;
     const seo_description = category ? category.seo_description : null;

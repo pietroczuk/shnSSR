@@ -6,16 +6,16 @@ import InteractiveIcon from '../../InteractiveIcon/InteractiveIcon';
 import CloseIcon from '../../svg/icons/CloseIcon';
 
 interface TopbarProps {
-    white: boolean;
+    isWhiteTopbar: boolean;
     closeHandler: VoidFunction
 }
 
-const Topbar: FC<TopbarProps> = ({ white, closeHandler }) => {
+const Topbar: FC<TopbarProps> = ({ isWhiteTopbar, closeHandler }) => {
     return (
-        <div className={`${styles.topbar} ${white ? styles.whiteTopbar : ''}`} >
+        <div className={`${styles.topbar} ${isWhiteTopbar ? styles.whiteTopbar : ''}`} >
             <span>jakies info o topbarze</span>
             <InteractiveIcon
-                white={!white}
+                isDarkBackground={!isWhiteTopbar}
                 onClick={closeHandler}
                 hoverOpacity={true}
                 customWidth={30}

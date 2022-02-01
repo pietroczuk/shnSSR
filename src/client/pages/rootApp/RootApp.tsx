@@ -18,26 +18,23 @@ const Header = loadable(() => import(/* webpackPrefetch: true */ '../../componen
 const Footer = loadable(() => import(/* webpackPrefetch: true */ '../../components/footer/Footer'), {});
 
 interface Props {
-    route: { 
-        routes: RouteConfig[] 
-    }
+    route: { routes: RouteConfig[] }
 }
 
 const RootApp: FC<Props> = ({ route }) => {
-    const { language, cookieLanguageKey } = useSelector(
-        (state: RootState) => ({
-            language: state.User.language,
-            cookieLanguageKey: state.SystemConfig.cookies_keys.user_language,
-        }), shallowEqual
-    )
+    const { language, cookieLanguageKey } = useSelector((state: RootState) => ({
+        language: state.User.language,
+        cookieLanguageKey: state.SystemConfig.cookies_keys.user_language,
+    }), shallowEqual);
+
     useEffect(() => {
-        const cookieLang = getCookie(cookieLanguageKey);
-        language && (language !== cookieLang) && setCookie(cookieLanguageKey, language);
+        const cookieUserLanguage = getCookie(cookieLanguageKey);
+        const coockieLanguageNeedChange = language && (language !== cookieUserLanguage);
+        coockieLanguageNeedChange && setCookie(cookieLanguageKey, language);
     }, [])
     return (
         <React.Fragment>
-            {console.log('render app')}
-            <Header white={true} whiteTopbar={true} />
+            <Header isWhiteTopbar={true} />
             {renderRoutes(route.routes)}
             <Footer />
         </React.Fragment>

@@ -13,46 +13,48 @@ import AssitiveText from '../helpers/display/assitiveText/AssitiveText';
 import { RootState } from '../../client';
 
 interface InteractiveIconProps {
-    white: boolean
-    hoverBg?: string
-    hoverOpacity?: boolean
+    isDarkBackground: boolean
+    isHoverBackground?: boolean
+    isHoverOpacity?: boolean
     customWidth?: number
     customSvgSize?: number
     onMouseEnter?: React.MouseEventHandler<HTMLAnchorElement | HTMLDivElement>,
     onMouseLeave?: React.MouseEventHandler<HTMLAnchorElement | HTMLDivElement>,
     onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLDivElement>,
-    type?: string
+    linkPageType?: string
 }
 
 const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
-    const { language, multilanguage, special_pages_urls, translation } =
+    const { language, isMultilanguage, specialPagesUrlsArray, translation } =
         useSelector((state: RootState) => ({
             language: state.User.language,
-            multilanguage: state.SystemConfig.multilanguage,
-            special_pages_urls: state.SystemConfig.special_pages_urls,
+            isMultilanguage: state.SystemConfig.multilanguage,
+            specialPagesUrlsArray: state.SystemConfig.special_pages_urls,
             translation: state.PublicConfig.translation
-
         }), shallowEqual);
     const {
-        white,
-        hoverBg,
-        hoverOpacity,
+        isDarkBackground,
+        isHoverBackground,
+        isHoverOpacity,
         customWidth,
         customSvgSize,
         onMouseEnter,
         onMouseLeave,
         onClick,
-        type
+        linkPageType
     } = props;
-    let badgeNumberDisplay = 0;
+    
+    let badgeNumber = 0;
     const width = customWidth ? customWidth : 50;
     const svgSize = customSvgSize ? customSvgSize : 20;
-    // console.log(special_pages_urls, type);
-    const link_url_type = type && special_pages_urls[type][language]
-    const link_url = link_url_type ? prepUrlFromConfigSlug(language, null, null, null, link_url_type, multilanguage) : undefined;
 
-    if (type === pageTypes.wishlist) {
-        badgeNumberDisplay = useSelector((state: RootState) => state.Wishlist.length, shallowEqual);
+    const rawSlug = linkPageType && specialPagesUrlsArray[linkPageType][language];
+    const linkUrl = rawSlug ? prepUrlFromConfigSlug(language, null, null, null, rawSlug, isMultilanguage) : undefined;
+
+    const isLinkingToWishlist = linkPageType === pageTypes.wishlist;
+
+    if (isLinkingToWishlist) {
+        badgeNumber = useSelector((state: RootState) => state.Wishlist.length, shallowEqual);
         const { api, initLocalstorageWishlistKey } = useSelector((state: RootState) => ({
             api: state.SystemConfig.api,
             initLocalstorageWishlistKey: state.SystemConfig.localstorage_keys.wishlist,
@@ -63,13 +65,15 @@ const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
         }, [])
     }
 
+    const showBadge = badgeNumber > 0;
+
     return (
-        <DivNavLink to={link_url}
+        <DivNavLink to={linkUrl}
             className={`
             ${styles.icon} 
-            ${white ? styles.whiteIcon : ''}
-            ${hoverBg ? styles.iconHover : ''}
-            ${hoverOpacity ? styles.iconOpacity : ''}
+            ${isDarkBackground ? styles.whiteIcon : ''}
+            ${isHoverBackground ? styles.iconHover : ''}
+            ${isHoverOpacity ? styles.iconOpacity : ''}
             `}
             style={{
                 width: width + 'px'
@@ -78,13 +82,14 @@ const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >
-            <AssitiveText>{type && translation[type]}</AssitiveText>
+            <AssitiveText>{linkPageType && translation[linkPageType]}</AssitiveText>
+
             <div className={styles.svgContener}
                 style={{
                     maxWidth: svgSize + 'px',
                     maxHeight: svgSize + 'px',
                 }}>
-                {badgeNumberDisplay > 0 && <div className={styles.badge}>{badgeNumberDisplay}</div>}
+                {showBadge && <div className={styles.badge}>{badgeNumber}</div>}
                 {props.children}
             </div>
         </DivNavLink>

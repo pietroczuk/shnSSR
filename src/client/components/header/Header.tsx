@@ -8,52 +8,51 @@ import InteractiveIcon from '../InteractiveIcon/InteractiveIcon';
 import CartIcon from '../svg/icons/CartIcon';
 import WishlistIcon from '../svg/icons/WishlistIcon';
 import SearchIcon from '../svg/icons/SearchIcon';
-
 import LanguageSwitcher from '../languageSwitcher/LanguageSwitcher';
 import CurrencySwitcher from '../currencySwitcher/CurrencySwitcher';
-
 import MenuTop from '../menuTop/MenuTop';
+
 import { getObjectLength } from '../../utils/utilsFrondend';
-
 import { useSelector, shallowEqual } from 'react-redux';
-
 import { pageTypes } from '../../utils/utilsFrondend';
-
 import { RootState } from '../../client';
 
 interface HeaderProps {
-    white: boolean;
-    whiteTopbar: boolean;
+    isDarkBackground: boolean;
+    isWhiteTopbar: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ white, whiteTopbar }) => {
-    const [topbarOpen, setTopbarOpen] = useState(true);
+const Header: React.FC<HeaderProps> = ({ isDarkBackground, isWhiteTopbar }) => {
+    const [isTopbarOpen, setIsTopbarOpen] = useState(true);
 
     const { all_config_languages, all_config_currencies } = useSelector((state: RootState) => ({
         all_config_languages: state.SystemConfig.language,
         all_config_currencies: state.SystemConfig.currency,
     }), shallowEqual);
 
-    const setTopbarOpenHandler = () => {
-        setTopbarOpen(prevstate => !prevstate);
+    const setIsTopbarOpenHandler = () => {
+        setIsTopbarOpen(prevstate => !prevstate);
     }
 
+    const showLanguageSwitcher = all_config_languages && getObjectLength(all_config_languages) > 1;
+    const showCurrencySwitcher = all_config_currencies && getObjectLength(all_config_currencies) > 1;
+
     return (
-        <header id="root_header" className={`${styles.rootHeader} ${!white ? styles.darkHeader : ''}`}>
-            {/* {console.log('render header')} */}
-            {topbarOpen && <Topbar closeHandler={setTopbarOpenHandler} white={whiteTopbar} />}
+        <header id="root_header" className={`${styles.rootHeader} ${isDarkBackground ? styles.darkHeader : ''}`}>
+            {isTopbarOpen && <Topbar closeHandler={setIsTopbarOpenHandler} isWhiteTopbar={isWhiteTopbar} />}
             <div className={styles.headerContent}>
-                <Logo white={!white} miniLogo={false} />
-                {/* <div onClick={setTopbarOpenHandler}>moj header</div> */}
+                <Logo isDarkBackground={isDarkBackground} isMiniLogo={false} />
                 <MenuTop />
                 <div className={styles.headerRight}>
-                    {all_config_languages && getObjectLength(all_config_languages) > 1 && <LanguageSwitcher />}
-                    {all_config_currencies && getObjectLength(all_config_currencies) > 1 && <CurrencySwitcher />}
-                    <InteractiveIcon hoverBg={true} white={!white}><SearchIcon /></InteractiveIcon>
-                    <InteractiveIcon hoverBg={true} white={!white} type={pageTypes.wishlist}>
+                    {showLanguageSwitcher && <LanguageSwitcher />}
+                    {showCurrencySwitcher && <CurrencySwitcher />}
+                    <InteractiveIcon hoverBg={true} isDarkBackground={isDarkBackground}>
+                        <SearchIcon />
+                    </InteractiveIcon>
+                    <InteractiveIcon hoverBg={true} isDarkBackground={isDarkBackground} linkPageType={pageTypes.wishlist}>
                         <WishlistIcon />
                     </InteractiveIcon>
-                    <InteractiveIcon hoverBg={true} white={!white} type={pageTypes.cart}>
+                    <InteractiveIcon hoverBg={true} isDarkBackground={isDarkBackground} linkPageType={pageTypes.cart}>
                         <CartIcon />
                     </InteractiveIcon>
                 </div>

@@ -8,30 +8,30 @@ import AssitiveText from '../../helpers/display/assitiveText/AssitiveText';
 import { RootState } from '../../../client';
 
 interface Props {
-    white: boolean,
-    miniLogo: boolean,
+    isDarkBackground: boolean,
+    isMiniLogo: boolean,
     customWidth: number
 }
 
 const Logo: FC<Props> = props => {
-    const { white, miniLogo, customWidth } = props;
+    const { isDarkBackground, isMiniLogo, customWidth } = props;
 
-    const { language, multilanguage, special_pages_urls, homepage } = useSelector((state: RootState) => ({
+    const { language, isMultilanguage, specialPagesUrlsArray, homepageTranslation } = useSelector((state: RootState) => ({
         language: state.User.language,
-        multilanguage: state.SystemConfig.multilanguage,
-        special_pages_urls: state.SystemConfig.special_pages_urls,
-        homepage: state.PublicConfig.translation.homepage,
+        isMultilanguage: state.SystemConfig.multilanguage,
+        specialPagesUrlsArray: state.SystemConfig.special_pages_urls,
+        homepageTranslation: state.PublicConfig.translation.homepage,
     }), shallowEqual)
 
     const svgWidth = customWidth ? customWidth : 220;
-    const logoWidth = miniLogo ? 54 : svgWidth;
-    const link_url_type = special_pages_urls[pageTypes.homePage][language]
-    const link_url = link_url_type ? prepUrlFromConfigSlug(language, null, null, null, link_url_type, multilanguage) : null;
+    const logoWidth = isMiniLogo ? 54 : svgWidth;
+    const rawSlug = specialPagesUrlsArray[pageTypes.homePage][language];
+    const linkUrl = rawSlug ? prepUrlFromConfigSlug(language, undefined, undefined, undefined, rawSlug, isMultilanguage) : undefined;
     return (
         <div className={styles.logoContener} style={{ width: logoWidth + 'px', minWidth: (logoWidth + 50) + 'px' }}>
-            <DivNavLink to={link_url}>
-                <AssitiveText>{homepage}</AssitiveText>
-                <div className={`${styles.logo} ${white ? styles.whiteLogo : ''}`}
+            <DivNavLink to={linkUrl}>
+                <AssitiveText>{homepageTranslation}</AssitiveText>
+                <div className={`${styles.logo} ${isDarkBackground ? styles.whiteLogo : ''}`}
                     style={{ width: svgWidth + 'px' }}>
                     <svg viewBox="0 0 528.59 41.316">
                         <path d="M11.729,0.996h11.288l-6.688,6.746h-4.6

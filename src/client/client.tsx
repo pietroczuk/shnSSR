@@ -12,7 +12,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 // import { createStore, applyMiddleware } from 'redux';
 // import thunk from 'redux-thunk';
-import { Provider, useDispatch } from 'react-redux';
+import { Provider } from 'react-redux';
 // import all_reducers from './redux/reducers/all_reducers';
 
 import { loadableReady } from '@loadable/component';
@@ -47,8 +47,8 @@ const store_client = configureStore({
 
 
 export type RootState = ReturnType<typeof store_client.getState>
-export type ClientAppDispatch = typeof store_client.dispatch;
-export const useClientAppDispatch = () => useDispatch<ClientAppDispatch>();
+export type RootStateDispatch = typeof store_client.dispatch;
+// export const useClientAppDispatch = () => useDispatch<ClientAppDispatch>();
 
 const new_routes_config = (window as any).__CONFIG__;
 const initialState = store_client.getState();

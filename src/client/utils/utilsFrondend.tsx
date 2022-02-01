@@ -178,16 +178,16 @@ interface prepUrlFromConfigSlugArgs {
         language: string,
         slug_urls: {
             [key: string]: string
-        } | null,
-        url_type: string | undefined,
-        slug_prefix: string | null,
-        url: string | null,
+        } | undefined | null,
+        url_type: string | undefined | null,
+        slug_prefix: string | undefined | null,
+        url: string | undefined | null,
         multilanguage: boolean,
-        search?: string | null
+        search?: string | undefined | null
     ): string
 }
 
-export const prepUrlFromConfigSlug: prepUrlFromConfigSlugArgs = (language, slug_urls, url_type, slug_prefix, url, multilanguage, search = null) => {
+export const prepUrlFromConfigSlug: prepUrlFromConfigSlugArgs = (language, slug_urls, url_type, slug_prefix, url, multilanguage, search) => {
     let url_link = '/';
     language && multilanguage ? url_link += language + '/' : null;
     url_type && slug_urls ? url_link += slug_urls[url_type] + '/' : null;

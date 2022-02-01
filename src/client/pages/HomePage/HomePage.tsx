@@ -1,28 +1,18 @@
-import React, { FC, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-// import { get_global_config } from '../redux/actions/all_actions';
-// import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
 import { RootState } from '../../client';
 
-// import Colors from '../../components/atributes/colors/Colors';
-
-const HomePage: FC = () => {
-    const { ssr } = useSelector((state : RootState) => ({
-        // config : state.SystemConfig,
+const HomePage: React.FC = () => {
+    const { ssr } = useSelector((state: RootState) => ({
         ssr: state.PublicConfig.ssr,
-    })
-        , shallowEqual);
-    // useEffect(() => {
-    //     if (!config) {
-    //         // props.get_global_config();
-    //     }
-    // }, []);
+    }), shallowEqual);
+    
     const dispatch = useDispatch();
     useEffect(() => {
         ssr && dispatch(publicConfigActions.disableSrr());
-    },[])
+    }, [])
     // const SeoHead = () => {
     //     return (
     //         <Helmet>
