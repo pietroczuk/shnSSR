@@ -32,7 +32,7 @@ const JA = loadable(() => import(/* webpackPrefetch: true */ '../svg/flags/JA'),
 
 import { RootState } from '../../client';
 
-const LanguageSwitcher:React.FC = () => {
+const LanguageSwitcher: React.FC = () => {
     const [searchParams, setSearchParams] = useState('');
     const { search } = useLocation();
 
@@ -51,8 +51,8 @@ const LanguageSwitcher:React.FC = () => {
         page: state.Page,
         language: state.User.language
     }), shallowEqual);
-    const page_ulrs = page.data ? page.data.url : null;
-    const page_type = page && page.type ? page.type : null;
+    const page_ulrs = page.info ? page.info.url : null;
+    const page_type = page.info ? page.info.type : null;
 
     useEffect(() => {
         setSearchParams(search);
@@ -89,7 +89,7 @@ const LanguageSwitcher:React.FC = () => {
                 {page_ulrs && Object.entries(allLanguages).map(
                     ([lang_key, lang_val]) => {
                         let languageLink = '/' + lang_val.code;
-                        page_type !== pageTypes.specialPage ? languageLink += ('/' + pageTypePrefixUrls[page.type]) : null;
+                        page_type !== pageTypes.specialPage ? languageLink += ('/' + pageTypePrefixUrls[page.info.type]) : null;
                         languageLink += '/' + page_ulrs[lang_val.code] + searchParams;
                         return (
                             <li

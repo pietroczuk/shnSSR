@@ -151,9 +151,12 @@ export const getPriceByCurrency: getPriceByCurrencyArgs = (productPrices, userCu
         allCurrencies[userCurrency] &&
         allCurrencies[userCurrency].sign &&
         productPrices[userCurrency] ? productPrices[userCurrency] : null;
-    return price && allCurrencies[userCurrency].isDisplayLeft ?
-        allCurrencies[userCurrency].isDisplayLeft ?
-            allCurrencies[userCurrency].sign + ' ' + price : price + ' ' + allCurrencies[userCurrency].sign : null;
+    if(!price) return null;
+    if(allCurrencies[userCurrency].isDisplayLeft) {
+        return allCurrencies[userCurrency].sign + ' ' + price;
+    }else{
+        return price + ' ' + allCurrencies[userCurrency].sign;
+    }
 }
 
 /**

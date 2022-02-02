@@ -14,11 +14,9 @@ const ProductsWishlistGrid: React.FC = () => {
         {products && Object.entries(products).map(
             ([_key, val]) => {
                 return <ProductItem
-                    product={val.productData}
+                    wishlistProduct={val}
                     key={val.v}
-                    imagesInRootVariant={true}
                     wishlistPage={true}
-                    wishlistVariantId={val.v}
                 />
             })
         }

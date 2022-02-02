@@ -27,7 +27,7 @@ const AddToWishlistSticker: FC<Props> = props => {
     }), shallowEqual)
     const inWishList = wishlistProducts[variantId] ? true : false;
     const clickHandler = () => {
-        console.log('click', productId);
+        console.log('click', productId, variantId, inWishList);
         variantId && productId && dispatch(addToStoreWishlist(api, lang, productId, variantId, localstorageWishlistKey, inWishList));
     }
     return <div className={`${styles.addToWishContainer} ${showVisual ? styles.visualMode : ''}`} onClick={clickHandler}>

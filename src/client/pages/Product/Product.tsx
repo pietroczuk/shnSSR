@@ -30,7 +30,7 @@ const Product: React.FC<RouteComponentProps<ProductProps>> = (props) => {
             currency: state.User.currency,
             language: state.User.language,
             ssr: state.PublicConfig.ssr,
-            title: state.Page.data.title
+            title: state.Page.info.title
         }), shallowEqual
     )
     const dispatch = useDispatch();

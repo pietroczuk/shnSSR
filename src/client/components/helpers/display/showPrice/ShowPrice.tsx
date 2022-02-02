@@ -21,6 +21,7 @@ const ShowPrice: React.FC<ShowPriceProps> = (props) => {
 
     const price = getPriceByCurrency(allPrices, currency, allCurrencies);
 
+    // console.log('allPrices', allPrices, price);
     return <div className={styles.price}>{price}</div>
 }
 

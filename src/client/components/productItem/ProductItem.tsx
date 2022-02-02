@@ -15,35 +15,32 @@ import loadable from '@loadable/component';
 import ShowAvaibleFeatures from '../helpers/product/productItem/showAvaibleFeatures/ShowAvaibleFeatures';
 import { RootState } from '../../client';
 import { Product } from '../../redux/Models/Product/Product.model';
+import { WishlistProduct } from '../../redux/Models/Wishlist/WishlistProducts/WishlistProduct/WishlistProduct.model';
 
 const ShowSelectedAttributes = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showSelectedAttributes/ShowSelectedAttributes'), {});
 const ShowAddToCartVariants = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showAddToCartVariants/ShowAddToCartVariants'), {});
 
 interface ProductItemProps {
     product?: Product;
+    wishlistProduct?: WishlistProduct;
     forceVisual?: boolean;
     index?: number;
-    imagesInRootVariant?: boolean;
     wishlistPage?: boolean;
-    wishlistVariantId?: string
 }
 
 const ProductItem: FC<ProductItemProps> = props => {
-    const { product, forceVisual, index = 0, imagesInRootVariant, wishlistPage, wishlistVariantId } = props;
+    const { product, wishlistProduct, forceVisual, index = 0, wishlistPage} = props;
 
-    const placeholder = product ? false : true;
+    const showPlaceholder = !product && !wishlistProduct ? true : false;
 
-    const { title, titlekey, variations, url, min_price, likes, id, hashmap } = product ? product : {
-        title: null,
-        titlekey: null,
-        variations: null,
-        url: null,
-        min_price: null,
-        likes: null,
-        id: null,
-        hashmap: null
-    };
-    const productId = id;
+    const title = product ? product.title : null;
+    const url = product ? product.url : wishlistProduct ? wishlistProduct.productData.url : null;
+    const hashmap = product ? product.hashmap : null;
+    const likes = product ? product.likes : wishlistProduct ? wishlistProduct.productData.likes : null;
+    const titlekey = product ? product.titlekey : wishlistProduct ? wishlistProduct.productData.titlekey : null;
+    const productId = product ? product.id : wishlistProduct ? wishlistProduct.p : null;
+    const min_price = product ? product.min_price : wishlistProduct ? wishlistProduct.productData.min_price : null;
+    const variations = product ? product.variations : wishlistProduct ? wishlistProduct.productData.variations : null;
 
     const {
         language,
@@ -66,10 +63,10 @@ const ProductItem: FC<ProductItemProps> = props => {
     const [onHover, setOnHover] = useState(false);
 
     const onHoverHandler = () => {
-        !placeholder && setOnHover(true);
+        !showPlaceholder && setOnHover(true);
     }
     const onLeaveHandler = () => {
-        !placeholder && setOnHover(false);
+        !showPlaceholder && setOnHover(false);
     }
 
     const [disableLocalRandom, setDisableLocalRandom] = useState(false);
@@ -85,7 +82,7 @@ const ProductItem: FC<ProductItemProps> = props => {
     }, [defaultVariantCode, showRandom]);
 
 
-    const changeLocalVariantCode = (featureId : string, obj : any) => {
+    const changeLocalVariantCode = (featureId: string, obj: any) => {
         if (isObjectEmpty(obj) || !featureId || !obj.atrib_id) {
             return;
         }
@@ -103,7 +100,7 @@ const ProductItem: FC<ProductItemProps> = props => {
     }
 
     const [variantId, setVariantId] = useState<string>('');
-    const changeVariantId = (vId: string) => {
+    const setVariantIdHandler = (vId: string) => {
         vId !== variantId && setVariantId(vId);
     }
 
@@ -116,10 +113,8 @@ const ProductItem: FC<ProductItemProps> = props => {
                 }
             }
             const variantFound = productVarianArray.length > 1 ? intersectArray(productVarianArray) : [];
-            variantFound[0] && changeVariantId(variantFound[0]);
+            variantFound[0] && setVariantIdHandler(variantFound[0]);
         }
-        // if (showRandom && !disableLocalRandom) {
-
     }
 
     const changeLocalVariantOnRandom = () => {
@@ -127,7 +122,7 @@ const ProductItem: FC<ProductItemProps> = props => {
             let newVariantIndexStyle: string | number | null = index < getObjectLength(variations) ? index : index % getObjectLength(variations);
             newVariantIndexStyle = newVariantIndexStyle == 1 ? 4 : newVariantIndexStyle == 4 ? 1 : newVariantIndexStyle;
             newVariantIndexStyle = productId && variations[Object.keys(variations)[newVariantIndexStyle]] ? variations[Object.keys(variations)[newVariantIndexStyle]].id : null
-            newVariantIndexStyle && changeVariantId(newVariantIndexStyle.toString());
+            newVariantIndexStyle && setVariantIdHandler(newVariantIndexStyle.toString());
 
             const newFeatObj = { ...localVariantCode }
             let foundChange = false;
@@ -158,21 +153,25 @@ const ProductItem: FC<ProductItemProps> = props => {
     }, [localVariantCode]);
 
     useEffect(() => {
-        wishlistVariantId && changeVariantId(wishlistVariantId);
-    }, [wishlistPage, wishlistVariantId])
+        wishlistProduct && wishlistProduct.v && setVariantIdHandler(wishlistProduct.v);
+    }, [wishlistPage, wishlistProduct])
 
     ssr && !wishlistPage && showRandom && changeLocalVariantOnRandom();
     ssr && !wishlistPage && setupVariantIdOnHashmap();
 
     const productUrl = prepUrlFromConfigSlug(language, pageTypePrefixUrls, pageTypes.productPage, null, url, isMultilanguage, variantId);
-    const imagesHolderUrl = imagesInRootVariant ? variations ? variations[variantId] : null : null;
 
-    return <div className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}
-        onMouseEnter={onHoverHandler} onMouseLeave={onLeaveHandler}
-    >
-        {/* {console.log(localVariantCode)} */}
-        {/* {console.log(variantId)} */}
-        {!placeholder && <AddToWishlistSticker
+    // Wishlist vs Category page
+    // In Wishlist Page variation_image is on Root
+    // In Category variation_image is in each variation object
+    const imagesHolderUrl = wishlistProduct ? wishlistProduct.productData.variation_image :
+        variations && variations[variantId] ? variations[variantId].variation_image : null;
+
+
+    return <div className={`${styles.productItemContainer} ${showPlaceholder ? styles.disable : ''}`}
+        onMouseEnter={onHoverHandler} onMouseLeave={onLeaveHandler}>
+
+        {!showPlaceholder && <AddToWishlistSticker
             showLikes={true}
             likes={likes}
             variantId={variantId}
@@ -180,17 +179,15 @@ const ProductItem: FC<ProductItemProps> = props => {
         />
         }
         <DivNavLink to={productUrl}>
-            <ImageDisplay title={title} imagesHolderUrl={imagesHolderUrl} forceVisual={forceVisual} onHover={onHover} placeholder={placeholder} />
+            <ImageDisplay title={title} imagesHolderUrl={imagesHolderUrl} forceVisual={forceVisual} onHover={onHover} showPlaceholder={showPlaceholder} />
         </DivNavLink>
         {wishlistPage && <ShowAddToCartVariants
             avaibleVariations={variations}
             active={onHover}
             productId={productId}
         />}
-        {!wishlistPage && !placeholder && <ShowAvaibleFeatures
+        {!wishlistPage && !showPlaceholder && <ShowAvaibleFeatures
             active={onHover}
-            // active={true}
-            // currentVariationCode={currentVariationCode}
             currentVariationCode={localVariantCode}
             onClickFunction={changeLocalVariantCode}
 
@@ -199,18 +196,18 @@ const ProductItem: FC<ProductItemProps> = props => {
             <div className={styles.productDataContainer}>
                 <div className={styles.titleContainer}>
                     <div className={styles.title}>
-                        {placeholder && <Placeholder customWidth={'100%'} />}
-                        {!placeholder && titlekey}
+                        {showPlaceholder && <Placeholder customWidth={'100%'} />}
+                        {!showPlaceholder && titlekey}
                     </div>
                     <div className={styles.subtitle}>
-                        {placeholder && <Placeholder customWidth={'50%'} />}
-                        {!placeholder && title && cutText(title)}
+                        {showPlaceholder && <Placeholder customWidth={'50%'} />}
+                        {!showPlaceholder && title && cutText(title)}
                     </div>
                     {wishlistPage && <ShowSelectedAttributes selectedVariantId={variantId} avaibleVariations={variations} />}
                 </div>
                 <div className={styles.priceContainer}>
                     <div className={styles.label}>
-                        {!placeholder && translations && translations.price_from ? translations.price_from : ''}
+                        {!showPlaceholder && translations && translations.price_from ? translations.price_from : ''}
                     </div>
                     <ShowPrice allPrices={min_price} />
                 </div>

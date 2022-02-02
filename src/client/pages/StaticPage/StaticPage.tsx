@@ -22,7 +22,7 @@ const StaticPage: React.FC<RouteComponentProps<StaticPageProps>> = props => {
     const { body, api, language, ssr, title } = useSelector(
         (state: RootState) => ({
             ssr: state.PublicConfig.ssr,
-            title: state.Page.data.title,
+            title: state.Page.info.title,
             body: state.Page.data.staticPage.body,
             api: state.SystemConfig.api,
             language: state.User.language

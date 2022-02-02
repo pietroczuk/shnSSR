@@ -116,7 +116,10 @@ export const addToStoreWishlist = (api: Api, lang: string, productId: string, va
     const axios_endpoint = api.product + page_url;
     return axios.get(api.url + '/' + axios_endpoint)
       .then(res => {
-        const productData = res.data.data;
+        const productData = {
+          ...res.data.info,
+          ...res.data.data
+        };
         if (!isObjectEmpty(productData)) {
           return dispatch(wishlistActions.addToWishlist({ product: productData, variantId, localstorageWishlistKey }))
         }
@@ -163,9 +166,12 @@ export const checkWishlist = (initLocalstorageWishlistKey: string, wishlistState
       res.forEach((r: any) => {
         if (r.responseData.status == 200 && !isObjectEmpty(r.responseData.data.data)) {
           wishlistProducts[r.variantId] = {
-            p: r.responseData.data.data.id,
+            p: r.responseData.data.info.id,
             v: r.variantId,
-            productData: r.responseData.data.data
+            productData: {
+              ...r.responseData.data.info,
+              ...r.responseData.data.data
+            }
           };
         }
       })

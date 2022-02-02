@@ -1,14 +1,16 @@
 import { Page } from "../../Models/Page/Page.model";
 
 export const pageInitialState : Page = {
-    type: '',
-    data: {
+    info: {
+        type: '',
         id: '',
         url: {},
         title: '',
         description: '',
         seo_title: '',
         seo_description: '',
+    },
+    data: {
         categoryPage : {
             products:[]
         },

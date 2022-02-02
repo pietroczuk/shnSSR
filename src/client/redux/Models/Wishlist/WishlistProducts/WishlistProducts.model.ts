@@ -1,9 +1,5 @@
-import { Product } from "../../Product/Product.model";
+import { WishlistProduct } from "./WishlistProduct/WishlistProduct.model";
 
 export interface WishlistProducts {
-    [key: string]: {
-        p: string,
-        v: string,
-        productData: Product
-    }
+    [key: string]: WishlistProduct
 }

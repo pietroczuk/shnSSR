@@ -1,6 +1,7 @@
 import { Data } from "./Data/Data.model";
+import { Info } from "./Info/Info.model";
 
 export interface Page {
-    type: string;
+    info: Info;
     data: Data;
 }

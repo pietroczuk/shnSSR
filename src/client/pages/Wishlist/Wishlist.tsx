@@ -43,7 +43,7 @@ const Wishlist: React.FC<RouteComponentProps<WishlistProps>> = props => {
     const dispatch = useDispatch();
     useEffect(() => {
         const wishlistPageObj = {
-            data: {
+            info: {
                 url: wishlistMultilanguageUrls,
                 type: pageTypes.specialPage
             }

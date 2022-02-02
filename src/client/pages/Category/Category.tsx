@@ -41,8 +41,8 @@ const Category: FC<RouteComponentProps<CategoryProps>> = props => {
         (state: RootState) => ({
             ssr: state.PublicConfig.ssr,
             category: state.Page.data.categoryPage,
-            title: state.Page.data.title,
-            description: state.Page.data.description,
+            title: state.Page.info.title,
+            description: state.Page.info.description,
             api: state.SystemConfig.api,
             language: state.User.language,
         }), shallowEqual)
