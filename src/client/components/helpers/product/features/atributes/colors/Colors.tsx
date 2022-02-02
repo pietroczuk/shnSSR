@@ -9,14 +9,15 @@ import DivNavLink from '../../../../../divNavLink/DivNavLink';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './colors.scss'
 import { RootState } from '../../../../../../client';
+import { Atribute } from '../../../../../../redux/types/publicConfig.types';
 
 interface Props {
-    attrib: { [key: string]: string },
+    attrib: Atribute,
     active: boolean,
     link: string,
     isGlobalChange: boolean,
     featureKey: string,
-    onClickFunction: (featureKey: string, codeObj: object) => void
+    onClickFunction: Function
 }
 
 const Colors: React.FC<Props> = props => {

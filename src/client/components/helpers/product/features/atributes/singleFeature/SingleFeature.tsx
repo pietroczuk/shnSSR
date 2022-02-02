@@ -17,7 +17,7 @@ interface Props {
     featureKey: string,
     allProductVariation: any,
     isGlobalChange: boolean,
-    onClickFunction : (featureId: string, obj: object) => void
+    onClickFunction : Function
 }
 
 const SingleFeature: React.FC<Props> = props => {
@@ -31,7 +31,7 @@ const SingleFeature: React.FC<Props> = props => {
         isGlobalChange,
         onClickFunction
     } = props;
-    const width = atributes ? getObjectLength(atributes) : 'auto';
+    const width = atributes ? getObjectLength(atributes) : undefined
 
     const [activeCodeValue, setActiveCodeValue] = useState('');
 
@@ -78,7 +78,6 @@ const SingleFeature: React.FC<Props> = props => {
                         key={att_key}
                         attrib={att_val}
                         active={active}
-                        width={width}
                         link={matchCode}
                         isGlobalChange={isGlobalChange}
                         featureKey={featureKey}
@@ -91,8 +90,6 @@ const SingleFeature: React.FC<Props> = props => {
                         active={active}
                         width={width}
                         link={matchCode}
-                        isGlobalChange={isGlobalChange}
-                        featureKey={featureKey}
                         onClickFunction={onClickFunction}
                     />
                 default: return null;

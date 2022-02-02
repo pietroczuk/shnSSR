@@ -46,13 +46,13 @@ const Header: React.FC<HeaderProps> = ({ isDarkBackground, isWhiteTopbar }) => {
                 <div className={styles.headerRight}>
                     {showLanguageSwitcher && <LanguageSwitcher />}
                     {showCurrencySwitcher && <CurrencySwitcher />}
-                    <InteractiveIcon hoverBg={true} isDarkBackground={isDarkBackground}>
+                    <InteractiveIcon isHoverBackground={true} isDarkBackground={isDarkBackground} >
                         <SearchIcon />
                     </InteractiveIcon>
-                    <InteractiveIcon hoverBg={true} isDarkBackground={isDarkBackground} linkPageType={pageTypes.wishlist}>
+                    <InteractiveIcon isHoverBackground={true} isDarkBackground={isDarkBackground} linkPageType={pageTypes.wishlist}>
                         <WishlistIcon />
                     </InteractiveIcon>
-                    <InteractiveIcon hoverBg={true} isDarkBackground={isDarkBackground} linkPageType={pageTypes.cart}>
+                    <InteractiveIcon isHoverBackground={true} isDarkBackground={isDarkBackground} linkPageType={pageTypes.cart}>
                         <CartIcon />
                     </InteractiveIcon>
                 </div>

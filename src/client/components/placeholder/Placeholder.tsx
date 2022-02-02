@@ -3,7 +3,7 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './placeholder.scss';
 
 interface Props {
-    customWidth?: number,
+    customWidth?: string,
     customHeight?: number
 }
 

@@ -8,13 +8,13 @@ import { isObjectEmpty } from "../../../../utils/utilsFrondend";
 
 interface BlackButtonProps {
     label: string;
-    customBgColor: string;
-    customHoverBgColor: string;
-    color: string;
-    colorHover: string;
+    customBgColor?: string;
+    customHoverBgColor?: string;
+    color?: string;
+    colorHover?: string;
     clickHandler: VoidFunction;
-    showHoverUnderline: boolean
-    sizeEm: number
+    showHoverUnderline?: boolean
+    sizeEm?: number
 }
 
 const BlackButton: React.FC<BlackButtonProps> = props => {

@@ -8,9 +8,9 @@ import AssitiveText from '../../helpers/display/assitiveText/AssitiveText';
 import { RootState } from '../../../client';
 
 interface Props {
-    isDarkBackground: boolean,
-    isMiniLogo: boolean,
-    customWidth: number
+    isDarkBackground?: boolean,
+    isMiniLogo?: boolean,
+    customWidth?: number
 }
 
 const Logo: FC<Props> = props => {

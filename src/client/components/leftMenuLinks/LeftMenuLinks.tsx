@@ -4,14 +4,18 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 
 import { useSelector, shallowEqual } from 'react-redux';
 
-import { NavLink, RouteComponentProps } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 
 import LeftMenuSubmenu from './leftMenuSubmenu/LeftMenuSubmenu';
 import { RootState } from '../../client';
 import { MenuItem } from '../../redux/types/publicConfig.types';
 
-const LeftMenuLinks: React.FC<RouteComponentProps> = props => {
+interface LeftMenuLinksProps {
+    location : Location | any;
+}
+
+const LeftMenuLinks: React.FC<LeftMenuLinksProps> = props => {
 
     const { menu_items, language, slug_urls, isMultilanguage } = useSelector((state: RootState) => ({
         menu_items: state.PublicConfig.menu!.side === 'top' ? state.PublicConfig.menu!.top : state.PublicConfig.menu!.side,

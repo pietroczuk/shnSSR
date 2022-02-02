@@ -1,8 +1,10 @@
+import { Product } from "./page.types";
+
 export type WishlistProducts = {
     [key: string]: {
         p: string,
         v: string,
-        productData?: object
+        productData?: Product
     }
 }
 

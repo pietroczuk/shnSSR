@@ -70,7 +70,7 @@ const Category: FC<RouteComponentProps<CategoryProps>> = props => {
 
     return (
         <ContentCointainer isMultirow={isMultirow} >
-            {<SeoMetaTags language={language} pageType={pageType} url={url}/>}
+            {<SeoMetaTags language={language} pageType={pageType} url={url} />}
             {
                 isMultirow && <StickySidebar location={location}>
                     <LeftMenuLinks location={location} />
@@ -83,7 +83,6 @@ const Category: FC<RouteComponentProps<CategoryProps>> = props => {
                         <ImageSwicher />
                         <RandomColorSwicher />
                         <AllFeaturesDisplay
-                            // allProductVariation={null}
                             onlyWishlistFeatures={true}
                             displayInline={true}
                             isGlobalChange={true}

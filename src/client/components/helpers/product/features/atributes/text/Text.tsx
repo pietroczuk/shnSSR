@@ -6,15 +6,16 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setProductCurrVarId } from '../../../../../../redux/actions/actionCreators';
 import { RootState } from '../../../../../../client';
+import { Atribute } from '../../../../../../redux/types/publicConfig.types';
 // import base64 from 'base-64';
 // import { prepareAttribLink } from '../../../../utils/utilsFrondend';
 
 interface Props {
-    attrib: { [key: string]: string },
+    attrib: Atribute,
     link: string,
-    width: number | null,
+    width?: number,
     active: boolean
-    onClickFunction: () => void
+    onClickFunction: Function
 }
 
 const Text: React.FC<Props> = props => {

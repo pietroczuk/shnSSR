@@ -34,7 +34,7 @@ const RootApp: React.FC<RootAppProps> = ({ route }) => {
     }, [])
     return (
         <React.Fragment>
-            <Header isWhiteTopbar={true} />
+            <Header isWhiteTopbar={true} isDarkBackground={false}/>
             {renderRoutes(route.routes)}
             <Footer />
         </React.Fragment>

@@ -17,7 +17,7 @@ const Topbar: FC<TopbarProps> = ({ isWhiteTopbar, closeHandler }) => {
             <InteractiveIcon
                 isDarkBackground={!isWhiteTopbar}
                 onClick={closeHandler}
-                hoverOpacity={true}
+                isHoverOpacity={true}
                 customWidth={30}
                 customSvgSize={15}
             >

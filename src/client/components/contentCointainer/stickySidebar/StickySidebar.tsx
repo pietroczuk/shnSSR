@@ -2,7 +2,6 @@ import { FC, useEffect, useState, useRef, useContext } from 'react';
 import styles from '../contentCointainer.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import ContenerContext from '../contenerContext/contenerContext';
-import { RouteComponentProps } from 'react-router-dom';
 
 type Styles = {
     position: string,
@@ -10,7 +9,11 @@ type Styles = {
     bottom: string
 }
 
-const StickySidebar: FC<RouteComponentProps> = props => {
+interface StickySidebarProps {
+    location : Location | any;
+}
+
+const StickySidebar: FC<StickySidebarProps> = props => {
 
     const [forcePosition, setForcePosition] = useState(true);
     const setForcePositionHandler = (force: boolean) => {

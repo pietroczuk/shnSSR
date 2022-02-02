@@ -4,7 +4,7 @@ import styles from './loadingSpinner.scss';
 
 interface LoadingSpinnerProps {
     customContenerWidth?: number;
-    customContenerHeight?: number;
+    customContenerHeight?: string;
     customSpinerSizeEm?: number;
     customBorderColor?: string;
     customBorderTopColor?: string;

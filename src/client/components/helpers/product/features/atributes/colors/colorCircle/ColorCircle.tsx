@@ -3,9 +3,9 @@ import styles from './colorCircle.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
 interface ColorCircleProps {
-    active: boolean,
+    active?: boolean,
     glow_color: string,
-    mini: boolean
+    mini?: boolean
 }
 
 const ColorCircle: React.FC<ColorCircleProps> = props => {

@@ -21,7 +21,7 @@ export type Product = {
     url: string,
     variations: SingleProductAllVariations,
     min_price: {
-        [key: string]: string
+        [key: string]: number
     }
     hashmap: {
         [key: string]: {
