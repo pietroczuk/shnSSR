@@ -9,18 +9,18 @@ import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 
 import LeftMenuSubmenu from './leftMenuSubmenu/LeftMenuSubmenu';
 import { RootState } from '../../client';
-import { MenuItem } from '../../redux/types/publicConfig.types';
+import { MenuItem } from '../../redux/Models/PublicConfig/Menu/MenuItem/MenuItem.model';
 
 interface LeftMenuLinksProps {
-    location : Location | any;
+    location: Location | any;
 }
 
 const LeftMenuLinks: React.FC<LeftMenuLinksProps> = props => {
 
-    const { menu_items, language, slug_urls, isMultilanguage } = useSelector((state: RootState) => ({
+    const { menu_items, language, pageTypePrefixUrls, isMultilanguage } = useSelector((state: RootState) => ({
         menu_items: state.PublicConfig.menu!.side === 'top' ? state.PublicConfig.menu!.top : state.PublicConfig.menu!.side,
         language: state.User.language,
-        slug_urls: state.SystemConfig.pageTypePrefixUrls,
+        pageTypePrefixUrls: state.SystemConfig.pageTypePrefixUrls,
         isMultilanguage: state.SystemConfig.isMultilanguage
     }), shallowEqual)
 
@@ -28,11 +28,11 @@ const LeftMenuLinks: React.FC<LeftMenuLinksProps> = props => {
     const pathname = location ? location.pathname : '';
 
 
-    const prepareSubmenu = (elem: MenuItem) => {
+    const prepareSubmenu = (menuItem: MenuItem) => {
         return <LeftMenuSubmenu
-            elem={elem}
+            menuItem={menuItem}
             pathname={pathname}
-            slug_urls={slug_urls}
+            pageTypePrefixUrls={pageTypePrefixUrls}
             language={language}
             prepareLabelMenu={prepareLabelMenu}
             prepareMenuLink={prepareMenuLink}
@@ -43,7 +43,7 @@ const LeftMenuLinks: React.FC<LeftMenuLinksProps> = props => {
         const { type, url, label, items, color } = elem;
 
         if (url) {
-            const new_url = prepUrlFromConfigSlug(language, slug_urls, type, null, url, isMultilanguage);
+            const new_url = prepUrlFromConfigSlug(language, pageTypePrefixUrls, type, null, url, isMultilanguage);
             return (
                 <NavLink to={new_url} activeClassName={styles.active} className={styles.side_link_container}>
                     {items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color)}

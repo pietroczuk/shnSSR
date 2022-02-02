@@ -9,7 +9,7 @@ import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 
 import SubMenu from './submenu/SubMenu';
 import { RootState } from '../../client';
-import { MenuItem } from '../../redux/types/publicConfig.types';
+import { MenuItem } from '../../redux/Models/PublicConfig/Menu/MenuItem/MenuItem.model';
 
 const MenuTop: FC = () => {
     const { menu_items, slug_urls, isMultilanguage, language } = useSelector((state: RootState) => ({
@@ -19,8 +19,8 @@ const MenuTop: FC = () => {
         language: state.User.language,
     }), shallowEqual)
 
-    const prepareSubmenu = (elem: MenuItem) => {
-        return <SubMenu elem={elem} prepareLabelMenu={prepareLabelMenu} prepareMenuLink={prepareMenuLink} />
+    const prepareSubmenu = (menuItem: MenuItem) => {
+        return <SubMenu menuItem={menuItem} prepareLabelMenu={prepareLabelMenu} prepareMenuLink={prepareMenuLink} />
     }
     const prepareMenuLink = (elem: MenuItem) => {
         const { type, url, label, items, color } = elem;

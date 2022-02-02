@@ -4,7 +4,6 @@ import styles from './product.scss';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { getPage } from '../../redux/actions/actionCreators';
-import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
 import { pageTypes, prepareSearchCode, scrollToTop } from '../../utils/utilsFrondend';
 
@@ -13,6 +12,7 @@ import AllFeaturesDisplay from '../../components/helpers/product/features/AllFea
 import { RootState } from '../../client';
 import { RouteComponentProps } from 'react-router-dom';
 import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
+import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
 
 interface ProductProps {
     url: string;
@@ -21,15 +21,16 @@ interface ProductProps {
 
 const Product: React.FC<RouteComponentProps<ProductProps>> = (props) => {
     const pageType = pageTypes.productPage;
-    const { product, api, images_url, allCurrencies, currency, language, ssr } = useSelector(
+    const { product, api, images_url, allCurrencies, currency, language, ssr, title } = useSelector(
         (state: RootState) => ({
-            product: state.Page.data,
+            product: state.Page.data.productPage,
             api: state.SystemConfig.api,
             images_url: state.SystemConfig.images,
             allCurrencies: state.SystemConfig.allCurrencies,
             currency: state.User.currency,
             language: state.User.language,
-            ssr: state.PublicConfig.ssr
+            ssr: state.PublicConfig.ssr,
+            title: state.Page.data.title
         }), shallowEqual
     )
     const dispatch = useDispatch();
@@ -60,8 +61,8 @@ const Product: React.FC<RouteComponentProps<ProductProps>> = (props) => {
             {<SeoMetaTags language={language} pageType={pageType} url={url} />}
             Product page
             {/* <FixedBar /> */}
-            {product ?
-                <h1>{product.title}</h1> : <h1><Placeholder /></h1>
+            {title ?
+                <h1>{title}</h1> : <h1><Placeholder /></h1>
             }
             {current_variation_id && product && product.variations && product.variations[current_variation_id].name}
             <br />

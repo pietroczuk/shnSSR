@@ -9,10 +9,10 @@ import DivNavLink from '../../../../../divNavLink/DivNavLink';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './colors.scss'
 import { RootState } from '../../../../../../client';
-import { Atribute } from '../../../../../../redux/types/publicConfig.types';
+import { SingleAtribute } from '../../../../../../redux/Models/PublicConfig/Features/SingleFeature/Atributes/SingleAtribute/SingleAtribute.model';
 
 interface Props {
-    attrib: Atribute,
+    attrib: SingleAtribute,
     active: boolean,
     link: string,
     isGlobalChange: boolean,
@@ -26,7 +26,7 @@ const Colors: React.FC<Props> = props => {
     const { glow_color, attrib_title, code, id } = attrib;
 
     const { variations, randomVariant } = useSelector((state: RootState) => ({
-        variations: state.Page.data ? state.Page.data.variations : null,
+        variations: state.Page.data ? state.Page.data.productPage.variations : null,
         randomVariant: state.SystemConfig.cookiesKeys.displayKeys.randomVariant
     }), shallowEqual);
     const dispatch = useDispatch();

@@ -4,7 +4,6 @@ import styles from './category.scss';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { getPage } from '../../redux/actions/actionCreators';
-import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
 import {
     pageTypes, prepareSearchCode,
@@ -29,6 +28,7 @@ import { RootState } from '../../client';
 import { RouteComponentProps } from 'react-router-dom';
 import ProductsCategoryGridProps from '../../components/productsGrid/productsCategoryGrid/productsCategoryGrid';
 import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
+import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
 
 interface CategoryProps {
     url: string;
@@ -37,10 +37,12 @@ interface CategoryProps {
 
 const Category: FC<RouteComponentProps<CategoryProps>> = props => {
     const pageType = pageTypes.categoryPage;
-    const { ssr, category, api, language, } = useSelector(
+    const { ssr, category, api, language, title, description} = useSelector(
         (state: RootState) => ({
             ssr: state.PublicConfig.ssr,
-            category: state.Page.data,
+            category: state.Page.data.categoryPage,
+            title: state.Page.data.title,
+            description: state.Page.data.description,
             api: state.SystemConfig.api,
             language: state.User.language,
         }), shallowEqual)
@@ -51,7 +53,6 @@ const Category: FC<RouteComponentProps<CategoryProps>> = props => {
     const { location } = props;
 
     const isMultirow = true;
-    const title = category ? category.title : undefined;
 
     useEffect(() => {
         const axiosAbortController = new AbortController();
@@ -90,7 +91,7 @@ const Category: FC<RouteComponentProps<CategoryProps>> = props => {
                     </FixedBar>
                     <ProductsCategoryGridProps />
                     <div className={styles.categroryLoadMore}><LoadingSpinner customContenerHeight={'100%'} customSpinerSizeEm={2} /></div>
-                    {category ? <div className={styles.categoryDescription} >{renderHtmlFromJson(category.description)}</div> : <div><Placeholder /></div>}
+                    {category ? <div className={styles.categoryDescription} >{renderHtmlFromJson(description)}</div> : <div><Placeholder /></div>}
                 </div>
             </MainContent>
         </ContentCointainer>

@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Page } from '../../types/page.types';
-import { PageInitialState } from './pageInitialState';
+import { Page } from '../../Models/Page/Page.model';
+
+import { pageInitialState } from './pageInitialState';
 
 const pageSlice = createSlice({
     name: 'Page',
-    initialState: PageInitialState,
+    initialState: pageInitialState,
     reducers: {
         setPageData(_state: Page, action) {
             const { data, query } = action.payload;
@@ -14,10 +15,10 @@ const pageSlice = createSlice({
             return data;
         },
         clearPageData() {
-            return PageInitialState;
+            return pageInitialState;
         },
         setProductCurrentVariantId(state: Page, action) {
-            state.data.current_variation_id = action.payload;
+            state.data.productPage.current_variation_id = action.payload;
             return state;
         }
     }

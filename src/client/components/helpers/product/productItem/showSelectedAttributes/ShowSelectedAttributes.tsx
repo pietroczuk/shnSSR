@@ -8,11 +8,11 @@ import styles from './showSelectedAttributes.scss';
 
 import ColorCircle from "../../features/atributes/colors/colorCircle/ColorCircle";
 import { RootState } from "../../../../../client";
-import { SingleProductAllVariations } from "../../../../../redux/types/page.types";
+import { Variations } from "../../../../../redux/Models/Product/Variations/Variations.model";
 
 interface ShowSelectedAttributesProps {
     selectedVariantId: string;
-    avaibleVariations: SingleProductAllVariations;
+    avaibleVariations: Variations;
 }
 
 const ShowSelectedAttributes: React.FC<ShowSelectedAttributesProps> = props => {

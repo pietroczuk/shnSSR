@@ -14,7 +14,7 @@ import ImageDisplay from './imageDisplay/ImageDisplay';
 import loadable from '@loadable/component';
 import ShowAvaibleFeatures from '../helpers/product/productItem/showAvaibleFeatures/ShowAvaibleFeatures';
 import { RootState } from '../../client';
-import { Product } from '../../redux/types/page.types';
+import { Product } from '../../redux/Models/Product/Product.model';
 
 const ShowSelectedAttributes = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showSelectedAttributes/ShowSelectedAttributes'), {});
 const ShowAddToCartVariants = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showAddToCartVariants/ShowAddToCartVariants'), {});
@@ -47,7 +47,7 @@ const ProductItem: FC<ProductItemProps> = props => {
 
     const {
         language,
-        slug_urls,
+        pageTypePrefixUrls,
         translations,
         showRandom,
         isMultilanguage,
@@ -56,7 +56,7 @@ const ProductItem: FC<ProductItemProps> = props => {
     } = useSelector((state: RootState) => ({
         language: state.User.language,
         showRandom: state.Display.showRandom,
-        slug_urls: state.SystemConfig.pageTypePrefixUrls,
+        pageTypePrefixUrls: state.SystemConfig.pageTypePrefixUrls,
         translations: state.PublicConfig.translations,
         isMultilanguage: state.SystemConfig.isMultilanguage,
         defaultVariantCode: state.PublicConfig.defaultVariantCode,
@@ -127,7 +127,7 @@ const ProductItem: FC<ProductItemProps> = props => {
             let newVariantIndexStyle: string | number | null = index < getObjectLength(variations) ? index : index % getObjectLength(variations);
             newVariantIndexStyle = newVariantIndexStyle == 1 ? 4 : newVariantIndexStyle == 4 ? 1 : newVariantIndexStyle;
             newVariantIndexStyle = productId && variations[Object.keys(variations)[newVariantIndexStyle]] ? variations[Object.keys(variations)[newVariantIndexStyle]].id : null
-            newVariantIndexStyle && changeVariantId(newVariantIndexStyle);
+            newVariantIndexStyle && changeVariantId(newVariantIndexStyle.toString());
 
             const newFeatObj = { ...localVariantCode }
             let foundChange = false;
@@ -164,8 +164,8 @@ const ProductItem: FC<ProductItemProps> = props => {
     ssr && !wishlistPage && showRandom && changeLocalVariantOnRandom();
     ssr && !wishlistPage && setupVariantIdOnHashmap();
 
-    const productUrl = prepUrlFromConfigSlug(language, slug_urls, pageTypes.productPage, null, url, isMultilanguage, variantId);
-    const imagesHolderUrl = imagesInRootVariant ? product : variations ? variations[variantId] : null;
+    const productUrl = prepUrlFromConfigSlug(language, pageTypePrefixUrls, pageTypes.productPage, null, url, isMultilanguage, variantId);
+    const imagesHolderUrl = imagesInRootVariant ? variations ? variations[variantId] : null : null;
 
     return <div className={`${styles.productItemContainer} ${placeholder ? styles.disable : ''}`}
         onMouseEnter={onHoverHandler} onMouseLeave={onLeaveHandler}

@@ -7,7 +7,7 @@ import { RootState } from "../../../../client";
 
 interface ShowPriceProps {
     allPrices: {
-        [key: string]: number
+        [key: string]: string
     }
 }
 

@@ -4,7 +4,6 @@ import styles from './staticpage.scss';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { getPage } from '../../redux/actions/actionCreators';
-import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
 import { pageTypes, prepareSearchCode, renderHtmlFromJson, scrollToTop } from '../../utils/utilsFrondend';
 
@@ -12,6 +11,7 @@ import { RootState } from '../../client';
 import { RouteComponentProps } from 'react-router-dom';
 import Placeholder from '../../components/placeholder/Placeholder';
 import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
+import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
 
 interface StaticPageProps {
     url: string;
@@ -19,10 +19,11 @@ interface StaticPageProps {
 
 const StaticPage: React.FC<RouteComponentProps<StaticPageProps>> = props => {
 
-    const { staticPageData, api, language, ssr } = useSelector(
+    const { body, api, language, ssr, title } = useSelector(
         (state: RootState) => ({
             ssr: state.PublicConfig.ssr,
-            staticPageData: state.Page.data,
+            title: state.Page.data.title,
+            body: state.Page.data.staticPage.body,
             api: state.SystemConfig.api,
             language: state.User.language
         }), shallowEqual
@@ -48,13 +49,13 @@ const StaticPage: React.FC<RouteComponentProps<StaticPageProps>> = props => {
         ssr && dispatch(publicConfigActions.disableSrr());
     }, [])
 
-    const showPageBody = staticPageData && staticPageData.body;
+    const showPageBody = !!body;
     return (
         <div>
             {<SeoMetaTags url={url} language={language} pageType={pageType}/>}
-            <h1>{staticPageData ? staticPageData.title : <Placeholder />}</h1>
+            <h1>{title ? title : <Placeholder />}</h1>
             <div>
-                {showPageBody && renderHtmlFromJson(staticPageData.body)}
+                {showPageBody && renderHtmlFromJson(body)}
             </div>
         </div>
     )

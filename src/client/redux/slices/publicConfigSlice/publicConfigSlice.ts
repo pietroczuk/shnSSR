@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { PublicConfig } from '../../types/publicConfig.types';
+import { PublicConfig } from '../../Models/PublicConfig/PublicConfig.model';
 import { PublicConfigInitialState } from './publicConfigInitialState';
 
 

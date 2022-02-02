@@ -4,9 +4,9 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 
 import { useSelector, shallowEqual } from 'react-redux';
 import { RootState } from '../../../../client';
-import { DefaultVariantCode } from '../../../../redux/types/publicConfig.types';
 
 import SingleFeature from './atributes/singleFeature/SingleFeature';
+import { DefaultVariantCode } from '../../../../redux/Models/PublicConfig/DefaultVariantCode/DefaultVariantCode.model';
 
 interface AllFeaturesDisplayProps {
     currentVariationCode?: DefaultVariantCode;

@@ -1,4 +1,4 @@
-import { PublicConfig } from "../../types/publicConfig.types";
+import { PublicConfig } from "../../Models/PublicConfig/PublicConfig.model";
 
 export const PublicConfigInitialState: PublicConfig = {
     defaultVariantCode: {},

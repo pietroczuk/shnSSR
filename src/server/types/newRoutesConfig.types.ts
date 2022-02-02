@@ -1,7 +1,9 @@
-import { Language, SpecialPagesUrls, Urls } from "../../client/redux/types/systemConfig.types";
+import { AllLanguages } from "../../client/redux/Models/SystemConfig/AllLanguages/AllLanguages.model";
+import { PageTypePrefixUrls } from "../../client/redux/Models/SystemConfig/PageTypePrefixUrls/PageTypePrefixUrls.model";
+import { SpecialPagesUrlsArray } from "../../client/redux/Models/SystemConfig/SpecialPagesUrlsArray/SpecialPagesUrlsArray.model";
 
 export type NewRoutesConfig = {
-    allLanguages: Language,
-    pageTypePrefixUrls: Urls
-    specialPagesUrlsArray: SpecialPagesUrls
+    allLanguages: AllLanguages,
+    pageTypePrefixUrls: PageTypePrefixUrls
+    specialPagesUrlsArray: SpecialPagesUrlsArray
 }

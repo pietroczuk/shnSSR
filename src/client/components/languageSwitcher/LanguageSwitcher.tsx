@@ -52,7 +52,7 @@ const LanguageSwitcher:React.FC = () => {
         language: state.User.language
     }), shallowEqual);
     const page_ulrs = page.data ? page.data.url : null;
-    const page_type = page && page.data.type ? page.data.type : null;
+    const page_type = page && page.type ? page.type : null;
 
     useEffect(() => {
         setSearchParams(search);

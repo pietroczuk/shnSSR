@@ -11,11 +11,11 @@ import ShowPrice from "../../../display/showPrice/ShowPrice";
 import { getObjectLength, isObjectEmpty } from "../../../../../utils/utilsFrondend";
 import HoverPopupContainer from "../hoverPopupContainer/HoverPopupContainer";
 import { RootState } from "../../../../../client";
-import { SingleProductVariation } from "../../../../../redux/types/page.types";
+import { Variations } from "../../../../../redux/Models/Product/Variations/Variations.model";
 
 interface ShowAddToCartVariantsProps {
     active: boolean;
-    avaibleVariations: SingleProductVariation;
+    avaibleVariations: Variations;
     productId: string
 }
 
@@ -44,7 +44,7 @@ const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
         console.log('add to cart product id:', productId);
     }
 
-    const showRestVariants = (avaibleVariations: SingleProductVariation) => {
+    const showRestVariants = (avaibleVariations: Variations) => {
         if (!getObjectLength(avaibleVariations) || isObjectEmpty(features)) {
             return null;
         }

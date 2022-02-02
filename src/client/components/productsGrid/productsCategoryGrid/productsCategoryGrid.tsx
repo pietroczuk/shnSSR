@@ -7,7 +7,7 @@ import { RootState } from "../../../client";
 
 const ProductsCategoryGrid: React.FC = () => {
     const { products, placeholderNumber } = useSelector((state: RootState) => ({
-        products: state.Page.data.products,
+        products: state.Page.data.categoryPage.products,
         placeholderNumber: state.SystemConfig.placeholders.categoryProducts,
     }))
 

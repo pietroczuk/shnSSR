@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { setCookie } from '../../../utils/utilsFrondend';
-import { User } from '../../types/user.types';
+import { User } from '../../Models/User/User.model';
 import { UserInitialState } from './userInitialState';
 
 
 type Action = {
     payload: {
-        currency_code: string,
+        currencyCode: string,
         cookieCurrencyKey: string
     }
 }
@@ -21,9 +21,9 @@ const userSlice = createSlice({
         //     return state;
         // },
         setUserCurrency(state: User, action: Action) {
-            const { cookieCurrencyKey, currency_code } = action.payload;
-            setCookie(cookieCurrencyKey, currency_code);
-            state.currency = currency_code;
+            const { cookieCurrencyKey, currencyCode } = action.payload;
+            setCookie(cookieCurrencyKey, currencyCode);
+            state.currency = currencyCode;
             return state;
         },
     }

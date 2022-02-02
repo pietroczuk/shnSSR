@@ -23,7 +23,7 @@ import {
     getDisplayCookies,
     urlDataFromPath
 } from './utils/utilsBackend';
-import { SystemConfig } from '../client/redux/types/systemConfig.types';
+import { SystemConfig } from '../client/redux/Models/SystemConfig/SystemConfig.type';
 import { NewRoutesConfig } from './types/newRoutesConfig.types';
 
 /** CACHE */

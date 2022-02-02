@@ -1,4 +1,4 @@
-import { Wishlist } from "../../types/wishlist.types";
+import { Wishlist } from "../../Models/Wishlist/Wishlist.model";
 
 const WishlistInitialState: Wishlist = {
     length: 0,

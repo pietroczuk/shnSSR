@@ -3,8 +3,8 @@
 // import all_reducers from '../../client/redux/reducers/all_reducers';
 
 import { configureStore } from '@reduxjs/toolkit';
-import { Display } from '../../client/redux/types/display.types';
-import { User } from '../../client/redux/types/user.types';
+import { Display } from '../../client/redux/Models/Display/Display.model';
+import { User } from '../../client/redux/Models/User/User.model';
 import allReducers from '../../client/redux/slices/allReducers';
 
 export const createServerInitStore = (language: string, currency: string, display_options: Display) => {

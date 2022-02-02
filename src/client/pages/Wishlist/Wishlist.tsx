@@ -3,7 +3,6 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './wishlist.scss';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
 import { pageTypes } from '../../utils/utilsFrondend';
 
@@ -19,6 +18,7 @@ import { RootState } from '../../client';
 import { RouteComponentProps } from 'react-router-dom';
 import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
 import ProductsWishlistGrid from '../../components/productsGrid/productsWishlistGrid/productsWishlistGrid';
+import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
 
 interface WishlistProps {
     url: string;

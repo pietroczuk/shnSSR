@@ -3,7 +3,7 @@ import styles from './showAvaibleFeatures.scss';
 import withStyles from "isomorphic-style-loader/withStyles";
 import HoverPopupContainer from "../hoverPopupContainer/HoverPopupContainer";
 import AllFeaturesDisplay from "../../features/AllFeaturesDisplay";
-import { DefaultVariantCode } from "../../../../../redux/types/publicConfig.types";
+import { DefaultVariantCode } from "../../../../../redux/Models/PublicConfig/DefaultVariantCode/DefaultVariantCode.model";
 
 interface ShowAvaibleFeaturesProps {
     active: boolean;

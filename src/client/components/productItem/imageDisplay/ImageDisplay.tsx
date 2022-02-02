@@ -7,11 +7,11 @@ import { useSelector, shallowEqual } from "react-redux";
 import LoadingSpinner from "../../helpers/ui/loadingSpinner/LoadingSpinner";
 import Blank from "../../svg/blank/Blank";
 import { RootState } from "../../../client";
-import { SingleProductVariation } from "../../../redux/types/page.types";
+import { Variation } from "../../../redux/Models/Product/Variations/Variation/Variation.model";
 
 interface Props {
     title: string,
-    imagesHolderUrl: SingleProductVariation,
+    imagesHolderUrl: Variation,
     forceVisual: boolean
     onHover: boolean
     placeholder: boolean

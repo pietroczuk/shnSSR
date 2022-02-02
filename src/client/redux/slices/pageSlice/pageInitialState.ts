@@ -1,11 +1,26 @@
-import { Page } from "../../types/page.types";
+import { Page } from "../../Models/Page/Page.model";
 
-export const PageInitialState : Page = {
-    type : '',
+export const pageInitialState : Page = {
+    type: '',
     data: {
+        id: '',
+        url: {},
+        title: '',
+        description: '',
         seo_title: '',
         seo_description: '',
-        title: '',
-        description: ''
+        categoryPage : {
+            products:[]
+        },
+        productPage: {
+            colection: '',
+            current_variation_id: '',
+            likes: 0,
+            sku: '',
+            variations: {}
+        },
+        staticPage: {
+            body: ''
+        }
     }
 }

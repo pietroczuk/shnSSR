@@ -1,6 +1,6 @@
 import Cookies from 'universal-cookie';
-import { Currency } from '../redux/types/systemConfig.types';
-
+import { AllCurrencies } from '../redux/Models/SystemConfig/AllCurrencies/AllCurrencies.model';
+import { PageTypePrefixUrls } from '../redux/Models/SystemConfig/PageTypePrefixUrls/PageTypePrefixUrls.model';
 // ---------- get page
 
 export const pageTypes = {
@@ -107,9 +107,7 @@ export const renderHtmlFromJson = (json: object | string) => {
 interface prepUrlFromConfigSlugArgs {
     (
         language: string,
-        slug_urls: {
-            [key: string]: string
-        } | undefined | null,
+        pageTypePrefixUrls: PageTypePrefixUrls,
         url_type: string | undefined | null,
         slug_prefix: string | undefined | null,
         url: string | undefined | null,
@@ -118,10 +116,10 @@ interface prepUrlFromConfigSlugArgs {
     ): string
 }
 
-export const prepUrlFromConfigSlug: prepUrlFromConfigSlugArgs = (language, slug_urls, url_type, slug_prefix, url, isMultilanguage, search) => {
+export const prepUrlFromConfigSlug: prepUrlFromConfigSlugArgs = (language, pageTypePrefixUrls, url_type, slug_prefix, url, isMultilanguage, search) => {
     let url_link = '/';
     language && isMultilanguage ? url_link += language + '/' : null;
-    url_type && slug_urls ? url_link += slug_urls[url_type] + '/' : null;
+    url_type && pageTypePrefixUrls ? url_link += pageTypePrefixUrls[url_type] + '/' : null;
     slug_prefix ? url_link += slug_prefix + '/' : null;
     url ? url_link += url + '/' : null;
     search ? url_link += '?' + search : null;
@@ -139,23 +137,23 @@ export const prepUrlFromConfigSlug: prepUrlFromConfigSlugArgs = (language, slug_
 interface getPriceByCurrencyArgs {
     (
         productPrices: {
-            [key: string]: number
+            [key: string]: string
         },
         userCurrency: string,
-        currency: Currency
+        allCurrencies: AllCurrencies
     ): string | null
 }
 
-export const getPriceByCurrency: getPriceByCurrencyArgs = (productPrices, userCurrency, currency) => {
+export const getPriceByCurrency: getPriceByCurrencyArgs = (productPrices, userCurrency, allCurrencies) => {
     const price = productPrices &&
         userCurrency &&
-        currency &&
-        currency[userCurrency] &&
-        currency[userCurrency].sign &&
+        allCurrencies &&
+        allCurrencies[userCurrency] &&
+        allCurrencies[userCurrency].sign &&
         productPrices[userCurrency] ? productPrices[userCurrency] : null;
-    return price && currency[userCurrency].isDisplayLeft ?
-        currency[userCurrency].isDisplayLeft ?
-            currency[userCurrency].sign + ' ' + price : price + ' ' + currency[userCurrency].sign : null;
+    return price && allCurrencies[userCurrency].isDisplayLeft ?
+        allCurrencies[userCurrency].isDisplayLeft ?
+            allCurrencies[userCurrency].sign + ' ' + price : price + ' ' + allCurrencies[userCurrency].sign : null;
 }
 
 /**

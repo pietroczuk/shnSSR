@@ -12,12 +12,12 @@ interface SeoMetaTagsProps {
 const SeoMetaTags: React.FC<SeoMetaTagsProps> = props => {
     const { url, language, pageType } = props;
 
-    const { seo, pageTitle, pageDescription, urlPrefix } = useSelector((state: RootState) => ({
+    const { seo, urlPrefix, pageTitle, pageDescription } = useSelector((state: RootState) => ({
         seo: state.PublicConfig.config.seo,
-        pageTitle: state.Page.data.seo_title,
-        pageDescription: state.Page.data.seo_description,
-        urlPrefix: state.SystemConfig.pageTypePrefixUrls[pageType]
-    }))
+        urlPrefix: state.SystemConfig.pageTypePrefixUrls[pageType],
+        pageTitle : state.Page.data.seo_title,
+        pageDescription: state.Page.data.seo_description
+    }));
 
     const title = pageTitle ? pageTitle : seo.title;
     const description = pageDescription ? pageDescription : seo.description;
@@ -61,7 +61,7 @@ const SeoMetaTags: React.FC<SeoMetaTagsProps> = props => {
                     },
                     {
                         name: 'og:site_name',
-                        content: og ? og.site_name : ''
+                        content: og ? og.siteName : ''
                     },
                 ]}
         />

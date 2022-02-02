@@ -1,6 +1,8 @@
 import Cookies from 'universal-cookie';
-import { Display } from '../../client/redux/types/display.types';
-import { CookiesKeysDisplay, Currency, Language } from '../../client/redux/types/systemConfig.types';
+import { Display } from '../../client/redux/Models/Display/Display.model';
+import { AllCurrencies } from '../../client/redux/Models/SystemConfig/AllCurrencies/AllCurrencies.model';
+import { AllLanguages } from '../../client/redux/Models/SystemConfig/AllLanguages/AllLanguages.model';
+import { DisplayKeys } from '../../client/redux/Models/SystemConfig/CookiesKeys/DisplayKeys/DisplayKeys.model';
 import { CoockieHeader } from '../types/coockieHeader.types';
 
 // LANGUAGE
@@ -8,7 +10,7 @@ interface CheckUserLanguage_Args {
     (
         cookie_header: CoockieHeader,
         browser_language: CoockieHeader,
-        allLanguages: Language,
+        allLanguages: AllLanguages,
         cookie_key: string
     ) : string
 }
@@ -26,7 +28,7 @@ export const checkUserLanguage : CheckUserLanguage_Args = (cookie_header, browse
     return cookie_lang;
 }
 
-export const urlDataFromPath = (full_path: string, allLanguages: Language, isMultilanguage: boolean) => {
+export const urlDataFromPath = (full_path: string, allLanguages: AllLanguages, isMultilanguage: boolean) => {
     const pathData: {
         languageCode: string,
         blankPath: boolean,
@@ -62,7 +64,7 @@ export const urlDataFromPath = (full_path: string, allLanguages: Language, isMul
 interface GetCurrencyCookie_Args {
     (
         cookie_header: CoockieHeader,
-        allCurrencies: Currency,
+        allCurrencies: AllCurrencies,
         cookie_key: string
     ) : string
 }
@@ -80,7 +82,7 @@ export const getCurrencyCookie : GetCurrencyCookie_Args = (cookie_header, allCur
 interface getDisplayCookies_Args {
     (
         cookie_header: CoockieHeader,
-        display_cookie_key_obj: CookiesKeysDisplay
+        display_cookie_key_obj: DisplayKeys
     ): Display
 }
 

@@ -6,12 +6,12 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setProductCurrVarId } from '../../../../../../redux/actions/actionCreators';
 import { RootState } from '../../../../../../client';
-import { Atribute } from '../../../../../../redux/types/publicConfig.types';
+import { SingleAtribute } from '../../../../../../redux/Models/PublicConfig/Features/SingleFeature/Atributes/SingleAtribute/SingleAtribute.model';
 // import base64 from 'base-64';
 // import { prepareAttribLink } from '../../../../utils/utilsFrondend';
 
 interface Props {
-    attrib: Atribute,
+    attrib: SingleAtribute,
     link: string,
     width?: number,
     active: boolean
@@ -23,7 +23,7 @@ const Text: React.FC<Props> = props => {
     const { attrib_title } = attrib;
     const textWidth = width ? (100 / width) - 2 + '%' : 'auto';
 
-    const variations = useSelector((state: RootState) => state.Page.data.variations);
+    const variations = useSelector((state: RootState) => state.Page.data.productPage.variations);
     const dispatch = useDispatch();
 
     const clickMe = () => {

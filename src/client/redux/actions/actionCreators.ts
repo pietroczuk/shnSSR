@@ -3,14 +3,17 @@ import { pageTypes, isObjectEmpty, getLocalStorage } from '../../utils/utilsFron
 
 import { systemConfigActions } from '../slices/systemConfigSlice/systemConfigSlice';
 import { publicConfigActions } from '../slices/publicConfigSlice/publicConfigSlice';
-import { pageActions } from '../slices/pageSlice/pageSlice';
 import { userActions } from '../slices/userSlice/userSlice';
 import { displayActions } from '../slices/displaySlice/displaySlice';
 import { wishlistActions } from '../slices/wishlistSlice/wishlistSlice';
-import { Api, Currency, SystemConfig } from '../types/systemConfig.types';
+import { SystemConfig } from '../Models/SystemConfig/SystemConfig.type';
 import { Dispatch } from '@reduxjs/toolkit';
-import { Variations } from '../types/page.types';
-import { Wishlist, WishlistProducts } from '../types/wishlist.types';
+import { Wishlist } from '../Models/Wishlist/Wishlist.model';
+import { Api } from '../Models/SystemConfig/Api/Api.model';
+import { AllCurrencies } from '../Models/SystemConfig/AllCurrencies/AllCurrencies.model';
+import { Variations } from '../Models/Product/Variations/Variations.model';
+import { WishlistProducts } from '../Models/Wishlist/WishlistProducts/WishlistProducts.model';
+import { pageActions } from '../slices/pageSlice/pageSlice';
 
 /* --------------------- CONFIG 
 loads global config
@@ -55,7 +58,7 @@ export const getPage = (api: Api, type: string, lang: string, url: string, query
     return axios.get(api.url + '/' + axios_endpoint,
       { signal: axiosAbortController ? axiosAbortController.signal : undefined })
       .then(res =>
-        dispatch(pageActions.setPageData({ data: res.data, query: query }))
+        dispatch(pageActions.setPageData({ data: res.data, query: query, pageType: type}))
       )
       .catch(err => {
         console.error('❌ Error get data from DB', err);
@@ -86,9 +89,9 @@ export const setGlobalDefaultVariantcode = (featureKey: string, value: object) =
  * language etc
  */
 
-export const setUserCurrency = (currency_code: string, all_currencies: Currency, cookieCurrencyKey: string) => (dispatch: Dispatch) => {
-  if (all_currencies[currency_code]) {
-    const actionPayload = { currency_code, cookieCurrencyKey };
+export const setUserCurrency = (currencyCode: string, allCurrencies: AllCurrencies, cookieCurrencyKey: string) => (dispatch: Dispatch) => {
+  if (allCurrencies[currencyCode]) {
+    const actionPayload = { currencyCode, cookieCurrencyKey };
     dispatch(userActions.setUserCurrency(actionPayload));
   }
 }
@@ -134,9 +137,9 @@ export const addToStoreWishlist = (api: Api, lang: string, productId: string, va
  * Get wishlist from localstorage  
  */
 
-export const checkWishlist = (initLocalstorageWishlistKey: string, wishlistState: Wishlist | null = null, api: Api, language: string) => (dispatch: Dispatch) => {
+export const checkWishlist = (initLocalstorageWishlistKey: string, wishlistState: Wishlist, api: Api, language: string) => (dispatch: Dispatch) => {
   const localstorageData = initLocalstorageWishlistKey ? getLocalStorage(initLocalstorageWishlistKey) : null;
-  const wishlistData: WishlistProducts | null = localstorageData ? localstorageData : wishlistState && wishlistState.products ? wishlistState.products : null;
+  const wishlistData: WishlistProducts = localstorageData ? localstorageData : wishlistState && wishlistState.products ? wishlistState.products : null;
   if (wishlistData) {
     const wishlistProducts: WishlistProducts = {};
     Promise.all(Object.entries(wishlistData).map(

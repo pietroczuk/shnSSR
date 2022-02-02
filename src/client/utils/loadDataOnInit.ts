@@ -1,6 +1,6 @@
 import { EnhancedStore } from '@reduxjs/toolkit';
 import { getPage, getGlobalConfig } from '../redux/actions/actionCreators';
-import { SystemConfig } from '../redux/types/systemConfig.types';
+import { SystemConfig } from '../redux/Models/SystemConfig/SystemConfig.type';
 
 interface loadDataOnInit_Args {
     (

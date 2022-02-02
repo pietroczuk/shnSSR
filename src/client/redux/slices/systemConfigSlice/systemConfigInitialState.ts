@@ -1,4 +1,4 @@
-import { SystemConfig } from "../../types/systemConfig.types";
+import { SystemConfig } from "../../Models/SystemConfig/SystemConfig.type";
 
 export const SystemConfigInitialState: SystemConfig = {
     productSlidersConfig: {

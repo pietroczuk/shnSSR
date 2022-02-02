@@ -1,15 +1,15 @@
 import { FC, useState } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from '../menuTop.scss';
-import { MenuItem } from '../../../redux/types/publicConfig.types';
+import { MenuItem } from '../../../redux/Models/PublicConfig/Menu/MenuItem/MenuItem.model';
 
 interface Props {
-    elem : MenuItem;
+    menuItem : MenuItem;
     prepareLabelMenu: Function;
     prepareMenuLink: Function;
 }
 
-const SubMenu: FC<Props> = ({ elem, prepareLabelMenu, prepareMenuLink }) => {
+const SubMenu: FC<Props> = ({ menuItem, prepareLabelMenu, prepareMenuLink }) => {
 
     const [openSubmenu, setOpenSubmenu] = useState(false);
 
@@ -20,7 +20,7 @@ const SubMenu: FC<Props> = ({ elem, prepareLabelMenu, prepareMenuLink }) => {
         setOpenSubmenu(false);
     }
 
-    const { items, label, color, columns } = elem;
+    const { items, label, color, columns } = menuItem;
     const percentOffset = 10;
     
 

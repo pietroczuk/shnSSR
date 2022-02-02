@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { SystemConfig } from '../../types/systemConfig.types';
+import { SystemConfig } from '../../Models/SystemConfig/SystemConfig.type';
 import { SystemConfigInitialState } from './systemConfigInitialState';
 
 type Action = {
