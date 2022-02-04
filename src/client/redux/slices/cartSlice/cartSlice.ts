@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { clearLocalStorage, getObjectLength, isObjectEmpty, setLocalStorage } from '../../../utils/utilsFrondend';
+import { clearLocalStorage, isObjectEmpty, setLocalStorage } from '../../../utils/utilsFrondend';
 import { Cart } from '../../Models/Cart/Cart.model';
+import { CartProducts } from '../../Models/Cart/CartProducts/CartProducts.model';
 // import { setLocalStorage, clearLocalStorage, isObjectEmpty, getObjectLength } from '../../../utils/utilsFrondend';
 import CartSliceInitialState from './cartSliceInitialState';
 
@@ -8,18 +9,14 @@ const cartSlice = createSlice({
     name: 'Cart',
     initialState: CartSliceInitialState,
     reducers: {
-    
-        addToCart(state, action) {
-            
+        addToCart(state, action) {      
             const { product, variantId, localstorageCartKey } = action.payload;
-            if (variantId && state && state.products && state.products[variantId]) {
+            if (variantId && state.products && state.products[variantId]) {
                 state.products[variantId].quantity++;
                 state.length++;
-
             } else {
                 const productId = product ? product.id : null;
                 if (productId && variantId) {
-                    // 
                     state.products[variantId] = {
                         p: productId,
                         v: variantId,
@@ -46,12 +43,13 @@ const cartSlice = createSlice({
         },
 
         updateCart(state: Cart, action) {
-            const productsData = action.payload;
-            state.products = productsData;
-            state.length = getObjectLength(productsData);
-            /** TODO
-             *  check number on load from loclastorage
-             */
+            const productsData: CartProducts = action.payload;
+            if(!isObjectEmpty(productsData)) {
+                state.length = Object.entries(productsData).reduce((actual , [_keyCurrent, valueCurrent])=> {
+                    return actual + valueCurrent.quantity
+                },0);
+                state.products = productsData;
+            }
             return state;
         },
     }

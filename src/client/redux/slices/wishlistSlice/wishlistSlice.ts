@@ -20,13 +20,12 @@ const wishlistSlice = createSlice({
              *  p: productId,
              *  v: variantId
              * }
-             */
-            console.log(action.payload);
-            
+             */         
             const { product, variantId, localstorageWishlistKey } = action.payload;
             if (variantId && state && state.products && state.products[variantId]) {
                 delete state.products[variantId];
                 state.length -= 1;
+                
             } else {
                 const productId = product ? product.id : null;
                 if (productId && variantId) {

@@ -25,17 +25,17 @@ const AddToWishlistSticker: FC<Props> = props => {
         wishlistProducts: state.Wishlist.products,
         showVisual: state.Display.showVisual
     }), shallowEqual)
-    const inWishList = wishlistProducts[variantId] ? true : false;
+    const alreadyInWishlist = wishlistProducts[variantId] ? true : false;
     const clickHandler = () => {
-        console.log('click', productId, variantId, inWishList);
-        variantId && productId && dispatch(addToStoreWishlist(api, lang, productId, variantId, localstorageWishlistKey, inWishList));
+        // console.log('click', productId, variantId, alreadyInWishlist);
+        variantId && productId && dispatch(addToStoreWishlist(api, lang, productId, variantId, localstorageWishlistKey, alreadyInWishlist));
     }
     return <div className={`${styles.addToWishContainer} ${showVisual ? styles.visualMode : ''}`} onClick={clickHandler}>
-        <div className={`${styles.iconContainer} ${inWishList ? styles.fullOpacity : ''}`}>
-            {inWishList ? <HeartFull /> : <WishlistIcon />}
+        <div className={`${styles.iconContainer} ${alreadyInWishlist ? styles.fullOpacity : ''}`}>
+            {alreadyInWishlist ? <HeartFull /> : <WishlistIcon />}
             {showVisual && <div className={styles.iconBg}></div>}
         </div>
-        {showLikes && <div className={styles.counter}>{inWishList ? likes + 1 : likes}</div>}
+        {showLikes && <div className={styles.counter}>{alreadyInWishlist ? likes + 1 : likes}</div>}
     </div>;
 }
 export default withStyles(styles)(AddToWishlistSticker);

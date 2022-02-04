@@ -31,13 +31,14 @@ const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
             dispatch(addToStoreCart(api, lang, productId, null, localstorageCartKey));
         }
     }
-    const { add_to_cart, choise, features, api, lang, localstorageCartKey } = useSelector((state: RootState) => ({
+    const { add_to_cart, choise, features, api, lang, localstorageCartKey, cartProducts } = useSelector((state: RootState) => ({
         add_to_cart: state.PublicConfig.translations && state.PublicConfig.translations.add_to_cart ? state.PublicConfig.translations.add_to_cart : null,
         choise: state.PublicConfig.translations && state.PublicConfig.translations.choise ? state.PublicConfig.translations.choise : null,
         features: state.PublicConfig.features,
         api: state.SystemConfig.api,
         lang: state.User.language,
-        localstorageCartKey: state.SystemConfig.localstorageKeys.cart
+        localstorageCartKey: state.SystemConfig.localstorageKeys.cart,
+        cartProducts: state.Cart.products
     }), shallowEqual);
 
     useEffect(() => {
@@ -47,7 +48,8 @@ const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
     const dispatch = useDispatch();
 
     const addToCartClickHandler = (variantId: string) => {
-        dispatch(addToStoreCart(api, lang, productId, variantId, localstorageCartKey));
+        const alreadyInCart = cartProducts[variantId] ? true : false;
+        dispatch(addToStoreCart(api, lang, productId, variantId, localstorageCartKey, alreadyInCart));
         console.log('add to cart product id:', productId);
     }
 

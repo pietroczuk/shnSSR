@@ -9,8 +9,8 @@ import { wishlistActions } from "../../slices/wishlistSlice/wishlistSlice";
 /**
  * Add to wishlist
  */
-export const addToStoreWishlist = (api: Api, lang: string, productId: string, variantId: string, localstorageWishlistKey: string, inWishList = false) => (dispatch: Dispatch) => {
-  if (!inWishList) {
+export const addToStoreWishlist = (api: Api, lang: string, productId: string, variantId: string, localstorageWishlistKey: string, alreadyInWishlist?:boolean) => (dispatch: Dispatch) => {
+  if (!alreadyInWishlist) {
     const page_url = '?lang=' + lang + '&variant=' + variantId + '&product=' + productId;
     const axios_endpoint = api.wishlist + page_url;
     return axios.get(api.url + '/' + axios_endpoint)
