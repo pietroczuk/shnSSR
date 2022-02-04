@@ -44,7 +44,7 @@ const Product: React.FC<RouteComponentProps<ProductProps>> = (props) => {
 
     useEffect(() => {
         const axiosAbortController = new AbortController();
-        dispatch(getPage(api, pageType, language, url, prepareSearchCode(location.search), axiosAbortController));
+        !ssr && dispatch(getPage(api, pageType, language, url, prepareSearchCode(location.search), axiosAbortController));
         scrollToTop(window);
         return () => {
             axiosAbortController.abort();

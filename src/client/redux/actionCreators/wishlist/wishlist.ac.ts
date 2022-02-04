@@ -12,7 +12,7 @@ import { wishlistActions } from "../../slices/wishlistSlice/wishlistSlice";
  export const addToStoreWishlist = (api: Api, lang: string, productId: string, variantId: string, localstorageWishlistKey: string, inWishList = false) => (dispatch: Dispatch) => {
     if (!inWishList) {
       const page_url = '?lang=' + lang + '&variant=' + variantId + '&product=' + productId;
-      const axios_endpoint = api.product + page_url;
+      const axios_endpoint = api.wishlist + page_url;
       return axios.get(api.url + '/' + axios_endpoint)
         .then(res => {
           const productData = {
@@ -49,7 +49,7 @@ import { wishlistActions } from "../../slices/wishlistSlice/wishlistSlice";
           const variantId = val.v;
           const productId = val.p;
           const page_url = '?lang=' + language + '&variant=' + variantId + '&product=' + productId;
-          const axios_endpoint = api.product + page_url;
+          const axios_endpoint = api.wishlist + page_url;
           return axios.get(api.url + '/' + axios_endpoint)
             .then(res => {
               return {
