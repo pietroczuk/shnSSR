@@ -1,6 +1,6 @@
 import { WishlistProducts } from "./WishlistProducts/WishlistProducts.model";
 
 export interface Wishlist {
-    length: number,
+    length: number;
     products?: WishlistProducts;
 }

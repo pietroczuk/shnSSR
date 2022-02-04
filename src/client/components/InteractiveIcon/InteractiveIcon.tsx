@@ -7,10 +7,11 @@ import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 
 import { pageTypes } from '../../utils/utilsFrondend';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { checkWishlist } from '../../redux/actions/actionCreators';
 import AssitiveText from '../helpers/display/assitiveText/AssitiveText';
 
 import { RootState } from '../../client';
+import { checkWishlist } from '../../redux/actionCreators/wishlist/wishlist.ac';
+import { checkCart } from '../../redux/actionCreators/cart/cart.ac';
 
 interface InteractiveIconProps {
     isDarkBackground: boolean
@@ -43,8 +44,7 @@ const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
         onClick,
         linkPageType
     } = props;
-    
-    let badgeNumber = 0;
+
     const width = customWidth ? customWidth : 50;
     const svgSize = customSvgSize ? customSvgSize : 20;
 
@@ -52,18 +52,46 @@ const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
     const linkUrl = rawSlug ? prepUrlFromConfigSlug(language, null, null, null, rawSlug, isMultilanguage) : undefined;
 
     const isLinkingToWishlist = linkPageType === pageTypes.wishlist;
+    const isLinkingToCart = linkPageType === pageTypes.cart;
+
+
+    let badgeNumber = 0;
+    let localstorageKey = null;
+    let apiConfig = null;
+
+    const dispatch = useDispatch();
+
+    if (isLinkingToCart) {
+        const { api, cartLocalstorageKey, cartLength } = useSelector((state: RootState) => ({
+            api: state.SystemConfig.api,
+            cartLocalstorageKey: state.SystemConfig.localstorageKeys.cart,
+            cartLength: state.Cart.length
+        }), shallowEqual);
+
+        badgeNumber = cartLength;
+        localstorageKey = cartLocalstorageKey;
+        apiConfig = api;
+    }
 
     if (isLinkingToWishlist) {
-        badgeNumber = useSelector((state: RootState) => state.Wishlist.length, shallowEqual);
-        const { api, initLocalstorageWishlistKey } = useSelector((state: RootState) => ({
+        const { api, wishlistLocalStorageKey, wishlistLenght } = useSelector((state: RootState) => ({
             api: state.SystemConfig.api,
-            initLocalstorageWishlistKey: state.SystemConfig.localstorageKeys.wishlist,
+            wishlistLocalStorageKey: state.SystemConfig.localstorageKeys.wishlist,
+            wishlistLenght: state.Wishlist.length
         }), shallowEqual);
-        const dispatch = useDispatch();
-        useEffect(() => {
-            dispatch(checkWishlist(initLocalstorageWishlistKey, null, api, language));
-        }, [])
+
+        badgeNumber = wishlistLenght;
+        localstorageKey = wishlistLocalStorageKey;
+        apiConfig = api;
     }
+    useEffect(() => {
+        if (isLinkingToCart) {
+            dispatch(checkCart(localstorageKey, null, apiConfig, language));
+        }
+        if (isLinkingToWishlist) {
+            dispatch(checkWishlist(localstorageKey, null, apiConfig, language));
+        }
+    }, []);
 
     const showBadge = badgeNumber > 0;
 

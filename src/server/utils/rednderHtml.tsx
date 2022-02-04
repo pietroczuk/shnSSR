@@ -111,6 +111,7 @@ export const rednderHtml: renderHtml = (req, server_store, context, new_routes_c
               <meta name="msapplication-TileImage" content="/images/shineposters_favicon_dark_black.png">
               <meta name="msapplication-TileColor" content="#fff">
               <meta name="theme-color" content="#000000">
+              <meta name="robots" content="noindex">
               <script>
                   window.__INITIAL_STATE__ = ${serialize(server_store.getState())};
                   window.__CONFIG__ = ${serialize(new_routes_config)};

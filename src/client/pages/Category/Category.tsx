@@ -3,7 +3,6 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './category.scss';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { getPage } from '../../redux/actions/actionCreators';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
 import {
     pageTypes, prepareSearchCode,
@@ -29,6 +28,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import ProductsCategoryGridProps from '../../components/productsGrid/productsCategoryGrid/productsCategoryGrid';
 import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
 import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
+import { getPage } from '../../redux/actionCreators/page/page.ac';
 
 interface CategoryProps {
     url: string;

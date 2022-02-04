@@ -4,8 +4,8 @@ import styles from './imageSwicher.scss';
 
 import NiceSwicher from '../niceSwitcher/NiceSwicher';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { setProductVisual } from '../../../../redux/actions/actionCreators';
 import { RootState } from '../../../../client';
+import { setProductVisual } from '../../../../redux/actionCreators/display/display.ac';
 
 const ImageSwicher: FC = () => {
 

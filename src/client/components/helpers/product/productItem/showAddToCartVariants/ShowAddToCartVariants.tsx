@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, shallowEqual } from "react-redux";
+import { useSelector, shallowEqual, useDispatch } from "react-redux";
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './showAddToCartVariants.scss';
 
@@ -12,6 +12,7 @@ import { getObjectLength, isObjectEmpty } from "../../../../../utils/utilsFronde
 import HoverPopupContainer from "../hoverPopupContainer/HoverPopupContainer";
 import { RootState } from "../../../../../client";
 import { Variations } from "../../../../../redux/Models/Product/Variations/Variations.model";
+import { addToStoreCart } from "../../../../../redux/actionCreators/cart/cart.ac";
 
 interface ShowAddToCartVariantsProps {
     active: boolean;
@@ -40,7 +41,10 @@ const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
         active !== showSubmenu && setShowSubmenu(false);
     }, [active]);
 
+    const dispatch = useDispatch();
+    
     const addToCartClickHandler = () => {
+        dispatch(addToStoreCart());
         console.log('add to cart product id:', productId);
     }
 

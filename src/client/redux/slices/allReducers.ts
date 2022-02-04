@@ -4,6 +4,7 @@ import userSlice from './userSlice/userSlice';
 import displaySlice from './displaySlice/displaySlice';
 import wishlistSlice from './wishlistSlice/wishlistSlice';
 import pageSlice from './pageSlice/pageSlice';
+import cartSlice from './cartSlice/cartSlice';
 
 const allReducers = {
     SystemConfig: systemConfigSlice.reducer,
@@ -12,6 +13,7 @@ const allReducers = {
     User: userSlice.reducer,
     Display: displaySlice.reducer,
     Wishlist: wishlistSlice.reducer,
+    Cart: cartSlice.reducer,
 }
 
 export default allReducers;

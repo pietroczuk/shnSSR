@@ -4,11 +4,11 @@ import styles from '../languageSwitcher/languageSwitcher.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { setUserCurrency } from '../../redux/actions/actionCreators';
 import { getCookie, setCookie } from '../../utils/utilsFrondend';
 
 import CurrencyIcon from '../svg/icons/CurrencyIcon';
 import { RootState } from '../../client';
+import { setUserCurrency } from '../../redux/actionCreators/user/user.ac';
 
 const CurrencySwitcher: FC = () => {
     const { currency, cookieCurrencyKey, allCurrencies } = useSelector((state: RootState) => ({

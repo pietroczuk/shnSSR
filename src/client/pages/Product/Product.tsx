@@ -3,7 +3,6 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './product.scss';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { getPage } from '../../redux/actions/actionCreators';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
 import { pageTypes, prepareSearchCode, scrollToTop } from '../../utils/utilsFrondend';
 
@@ -13,6 +12,7 @@ import { RootState } from '../../client';
 import { RouteComponentProps } from 'react-router-dom';
 import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
 import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
+import { getPage } from '../../redux/actionCreators/page/page.ac';
 
 interface ProductProps {
     url: string;

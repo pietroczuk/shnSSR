@@ -5,8 +5,8 @@ import WishlistIcon from '../../../svg/icons/WishlistIcon';
 import HeartFull from '../../../svg/icons/HeartFull';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { addToStoreWishlist } from '../../../../redux/actions/actionCreators';
 import { RootState } from '../../../../client';
+import { addToStoreWishlist } from '../../../../redux/actionCreators/wishlist/wishlist.ac';
 
 interface Props {
     showLikes: boolean,

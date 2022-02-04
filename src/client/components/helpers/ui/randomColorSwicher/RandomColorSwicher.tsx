@@ -4,8 +4,8 @@ import styles from './randomColorSwicher.scss';
 
 import NiceSwicher from '../niceSwitcher/NiceSwicher';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { setProductRandomColors } from '../../../../redux/actions/actionCreators';
 import { RootState } from '../../../../client';
+import { setProductRandomColors } from '../../../../redux/actionCreators/display/display.ac';
 
 const RandomColorSwicher: React.FC = () => {
 

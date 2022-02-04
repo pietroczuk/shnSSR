@@ -1,5 +1,5 @@
-import { VariationImage } from "../../../Product/Variations/Variation/VariationImage/VariationImage.model";
-import { Variations } from "../../../Product/Variations/Variations.model";
+import { VariationImage } from "../../../../Product/Variations/Variation/VariationImage/VariationImage.model";
+import { Variations } from "../../../../Product/Variations/Variations.model";
 
 
 export interface WishlistProductData {
