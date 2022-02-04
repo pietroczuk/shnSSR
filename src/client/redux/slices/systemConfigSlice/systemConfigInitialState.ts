@@ -45,7 +45,7 @@ export const SystemConfigInitialState: SystemConfig = {
         similarvisit: '',
         global: '',
         wishlist: '',
-        checkcart: '',
+        cart: '',
         search: '',
         similarcat: '',
         product: '',

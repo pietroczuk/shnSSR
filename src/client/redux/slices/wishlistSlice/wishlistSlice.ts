@@ -15,7 +15,7 @@ const wishlistSlice = createSlice({
             return state;
         },
         addToWishlist(state, action) {
-            /**
+            /** 
              * model products => variantId = {
              *  p: productId,
              *  v: variantId

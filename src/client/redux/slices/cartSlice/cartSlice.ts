@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { clearLocalStorage, getObjectLength, isObjectEmpty, setLocalStorage } from '../../../utils/utilsFrondend';
 import { Cart } from '../../Models/Cart/Cart.model';
 // import { setLocalStorage, clearLocalStorage, isObjectEmpty, getObjectLength } from '../../../utils/utilsFrondend';
 import CartSliceInitialState from './cartSliceInitialState';
@@ -7,28 +8,14 @@ const cartSlice = createSlice({
     name: 'Cart',
     initialState: CartSliceInitialState,
     reducers: {
-        // updateWishlist(state: Wishlist, action) {
-        //     const productsData = action.payload;
-        //     state.products = productsData;
-        //     state.length = getObjectLength(productsData);
-        //     return state;
-        // },
-        addToCart(state: Cart, action) {
-            console.log('addToCart', action.payload);
-            state.length++;
-            return state;
-        },
-        updateCart(state: Cart, action) {
-            console.log('updateCart', action.payload);
-            return state;
-        }
-        /*addToWishlist(state, action) {
-            console.log(action.payload);
+    
+        addToCart(state, action) {
             
-            const { product, variantId, localstorageWishlistKey } = action.payload;
+            const { product, variantId, localstorageCartKey } = action.payload;
             if (variantId && state && state.products && state.products[variantId]) {
-                delete state.products[variantId];
-                state.length -= 1;
+                state.products[variantId].quantity++;
+                state.length++;
+
             } else {
                 const productId = product ? product.id : null;
                 if (productId && variantId) {
@@ -36,26 +23,37 @@ const cartSlice = createSlice({
                     state.products[variantId] = {
                         p: productId,
                         v: variantId,
+                        quantity: 1,
                         productData: product
                     }
                     state.length++;
                 }
             }
             if (isObjectEmpty(state.products)) {
-                clearLocalStorage(localstorageWishlistKey);
+                clearLocalStorage(localstorageCartKey);
             } else {
-                const localStorageWishlist = {};
+                const localStorageCart = {};
                 Object.entries(state.products).forEach(([key, value]) => {
-                    localStorageWishlist[key] = {
+                    localStorageCart[key] = {
                         p: value.p,
-                        v: key
+                        v: key,
+                        quantity: value.quantity
                     }
                 });
-                setLocalStorage(localStorageWishlist, localstorageWishlistKey);
+                setLocalStorage(localStorageCart, localstorageCartKey);
             }
             return state;
-        }
-        */
+        },
+
+        updateCart(state: Cart, action) {
+            const productsData = action.payload;
+            state.products = productsData;
+            state.length = getObjectLength(productsData);
+            /** TODO
+             *  check number on load from loclastorage
+             */
+            return state;
+        },
     }
 });
 export const cartActions = cartSlice.actions;

@@ -28,13 +28,16 @@ const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
         if (getObjectLength(avaibleVariations) > 1) {
             setShowSubmenu(prevstate => !prevstate);
         } else {
-            addToCartClickHandler();
+            dispatch(addToStoreCart(api, lang, productId, null, localstorageCartKey));
         }
     }
-    const { add_to_cart, choise, features } = useSelector((state: RootState) => ({
+    const { add_to_cart, choise, features, api, lang, localstorageCartKey } = useSelector((state: RootState) => ({
         add_to_cart: state.PublicConfig.translations && state.PublicConfig.translations.add_to_cart ? state.PublicConfig.translations.add_to_cart : null,
         choise: state.PublicConfig.translations && state.PublicConfig.translations.choise ? state.PublicConfig.translations.choise : null,
         features: state.PublicConfig.features,
+        api: state.SystemConfig.api,
+        lang: state.User.language,
+        localstorageCartKey: state.SystemConfig.localstorageKeys.cart
     }), shallowEqual);
 
     useEffect(() => {
@@ -42,9 +45,9 @@ const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
     }, [active]);
 
     const dispatch = useDispatch();
-    
-    const addToCartClickHandler = () => {
-        dispatch(addToStoreCart());
+
+    const addToCartClickHandler = (variantId: string) => {
+        dispatch(addToStoreCart(api, lang, productId, variantId, localstorageCartKey));
         console.log('add to cart product id:', productId);
     }
 
@@ -69,7 +72,7 @@ const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
                         const attribTooltip = featureIdForSelect ? features[featureIdForSelect].atributes[attribId].attrib_tooltip : null;
 
                         return (
-                            <div className={styles.selectOption} onClick={addToCartClickHandler} key={variantId}>
+                            <div className={styles.selectOption} onClick={addToCartClickHandler.bind(this,variantId)} key={variantId}>
                                 <ShowSizesText text={attribTitle} minitext={attribTooltip} />
                                 <ShowPrice allPrices={variant.variation_price} />
                             </div>

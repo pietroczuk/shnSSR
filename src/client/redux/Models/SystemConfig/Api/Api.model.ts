@@ -2,7 +2,7 @@ export interface Api {
     similarvisit: string;
     global: string;
     wishlist: string;
-    checkcart: string;
+    cart: string;
     search: string;
     similarcat: string;
     product: string;
