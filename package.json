@@ -11,12 +11,9 @@
     "clean-win": "del /s /q public_html\\public\\*client*.js public_html\\public\\*client*.js.map public_html\\server\\*server*.js*",
     "clean": "rm -if public_html/public/*client*.js public_html/public/*client*.js.map public_html/public/*update.js public_html/public/*update.js.map public_html/public/*update.json public_html/server/*.*",
     "dev": "npm run clean && npm-run-all --parallel dev:*",
-
     "dev:start-client": "webpack  --config webpack/webpack.client.js --env env=dev --watch",
     "dev:start-server": "webpack  --config webpack/webpack.server.js --env env=dev --watch",
-
     "dev:server": "nodemon --watch public_html/server  --exec \" tsc && node public_html/server/server.js \" ",
-
     "build": "npm run clean && npm-run-all --parallel prod:*",
     "prod:build-client": "webpack --config webpack/webpack.client.js --env env=prod --watch",
     "prod:build-server": "webpack --config webpack/webpack.server.js --env env=prod --watch",
@@ -31,6 +28,7 @@
     "@reduxjs/toolkit": "^1.6.1",
     "axios": "^0.24.0",
     "dotenv": "^8.2.0",
+    "mobile-detect": "^1.4.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.2",

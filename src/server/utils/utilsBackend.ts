@@ -8,14 +8,14 @@ import { CoockieHeader } from '../types/coockieHeader.types';
 // LANGUAGE
 interface CheckUserLanguage_Args {
     (
-        cookie_header: CoockieHeader,
+        cookieHeader: CoockieHeader,
         browser_language: CoockieHeader,
         allLanguages: AllLanguages,
         cookie_key: string
     ) : string
 }
-export const checkUserLanguage : CheckUserLanguage_Args = (cookie_header, browser_language, allLanguages, cookie_key) => {
-    let cookie_lang = new Cookies(cookie_header).get(cookie_key);
+export const checkUserLanguage : CheckUserLanguage_Args = (cookieHeader, browser_language, allLanguages, cookie_key) => {
+    let cookie_lang = new Cookies(cookieHeader).get(cookie_key);
     if (!allLanguages[cookie_lang]) {
         // browser
         if (browser_language) {
@@ -63,14 +63,14 @@ export const urlDataFromPath = (full_path: string, allLanguages: AllLanguages, i
 
 interface GetCurrencyCookie_Args {
     (
-        cookie_header: CoockieHeader,
+        cookieHeader: CoockieHeader,
         allCurrencies: AllCurrencies,
         cookie_key: string
     ) : string
 }
 
-export const getCurrencyCookie : GetCurrencyCookie_Args = (cookie_header, allCurrencies, cookie_key) => {
-    const cookie_currency = new Cookies(cookie_header).get(cookie_key);
+export const getCurrencyCookie : GetCurrencyCookie_Args = (cookieHeader, allCurrencies, cookie_key) => {
+    const cookie_currency = new Cookies(cookieHeader).get(cookie_key);
     if (!allCurrencies[cookie_currency]) {
         return Object.keys(allCurrencies)[0];
     }
@@ -81,13 +81,13 @@ export const getCurrencyCookie : GetCurrencyCookie_Args = (cookie_header, allCur
 
 interface getDisplayCookies_Args {
     (
-        cookie_header: CoockieHeader,
-        display_cookie_key_obj: DisplayKeys
+        cookieHeader: CoockieHeader,
+        displayCookieKeyObj: DisplayKeys
     ): Display
 }
 
-export const getDisplayCookies: getDisplayCookies_Args = (cookie_header, display_cookie_key_obj) => {
-    const visual = new Cookies(cookie_header).get(display_cookie_key_obj['visualMode']) === "true" ? true : false;
-    const random = new Cookies(cookie_header).get(display_cookie_key_obj['randomVariant']) === "true" ? true : false;
-    return { showVisual: visual, showRandom: random }
+export const getDisplayCookies: getDisplayCookies_Args = (cookieHeader, displayCookieKeyObj) => {
+    const visual = new Cookies(cookieHeader).get(displayCookieKeyObj['visualMode']) === "true" ? true : false;
+    const random = new Cookies(cookieHeader).get(displayCookieKeyObj['randomVariant']) === "true" ? true : false;
+    return { showVisual: visual, showRandom: random, isMobile: false }
 }

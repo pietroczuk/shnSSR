@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import DivNavLink from '../divNavLink/DivNavLink';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './interactiveIcon.scss';
@@ -7,11 +7,13 @@ import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 
 import { pageTypes } from '../../utils/utilsFrondend';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import AssitiveText from '../helpers/display/assitiveText/AssitiveText';
 
 import { RootState } from '../../client';
 import { checkWishlist } from '../../redux/actionCreators/wishlist/wishlist.ac';
 import { checkCart } from '../../redux/actionCreators/cart/cart.ac';
+
+import AssitiveText from '../helpers/display/assitiveText/AssitiveText';
+import IconSubmenu from '../iconSubmenu/IconSubmenu';
 
 interface InteractiveIconProps {
     isDarkBackground: boolean
@@ -26,12 +28,13 @@ interface InteractiveIconProps {
 }
 
 const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
-    const { language, isMultilanguage, specialPagesUrlsArray, translations } =
+    const { language, isMultilanguage, specialPagesUrlsArray, translations, isMobile } =
         useSelector((state: RootState) => ({
             language: state.User.language,
             isMultilanguage: state.SystemConfig.isMultilanguage,
             specialPagesUrlsArray: state.SystemConfig.specialPagesUrlsArray,
-            translations: state.PublicConfig.translations
+            translations: state.PublicConfig.translations,
+            isMobile: state.Display.isMobile
         }), shallowEqual);
     const {
         isDarkBackground,
@@ -44,6 +47,20 @@ const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
         onClick,
         linkPageType
     } = props;
+
+    const [showSubmenu, setShowSubmenu] = useState(false);
+
+    // const setShowSubmenuOpen = () => {
+    //     setShowSubmenu(true);
+    //     console.log('open');
+    // }
+    // const setShowSubmenuClose = () => {
+    //     setShowSubmenu(false);
+    //     console.log('close');
+    // }
+    const toogleShowMenu = () => {
+        setShowSubmenu(prevState => !prevState);
+    }
 
     const width = customWidth ? customWidth : 50;
     const svgSize = customSvgSize ? customSvgSize : 20;
@@ -95,6 +112,8 @@ const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
 
     const showBadge = badgeNumber > 0;
 
+    const enableHoverHandlers = (isLinkingToCart || isLinkingToWishlist) && !isMobile;
+    // console.log('enableHoverHandlers', enableHoverHandlers);
     return (
         <DivNavLink to={linkUrl}
             className={`
@@ -106,7 +125,10 @@ const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
             style={{
                 width: width + 'px'
             }}
-            onClick={onClick}
+            // onClick={onClick}         
+            onClick={enableHoverHandlers ? toogleShowMenu : onClick}
+            // onMouseEnter={enableHoverHandlers ? setShowSubmenuOpen : onMouseEnter}
+            // onMouseLeave={enableHoverHandlers ? setShowSubmenuClose : onMouseLeave}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >
@@ -120,6 +142,7 @@ const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
                 {showBadge && <div className={styles.badge}>{badgeNumber}</div>}
                 {props.children}
             </div>
+            {showSubmenu && <IconSubmenu align='right' parrentWidth={width}>tutaj content</IconSubmenu>}
         </DivNavLink>
     )
 }
