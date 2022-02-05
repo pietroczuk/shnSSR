@@ -12,5 +12,7 @@ export interface WishlistProductData {
     };
     variations: Variations;
     titlekey: string;
+    title: string;
     url: string;
+    variantId: string;
 }

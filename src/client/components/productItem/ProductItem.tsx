@@ -33,7 +33,7 @@ const ProductItem: FC<ProductItemProps> = props => {
 
     const showPlaceholder = !product && !wishlistProduct ? true : false;
 
-    const title = product ? product.title : null;
+    const title = product ? product.title : wishlistProduct ? wishlistProduct.productData.title : null;
     const url = product ? product.url : wishlistProduct ? wishlistProduct.productData.url : null;
     const hashmap = product ? product.hashmap : null;
     const likes = product ? product.likes : wishlistProduct ? wishlistProduct.productData.likes : null;

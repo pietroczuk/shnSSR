@@ -11,7 +11,7 @@ const ProductsWishlistGrid: React.FC = () => {
     }))
 
     return <div className={styles.productsGrid}>
-        {products && Object.entries(products).map(
+        {products && Object.entries(products).reverse().map(
             ([_key, val]) => {
                 return <ProductItem
                     wishlistProduct={val}

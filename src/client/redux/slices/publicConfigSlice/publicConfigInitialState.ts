@@ -10,6 +10,7 @@ export const PublicConfigInitialState: PublicConfig = {
 
         wishlistLabel: '',
         wishlistStrictLabel: '',
+        gotoWishlist: '',
         
         priceFrom: '',
         choiseLabel: '',

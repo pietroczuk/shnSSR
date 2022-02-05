@@ -52,14 +52,14 @@ const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
     const [showSubmenu, setShowSubmenu] = useState(false);
 
     const setShowSubmenuOpen = () => {
-        // setShowSubmenu(true);
+        setShowSubmenu(true);
     }
     const setShowSubmenuClose = () => {
-        // setShowSubmenu(false);
+        setShowSubmenu(false);
     }
-    const toogleShowMenu = () => {
-        setShowSubmenu(prevState => !prevState);
-    }
+    // const toogleShowMenu = () => {
+    //     setShowSubmenu(prevState => !prevState);
+    // }
 
     const width = customWidth ? customWidth : 50;
     const svgSize = customSvgSize ? customSvgSize : 20;
@@ -117,7 +117,7 @@ const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
     const isCartSubmenuVisible = showSubmenu && isLinkingToCart ? true : false;
     return (
         <div className={styles.iconHolder}
-            onClick={enableHoverHandlers ? toogleShowMenu : onClick}
+            // onClick={enableHoverHandlers ? toogleShowMenu : onClick}
             onMouseEnter={enableHoverHandlers ? setShowSubmenuOpen : onMouseEnter}
             onMouseLeave={enableHoverHandlers ? setShowSubmenuClose : onMouseLeave}
         >
@@ -146,8 +146,8 @@ const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
                     {props.children}
                 </div>
             </DivNavLink>
-            {isWishlistSubmenuVisible && <WishlistSubmenu parrentWidth={width} />}
-            {isCartSubmenuVisible && <CartSubmenu parrentWidth={width} />}
+            {isWishlistSubmenuVisible && <WishlistSubmenu parrentWidth={width} linkUrl={linkUrl} clickHandler={setShowSubmenuClose} />}
+            {isCartSubmenuVisible && <CartSubmenu parrentWidth={width} linkUrl={linkUrl}/>}
         </div>
     )
 }

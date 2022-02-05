@@ -4,7 +4,8 @@ import { RootState } from "../../../client";
 import HeaderIconSubmenu from "../headerIconSubmenu/HeaderIconSubmenu";
 
 interface CartSubmenuProps {
-    parrentWidth?: number
+    parrentWidth?: number,
+    linkUrl?: string
 }
 
 const CartSubmenu: React.FC<CartSubmenuProps> = props => {

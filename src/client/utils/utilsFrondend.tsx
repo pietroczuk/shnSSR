@@ -227,7 +227,7 @@ export const clearLocalStorage = (key: string) => {
 
 export const cutText = (text: string, cutLenght = 50) => {
     return text && text.length > cutLenght ?
-        text.substr(0, cutLenght).substr(0, Math.min(text.length, text.lastIndexOf(" "))) + '...' :
+        text.substring(0, cutLenght).substring(0, Math.min(text.length, text.lastIndexOf(" "))) + '...' :
         text ? text : null;
 }
 

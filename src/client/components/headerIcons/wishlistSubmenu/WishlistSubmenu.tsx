@@ -1,30 +1,37 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { RootState } from "../../../client";
 import BlackButton from "../../helpers/ui/blackButton/BlackButton";
 import HeaderIconSubmenu from "../headerIconSubmenu/HeaderIconSubmenu";
 import ScrollSubmenuContent from "../scrollSubmenuContent/ScrollSubmenuContent";
 
 interface WishlistSubmenuProps {
-    parrentWidth?: number
+    parrentWidth?: number,
+    linkUrl?: string,
+    clickHandler?: VoidFunction
 }
 
 const WishlistSubmenu: React.FC<WishlistSubmenuProps> = props => {
-    const { parrentWidth } = props;
+    const { parrentWidth, linkUrl, clickHandler } = props;
 
-    const { wishlistLabel, wishlistLenght } = useSelector((state: RootState) => ({
+    const { wishlistLenght, wishlistLabel, gotoWishlist } = useSelector((state: RootState) => ({
+        wishlistLenght: state.Wishlist.length,
         wishlistLabel: state.PublicConfig.translations.wishlistLabel,
-        wishlistLenght: state.Wishlist.length
+        gotoWishlist: state.PublicConfig.translations.gotoWishlist
     }))
 
-    return <HeaderIconSubmenu parrentWidth={parrentWidth} align="right" title={wishlistLabel}>
-        {wishlistLenght ? 
-        <ScrollSubmenuContent listType="wishlist"/>
-        :
-        <p>Twoja lista jest niestety pusta :(</p>
-        }
+    // const wishlist = rawSlug ? prepUrlFromConfigSlug(language, null, null, null, rawSlug, isMultilanguage)
 
-        <BlackButton sizeEm={0.9} clickHandler={()=>{console.log('klik')}} label="idz do listy" />
+    return <HeaderIconSubmenu parrentWidth={parrentWidth} align="right" title={wishlistLabel}>
+        {wishlistLenght ?
+            <ScrollSubmenuContent listType="wishlist" clickHandler={clickHandler}/>
+            :
+            <p>Twoja lista jest niestety pusta :(</p>
+        }
+        <Link to={linkUrl}>
+            <BlackButton sizeEm={0.9} clickHandler={clickHandler} label={gotoWishlist} />
+        </Link>
     </HeaderIconSubmenu>
 }
 

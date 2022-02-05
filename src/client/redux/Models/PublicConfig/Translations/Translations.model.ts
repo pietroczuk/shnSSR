@@ -5,6 +5,7 @@ export interface Translations {
 
     wishlistLabel: string;
     wishlistStrictLabel: string;
+    gotoWishlist: string;
 
     priceFrom: string;
 

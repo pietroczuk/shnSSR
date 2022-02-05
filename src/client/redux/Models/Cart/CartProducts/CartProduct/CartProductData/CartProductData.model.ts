@@ -8,4 +8,8 @@ export interface CartProductData {
     url: string;
     variations: Variations;
     variation_image: VariationImage;
+    min_price: {
+        [key: string]: string;
+    };
+    variantId: string;
 }
