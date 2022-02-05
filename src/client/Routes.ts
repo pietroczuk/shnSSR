@@ -2,6 +2,7 @@ import { loadDataOnInit } from './utils/loadDataOnInit';
 import { pageTypes } from './utils/utilsFrondend';
 
 import loadable from '@loadable/component';
+import Cart from './pages/Cart/Cart';
 
 const RootApp = loadable(() => import(/* webpackPrefetch: true */ './pages/rootApp/RootApp'), {});
 const HomePage = loadable(() => import(/* webpackPrefetch: true */ './pages/HomePage/HomePage'), {});
@@ -52,11 +53,17 @@ export const getRoutes = () => {
                     },
                     {
                         component: Wishlist,
-                        // loadDataOnInit: loadDataOnInit,
                         path: '/',
                         exact: true,
                         server_change: false,
                         type: pageTypes.wishlist
+                    },
+                    {
+                        component: Cart,
+                        path: '/',
+                        exact: true,
+                        server_change: false,
+                        type: pageTypes.cart
                     },
                     {
                         component: NotFoundPage
