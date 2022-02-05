@@ -27,8 +27,8 @@ interface CartProps {
 const Cart: React.FC<RouteComponentProps<CartProps>> = props => {
     const pageType = pageTypes.cart;
 
-    const { title, cart, language, cartMultilanguageUrls, ssr } = useSelector((state: RootState) => ({
-        title: state.PublicConfig.translations.cart,
+    const { cartLabel, cart, language, cartMultilanguageUrls, ssr } = useSelector((state: RootState) => ({
+        cartLabel: state.PublicConfig.translations.cartLabel,
         cart: state.Cart,
         language: state.User.language,
         cartMultilanguageUrls: state.SystemConfig.specialPagesUrlsArray[pageType],
@@ -63,7 +63,7 @@ const Cart: React.FC<RouteComponentProps<CartProps>> = props => {
             {<SeoMetaTags url={url} language={language} pageType={pageType}/>}
 
             <MainContent>
-                <ShowTitleWithBadge title={title} badgeNumber={badgeNumber} customWidth={20} />
+                <ShowTitleWithBadge title={cartLabel} badgeNumber={badgeNumber} customWidth={20} />
                 <div>
                     {/* <FixedBar>
                         <ImageSwicher />

@@ -1,12 +1,17 @@
 export interface Translations {
-    add_to_cart: string;
-    price_from: string;
-    wishlist: string;
-    cart: string;
-    choise: string;
+    cartLabel: string,
+    cartStrictLabel: string,
+    addToCart: string;
+
+    wishlistLabel: string;
+    wishlistStrictLabel: string;
+
+    priceFrom: string;
+
+    choiseLabel: string;
     homepage: string;
-    show_arrangement: string;
-    hide_arrangement: string;
-    show_random: string;
-    hide_random: string;
+    showArrangement: string;
+    hideArrangement: string;
+    showRandom: string;
+    hideRandom: string;
 }

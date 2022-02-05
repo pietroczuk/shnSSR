@@ -31,9 +31,9 @@ const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
             dispatch(addToStoreCart(api, lang, productId, null, localstorageCartKey));
         }
     }
-    const { add_to_cart, choise, features, api, lang, localstorageCartKey, cartProducts } = useSelector((state: RootState) => ({
-        add_to_cart: state.PublicConfig.translations && state.PublicConfig.translations.add_to_cart ? state.PublicConfig.translations.add_to_cart : null,
-        choise: state.PublicConfig.translations && state.PublicConfig.translations.choise ? state.PublicConfig.translations.choise : null,
+    const { addToCart, choiseLabel, features, api, lang, localstorageCartKey, cartProducts } = useSelector((state: RootState) => ({
+        addToCart: state.PublicConfig.translations && state.PublicConfig.translations.addToCart ? state.PublicConfig.translations.addToCart : null,
+        choiseLabel: state.PublicConfig.translations && state.PublicConfig.translations.choiseLabel ? state.PublicConfig.translations.choiseLabel : null,
         features: state.PublicConfig.features,
         api: state.SystemConfig.api,
         lang: state.User.language,
@@ -62,7 +62,7 @@ const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
 
         return <div className={styles.selectOptionsCointainerRoot}>
             <div className={styles.selectOptionsCointainerChild}>
-                <PopupTitle text={choise + ' ' + featureTitle} underline={true} />
+                <PopupTitle text={choiseLabel + ' ' + featureTitle} underline={true} />
                 <div className={styles.selectOptionsCointainer}>
                     {/* {console.log(avaibleVariations)} */}
                     {Object.keys(avaibleVariations).map(variantId => {
@@ -88,7 +88,7 @@ const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
     return <HoverPopupContainer active={active}>
         {showSubmenu && showRestVariants(avaibleVariations)}
         <BlackButton
-            label={add_to_cart}
+            label={addToCart}
             clickHandler={onClickHandler}
         />
     </HoverPopupContainer>

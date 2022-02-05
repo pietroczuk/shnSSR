@@ -21,12 +21,12 @@ const RandomColorSwicher: React.FC = () => {
     }
     const options = [
         {
-            title: translations && translations.show_random ? translations.show_random : '',
+            title: translations && translations.showRandom ? translations.showRandom : '',
             clickHandler: clickHandlerFunction,
             default: showRandom ? true : false,
         },
         {
-            title: translations && translations.hide_random ? translations.hide_random : '',
+            title: translations && translations.hideRandom ? translations.hideRandom : '',
             clickHandler: clickHandlerFunction,
             default: !showRandom ? true : false,
         },

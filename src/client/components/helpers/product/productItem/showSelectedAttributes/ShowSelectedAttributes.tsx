@@ -13,16 +13,17 @@ import { Variations } from "../../../../../redux/Models/Product/Variations/Varia
 interface ShowSelectedAttributesProps {
     selectedVariantId: string;
     avaibleVariations: Variations;
+    customFontSize?: number;
 }
 
 const ShowSelectedAttributes: React.FC<ShowSelectedAttributesProps> = props => {
-    const { selectedVariantId, avaibleVariations } = props;
+    const { selectedVariantId, avaibleVariations, customFontSize } = props;
     const features = useSelector((state: RootState) => state.PublicConfig.features, shallowEqual);
     const productFeatData = avaibleVariations && avaibleVariations[selectedVariantId] && avaibleVariations[selectedVariantId].variation_code ? avaibleVariations[selectedVariantId].variation_code : null;
     if ((productFeatData && isObjectEmpty(productFeatData)) || isObjectEmpty(features)) {
         return null;
     }
-    return <div className={styles.featDataCont}>{
+    return <div className={styles.featDataCont} style={customFontSize ? {fontSize: customFontSize+'em'} : {}}>{
         productFeatData && Object.keys(productFeatData).map(attribId => {
             const variantFeature = productFeatData[attribId];
             const foundFeature = features[variantFeature.feature] && features[variantFeature.feature] ? features[variantFeature.feature] : null;

@@ -13,7 +13,8 @@ import { checkWishlist } from '../../redux/actionCreators/wishlist/wishlist.ac';
 import { checkCart } from '../../redux/actionCreators/cart/cart.ac';
 
 import AssitiveText from '../helpers/display/assitiveText/AssitiveText';
-import IconSubmenu from '../iconSubmenu/IconSubmenu';
+import WishlistSubmenu from '../headerIcons/wishlistSubmenu/WishlistSubmenu';
+import CartSubmenu from '../headerIcons/cartSubmenu/CartSubmenu';
 
 interface InteractiveIconProps {
     isDarkBackground: boolean
@@ -50,14 +51,12 @@ const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
 
     const [showSubmenu, setShowSubmenu] = useState(false);
 
-    // const setShowSubmenuOpen = () => {
-    //     setShowSubmenu(true);
-    //     console.log('open');
-    // }
-    // const setShowSubmenuClose = () => {
-    //     setShowSubmenu(false);
-    //     console.log('close');
-    // }
+    const setShowSubmenuOpen = () => {
+        // setShowSubmenu(true);
+    }
+    const setShowSubmenuClose = () => {
+        // setShowSubmenu(false);
+    }
     const toogleShowMenu = () => {
         setShowSubmenu(prevState => !prevState);
     }
@@ -113,37 +112,43 @@ const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
     const showBadge = badgeNumber > 0;
 
     const enableHoverHandlers = (isLinkingToCart || isLinkingToWishlist) && !isMobile;
-    // console.log('enableHoverHandlers', enableHoverHandlers);
-    return (
-        <DivNavLink to={linkUrl}
-            className={`
-            ${styles.icon} 
-            ${isDarkBackground ? styles.whiteIcon : ''}
-            ${isHoverBackground ? styles.iconHover : ''}
-            ${isHoverOpacity ? styles.iconOpacity : ''}
-            `}
-            style={{
-                width: width + 'px'
-            }}
-            // onClick={onClick}         
-            onClick={enableHoverHandlers ? toogleShowMenu : onClick}
-            // onMouseEnter={enableHoverHandlers ? setShowSubmenuOpen : onMouseEnter}
-            // onMouseLeave={enableHoverHandlers ? setShowSubmenuClose : onMouseLeave}
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-        >
-            <AssitiveText>{linkPageType && translations[linkPageType]}</AssitiveText>
 
-            <div className={styles.svgContener}
+    const isWishlistSubmenuVisible = showSubmenu && isLinkingToWishlist ? true : false;
+    const isCartSubmenuVisible = showSubmenu && isLinkingToCart ? true : false;
+    return (
+        <div className={styles.iconHolder}
+            onClick={enableHoverHandlers ? toogleShowMenu : onClick}
+            onMouseEnter={enableHoverHandlers ? setShowSubmenuOpen : onMouseEnter}
+            onMouseLeave={enableHoverHandlers ? setShowSubmenuClose : onMouseLeave}
+        >
+            <DivNavLink to={linkUrl}
+                className={`
+                    ${styles.icon} 
+                    ${isDarkBackground ? styles.whiteIcon : ''}
+                    ${isHoverBackground ? styles.iconHover : ''}
+                    ${isHoverOpacity ? styles.iconOpacity : ''}
+                    `}
                 style={{
-                    maxWidth: svgSize + 'px',
-                    maxHeight: svgSize + 'px',
-                }}>
-                {showBadge && <div className={styles.badge}>{badgeNumber}</div>}
-                {props.children}
-            </div>
-            {showSubmenu && <IconSubmenu align='right' parrentWidth={width}>tutaj content</IconSubmenu>}
-        </DivNavLink>
+                    width: width + 'px'
+                }}
+                onClick={onClick}
+                onMouseEnter={onMouseEnter}
+                onMouseLeave={onMouseLeave}
+            >
+                <AssitiveText>{linkPageType && translations[linkPageType]}</AssitiveText>
+
+                <div className={styles.svgContener}
+                    style={{
+                        maxWidth: svgSize + 'px',
+                        maxHeight: svgSize + 'px',
+                    }}>
+                    {showBadge && <div className={styles.badge}>{badgeNumber}</div>}
+                    {props.children}
+                </div>
+            </DivNavLink>
+            {isWishlistSubmenuVisible && <WishlistSubmenu parrentWidth={width} />}
+            {isCartSubmenuVisible && <CartSubmenu parrentWidth={width} />}
+        </div>
     )
 }
 export default withStyles(styles)(InteractiveIcon);

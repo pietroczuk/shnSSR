@@ -1,14 +1,15 @@
 import React from "react";
 import withStyles from "isomorphic-style-loader/withStyles";
-import styles from './iconSubmenu.scss';
+import styles from './headerIconSubmenu.scss'
 
-interface IconSubmenuProps {
+interface HeaderIconSubmenuProps {
     align?: 'left' | 'right',
-    parrentWidth?: number
+    parrentWidth?: number,
+    title: string
 }
 
-const IconSubmenu: React.FC<IconSubmenuProps> = props => {
-    const { align, parrentWidth } = props;
+const HeaderIconSubmenu: React.FC<HeaderIconSubmenuProps> = props => {
+    const { align, parrentWidth, title } = props;
     let style = {}
     let alignClass = '';
 
@@ -32,7 +33,8 @@ const IconSubmenu: React.FC<IconSubmenuProps> = props => {
     }
 
     return <div className={`${styles.submenu} ${alignClass}`} style={style}>
+        <span className={styles.title}>{title}</span>
         {props.children}
     </div>
 }
-export default withStyles(styles)(IconSubmenu);
+export default withStyles(styles)(HeaderIconSubmenu);

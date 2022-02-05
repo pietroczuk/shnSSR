@@ -207,7 +207,7 @@ const ProductItem: FC<ProductItemProps> = props => {
                 </div>
                 <div className={styles.priceContainer}>
                     <div className={styles.label}>
-                        {!showPlaceholder && translations && translations.price_from ? translations.price_from : ''}
+                        {!showPlaceholder && translations && translations.priceFrom ? translations.priceFrom : ''}
                     </div>
                     <ShowPrice allPrices={min_price} />
                 </div>

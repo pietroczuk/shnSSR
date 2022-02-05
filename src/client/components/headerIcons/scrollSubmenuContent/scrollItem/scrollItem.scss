@@ -1,0 +1,30 @@
+.item {
+    display   : flex;
+    margin-top: 1em;
+
+    a {
+        display: block;
+    }
+
+    .imageHolder {
+        background-color: #f2f2f2;
+        padding         : 10px;
+        width           : 120px;
+        min-width       : 120px;
+
+        img {
+            display: block;
+        }
+    }
+
+    .itemDataHolder {
+        padding: 0.5em 0em 0.5em 1em;
+        width  : 100%;
+
+        .label {
+            font-weight  : 600;
+            font-size    : 0.85em;
+            margin-bottom: 1em;
+        }
+    }
+}

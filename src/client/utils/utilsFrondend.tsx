@@ -12,6 +12,9 @@ export const pageTypes = {
     cart: 'cart',
     specialPage: 'special',
 }
+export const getPageTypeAsString = (pageType: string) =>{
+    return pageTypes[pageType];
+}
 // ---------- end get page
 
 // --------- coockies

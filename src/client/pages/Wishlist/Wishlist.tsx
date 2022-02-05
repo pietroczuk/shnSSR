@@ -27,8 +27,8 @@ interface WishlistProps {
 const Wishlist: React.FC<RouteComponentProps<WishlistProps>> = props => {
     const pageType = pageTypes.wishlist;
 
-    const { title, wishlist, language, wishlistMultilanguageUrls, ssr } = useSelector((state: RootState) => ({
-        title: state.PublicConfig.translations.wishlist,
+    const { wishlistLabel, wishlist, language, wishlistMultilanguageUrls, ssr } = useSelector((state: RootState) => ({
+        wishlistLabel: state.PublicConfig.translations.wishlistLabel,
         wishlist: state.Wishlist,
         language: state.User.language,
         wishlistMultilanguageUrls: state.SystemConfig.specialPagesUrlsArray[pageType],
@@ -69,7 +69,7 @@ const Wishlist: React.FC<RouteComponentProps<WishlistProps>> = props => {
             }
 
             <MainContent>
-                <ShowTitleWithBadge title={title} badgeNumber={badgeNumber} customWidth={20} />
+                <ShowTitleWithBadge title={wishlistLabel} badgeNumber={badgeNumber} customWidth={20} />
                 <div>
                     <FixedBar>
                         <ImageSwicher />

@@ -21,12 +21,12 @@ const ImageSwicher: FC = () => {
     }
     const options = [
         {
-            title: translations && translations.show_arrangement ? translations.show_arrangement : '',
+            title: translations && translations.showArrangement ? translations.showArrangement : '',
             clickHandler: clickHandlerFunction,
             default: showVisual ? true : false
         },
         {
-            title: translations && translations.show_arrangement ? translations.hide_arrangement : '',
+            title: translations && translations.showArrangement ? translations.hideArrangement : '',
             clickHandler: clickHandlerFunction,
             default: !showVisual ? true : false
         },

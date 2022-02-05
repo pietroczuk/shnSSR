@@ -1,72 +1,76 @@
-.icon {
-    display        : flex;
-    flex-direction : column;
-    justify-content: center;
-    cursor         : pointer;
-    padding        : 5px;
-    position       : relative;
+.iconHolder {
+    position: relative;
+    display: flex;
+    .icon {
+        display        : flex;
+        flex-direction : column;
+        justify-content: center;
+        cursor         : pointer;
+        padding        : 5px;
+        position       : relative;
 
-    .svgContener {
-        max-width   : 20px;
-        max-height  : 20px;
-        margin-left : auto;
-        margin-right: auto;
-        width       : 100%;
-        position    : relative;
+        .svgContener {
+            max-width   : 20px;
+            max-height  : 20px;
+            margin-left : auto;
+            margin-right: auto;
+            width       : 100%;
+            position    : relative;
 
-        .badge {
-            background-color: #da0e2c;
-            position        : absolute;
-            color           : #fff;
-            width           : 1.7em;
-            height          : 1.7em;
-            border-radius   : 2em;
-            display         : flex;
-            flex-direction  : column;
-            justify-content : center;
-            text-align      : center;
-            font-size       : 0.6em;
-            font-weight     : 500;
-            right           : -1em;
-            top             : -0.2em;
-            line-height     : 1.3em;
-        }
+            .badge {
+                background-color: #da0e2c;
+                position        : absolute;
+                color           : #fff;
+                width           : 1.7em;
+                height          : 1.7em;
+                border-radius   : 2em;
+                display         : flex;
+                flex-direction  : column;
+                justify-content : center;
+                text-align      : center;
+                font-size       : 0.6em;
+                font-weight     : 500;
+                right           : -1em;
+                top             : -0.2em;
+                line-height     : 1.3em;
+            }
 
-        svg {
-            width: 100%;
+            svg {
+                width: 100%;
 
-            path {
-                fill: #000;
+                path {
+                    fill: #000;
+                }
             }
         }
-    }
 
-    &.whiteIcon .svgContener {
-        svg path {
-            fill: #fff;
+        &.whiteIcon .svgContener {
+            svg path {
+                fill: #fff;
+            }
         }
-    }
 
-    &.iconHover {
-        -webkit-transition: background-color 0.2s;
-        -moz-transition   : background-color 0.2s;
-        -o-transition     : background-color 0.2s;
-        transition        : background-color 0.2s;
+        &.iconHover {
+            -webkit-transition: background-color 0.2s;
+            -moz-transition   : background-color 0.2s;
+            -o-transition     : background-color 0.2s;
+            transition        : background-color 0.2s;
 
-        &:hover {
-            background-color: #ededed;
+            &:hover {
+                background-color: #ededed;
+            }
         }
-    }
 
-    &.iconOpacity {
-        opacity           : 0.5;
-        -webkit-transition: opacity 0.2s;
-        -moz-transition   : opacity 0.2s;
-        -o-transition     : opacity 0.2s;
-        transition        : opacity 0.2s;
+        &.iconOpacity {
+            opacity           : 0.5;
+            -webkit-transition: opacity 0.2s;
+            -moz-transition   : opacity 0.2s;
+            -o-transition     : opacity 0.2s;
+            transition        : opacity 0.2s;
 
-        &:hover {
-            opacity: 1;
+            &:hover {
+                opacity: 1;
+            }
         }
     }
 }
