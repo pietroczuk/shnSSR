@@ -26,6 +26,8 @@ import {
 import { SystemConfig } from '../client/redux/Models/SystemConfig/SystemConfig.type';
 import { NewRoutesConfig } from './types/newRoutesConfig.types';
 
+import MobileDetect from 'mobile-detect';
+
 /** CACHE */
 // const cache = require('node-file-cache').create();
 
@@ -70,7 +72,7 @@ if (!process.env.API_URL) {
                 const real_path = urlData.realPath;
                 const blankUrl = req.path === '/' || urlData.blankPath ? true : false;
                 const language =
-                isMultilanguage ?
+                    isMultilanguage ?
                         blankUrl ?
                             checkUserLanguage(req.headers.cookie, req.headers['accept-language'], allLanguages, api_config.cookiesKeys.userLanguage)
                             :
@@ -87,9 +89,24 @@ if (!process.env.API_URL) {
                             : language;
                     res.redirect('/' + homepageUrl);
                 } else {
+                    const mobileDetect = new MobileDetect(req.headers['user-agent']);
+                    const isMobile = mobileDetect.mobile() || mobileDetect.phone() || mobileDetect.tablet() ? true : false;
+                    // console.log( mobileDetect.mobile() );          // 'Sony'
+                    // console.log( mobileDetect.phone() );           // 'Sony'
+                    // console.log( mobileDetect.tablet() );          // null
+                    // console.log( mobileDetect.userAgent() );       // 'Safari'
+                    // console.log( mobileDetect.os() );              // 'AndroidOS'
+                    // console.log( mobileDetect.is('iPhone') );      // false
+                    // console.log( mobileDetect.is('bot') );         // false
+                    // console.log( mobileDetect.version('Webkit') );         // 534.3
+                    // console.log( mobileDetect.versionStr('Build') );       // '4.1.A.0.562'
+                    // console.log( mobileDetect.match('playstation|xbox') ); // false
+
                     const userCurrency = getCurrencyCookie(req.headers.cookie, api_config.allCurrencies, api_config.cookiesKeys.userCurrency);
                     // get display cookies
                     const display_options = getDisplayCookies(req.headers.cookie, api_config.cookiesKeys.displayKeys);
+                    display_options.isMobile = isMobile;
+                    
                     const server_store = createServerInitStore(language, userCurrency, display_options);
 
                     // preapre system pages uls
