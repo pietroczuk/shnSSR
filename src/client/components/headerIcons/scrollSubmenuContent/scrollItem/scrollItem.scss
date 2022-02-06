@@ -9,8 +9,8 @@
     .imageHolder {
         background-color: #f2f2f2;
         padding         : 10px;
-        width           : 120px;
-        min-width       : 120px;
+        width           : 140px;
+        min-width       : 140px;
 
         img {
             display: block;
@@ -35,15 +35,30 @@
         }
 
         .priceCont {
-            margin-top: 1em;
+            margin-top   : 1em;
             padding-right: 1em;
-            text-align: right;
+            text-align   : right;
+
 
             .priceLabel {
                 font-size    : 0.65em;
                 color        : #565656;
                 font-weight  : 400;
                 margin-bottom: 2px;
+            }
+
+            &.minicart {
+                display        : flex;
+                justify-content: flex-end;
+                gap            : 0.7em;
+
+                .priceLabel {
+                    margin-bottom  : 0;
+                    display        : flex;
+                    flex-direction : column;
+                    justify-content: flex-end;
+                    padding-bottom : 1px;
+                }
             }
         }
     }

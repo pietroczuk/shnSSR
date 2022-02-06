@@ -2,6 +2,7 @@ export interface Translations {
     cartLabel: string,
     cartStrictLabel: string,
     addToCart: string;
+    gotoCart: string;
 
     wishlistLabel: string;
     wishlistStrictLabel: string;

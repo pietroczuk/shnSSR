@@ -8,8 +8,8 @@ import { CartProducts } from "../../../redux/Models/Cart/CartProducts/CartProduc
 import { WishlistProducts } from "../../../redux/Models/Wishlist/WishlistProducts/WishlistProducts.model";
 
 interface ScrollSubmenuContentProps {
-    listType: 'wishlist' | 'cart',
-    clickHandler? : VoidFunction
+    listType: 'wishlist' | 'cart';
+    clickHandler? : VoidFunction;
 }
 
 const ScrollSubmenuContent: React.FC<ScrollSubmenuContentProps> = props => {
@@ -24,7 +24,7 @@ const ScrollSubmenuContent: React.FC<ScrollSubmenuContentProps> = props => {
     }
 
     return <div className={styles.scrollContent}>
-        {Object.entries(products).reverse().map(([_key, product]) => <ScrollItem product={product} key={product.v} clickHandler={clickHandler}/>)}
+        {Object.entries(products).reverse().map(([_key, product]) => <ScrollItem product={product} key={product.v} clickHandler={clickHandler} listType={listType}/>)}
     </div>
 }
 

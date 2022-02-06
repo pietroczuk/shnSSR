@@ -13,11 +13,12 @@ import { Variations } from "../../../../../redux/Models/Product/Variations/Varia
 interface ShowSelectedAttributesProps {
     selectedVariantId: string;
     avaibleVariations: Variations;
+    isWishlist: boolean;
     customFontSize?: number;
 }
 
 const ShowSelectedAttributes: React.FC<ShowSelectedAttributesProps> = props => {
-    const { selectedVariantId, avaibleVariations, customFontSize } = props;
+    const { selectedVariantId, avaibleVariations, customFontSize, isWishlist } = props;
     const features = useSelector((state: RootState) => state.PublicConfig.features, shallowEqual);
     const productFeatData = avaibleVariations && avaibleVariations[selectedVariantId] && avaibleVariations[selectedVariantId].variation_code ? avaibleVariations[selectedVariantId].variation_code : null;
     if ((productFeatData && isObjectEmpty(productFeatData)) || isObjectEmpty(features)) {
@@ -27,7 +28,7 @@ const ShowSelectedAttributes: React.FC<ShowSelectedAttributesProps> = props => {
         productFeatData && Object.keys(productFeatData).map(attribId => {
             const variantFeature = productFeatData[attribId];
             const foundFeature = features[variantFeature.feature] && features[variantFeature.feature] ? features[variantFeature.feature] : null;
-            const attribInWishlist = foundFeature && foundFeature.wishlist !== null && foundFeature.wishlist ? foundFeature.wishlist : null;
+            const attribInWishlist = !isWishlist ? true : foundFeature && foundFeature.wishlist ? foundFeature.wishlist : null;
             if (!attribInWishlist) {
                 return null;
             }
@@ -38,9 +39,9 @@ const ShowSelectedAttributes: React.FC<ShowSelectedAttributesProps> = props => {
             return <div key={variantFeature.feature} className={styles.attribContener}>
                 <span className={styles.title}>{title}:</span>
                 <span className={styles.attribTitle}>{attrib_title}</span>
-                <span className={styles.attribColor}>
+                {foundFeature.feature_display === "color" && <span className={styles.attribColor}>
                     <ColorCircle glow_color={glow_color} mini={true} />
-                </span>
+                </span>}
             </div>
 
         })

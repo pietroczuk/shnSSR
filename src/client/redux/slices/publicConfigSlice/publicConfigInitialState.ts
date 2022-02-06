@@ -7,6 +7,7 @@ export const PublicConfigInitialState: PublicConfig = {
         cartLabel: '',
         cartStrictLabel: '',
         addToCart: '',
+        gotoCart: '',
 
         wishlistLabel: '',
         wishlistStrictLabel: '',

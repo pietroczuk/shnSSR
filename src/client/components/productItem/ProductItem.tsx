@@ -203,7 +203,7 @@ const ProductItem: FC<ProductItemProps> = props => {
                         {showPlaceholder && <Placeholder customWidth={'50%'} />}
                         {!showPlaceholder && title && cutText(title)}
                     </div>
-                    {wishlistPage && <ShowSelectedAttributes selectedVariantId={variantId} avaibleVariations={variations} />}
+                    {wishlistPage && <ShowSelectedAttributes selectedVariantId={variantId} avaibleVariations={variations} isWishlist={true}/>}
                 </div>
                 <div className={styles.priceContainer}>
                     <div className={styles.label}>
