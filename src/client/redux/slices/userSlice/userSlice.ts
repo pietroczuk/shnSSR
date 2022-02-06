@@ -26,6 +26,13 @@ const userSlice = createSlice({
             state.currency = currencyCode;
             return state;
         },
+        addSecontToTimer(state: User) {
+            const stateDate = new Date(state.today.date);
+            const newStateDate =  new Date(stateDate.getTime() + 1000);
+            const newStateDateString = newStateDate.toString();
+            state.today.date = newStateDateString;
+            return state;
+        }
     }
 });
 export const userActions = userSlice.actions;

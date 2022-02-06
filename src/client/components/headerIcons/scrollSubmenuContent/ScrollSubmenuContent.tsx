@@ -2,7 +2,7 @@ import React from "react";
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './scrollSubmenuContent.scss';
 import { RootState } from "../../../client";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import ScrollItem from "./scrollItem/ScrollItem";
 import { CartProducts } from "../../../redux/Models/Cart/CartProducts/CartProducts.model";
 import { WishlistProducts } from "../../../redux/Models/Wishlist/WishlistProducts/WishlistProducts.model";
@@ -17,10 +17,10 @@ const ScrollSubmenuContent: React.FC<ScrollSubmenuContentProps> = props => {
     let products: CartProducts | WishlistProducts;
 
     if (listType === 'wishlist') {
-        products = useSelector((state: RootState) => state.Wishlist.products);
+        products = useSelector((state: RootState) => state.Wishlist.products, shallowEqual);
     }
     if (listType === 'cart') {
-        products = useSelector((state: RootState) => state.Cart.products);
+        products = useSelector((state: RootState) => state.Cart.products, shallowEqual);
     }
 
     return <div className={styles.scrollContent}>

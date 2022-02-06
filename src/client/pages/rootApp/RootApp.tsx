@@ -9,6 +9,7 @@ import { setCookie, getCookie } from '../../utils/utilsFrondend';
 
 import loadable from '@loadable/component';
 import { RootState } from '../../client';
+import Timer from '../../components/timer/Timer';
 
 const Header = loadable(() => import(/* webpackPrefetch: true */ '../../components/header/Header'),
     {
@@ -31,10 +32,12 @@ const RootApp: React.FC<RootAppProps> = ({ route }) => {
         const cookieUserLanguage = getCookie(cookieLanguageKey);
         const coockieLanguageNeedChange = language && (language !== cookieUserLanguage);
         coockieLanguageNeedChange && setCookie(cookieLanguageKey, language);
-    }, [])
+    }, []);
+
     return (
         <React.Fragment>
-            <Header isWhiteTopbar={true} isDarkBackground={false}/>
+            <Timer />
+            <Header isWhiteTopbar={true} isDarkBackground={false} />
             {renderRoutes(route.routes)}
             <Footer />
         </React.Fragment>

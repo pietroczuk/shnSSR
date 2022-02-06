@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './cart.scss';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
 import { pageTypes } from '../../utils/utilsFrondend';
 
@@ -33,7 +33,7 @@ const Cart: React.FC<RouteComponentProps<CartProps>> = props => {
         language: state.User.language,
         cartMultilanguageUrls: state.SystemConfig.specialPagesUrlsArray[pageType],
         ssr: state.PublicConfig.ssr,
-    })
+    }), shallowEqual
     );
     const { location } = props;
     const { url } = props.match.params;

@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "../../../client";
 import BlackButton from "../../helpers/ui/blackButton/BlackButton";
@@ -19,7 +19,7 @@ const CartSubmenu: React.FC<CartSubmenuProps> = props => {
         cartLenght: state.Cart.length,
         cartLabel: state.PublicConfig.translations.cartLabel,
         gotoCart: state.PublicConfig.translations.gotoCart
-    }))
+    }), shallowEqual)
 
     // const wishlist = rawSlug ? prepUrlFromConfigSlug(language, null, null, null, rawSlug, isMultilanguage)
 

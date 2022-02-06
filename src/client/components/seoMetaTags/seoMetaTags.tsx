@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import { RootState } from "../../client";
 
 interface SeoMetaTagsProps {
@@ -15,9 +15,9 @@ const SeoMetaTags: React.FC<SeoMetaTagsProps> = props => {
     const { seo, urlPrefix, pageTitle, pageDescription } = useSelector((state: RootState) => ({
         seo: state.PublicConfig.config.seo,
         urlPrefix: state.SystemConfig.pageTypePrefixUrls[pageType],
-        pageTitle : state.Page.info.seo.seoTitle,
-        pageDescription: state.Page.info.seo.seoDescription
-    }));
+        pageTitle : state.Page.info.seo ? state.Page.info.seo.seoTitle : null,
+        pageDescription: state.Page.info.seo ? state.Page.info.seo.seoDescription: null
+    }), shallowEqual);
 
     const title = pageTitle ? pageTitle : seo.title;
     const description = pageDescription ? pageDescription : seo.description;

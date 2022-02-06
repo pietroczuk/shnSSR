@@ -3,7 +3,7 @@ import styles from './text.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import { Link } from 'react-router-dom';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { RootState } from '../../../../../../client';
 import { SingleAtribute } from '../../../../../../redux/Models/PublicConfig/Features/SingleFeature/Atributes/SingleAtribute/SingleAtribute.model';
 import { setProductCurrVarId } from '../../../../../../redux/actionCreators/page/page.ac';
@@ -23,7 +23,7 @@ const Text: React.FC<Props> = props => {
     const { attribTitle } = attrib;
     const textWidth = width ? (100 / width) - 2 + '%' : 'auto';
 
-    const variations = useSelector((state: RootState) => state.Page.data.productPage.variations);
+    const variations = useSelector((state: RootState) => state.Page.data.productPage.variations, shallowEqual);
     const dispatch = useDispatch();
 
     const clickMe = () => {

@@ -38,9 +38,14 @@ import StyleContext from 'isomorphic-style-loader/StyleContext';
 
 // const store_client = createStore(all_reducers, window.__INITIAL_STATE__, composeWithDevTools(applyMiddleware(thunk)));
 
+
+
 const store_client = configureStore({
     reducer: allReducers,
     preloadedState: (window as any).__INITIAL_STATE__,
+    devTools: {
+        actionsBlacklist: 'addSecontToTimer'
+    }
     // devTools: false, //process.env.NODE_ENV !== 'production',
 });
 
@@ -58,10 +63,10 @@ const isMultilanguage = initialState.SystemConfig.isMultilanguage;
 delete (window as any).__INITIAL_STATE__;
 delete (window as any).__CONFIG__;
 
-const insertCss = (...styles:any[]) => {
-// const insertCss = (...styles) => {
+const insertCss = (...styles: any[]) => {
+    // const insertCss = (...styles) => {
     const removeCss = styles.map(style => style._insertCss());
-    return () =>removeCss.forEach(dispose => dispose());
+    return () => removeCss.forEach(dispose => dispose());
 };
 
 // const css = new Set();
@@ -72,7 +77,7 @@ const insertCss = (...styles:any[]) => {
 // const insertCss = null;
 // console.log('client isMultilanguage:', isMultilanguage);
 loadableReady(() => {
-    hydrate( 
+    hydrate(
         <Provider store={store_client}>
             <StyleContext.Provider value={{ insertCss }}>
                 <BrowserRouter>

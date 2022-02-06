@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import { RootState } from "../../../../client";
 import withStyles from "isomorphic-style-loader/withStyles";
 
@@ -27,7 +27,7 @@ const ScrollItem: React.FC<ScrollItemProps> = (props) => {
         pageTypePrefixUrls: state.SystemConfig.pageTypePrefixUrls,
         isMultilanguage: state.SystemConfig.isMultilanguage,
         priceFrom: state.PublicConfig.translations.priceFrom
-    }));
+    }), shallowEqual);
     const isWishlist = listType === 'wishlist' ? true : false;
 
     const imageUrl = imagesBase + '/' + product.productData.variationImage.poster + imagesSize;

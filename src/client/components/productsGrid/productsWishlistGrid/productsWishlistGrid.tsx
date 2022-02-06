@@ -2,13 +2,13 @@ import React from "react";
 import styles from '../productsGrid.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import ProductItem from "../../productItem/ProductItem";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import { RootState } from "../../../client";
 
 const ProductsWishlistGrid: React.FC = () => {
     const { products } = useSelector((state: RootState) => ({
         products: state.Wishlist.products
-    }))
+    }), shallowEqual)
 
     return <div className={styles.productsGrid}>
         {products && Object.entries(products).reverse().map(
