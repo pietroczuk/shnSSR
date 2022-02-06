@@ -35,7 +35,7 @@ const Product: React.FC<RouteComponentProps<ProductProps>> = (props) => {
     )
     const dispatch = useDispatch();
 
-    const current_variation_id = product ? product.current_variation_id : null;
+    const currentVariationId = product ? product.currentVariationId : null;
     // from props
     const { url, 
         // lang 
@@ -64,20 +64,20 @@ const Product: React.FC<RouteComponentProps<ProductProps>> = (props) => {
             {title ?
                 <h1>{title}</h1> : <h1><Placeholder /></h1>
             }
-            {current_variation_id && product && product.variations && product.variations[current_variation_id].name}
+            {currentVariationId && product && product.variations && product.variations[currentVariationId].name}
             <br />
-            {current_variation_id && product && product.variations && <p>
-                {product.variations[current_variation_id].variation_price[currency]} {allCurrencies[currency].sign}
+            {currentVariationId && product && product.variations && <p>
+                {product.variations[currentVariationId].variationPrice[currency]} {allCurrencies[currency].sign}
             </p>}
             <br />
-            {current_variation_id}
+            {currentVariationId}
             <br />
-            {current_variation_id && product && product.variations && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[current_variation_id].variation_image.poster + images_url.medium} />}
-            {current_variation_id && product && product.variations && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[current_variation_id].variation_image.wall + images_url.medium} />}
+            {currentVariationId && product && product.variations && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[currentVariationId].variationImage.poster + images_url.medium} />}
+            {currentVariationId && product && product.variations && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[currentVariationId].variationImage.wall + images_url.medium} />}
 
-            {product && current_variation_id && product.variations &&
+            {product && currentVariationId && product.variations &&
                 <AllFeaturesDisplay
-                    currentVariationCode={product.variations[current_variation_id].variation_code}
+                    currentVariationCode={product.variations[currentVariationId].variationCode}
                     allProductVariation={product.variations}
                 // isGlobalChange={true}
                 />

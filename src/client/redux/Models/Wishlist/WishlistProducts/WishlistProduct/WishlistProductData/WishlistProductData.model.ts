@@ -6,8 +6,8 @@ export interface WishlistProductData {
     id: string;
     sku: string;
     likes: number;
-    variation_image: VariationImage;
-    min_price: {
+    variationImage: VariationImage;
+    minPrice: {
         [key: string]: string;
     };
     variations: Variations;

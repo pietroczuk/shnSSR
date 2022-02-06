@@ -7,7 +7,7 @@ export interface Product {
     titlekey: string;
     url: string;
     variations: Variations;
-    min_price: {
+    minPrice: {
         [key: string]: string;
     }
     hashmap: {

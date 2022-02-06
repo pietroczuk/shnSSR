@@ -58,7 +58,7 @@ const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
             return null;
         }
         const featureIdForSelect = Object.keys(features).find(featId => !features[featId].wishlist);
-        const featureTitle = featureIdForSelect ? features[featureIdForSelect].feature_title : '';
+        const featureTitle = featureIdForSelect ? features[featureIdForSelect].featureTitle : '';
 
         return <div className={styles.selectOptionsCointainerRoot}>
             <div className={styles.selectOptionsCointainerChild}>
@@ -67,16 +67,16 @@ const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
                     {/* {console.log(avaibleVariations)} */}
                     {Object.keys(avaibleVariations).map(variantId => {
                         const variant = avaibleVariations[variantId];
-                        const variantCode = variant.variation_code;
-                        const attribId = variantCode[featureIdForSelect].atrib_id;
+                        const variantCode = variant.variationCode;
+                        const attribId = variantCode[featureIdForSelect].atribId;
 
-                        const attribTitle = featureIdForSelect ? features[featureIdForSelect].atributes[attribId].attrib_title : null;
-                        const attribTooltip = featureIdForSelect ? features[featureIdForSelect].atributes[attribId].attrib_tooltip : null;
+                        const attribTitle = featureIdForSelect ? features[featureIdForSelect].atributes[attribId].attribTitle : null;
+                        const attribTooltip = featureIdForSelect ? features[featureIdForSelect].atributes[attribId].attribTooltip : null;
 
                         return (
                             <div className={styles.selectOption} onClick={addToCartClickHandler.bind(this,variantId)} key={variantId}>
                                 <ShowSizesText text={attribTitle} minitext={attribTooltip} />
-                                <ShowPrice allPrices={variant.variation_price} />
+                                <ShowPrice allPrices={variant.variationPrice} />
                             </div>
                         )
                     })}

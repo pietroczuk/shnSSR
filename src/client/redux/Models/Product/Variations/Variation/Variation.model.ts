@@ -3,14 +3,14 @@ import { VariationImage } from "./VariationImage/VariationImage.model";
 
 export interface Variation {
     id: string,
-    variation_price: {
+    variationPrice: {
         [key: string]: string
     },
-    variation_image: VariationImage,
+    variationImage: VariationImage,
     name: string,
     color: string,
     default: boolean,
-    variation_code: {
+    variationCode: {
         [key: string]: VariationCode
     }
 }

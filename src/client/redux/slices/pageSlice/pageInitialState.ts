@@ -1,22 +1,24 @@
 import { Page } from "../../Models/Page/Page.model";
 
-export const pageInitialState : Page = {
+export const pageInitialState: Page = {
     info: {
         type: '',
         id: '',
         url: {},
         title: '',
         description: '',
-        seo_title: '',
-        seo_description: '',
+        seo: {
+            seoTitle: '',
+            seoDescription: '',
+        }
     },
     data: {
-        categoryPage : {
-            products:[]
+        categoryPage: {
+            products: []
         },
         productPage: {
             colection: '',
-            current_variation_id: '',
+            currentVariationId: '',
             likes: 0,
             sku: '',
             variations: {}

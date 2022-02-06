@@ -20,7 +20,7 @@ interface Props {
 
 const Text: React.FC<Props> = props => {
     const { attrib, width, active, link, onClickFunction } = props;
-    const { attrib_title } = attrib;
+    const { attribTitle } = attrib;
     const textWidth = width ? (100 / width) - 2 + '%' : 'auto';
 
     const variations = useSelector((state: RootState) => state.Page.data.productPage.variations);
@@ -38,7 +38,7 @@ const Text: React.FC<Props> = props => {
             className={`${styles.contener} ${active ? styles.active : ''}`}
             style={{ width: textWidth }}
         >
-            {attrib_title}
+            {attribTitle}
         </Link>
     )
 }

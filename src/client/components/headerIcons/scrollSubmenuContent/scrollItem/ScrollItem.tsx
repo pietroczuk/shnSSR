@@ -30,17 +30,17 @@ const ScrollItem: React.FC<ScrollItemProps> = (props) => {
     }));
     const isWishlist = listType === 'wishlist' ? true : false;
 
-    const imageUrl = imagesBase + '/' + product.productData.variation_image.poster + imagesSize;
+    const imageUrl = imagesBase + '/' + product.productData.variationImage.poster + imagesSize;
     const rawProductUrl = product.productData.url
     const variantId = product.v;
     const productUrl = prepUrlFromConfigSlug(language, pageTypePrefixUrls, pageTypes.productPage, null, rawProductUrl, isMultilanguage, variantId);
 
     const variations = product.productData.variations;
-    const min_price = { ...product.productData.min_price };
-    const singlePrice = product.productData.min_price;
+    const minPrice = { ...product.productData.minPrice };
+    const singlePrice = product.productData.minPrice;
     const quantity = product.quantity > 0 ? product.quantity : 1;
 
-    quantity > 1 && Object.entries(min_price).forEach(([key, price]) => min_price[key] = (+price * quantity).toString());
+    quantity > 1 && Object.entries(minPrice).forEach(([key, price]) => minPrice[key] = (+price * quantity).toString());
     return (
         <DivNavLink to={productUrl} className={styles.item} onClick={clickHandler}>
             <div className={styles.imageHolder}>
@@ -68,7 +68,7 @@ const ScrollItem: React.FC<ScrollItemProps> = (props) => {
                             <ShowPrice allPrices={singlePrice} quantity={quantity} />
                         </div>
                     }
-                    <ShowPrice allPrices={min_price} />
+                    <ShowPrice allPrices={minPrice} />
                 </div>
             </div>
         </DivNavLink>

@@ -27,7 +27,7 @@ const pageSlice = createSlice({
             }
             state.info = data.info;
             if (query && data.data.variations[query]) {
-                state.data.productPage.current_variation_id = query;
+                state.data.productPage.currentVariationId = query;
             }
             return state;
         },
@@ -35,7 +35,7 @@ const pageSlice = createSlice({
             return pageInitialState;
         },
         setProductCurrentVariantId(state: Page, action) {
-            state.data.productPage.current_variation_id = action.payload;
+            state.data.productPage.currentVariationId = action.payload;
             return state;
         }
     }

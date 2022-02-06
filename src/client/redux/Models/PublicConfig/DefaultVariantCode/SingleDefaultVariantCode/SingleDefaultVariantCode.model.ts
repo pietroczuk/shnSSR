@@ -1,5 +1,5 @@
 export interface SingleDefaultVariantCode {
-    atrib_id: string;
+    atribId: string;
     code: string;
     wishlist?: boolean;
 }

@@ -15,8 +15,8 @@ const SeoMetaTags: React.FC<SeoMetaTagsProps> = props => {
     const { seo, urlPrefix, pageTitle, pageDescription } = useSelector((state: RootState) => ({
         seo: state.PublicConfig.config.seo,
         urlPrefix: state.SystemConfig.pageTypePrefixUrls[pageType],
-        pageTitle : state.Page.info.seo_title,
-        pageDescription: state.Page.info.seo_description
+        pageTitle : state.Page.info.seo.seoTitle,
+        pageDescription: state.Page.info.seo.seoDescription
     }));
 
     const title = pageTitle ? pageTitle : seo.title;

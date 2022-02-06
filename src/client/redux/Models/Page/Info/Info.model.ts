@@ -1,8 +1,10 @@
 export interface Info {
     type: string;
     id: string;
-    seo_title: string;
-    seo_description: string;
+    seo: {
+        seoTitle: string;
+        seoDescription: string;
+    }
     title: string;
     description: string;
     url: {

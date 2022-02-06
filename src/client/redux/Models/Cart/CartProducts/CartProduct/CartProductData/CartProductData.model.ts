@@ -7,8 +7,8 @@ export interface CartProductData {
     titlekey: string;
     url: string;
     variations: Variations;
-    variation_image: VariationImage;
-    min_price: {
+    variationImage: VariationImage;
+    minPrice: {
         [key: string]: string;
     };
     variantId: string;

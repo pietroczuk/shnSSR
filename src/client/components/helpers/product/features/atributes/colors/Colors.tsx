@@ -25,7 +25,7 @@ interface Props {
 const Colors: React.FC<Props> = props => {
 
     const { attrib, active, link, isGlobalChange, featureKey, onClickFunction } = props;
-    const { glow_color, attrib_title, code, id } = attrib;
+    const { glowColor, attribTitle, code, id } = attrib;
 
     const { variations, randomVariant } = useSelector((state: RootState) => ({
         variations: state.Page.data ? state.Page.data.productPage.variations : null,
@@ -36,7 +36,7 @@ const Colors: React.FC<Props> = props => {
     const clickMe = () => {
         const codeObj = {
             code: code,
-            atrib_id: id
+            atribId: id
         }
         if (onClickFunction) {
             onClickFunction(featureKey, codeObj);
@@ -53,10 +53,10 @@ const Colors: React.FC<Props> = props => {
     return (
         <DivNavLink to={"?" + link}
             onClick={clickMe}
-            aria-label={attrib_title}
+            aria-label={attribTitle}
             className={styles.color}
         >
-            <ColorCircle active={active} glow_color={glow_color} />
+            <ColorCircle active={active} glowColor={glowColor} />
         </DivNavLink>
     )
 }

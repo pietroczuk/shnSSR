@@ -20,7 +20,7 @@ interface ShowSelectedAttributesProps {
 const ShowSelectedAttributes: React.FC<ShowSelectedAttributesProps> = props => {
     const { selectedVariantId, avaibleVariations, customFontSize, isWishlist } = props;
     const features = useSelector((state: RootState) => state.PublicConfig.features, shallowEqual);
-    const productFeatData = avaibleVariations && avaibleVariations[selectedVariantId] && avaibleVariations[selectedVariantId].variation_code ? avaibleVariations[selectedVariantId].variation_code : null;
+    const productFeatData = avaibleVariations && avaibleVariations[selectedVariantId] && avaibleVariations[selectedVariantId].variationCode ? avaibleVariations[selectedVariantId].variationCode : null;
     if ((productFeatData && isObjectEmpty(productFeatData)) || isObjectEmpty(features)) {
         return null;
     }
@@ -32,15 +32,15 @@ const ShowSelectedAttributes: React.FC<ShowSelectedAttributesProps> = props => {
             if (!attribInWishlist) {
                 return null;
             }
-            const title = foundFeature && foundFeature.feature_title ? foundFeature.feature_title : null;
-            const attribData = foundFeature && foundFeature.atributes ? foundFeature.atributes[variantFeature.atrib_id] : null;
-            const glow_color = attribData && attribData.glow_color ? attribData.glow_color : null;
-            const attrib_title = attribData && attribData.attrib_title ? attribData.attrib_title : null;
+            const title = foundFeature && foundFeature.featureTitle ? foundFeature.featureTitle : null;
+            const attribData = foundFeature && foundFeature.atributes ? foundFeature.atributes[variantFeature.atribId] : null;
+            const glowColor = attribData && attribData.glowColor ? attribData.glowColor : null;
+            const attribTitle = attribData && attribData.attribTitle ? attribData.attribTitle : null;
             return <div key={variantFeature.feature} className={styles.attribContener}>
                 <span className={styles.title}>{title}:</span>
-                <span className={styles.attribTitle}>{attrib_title}</span>
-                {foundFeature.feature_display === "color" && <span className={styles.attribColor}>
-                    <ColorCircle glow_color={glow_color} mini={true} />
+                <span className={styles.attribTitle}>{attribTitle}</span>
+                {foundFeature.featureDisplay === "color" && <span className={styles.attribColor}>
+                    <ColorCircle glowColor={glowColor} mini={true} />
                 </span>}
             </div>
 

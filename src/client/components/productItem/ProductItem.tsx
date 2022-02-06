@@ -39,7 +39,7 @@ const ProductItem: FC<ProductItemProps> = props => {
     const likes = product ? product.likes : wishlistProduct ? wishlistProduct.productData.likes : null;
     const titlekey = product ? product.titlekey : wishlistProduct ? wishlistProduct.productData.titlekey : null;
     const productId = product ? product.id : wishlistProduct ? wishlistProduct.p : null;
-    const min_price = product ? product.min_price : wishlistProduct ? wishlistProduct.productData.min_price : null;
+    const minPrice = product ? product.minPrice : wishlistProduct ? wishlistProduct.productData.minPrice : null;
     const variations = product ? product.variations : wishlistProduct ? wishlistProduct.productData.variations : null;
 
     const {
@@ -83,12 +83,12 @@ const ProductItem: FC<ProductItemProps> = props => {
 
 
     const changeLocalVariantCode = (featureId: string, obj: any) => {
-        if (isObjectEmpty(obj) || !featureId || !obj.atrib_id) {
+        if (isObjectEmpty(obj) || !featureId || !obj.atribId) {
             return;
         }
         // console.log(featureId, obj, localVariantCode[featureId]);
-        const atrib_id = obj.atrib_id;
-        if (localVariantCode[featureId] && localVariantCode[featureId].atrib_id !== atrib_id && localVariantCode[featureId].wishlist) {
+        const atribId = obj.atribId;
+        if (localVariantCode[featureId] && localVariantCode[featureId].atribId !== atribId && localVariantCode[featureId].wishlist) {
             const newFeatObj = { ...localVariantCode }
             newFeatObj[featureId] = obj;
             newFeatObj[featureId].wishlist = localVariantCode[featureId].wishlist;
@@ -109,7 +109,7 @@ const ProductItem: FC<ProductItemProps> = props => {
             const productVarianArray = [];
             for (const featureKey in localVariantCode) {
                 if (localVariantCode[featureKey].wishlist) {
-                    productVarianArray.push(hashmap[featureKey][localVariantCode[featureKey].atrib_id]);
+                    productVarianArray.push(hashmap[featureKey][localVariantCode[featureKey].atribId]);
                 }
             }
             const variantFound = productVarianArray.length > 1 ? intersectArray(productVarianArray) : [];
@@ -127,16 +127,16 @@ const ProductItem: FC<ProductItemProps> = props => {
             const newFeatObj = { ...localVariantCode }
             let foundChange = false;
             if (newVariantIndexStyle !== null) {
-                for (const featureId in variations[newVariantIndexStyle].variation_code) {
-                    const atrib_id = variations[newVariantIndexStyle].variation_code[featureId].atrib_id;
+                for (const featureId in variations[newVariantIndexStyle].variationCode) {
+                    const atribId = variations[newVariantIndexStyle].variationCode[featureId].atribId;
 
-                    if (newFeatObj[featureId].atrib_id !== atrib_id) {
-                        newFeatObj[featureId] = variations[newVariantIndexStyle].variation_code[featureId];
+                    if (newFeatObj[featureId].atribId !== atribId) {
+                        newFeatObj[featureId] = variations[newVariantIndexStyle].variationCode[featureId];
                         newFeatObj[featureId] = { ...newFeatObj[featureId], wishlist: localVariantCode[featureId].wishlist };
                         foundChange = true;
                     }
-                    // changeLocalVariantCode(featureIdInVariantCodes, {...variations[newVariantIndexStyle].variation_code[featureIdInVariantCodes]});
-                    // console.log(featureIdInVariantCodes, {...variations[newVariantIndexStyle].variation_code[featureIdInVariantCodes]});
+                    // changeLocalVariantCode(featureIdInVariantCodes, {...variations[newVariantIndexStyle].variationCode[featureIdInVariantCodes]});
+                    // console.log(featureIdInVariantCodes, {...variations[newVariantIndexStyle].variationCode[featureIdInVariantCodes]});
                 }
             }
             // isObjectEmpty()
@@ -162,10 +162,10 @@ const ProductItem: FC<ProductItemProps> = props => {
     const productUrl = prepUrlFromConfigSlug(language, pageTypePrefixUrls, pageTypes.productPage, null, url, isMultilanguage, variantId);
 
     // Wishlist vs Category page
-    // In Wishlist Page variation_image is on Root
-    // In Category variation_image is in each variation object
-    const imagesHolderUrl = wishlistProduct ? wishlistProduct.productData.variation_image :
-        variations && variations[variantId] ? variations[variantId].variation_image : null;
+    // In Wishlist Page variationImage is on Root
+    // In Category variationImage is in each variation object
+    const imagesHolderUrl = wishlistProduct ? wishlistProduct.productData.variationImage :
+        variations && variations[variantId] ? variations[variantId].variationImage : null;
 
 
     return <div className={`${styles.productItemContainer} ${showPlaceholder ? styles.disable : ''}`}
@@ -209,7 +209,7 @@ const ProductItem: FC<ProductItemProps> = props => {
                     <div className={styles.label}>
                         {!showPlaceholder && translations && translations.priceFrom ? translations.priceFrom : ''}
                     </div>
-                    <ShowPrice allPrices={min_price} />
+                    <ShowPrice allPrices={minPrice} />
                 </div>
             </div>
         </DivNavLink>

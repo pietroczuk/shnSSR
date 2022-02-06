@@ -47,9 +47,9 @@ const AllFeaturesDisplay: React.FC<AllFeaturesDisplayProps> = props => {
                 }
                 return <div key={featureKey} className={styles.featureContainer}>
                     <SingleFeature
-                        title={feature.feature_title}
+                        title={feature.featureTitle}
                         atributes={feature.atributes}
-                        displayType={feature.feature_display}
+                        displayType={feature.featureDisplay}
                         featureKey={featureKey}
                         currentVariationCode={localCurrentVariationCode}
                         allProductVariation={allProductVariation}

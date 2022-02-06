@@ -18,7 +18,7 @@ interface Props {
     featureKey: string,
     allProductVariation: any,
     isGlobalChange: boolean,
-    onClickFunction : Function
+    onClickFunction: Function
 }
 
 const SingleFeature: React.FC<Props> = props => {
@@ -43,25 +43,25 @@ const SingleFeature: React.FC<Props> = props => {
     }
     const displaySingleFeature = () => {
         return currentVariationCode && Object.entries(atributes).map(([att_key, att_val], index) => {
-            const active = currentVariationCode[featureKey] && currentVariationCode[featureKey].atrib_id == att_key ? true : false;
+            const active = currentVariationCode[featureKey] && currentVariationCode[featureKey].atribId == att_key ? true : false;
             // const att_val = atributes[att_key];
 
             let matchCode = '';
             const new_variant = { ...currentVariationCode };
 
             if (!active) {
-                new_variant[featureKey] = { ...new_variant[featureKey], 'code': att_val.code, 'atrib_id': att_val.id }
+                new_variant[featureKey] = { ...new_variant[featureKey], code: att_val.code, atribId: att_val.id }
             } else {
                 bgPossition = index;
-                setActiveCodeValueHandler(att_val.attrib_title);
+                setActiveCodeValueHandler(att_val.attribTitle);
             }
 
             if (allProductVariation) {
                 for (const variant in allProductVariation) {
                     let match = true;
                     for (const searchVariant in new_variant) {
-                        const variant_code = allProductVariation[variant].variation_code;
-                        if (variant_code[searchVariant].atrib_id !== new_variant[searchVariant].atrib_id) {
+                        const variant_code = allProductVariation[variant].variationCode;
+                        if (variant_code[searchVariant].atribId !== new_variant[searchVariant].atribId) {
                             match = false;
                             break;
                         }
