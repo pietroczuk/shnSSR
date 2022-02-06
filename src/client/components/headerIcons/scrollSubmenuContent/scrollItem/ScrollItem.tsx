@@ -47,14 +47,15 @@ const ScrollItem: React.FC<ScrollItemProps> = (props) => {
                 <img src={imageUrl} />
             </div>
             <div className={styles.itemDataHolder}>
-                <div className={styles.label}>
-                    {product.productData.titlekey}
+                <div className={styles.itemData}>
+                    <div className={styles.label}>
+                        {product.productData.titlekey}
+                    </div>
+                    <div className={styles.description}>
+                        {cutText(product.productData.title, 20)}
+                    </div>
+                    <ShowSelectedAttributes selectedVariantId={variantId} avaibleVariations={variations} customFontSize={0.6} isWishlist={isWishlist} />
                 </div>
-                <div className={styles.description}>
-                    {cutText(product.productData.title, 20)}
-                </div>
-                <ShowSelectedAttributes selectedVariantId={variantId} avaibleVariations={variations} customFontSize={0.6} isWishlist={isWishlist} />
-
                 <div className={`${styles.priceCont} ${!isWishlist ? styles.minicart : ''}`}>
                     {
                         isWishlist &&

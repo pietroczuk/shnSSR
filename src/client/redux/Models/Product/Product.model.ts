@@ -15,4 +15,8 @@ export interface Product {
             [key: string]: string[];
         }
     }
+    sale: boolean;
+    startsale: string;
+    stopsale: string;
+    salePercent: number;
 }

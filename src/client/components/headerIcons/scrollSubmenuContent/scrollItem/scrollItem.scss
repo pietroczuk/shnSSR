@@ -9,8 +9,8 @@
     .imageHolder {
         background-color: #f2f2f2;
         padding         : 10px;
-        width           : 140px;
-        min-width       : 140px;
+        width           : 130px;
+        min-width       : 130px;
 
         img {
             display: block;
@@ -18,27 +18,31 @@
     }
 
     .itemDataHolder {
-        padding: 0.5em 0em 0.5em 1em;
-        width  : 100%;
+        padding        : 0.5em 0em 0.5em 1em;
+        width          : 100%;
+        display        : flex;
+        flex-direction : column;
+        justify-content: space-around;
 
-        .label {
-            font-weight  : 600;
-            font-size    : 0.85em;
-            margin-bottom: 0.1em;
-        }
+        .itemData {
 
-        .description {
-            font-size    : 0.6em;
-            margin-bottom: 1.5em;
-            color        : #888;
-            line-height  : 1.4em;
+            .label {
+                font-weight  : 600;
+                font-size    : 0.85em;
+                margin-bottom: 0.1em;
+            }
+
+            .description {
+                font-size    : 0.6em;
+                margin-bottom: 1.5em;
+                color        : #888;
+                line-height  : 1.4em;
+            }
         }
 
         .priceCont {
-            margin-top   : 1em;
             padding-right: 1em;
             text-align   : right;
-
 
             .priceLabel {
                 font-size    : 0.65em;
