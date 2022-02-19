@@ -10,9 +10,12 @@ import Placeholder from '../../components/placeholder/Placeholder';
 import AllFeaturesDisplay from '../../components/helpers/product/features/AllFeaturesDisplay';
 import { RootState } from '../../client';
 import { RouteComponentProps } from 'react-router-dom';
-import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
 import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
 import { getPage } from '../../redux/actionCreators/page/page.ac';
+// SEO
+import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
+import { helmetJsonLdProp } from "react-schemaorg";
+import { Product as HelmetProduct } from "schema-dts";
 
 interface ProductProps {
     url: string;
@@ -37,7 +40,7 @@ const Product: React.FC<RouteComponentProps<ProductProps>> = (props) => {
 
     const currentVariationId = product ? product.currentVariationId : null;
     // from props
-    const { url, 
+    const { url,
         // lang 
     } = props.match.params;
     const { location } = props;
@@ -56,9 +59,20 @@ const Product: React.FC<RouteComponentProps<ProductProps>> = (props) => {
         ssr && dispatch(publicConfigActions.disableSrr());
     }, [])
 
+    const script = [
+        helmetJsonLdProp<HelmetProduct>({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: title,
+            brand: {
+                "@type": "Brand",
+                name: "ShinePosters"
+            }
+        }),
+    ];
     return (
         <div>
-            {<SeoMetaTags language={language} pageType={pageType} url={url} />}
+            {<SeoMetaTags language={language} pageType={pageType} url={url} script={script}/>}
             Product page
             {/* <FixedBar /> */}
             {title ?

@@ -7,10 +7,11 @@ interface SeoMetaTagsProps {
     url: string;
     language: string;
     pageType: string;
+    script?: any; 
 }
 
 const SeoMetaTags: React.FC<SeoMetaTagsProps> = props => {
-    const { url, language, pageType } = props;
+    const { url, language, pageType, script } = props;
 
     const { seo, urlPrefix, pageTitle, pageDescription } = useSelector((state: RootState) => ({
         seo: state.PublicConfig.config.seo,
@@ -25,7 +26,7 @@ const SeoMetaTags: React.FC<SeoMetaTagsProps> = props => {
     const prefix = urlPrefix ? urlPrefix + '/' : '';
     const ogUlr = og ? og.url + '/' : '';
     const link = ogUlr + language + '/' + prefix + url;
-
+    const seoScript = script ? script : [];
     return (
         <Helmet
             title={title}
@@ -64,6 +65,7 @@ const SeoMetaTags: React.FC<SeoMetaTagsProps> = props => {
                         content: og ? og.siteName : ''
                     },
                 ]}
+            script={seoScript}
         />
     );
 }

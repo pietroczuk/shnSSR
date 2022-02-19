@@ -90,8 +90,8 @@ export const rednderHtml: renderHtml = (req, server_store, context, new_routes_c
               ${server_helmet.link.toString()}
               <meta charset="UTF-8">
               <meta name="viewport" content="width=device-width, initial-scale=1">
-              <link async rel="shortcut icon" href="/images/shineposters_favicon_dark_black.png">
-              <link async rel="apple-touch-icon" href="/images/shineposters_favicon_dark_black.png"/>
+              <link rel="shortcut icon" href="/images/shineposters_favicon_dark_black.png">
+              <link rel="apple-touch-icon" href="/images/shineposters_favicon_dark_black.png"/>
               <link rel="manifest" href="/manifest.json"/>
               <meta name="apple-mobile-web-app-status-bar-style" content="black">
               <meta name="apple-mobile-web-app-title" content="SHN">
