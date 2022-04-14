@@ -1,5 +1,5 @@
 export interface AllCurrencies {
-    [key: string]: {
+    // [key: string]: {
         [key: string]: {
             code: string;
             label: string;
@@ -7,5 +7,5 @@ export interface AllCurrencies {
             isDisplayLeft: boolean;
             default: boolean;
         }
-    }
+    // }
 }

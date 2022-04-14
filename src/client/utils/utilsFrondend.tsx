@@ -177,6 +177,8 @@ interface formatPriceArgs {
 }
 export const formatPrice: formatPriceArgs = (price, userCurrency, allCurrencies) => {
     if (allCurrencies && allCurrencies[userCurrency] && price) {
+        // return allCurrencies[userCurrency].sign;
+        // console.log(price);
         if (allCurrencies[userCurrency].isDisplayLeft) {
             return allCurrencies[userCurrency].sign + ' ' + price;
         } else {
@@ -191,17 +193,25 @@ interface getPromoPriceArgs {
         price: string | number,
         sale: Sale,
         returnFloat?: boolean,
-        cutDecimal?: boolean
+        cutDecimal?: boolean,
+        finalQuantity? : number
     ): string | number
 }
 
-export const getPromoPrice: getPromoPriceArgs = (price, sale, returnFloat, cutDecimal) => {
+export const getPromoPrice: getPromoPriceArgs = (price, sale, returnFloat, cutDecimal, finalQuantity) => {
     const { enable, percent } = sale;
     if (!enable || percent <= 0) return price;
 
     let floatPrice = typeof price === "string" ? parseFloat(price) : price;
     floatPrice = floatPrice - (floatPrice * percent / 100);
+    
     floatPrice = cutDecimal ? +floatPrice.toFixed(0) : +floatPrice.toFixed(2);
+
+    if(finalQuantity && finalQuantity > 1) {
+        floatPrice *= finalQuantity;
+    }
+
+    // floatPrice =  Math.round(floatPrice);
     if (returnFloat) {
         return floatPrice;
     }

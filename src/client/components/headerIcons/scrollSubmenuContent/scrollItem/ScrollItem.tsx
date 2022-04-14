@@ -43,7 +43,7 @@ const ScrollItem: React.FC<ScrollItemProps> = (props) => {
     const sale = product.productData.sale;
     const showSaleBadge = sale.enable;
 
-    quantity > 1 && Object.entries(minPrice).forEach(([key, price]) => minPrice[key] = (+price * quantity).toString());
+    // quantity > 1 && Object.entries(minPrice).forEach(([key, price]) => minPrice[key] = (+price * quantity).toString());
     return (
         <DivNavLink to={productUrl} className={styles.item} onClick={clickHandler}>
             <div className={styles.imageHolder}>
@@ -72,7 +72,7 @@ const ScrollItem: React.FC<ScrollItemProps> = (props) => {
                             <ShowPrice allPrices={singlePrice} quantity={quantity} sale={sale} />
                         </div>
                     }
-                    <ShowPrice allPrices={minPrice} sale={sale} />
+                    <ShowPrice allPrices={minPrice} sale={sale} finalQuantity={quantity}/>
                 </div>
             </div>
         </DivNavLink>

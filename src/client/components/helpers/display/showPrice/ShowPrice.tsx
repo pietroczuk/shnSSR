@@ -11,11 +11,12 @@ interface ShowPriceProps {
         [key: string]: string
     }
     quantity?: number;
+    finalQuantity?: number;
     sale: Sale;
 }
 
 const ShowPrice: React.FC<ShowPriceProps> = (props) => {
-    const { allPrices, quantity, sale } = props;
+    const { allPrices, quantity, sale, finalQuantity } = props;
 
     const { currency, allCurrencies } = useSelector((state: RootState) => ({
         currency: state.User.currency,
@@ -28,14 +29,24 @@ const ShowPrice: React.FC<ShowPriceProps> = (props) => {
     });
 
     const price = getPriceByCurrency(allPrices, currency, allCurrencies);
-    const formatedPrice = formatPrice(price, currency, allCurrencies);
+    const finalOemPrice = finalQuantity ? +price * finalQuantity : +price;
+    const formatedPrice = formatPrice(finalOemPrice, currency, allCurrencies);
 
-    return <div className={styles.price}>
+    const promoPrice = showPromo ? getPromoPrice(price, sale, true, true, finalQuantity) : 0;
+
+    return <div className={`${styles.price} ${quantity ? styles.quantity : ''}`}>
         {quantity ? quantity + ' x ' : ''}
-        {showPromo && <div className={styles.promo}>
-            {formatPrice(getPromoPrice(price, sale, true, true), currency, allCurrencies)}
-        </div>}
-        {showPromo ? <del>{parseFloat(formatedPrice).toFixed(2)}</del> : formatedPrice}
+        {showPromo &&
+            <div className={quantity ? '' : styles.promo}>
+                {
+                    formatPrice(promoPrice, currency, allCurrencies)}
+            </div>
+        }
+        {!showPromo ?
+            formatedPrice :
+            quantity ? '' :
+                <del>{formatPrice(finalOemPrice.toFixed(2), currency, allCurrencies)}</del>
+        }
     </div>
 }
 
