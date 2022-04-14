@@ -3,6 +3,7 @@ import styles from './saleBadge.scss';
 import withStyles from "isomorphic-style-loader/withStyles";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../client";
+import { checkTrueSale } from "../../../../../utils/utilsFrondend";
 
 interface SaleBadgeProps {
     sale: {
@@ -15,16 +16,10 @@ interface SaleBadgeProps {
 
 const SaleBadge: React.FC<SaleBadgeProps> = props => {
     const { sale } = props;
-    if (!sale || (sale && !sale.enable)) {
-        return <React.Fragment />
-    }
 
     const showBadge = useSelector((state: RootState) => {
-        const date = state.User.today.date
-        if (date >= sale.startSale) {
-            return true;
-        }
-        return false;
+        const now = state.User.today.date
+        return checkTrueSale(sale, now)
     }
     );
 

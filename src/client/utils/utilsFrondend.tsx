@@ -265,3 +265,36 @@ export const intersectArray = (arrayOfArrays: Array<any>) => {
             arrayOfArrays.reduce((a, b) => a.filter((c: any) => b.includes(c))) :
             arrayOfArrays : null;
 }
+
+/**
+ * check true sale
+ */
+
+interface checkTrueSaleArgs {
+    (
+        sale: {
+            enable: boolean,
+            startSale: number | null,
+            stopSale: number | null,
+            percent: number | null
+        } | null,
+        now: number
+    ): boolean
+}
+
+export const checkTrueSale: checkTrueSaleArgs = (sale, now) => {
+    if (!sale || (sale && !sale.enable)) {
+        return false;
+    }
+    const { startSale, stopSale } = sale;
+
+    if(
+        (startSale <= now && stopSale >= now) ||
+        (startSale <= now && !stopSale) || 
+        (!startSale && stopSale >= now)
+    )
+         {
+        return true;
+    }
+    return false;
+}
