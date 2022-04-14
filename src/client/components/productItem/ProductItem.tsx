@@ -42,7 +42,7 @@ const ProductItem: FC<ProductItemProps> = props => {
     const productId = product ? product.id : wishlistProduct ? wishlistProduct.p : null;
     const minPrice = product ? product.minPrice : wishlistProduct ? wishlistProduct.productData.minPrice : null;
     const sale = product ? product.sale : wishlistProduct ? wishlistProduct.productData.sale : null ;
-    const showSaleBadge = sale && sale.enable ? sale.enable : false;
+    const showSaleBadge = sale.enable;
     const variations = product ? product.variations : wishlistProduct ? wishlistProduct.productData.variations : null;
 
     const {

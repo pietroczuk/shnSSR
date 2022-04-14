@@ -1,4 +1,5 @@
 import Cookies from 'universal-cookie';
+import { Sale } from '../redux/Models/Product/Sale/Sale.model';
 import { AllCurrencies } from '../redux/Models/SystemConfig/AllCurrencies/AllCurrencies.model';
 import { PageTypePrefixUrls } from '../redux/Models/SystemConfig/PageTypePrefixUrls/PageTypePrefixUrls.model';
 // ---------- get page
@@ -137,6 +138,11 @@ export const prepUrlFromConfigSlug: prepUrlFromConfigSlugArgs = (language, pageT
 //     return url_link;
 // }
 
+/**
+ * getting product price based on user currency
+ * return only price without currency
+ */
+
 interface getPriceByCurrencyArgs {
     (
         productPrices: {
@@ -144,45 +150,61 @@ interface getPriceByCurrencyArgs {
         },
         userCurrency: string,
         allCurrencies: AllCurrencies,
-        sale: {
-            enable: boolean,
-            startSale: number | null,
-            stopSale: number | null,
-            percent: number | null
-        } | null
-    ): string | null | JSX.Element
+        returnFloat?: boolean
+    ): string | number
 }
 
-export const getPriceByCurrency: getPriceByCurrencyArgs = (productPrices, userCurrency, allCurrencies, sale) => {
-    let price = productPrices &&
+export const getPriceByCurrency: getPriceByCurrencyArgs = (productPrices, userCurrency, allCurrencies, returnFloat) => {
+    const price =  productPrices &&
         userCurrency &&
         allCurrencies &&
         allCurrencies[userCurrency] &&
-        allCurrencies[userCurrency].sign &&
         productPrices[userCurrency] ? productPrices[userCurrency] : null;
-    if (!price) return null;
-
-    if (sale && sale.enable) {
-        if (allCurrencies[userCurrency].isDisplayLeft) {
-            return (
-                <del>
-                    {allCurrencies[userCurrency].sign + ' ' + price}
-                </del>
-            );
-        } else {
-            return (
-                <del>
-                    {price + ' ' + allCurrencies[userCurrency].sign}
-                </del>
-            );
-        }
-    } else {
+    if(returnFloat) {
+        return parseFloat(price);
+    }
+    return price;
+}
+/**
+ * format price based on currency possition
+ */
+interface formatPriceArgs {
+    (
+        price: string | number,
+        userCurrency: string,
+        allCurrencies: AllCurrencies,
+    ): string
+}
+export const formatPrice: formatPriceArgs = (price, userCurrency, allCurrencies) => {
+    if (allCurrencies && allCurrencies[userCurrency] && price) {
         if (allCurrencies[userCurrency].isDisplayLeft) {
             return allCurrencies[userCurrency].sign + ' ' + price;
         } else {
             return price + ' ' + allCurrencies[userCurrency].sign;
         }
     }
+    return '';
+}
+
+interface getPromoPriceArgs {
+    (
+        price: string,
+        sale: Sale,
+        returnFloat?: boolean
+    ) : string | number
+}
+
+export const getPromoPrice:getPromoPriceArgs = (price, sale, returnFloat) => {
+    const { enable, percent } = sale;
+    if(!enable || percent <= 0) return price;
+
+    let floatPrice = parseFloat(price);
+    floatPrice = floatPrice - (floatPrice * percent/100);
+    floatPrice.toFixed(2);
+    if(returnFloat) {
+        return floatPrice;
+    }
+    return floatPrice.toString();
 }
 
 /**
@@ -272,28 +294,22 @@ export const intersectArray = (arrayOfArrays: Array<any>) => {
 
 interface checkTrueSaleArgs {
     (
-        sale: {
-            enable: boolean,
-            startSale: number | null,
-            stopSale: number | null,
-            percent: number | null
-        } | null,
+        sale: Sale,
         now: number
     ): boolean
 }
 
 export const checkTrueSale: checkTrueSaleArgs = (sale, now) => {
-    if (!sale || (sale && !sale.enable)) {
+    if (!sale.enable) {
         return false;
     }
     const { startSale, stopSale } = sale;
 
-    if(
+    if (
         (startSale <= now && stopSale >= now) ||
-        (startSale <= now && !stopSale) || 
+        (startSale <= now && !stopSale) ||
         (!startSale && stopSale >= now)
-    )
-         {
+    ) {
         return true;
     }
     return false;

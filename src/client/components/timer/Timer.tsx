@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
-import { useDispatch, 
-    useSelector 
+import {
+    useDispatch,
+    useSelector
 } from "react-redux";
 import { RootState } from "../../client";
 import { userActions } from "../../redux/slices/userSlice/userSlice";
 
 const Timer: React.FC = () => {
-    const date = useSelector((state:RootState) => state.User.today.date);
+    const date = useSelector((state: RootState) => state.User.today.date);
+    const showMe = false;
     const dispatch = useDispatch();
     useEffect(() => {
         /** Increase date */
@@ -18,9 +20,12 @@ const Timer: React.FC = () => {
         }
     }, [])
     const normal_date = new Date(date).toLocaleString("pl-PL", { timeZone: 'Europe/Warsaw' })
-    return <React.Fragment>
-        {date} {normal_date}
+    if (showMe) {
+        return <React.Fragment>
+            {date} {normal_date}
         </React.Fragment>
-    // return <React.Fragment/>
+    } else {
+        return <React.Fragment />
+    }
 }
 export default Timer;

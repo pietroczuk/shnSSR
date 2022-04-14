@@ -1,3 +1,4 @@
+import { Sale } from "./Sale/Sale.model";
 import { Variations } from "./Variations/Variations.model";
 
 export interface Product {
@@ -15,10 +16,5 @@ export interface Product {
             [key: string]: string[];
         }
     }
-    sale: {
-        enable: boolean,
-        startSale: number | null,
-        stopSale: number | null,
-        percent: number | null
-    } | null
+    sale: Sale;
 }

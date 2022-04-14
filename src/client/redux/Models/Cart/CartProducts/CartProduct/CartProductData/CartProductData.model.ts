@@ -1,3 +1,4 @@
+import { Sale } from '../../../../Product/Sale/Sale.model';
 import { VariationImage } from '../../../../Product/Variations/Variation/VariationImage/VariationImage.model';
 import { Variations } from '../../../../Product/Variations/Variations.model';
 export interface CartProductData {
@@ -12,10 +13,5 @@ export interface CartProductData {
         [key: string]: string;
     };
     variantId: string;
-    sale: {
-        enable: boolean,
-        startSale: number | null,
-        stopSale: number | null,
-        percent: number | null
-    } | null
+    sale: Sale;
 }

@@ -13,17 +13,13 @@ import HoverPopupContainer from "../hoverPopupContainer/HoverPopupContainer";
 import { RootState } from "../../../../../client";
 import { Variations } from "../../../../../redux/Models/Product/Variations/Variations.model";
 import { addToStoreCart } from "../../../../../redux/actionCreators/cart/cart.ac";
+import { Sale } from "../../../../../redux/Models/Product/Sale/Sale.model";
 
 interface ShowAddToCartVariantsProps {
     active: boolean;
     avaibleVariations: Variations;
     productId: string;
-    sale: {
-        enable: boolean,
-        startSale: number | null,
-        stopSale: number | null,
-        percent: number | null
-    } | null
+    sale: Sale;
 }
 
 const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {

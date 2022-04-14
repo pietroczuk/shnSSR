@@ -2,20 +2,16 @@ import React from "react";
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './showPrice.scss';
 import { useSelector, shallowEqual } from "react-redux";
-import { getPriceByCurrency } from "../../../../utils/utilsFrondend";
+import { checkTrueSale, formatPrice, getPriceByCurrency } from "../../../../utils/utilsFrondend";
 import { RootState } from "../../../../client";
+import { Sale } from "../../../../redux/Models/Product/Sale/Sale.model";
 
 interface ShowPriceProps {
     allPrices: {
         [key: string]: string
     }
     quantity?: number;
-    sale : {
-        enable: boolean,
-        startSale: number | null,
-        stopSale: number | null,
-        percent: number | null
-    } | null;
+    sale: Sale;
 }
 
 const ShowPrice: React.FC<ShowPriceProps> = (props) => {
@@ -26,12 +22,18 @@ const ShowPrice: React.FC<ShowPriceProps> = (props) => {
         allCurrencies: state.SystemConfig.allCurrencies,
     }), shallowEqual);
 
-    const price = getPriceByCurrency(allPrices, currency, allCurrencies, sale);
+    const showPromo = useSelector((state: RootState) => {
+        const now = state.User.today.date
+        return checkTrueSale(sale, now)
+    });
+
+    const price = getPriceByCurrency(allPrices, currency, allCurrencies);
+    const formatedPrice = formatPrice(price, currency, allCurrencies);
 
     return <div className={styles.price}>
         {quantity ? quantity + ' x ' : ''}
-        {price}
-        </div>
+        {showPromo ? <del>{formatedPrice}</del> : formatedPrice}
+    </div>
 }
 
 export default withStyles(styles)(ShowPrice);
