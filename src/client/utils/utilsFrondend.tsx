@@ -12,7 +12,7 @@ export const pageTypes = {
     cart: 'cart',
     specialPage: 'special',
 }
-export const getPageTypeAsString = (pageType: string) =>{
+export const getPageTypeAsString = (pageType: string) => {
     return pageTypes[pageType];
 }
 // ---------- end get page
@@ -143,22 +143,45 @@ interface getPriceByCurrencyArgs {
             [key: string]: string
         },
         userCurrency: string,
-        allCurrencies: AllCurrencies
-    ): string | null
+        allCurrencies: AllCurrencies,
+        sale: {
+            enable: boolean,
+            startSale: number | null,
+            stopSale: number | null,
+            percent: number | null
+        } | null
+    ): string | null | JSX.Element
 }
 
-export const getPriceByCurrency: getPriceByCurrencyArgs = (productPrices, userCurrency, allCurrencies) => {
-    const price = productPrices &&
+export const getPriceByCurrency: getPriceByCurrencyArgs = (productPrices, userCurrency, allCurrencies, sale) => {
+    let price = productPrices &&
         userCurrency &&
         allCurrencies &&
         allCurrencies[userCurrency] &&
         allCurrencies[userCurrency].sign &&
         productPrices[userCurrency] ? productPrices[userCurrency] : null;
-    if(!price) return null;
-    if(allCurrencies[userCurrency].isDisplayLeft) {
-        return allCurrencies[userCurrency].sign + ' ' + price;
-    }else{
-        return price + ' ' + allCurrencies[userCurrency].sign;
+    if (!price) return null;
+
+    if (sale && sale.enable) {
+        if (allCurrencies[userCurrency].isDisplayLeft) {
+            return (
+                <del>
+                    {allCurrencies[userCurrency].sign + ' ' + price}
+                </del>
+            );
+        } else {
+            return (
+                <del>
+                    {price + ' ' + allCurrencies[userCurrency].sign}
+                </del>
+            );
+        }
+    } else {
+        if (allCurrencies[userCurrency].isDisplayLeft) {
+            return allCurrencies[userCurrency].sign + ' ' + price;
+        } else {
+            return price + ' ' + allCurrencies[userCurrency].sign;
+        }
     }
 }
 

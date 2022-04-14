@@ -27,10 +27,11 @@ const userSlice = createSlice({
             return state;
         },
         addSecontToTimer(state: User) {
-            const stateDate = new Date(state.today.date);
-            const newStateDate =  new Date(stateDate.getTime() + 1000);
-            const newStateDateString = newStateDate.toString();
-            state.today.date = newStateDateString;
+            // const stateDate = new Date(state.today.date);
+            // const newStateDate =  new Date(stateDate.getTime() + 1000);
+            // const newStateDateString = newStateDate.toString();
+            // state.today.date = newStateDateString;
+            state.today.date += 1000;
             return state;
         }
     }

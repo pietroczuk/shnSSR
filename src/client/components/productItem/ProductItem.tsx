@@ -16,6 +16,7 @@ import ShowAvaibleFeatures from '../helpers/product/productItem/showAvaibleFeatu
 import { RootState } from '../../client';
 import { Product } from '../../redux/Models/Product/Product.model';
 import { WishlistProduct } from '../../redux/Models/Wishlist/WishlistProducts/WishlistProduct/WishlistProduct.model';
+import SaleBadge from '../helpers/product/productItem/saleBadge/SaleBadge';
 
 const ShowSelectedAttributes = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showSelectedAttributes/ShowSelectedAttributes'), {});
 const ShowAddToCartVariants = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showAddToCartVariants/ShowAddToCartVariants'), {});
@@ -40,6 +41,8 @@ const ProductItem: FC<ProductItemProps> = props => {
     const titlekey = product ? product.titlekey : wishlistProduct ? wishlistProduct.productData.titlekey : null;
     const productId = product ? product.id : wishlistProduct ? wishlistProduct.p : null;
     const minPrice = product ? product.minPrice : wishlistProduct ? wishlistProduct.productData.minPrice : null;
+    const sale = product ? product.sale : wishlistProduct ? wishlistProduct.productData.sale : null ;
+    const showSaleBadge = sale && sale.enable ? sale.enable : false;
     const variations = product ? product.variations : wishlistProduct ? wishlistProduct.productData.variations : null;
 
     const {
@@ -179,12 +182,14 @@ const ProductItem: FC<ProductItemProps> = props => {
         />
         }
         <DivNavLink to={productUrl}>
+            {showSaleBadge && <SaleBadge sale={sale}/>}
             <ImageDisplay title={title} imagesHolderUrl={imagesHolderUrl} forceVisual={forceVisual} onHover={onHover} showPlaceholder={showPlaceholder} />
         </DivNavLink>
         {wishlistPage && <ShowAddToCartVariants
             avaibleVariations={variations}
             active={onHover}
             productId={productId}
+            sale={sale}
         />}
         {!wishlistPage && !showPlaceholder && <ShowAvaibleFeatures
             active={onHover}
@@ -209,7 +214,7 @@ const ProductItem: FC<ProductItemProps> = props => {
                     <div className={styles.label}>
                         {!showPlaceholder && translations && translations.priceFrom ? translations.priceFrom : ''}
                     </div>
-                    <ShowPrice allPrices={minPrice} />
+                    <ShowPrice allPrices={minPrice} sale={sale}/>
                 </div>
             </div>
         </DivNavLink>

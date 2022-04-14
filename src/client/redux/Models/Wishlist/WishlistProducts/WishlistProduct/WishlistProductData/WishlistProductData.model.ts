@@ -15,8 +15,10 @@ export interface WishlistProductData {
     title: string;
     url: string;
     variantId: string;
-    sale: boolean;
-    startsale: string;
-    stopsale: string;
-    salePercent: number;
+    sale: {
+        enable: boolean,
+        startSale: number | null,
+        stopSale: number | null,
+        percent: number | null
+    } | null
 }

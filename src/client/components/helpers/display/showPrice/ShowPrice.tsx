@@ -10,19 +10,28 @@ interface ShowPriceProps {
         [key: string]: string
     }
     quantity?: number;
+    sale : {
+        enable: boolean,
+        startSale: number | null,
+        stopSale: number | null,
+        percent: number | null
+    } | null;
 }
 
 const ShowPrice: React.FC<ShowPriceProps> = (props) => {
-    const { allPrices, quantity } = props;
+    const { allPrices, quantity, sale } = props;
 
     const { currency, allCurrencies } = useSelector((state: RootState) => ({
         currency: state.User.currency,
         allCurrencies: state.SystemConfig.allCurrencies,
     }), shallowEqual);
 
-    const price = getPriceByCurrency(allPrices, currency, allCurrencies);
+    const price = getPriceByCurrency(allPrices, currency, allCurrencies, sale);
 
-    return <div className={styles.price}>{quantity ? quantity + ' x ' : ''}{price}</div>
+    return <div className={styles.price}>
+        {quantity ? quantity + ' x ' : ''}
+        {price}
+        </div>
 }
 
 export default withStyles(styles)(ShowPrice);

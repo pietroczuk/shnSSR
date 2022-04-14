@@ -39,6 +39,7 @@ const ScrollItem: React.FC<ScrollItemProps> = (props) => {
     const minPrice = { ...product.productData.minPrice };
     const singlePrice = product.productData.minPrice;
     const quantity = product.quantity > 0 ? product.quantity : 1;
+    const sale = product.productData.sale;
 
     quantity > 1 && Object.entries(minPrice).forEach(([key, price]) => minPrice[key] = (+price * quantity).toString());
     return (
@@ -65,10 +66,10 @@ const ScrollItem: React.FC<ScrollItemProps> = (props) => {
                     }
                     {!isWishlist && quantity > 1 &&
                         <div className={styles.priceLabel}>
-                            <ShowPrice allPrices={singlePrice} quantity={quantity} />
+                            <ShowPrice allPrices={singlePrice} quantity={quantity} sale={sale}/>
                         </div>
                     }
-                    <ShowPrice allPrices={minPrice} />
+                    <ShowPrice allPrices={minPrice} sale={sale}/>
                 </div>
             </div>
         </DivNavLink>

@@ -1,0 +1,16 @@
+.badge {
+    background-color: #da0e2b;
+    width: 3.5em;
+    height: 3.5em;
+    position: absolute;
+    z-index: 2;
+    top: 0.7em;
+    left: 0.7em;
+    color: #fff;
+    border-radius: 3em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: 500;
+}

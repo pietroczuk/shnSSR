@@ -67,7 +67,24 @@ const Product: React.FC<RouteComponentProps<ProductProps>> = (props) => {
             brand: {
                 "@type": "Brand",
                 name: "ShinePosters"
-            }
+            },
+            offers: [{
+                "@type": "Offer",
+                url: "/"+location.pathname,
+                priceCurrency: currency,
+                price: "134.95",
+                "priceValidUntil": "2020-11-06",
+                availability: "https://schema.org/InStock",
+                itemCondition: "https://schema.org/NewCondition"
+              },{
+                "@type": "Offer",
+                "url": "https://my-product-url.com/",
+                "priceCurrency": "EUR",
+                "price": "123.99",
+                "priceValidUntil": "2020-11-10",
+                "availability": "https://schema.org/InStock",
+                "itemCondition": "https://schema.org/NewCondition"
+              }],
         }),
     ];
     return (

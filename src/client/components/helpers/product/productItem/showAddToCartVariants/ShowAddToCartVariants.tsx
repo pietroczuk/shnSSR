@@ -17,11 +17,17 @@ import { addToStoreCart } from "../../../../../redux/actionCreators/cart/cart.ac
 interface ShowAddToCartVariantsProps {
     active: boolean;
     avaibleVariations: Variations;
-    productId: string
+    productId: string;
+    sale: {
+        enable: boolean,
+        startSale: number | null,
+        stopSale: number | null,
+        percent: number | null
+    } | null
 }
 
 const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
-    const { active, avaibleVariations, productId } = props;
+    const { active, avaibleVariations, productId, sale } = props;
     const [showSubmenu, setShowSubmenu] = useState(false);
 
     const onClickHandler = () => {
@@ -76,7 +82,7 @@ const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
                         return (
                             <div className={styles.selectOption} onClick={addToCartClickHandler.bind(this,variantId)} key={variantId}>
                                 <ShowSizesText text={attribTitle} minitext={attribTooltip} />
-                                <ShowPrice allPrices={variant.variationPrice} />
+                                <ShowPrice allPrices={variant.variationPrice} sale={sale}/>
                             </div>
                         )
                     })}

@@ -16,7 +16,8 @@ export const createServerInitStore = (language: string, currency: string, displa
             language: language,
             currency: currency,
             today: {
-                date: new Date().toLocaleString("pl-PL", { timeZone: 'Europe/Warsaw' })
+                // date: new Date().toLocaleString("pl-PL", { timeZone: 'Europe/Warsaw' })
+                date: new Date().setMilliseconds(0)
             },
         },
         Display: display_options
