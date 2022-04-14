@@ -155,12 +155,12 @@ interface getPriceByCurrencyArgs {
 }
 
 export const getPriceByCurrency: getPriceByCurrencyArgs = (productPrices, userCurrency, allCurrencies, returnFloat) => {
-    const price =  productPrices &&
+    const price = productPrices &&
         userCurrency &&
         allCurrencies &&
         allCurrencies[userCurrency] &&
         productPrices[userCurrency] ? productPrices[userCurrency] : null;
-    if(returnFloat) {
+    if (returnFloat) {
         return parseFloat(price);
     }
     return price;
@@ -188,20 +188,20 @@ export const formatPrice: formatPriceArgs = (price, userCurrency, allCurrencies)
 
 interface getPromoPriceArgs {
     (
-        price: string,
+        price: string | number,
         sale: Sale,
         returnFloat?: boolean
-    ) : string | number
+    ): string | number
 }
 
-export const getPromoPrice:getPromoPriceArgs = (price, sale, returnFloat) => {
+export const getPromoPrice: getPromoPriceArgs = (price, sale, returnFloat) => {
     const { enable, percent } = sale;
-    if(!enable || percent <= 0) return price;
+    if (!enable || percent <= 0) return price;
 
-    let floatPrice = parseFloat(price);
-    floatPrice = floatPrice - (floatPrice * percent/100);
+    let floatPrice = typeof price === "string" ? parseFloat(price) : price;
+    floatPrice = floatPrice - (floatPrice * percent / 100);
     floatPrice.toFixed(2);
-    if(returnFloat) {
+    if (returnFloat) {
         return floatPrice;
     }
     return floatPrice.toString();

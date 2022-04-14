@@ -2,7 +2,7 @@ import React from "react";
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './showPrice.scss';
 import { useSelector, shallowEqual } from "react-redux";
-import { checkTrueSale, formatPrice, getPriceByCurrency } from "../../../../utils/utilsFrondend";
+import { checkTrueSale, formatPrice, getPriceByCurrency, getPromoPrice } from "../../../../utils/utilsFrondend";
 import { RootState } from "../../../../client";
 import { Sale } from "../../../../redux/Models/Product/Sale/Sale.model";
 
@@ -33,6 +33,7 @@ const ShowPrice: React.FC<ShowPriceProps> = (props) => {
     return <div className={styles.price}>
         {quantity ? quantity + ' x ' : ''}
         {showPromo ? <del>{formatedPrice}</del> : formatedPrice}
+        {showPromo && formatPrice(getPromoPrice(price, sale), currency, allCurrencies)}
     </div>
 }
 
