@@ -32,8 +32,10 @@ const ShowPrice: React.FC<ShowPriceProps> = (props) => {
 
     return <div className={styles.price}>
         {quantity ? quantity + ' x ' : ''}
-        {showPromo ? <del>{formatedPrice}</del> : formatedPrice}
-        {showPromo && formatPrice(getPromoPrice(price, sale), currency, allCurrencies)}
+        {showPromo && <div className={styles.promo}>
+            {formatPrice(getPromoPrice(price, sale, true, true), currency, allCurrencies)}
+        </div>}
+        {showPromo ? <del>{parseFloat(formatedPrice).toFixed(2)}</del> : formatedPrice}
     </div>
 }
 

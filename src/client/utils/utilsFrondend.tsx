@@ -190,17 +190,18 @@ interface getPromoPriceArgs {
     (
         price: string | number,
         sale: Sale,
-        returnFloat?: boolean
+        returnFloat?: boolean,
+        cutDecimal?: boolean
     ): string | number
 }
 
-export const getPromoPrice: getPromoPriceArgs = (price, sale, returnFloat) => {
+export const getPromoPrice: getPromoPriceArgs = (price, sale, returnFloat, cutDecimal) => {
     const { enable, percent } = sale;
     if (!enable || percent <= 0) return price;
 
     let floatPrice = typeof price === "string" ? parseFloat(price) : price;
     floatPrice = floatPrice - (floatPrice * percent / 100);
-    floatPrice.toFixed(2);
+    floatPrice = cutDecimal ? +floatPrice.toFixed(0) : +floatPrice.toFixed(2);
     if (returnFloat) {
         return floatPrice;
     }

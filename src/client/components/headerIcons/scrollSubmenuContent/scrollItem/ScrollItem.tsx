@@ -10,6 +10,7 @@ import DivNavLink from "../../../divNavLink/DivNavLink";
 import { cutText, pageTypes, prepUrlFromConfigSlug } from "../../../../utils/utilsFrondend";
 import ShowSelectedAttributes from "../../../helpers/product/productItem/showSelectedAttributes/ShowSelectedAttributes";
 import ShowPrice from "../../../helpers/display/showPrice/ShowPrice";
+import SaleBadge from "../../../helpers/product/productItem/saleBadge/SaleBadge";
 // import ShowSelectedAttributes from "../../../helpers/product/productItem/showSelectedAttributes/ShowSelectedAttributes";
 
 interface ScrollItemProps {
@@ -40,11 +41,13 @@ const ScrollItem: React.FC<ScrollItemProps> = (props) => {
     const singlePrice = product.productData.minPrice;
     const quantity = product.quantity > 0 ? product.quantity : 1;
     const sale = product.productData.sale;
+    const showSaleBadge = sale.enable;
 
     quantity > 1 && Object.entries(minPrice).forEach(([key, price]) => minPrice[key] = (+price * quantity).toString());
     return (
         <DivNavLink to={productUrl} className={styles.item} onClick={clickHandler}>
             <div className={styles.imageHolder}>
+                {showSaleBadge && <SaleBadge sale={sale} />}
                 <img src={imageUrl} />
             </div>
             <div className={styles.itemDataHolder}>
@@ -66,10 +69,10 @@ const ScrollItem: React.FC<ScrollItemProps> = (props) => {
                     }
                     {!isWishlist && quantity > 1 &&
                         <div className={styles.priceLabel}>
-                            <ShowPrice allPrices={singlePrice} quantity={quantity} sale={sale}/>
+                            <ShowPrice allPrices={singlePrice} quantity={quantity} sale={sale} />
                         </div>
                     }
-                    <ShowPrice allPrices={minPrice} sale={sale}/>
+                    <ShowPrice allPrices={minPrice} sale={sale} />
                 </div>
             </div>
         </DivNavLink>

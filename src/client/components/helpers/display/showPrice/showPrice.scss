@@ -1,4 +1,18 @@
 .price {
     font-size  : 1.1em;
     font-weight: 500;
+    display: flex;
+    gap: 0.4em;
+    justify-content: flex-end;
+    del {
+        font-size: 0.7em;
+        color: #7e7e7e;
+        font-weight: 400;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .promo {
+        color: #da0e2b;
+    }
 }
