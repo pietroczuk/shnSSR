@@ -170,7 +170,7 @@ const ProductItem: FC<ProductItemProps> = props => {
 
     const dispatch = useDispatch();
     useEffect(() => {
-        !wishlistPage && sale.enable && dispatch(updateStorePageProductslistPromoPrice(variantId, showPromo));
+        !wishlistPage && sale.enable && dispatch(updateStorePageProductslistPromoPrice(productId, showPromo));
         wishlistPage && sale.enable && wishlistProduct.v && dispatch(updateStoreWishlistPromoPrice(wishlistProduct.v, showPromo));
     }, [showPromo])
 

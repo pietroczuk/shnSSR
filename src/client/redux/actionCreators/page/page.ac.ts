@@ -39,7 +39,7 @@ export const setProductCurrVarId = (productVariantId: string, variations: Variat
   }
 }
 
-export const updateStorePageProductslistPromoPrice = (variantId: string, saleEnable: boolean) => (dispatch: Dispatch) => {
-  const actionPayload = { variantId, saleEnable };
-  return dispatch(pageActions.updatePageProductsPromoPrice(actionPayload));
+export const updateStorePageProductslistPromoPrice = (productId: string, saleEnable: boolean) => (dispatch: Dispatch) => {
+  const actionPayload = { productId, saleEnable };
+  return dispatch(pageActions.updateCategoryProductsPromoPrice(actionPayload));
 }

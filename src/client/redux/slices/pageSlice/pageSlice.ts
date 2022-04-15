@@ -38,8 +38,46 @@ const pageSlice = createSlice({
             state.data.productPage.currentVariationId = action.payload;
             return state;
         },
-        updatePageProductsPromoPrice(state: Page, action) {
-            console.log('product update',action.payload);
+        updateCategoryProductsPromoPrice(state: Page, action) {
+            const { productId, saleEnable } = action.payload;
+            const { saveMoney, salePrice, minPrice, sale, variations } = state.data.categoryPage.products[productId];
+            // const productData = state.products[variantId].productData;
+            const { percent } = sale;
+            if (!saleEnable) {
+                Object.entries(salePrice).forEach(([key, _value]) => {
+                    salePrice[key] = 0;
+                });
+                Object.entries(saveMoney).forEach(([key, _value]) => {
+                    saveMoney[key] = 0;
+                });
+                Object.entries(variations).forEach(([_key, value]) => {
+                    Object.entries(value.salePrice).forEach(([key, _saleValue]) => {
+                        value.salePrice[key] = 0;
+                    });
+                    Object.entries(value.saveMoney).forEach(([key, _saleValue]) => {
+                        value.saveMoney[key] = 0;
+                    });
+                });
+                
+            } else {
+                Object.entries(salePrice).forEach(([key, _value]) => {
+                    salePrice[key] = Math.round(minPrice[key] * ((100 - percent) / 100));
+                });
+                Object.entries(saveMoney).forEach(([key, _value]) => {
+                    saveMoney[key] = minPrice[key] - salePrice[key];
+                });
+
+                Object.entries(variations).forEach(([_key, value]) => {
+                    Object.entries(value.salePrice).forEach(([key, _saleValue]) => {
+                        value.salePrice[key] = Math.round(value.variationPrice[key] * ((100 - percent) / 100));
+                    });
+                    Object.entries(value.saveMoney).forEach(([key, _saleValue]) => {
+                        value.saveMoney[key] = value.variationPrice[key] - value.salePrice[key];
+                    });
+                });
+            }
+
+            // console.log('product update',action.payload);
             return state;
         }
     }
