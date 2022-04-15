@@ -9,7 +9,7 @@ const cartSlice = createSlice({
     name: 'Cart',
     initialState: CartSliceInitialState,
     reducers: {
-        addToCart(state: Cart, action) {      
+        addToCart(state: Cart, action) {
             const { product, variantId, localstorageCartKey } = action.payload;
             if (variantId && state.products && state.products[variantId]) {
                 state.products[variantId].quantity++;
@@ -43,31 +43,32 @@ const cartSlice = createSlice({
         },
         updateCartPromoPrice(state: Cart, action) {
             const { variantId, saleEnable } = action.payload;
-            const productData = state.products[variantId].productData;
-            if(!saleEnable) {
-                Object.entries(productData.saveMoney).forEach(([key, _value])=> {
-                    productData.saveMoney[key] = 0;
+            const { saveMoney, salePrice, minPrice, sale } = state.products[variantId].productData;
+            // const productData = state.products[variantId].productData;
+            const { percent } = sale;
+            if (!saleEnable) {
+                Object.entries(salePrice).forEach(([key, _value]) => {
+                    salePrice[key] = 0;
                 });
-                Object.entries(productData.salePrice).forEach(([key, _value])=> {
-                    productData.saveMoney[key] = 0;
+                Object.entries(saveMoney).forEach(([key, _value]) => {
+                    saveMoney[key] = 0;
                 });
-            }else{
-                Object.entries(productData.saveMoney).forEach(([key, _value])=> {
-                    productData.salePrice[key] = 1;
+            } else {
+                Object.entries(salePrice).forEach(([key, _value]) => {
+                    salePrice[key] = Math.round(minPrice[key] * ((100 - percent) / 100));
                 });
-                Object.entries(productData.salePrice).forEach(([key, _value])=> {
-                    productData.salePrice[key] = 1;
+                Object.entries(saveMoney).forEach(([key, _value]) => {
+                    saveMoney[key] = minPrice[key] - salePrice[key];
                 });
             }
-            console.log('update cart promo')
             return state;
         },
         updateCart(state: Cart, action) {
             const productsData: CartProducts = action.payload;
-            if(!isObjectEmpty(productsData)) {
-                state.length = Object.entries(productsData).reduce((actual , [_keyCurrent, valueCurrent])=> {
+            if (!isObjectEmpty(productsData)) {
+                state.length = Object.entries(productsData).reduce((actual, [_keyCurrent, valueCurrent]) => {
                     return actual + valueCurrent.quantity
-                },0);
+                }, 0);
                 state.products = productsData;
             }
             return state;
