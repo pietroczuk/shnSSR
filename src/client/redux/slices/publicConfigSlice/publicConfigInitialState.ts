@@ -20,12 +20,19 @@ export const PublicConfigInitialState: PublicConfig = {
         hideArrangement: '',
         showRandom: '',
         hideRandom: '',
+
+        taxInclude: '',
+        tax: '',
+        total: '',
+
+        saveMoney: '',
     },
     config: {
         seo: {
             title: '',
             description: ''
-        }
+        },
+        taxPercent: 0
     },
     features: {}
 }

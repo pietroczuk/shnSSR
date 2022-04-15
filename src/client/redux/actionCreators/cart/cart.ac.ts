@@ -6,6 +6,11 @@ import { CartProducts } from "../../Models/Cart/CartProducts/CartProducts.model"
 import { Api } from "../../Models/SystemConfig/Api/Api.model";
 import { cartActions } from "../../slices/cartSlice/cartSlice";
 
+export const updateStoreCartPromoPrice = (variantId: string, saleEnable: boolean) => (dispatch: Dispatch) => {
+  const actionPayload = { variantId, saleEnable };
+  return dispatch(cartActions.updateCartPromoPrice(actionPayload));
+}
+
 export const addToStoreCart = (api: Api, lang: string, productId: string, variantId: string, localstorageCartKey: string, inCart = false) => (dispatch: Dispatch) => {
     if (!inCart) {
         const page_url = '?lang=' + lang + '&variant=' + variantId + '&product=' + productId;
@@ -71,7 +76,7 @@ export const checkCart = (initLocalstorageCartKey: string, cartState: Cart, api:
         })
         dispatch(cartActions.updateCart(cartProducts));
       }).catch(e => {
-        console.error('❌ Error: get multiple wishlist products data from DB', e);
+        console.error('❌ Error: get multiple cart products data from DB', e);
       });
     }
   }

@@ -16,4 +16,10 @@ export interface Translations {
     hideArrangement: string;
     showRandom: string;
     hideRandom: string;
+
+    taxInclude: string;
+    tax: string;
+    total: string;
+
+    saveMoney: string;
 }

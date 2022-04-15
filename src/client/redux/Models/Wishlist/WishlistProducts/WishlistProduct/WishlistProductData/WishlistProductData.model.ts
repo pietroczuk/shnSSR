@@ -9,7 +9,7 @@ export interface WishlistProductData {
     likes: number;
     variationImage: VariationImage;
     minPrice: {
-        [key: string]: string;
+        [key: string]: number;
     };
     variations: Variations;
     titlekey: string;

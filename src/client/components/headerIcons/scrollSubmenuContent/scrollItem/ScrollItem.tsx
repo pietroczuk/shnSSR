@@ -1,5 +1,5 @@
-import React from "react";
-import { shallowEqual, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../client";
 import withStyles from "isomorphic-style-loader/withStyles";
 
@@ -7,10 +7,11 @@ import styles from './scrollItem.scss'
 import { CartProduct } from "../../../../redux/Models/Cart/CartProducts/CartProduct/CartProduct.model";
 import { WishlistProduct } from "../../../../redux/Models/Wishlist/WishlistProducts/WishlistProduct/WishlistProduct.model";
 import DivNavLink from "../../../divNavLink/DivNavLink";
-import { cutText, pageTypes, prepUrlFromConfigSlug } from "../../../../utils/utilsFrondend";
+import { checkTrueSale, cutText, pageTypes, prepUrlFromConfigSlug } from "../../../../utils/utilsFrondend";
 import ShowSelectedAttributes from "../../../helpers/product/productItem/showSelectedAttributes/ShowSelectedAttributes";
 import ShowPrice from "../../../helpers/display/showPrice/ShowPrice";
 import SaleBadge from "../../../helpers/product/productItem/saleBadge/SaleBadge";
+import { updateStoreCartPromoPrice } from "../../../../redux/actionCreators/cart/cart.ac";
 // import ShowSelectedAttributes from "../../../helpers/product/productItem/showSelectedAttributes/ShowSelectedAttributes";
 
 interface ScrollItemProps {
@@ -40,14 +41,22 @@ const ScrollItem: React.FC<ScrollItemProps> = (props) => {
     const minPrice = { ...product.productData.minPrice };
     const singlePrice = product.productData.minPrice;
     const quantity = product.quantity > 0 ? product.quantity : 1;
-    const sale = product.productData.sale;
-    const showSaleBadge = sale.enable;
-
+    const sale = product.productData.sale; 
+    
+    const showPromo = useSelector((state: RootState) => {
+        const now = state.User.today.date
+        return checkTrueSale(sale, now)
+    });
+    const dispatch = useDispatch();
+    useEffect(()=> {
+        !isWishlist && sale.enable && dispatch(updateStoreCartPromoPrice(variantId, showPromo));
+    }, [showPromo])
+    
     // quantity > 1 && Object.entries(minPrice).forEach(([key, price]) => minPrice[key] = (+price * quantity).toString());
     return (
         <DivNavLink to={productUrl} className={styles.item} onClick={clickHandler}>
             <div className={styles.imageHolder}>
-                {showSaleBadge && <SaleBadge sale={sale} />}
+                {showPromo && <SaleBadge sale={sale} />}
                 <img src={imageUrl} />
             </div>
             <div className={styles.itemDataHolder}>

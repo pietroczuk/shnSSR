@@ -8,7 +8,7 @@ import { Sale } from "../../../../redux/Models/Product/Sale/Sale.model";
 
 interface ShowPriceProps {
     allPrices: {
-        [key: string]: string
+        [key: string]: number
     }
     quantity?: number;
     finalQuantity?: number;
@@ -29,10 +29,11 @@ const ShowPrice: React.FC<ShowPriceProps> = (props) => {
     });
 
     const price = getPriceByCurrency(allPrices, currency, allCurrencies);
-    const finalOemPrice = finalQuantity ? +price * finalQuantity : +price;
+
+    const finalOemPrice = finalQuantity ? price * finalQuantity : price;
     const formatedPrice = formatPrice(finalOemPrice, currency, allCurrencies);
 
-    const promoPrice = showPromo ? getPromoPrice(price, sale, true, true, finalQuantity) : 0;
+    const promoPrice = showPromo ? getPromoPrice(price, sale, finalQuantity) : 0;
 
     return <div className={`${styles.price} ${quantity ? styles.quantity : ''}`}>
         {quantity ? quantity + ' x ' : ''}
@@ -44,7 +45,8 @@ const ShowPrice: React.FC<ShowPriceProps> = (props) => {
         }
         {!showPromo ?
             formatedPrice :
-            quantity ? '' :
+            quantity ?
+                '' :
                 <del>{formatPrice(finalOemPrice.toFixed(2), currency, allCurrencies)}</del>
         }
     </div>

@@ -9,7 +9,7 @@ export interface Product {
     url: string;
     variations: Variations;
     minPrice: {
-        [key: string]: string;
+        [key: string]: number;
     }
     hashmap: {
         [key: string]: {

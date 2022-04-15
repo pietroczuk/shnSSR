@@ -10,8 +10,14 @@ export interface CartProductData {
     variations: Variations;
     variationImage: VariationImage;
     minPrice: {
-        [key: string]: string;
+        [key: string]: number;
     };
+    salePrice: {
+        [key: string]: number;
+    }
+    saveMoney :{
+        [key: string]: number;
+    }
     variantId: string;
     sale: Sale;
 }

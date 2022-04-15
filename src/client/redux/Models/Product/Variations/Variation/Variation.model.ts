@@ -4,7 +4,7 @@ import { VariationImage } from "./VariationImage/VariationImage.model";
 export interface Variation {
     id: string,
     variationPrice: {
-        [key: string]: string
+        [key: string]: number
     },
     variationImage: VariationImage,
     name: string,

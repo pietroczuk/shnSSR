@@ -9,7 +9,7 @@ const cartSlice = createSlice({
     name: 'Cart',
     initialState: CartSliceInitialState,
     reducers: {
-        addToCart(state, action) {      
+        addToCart(state: Cart, action) {      
             const { product, variantId, localstorageCartKey } = action.payload;
             if (variantId && state.products && state.products[variantId]) {
                 state.products[variantId].quantity++;
@@ -41,7 +41,27 @@ const cartSlice = createSlice({
             }
             return state;
         },
-
+        updateCartPromoPrice(state: Cart, action) {
+            const { variantId, saleEnable } = action.payload;
+            const productData = state.products[variantId].productData;
+            if(!saleEnable) {
+                Object.entries(productData.saveMoney).forEach(([key, _value])=> {
+                    productData.saveMoney[key] = 0;
+                });
+                Object.entries(productData.salePrice).forEach(([key, _value])=> {
+                    productData.saveMoney[key] = 0;
+                });
+            }else{
+                Object.entries(productData.saveMoney).forEach(([key, _value])=> {
+                    productData.salePrice[key] = 1;
+                });
+                Object.entries(productData.salePrice).forEach(([key, _value])=> {
+                    productData.salePrice[key] = 1;
+                });
+            }
+            console.log('update cart promo')
+            return state;
+        },
         updateCart(state: Cart, action) {
             const productsData: CartProducts = action.payload;
             if(!isObjectEmpty(productsData)) {

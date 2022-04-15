@@ -1,4 +1,5 @@
 import Cookies from 'universal-cookie';
+import { CartProducts } from '../redux/Models/Cart/CartProducts/CartProducts.model';
 import { Sale } from '../redux/Models/Product/Sale/Sale.model';
 import { AllCurrencies } from '../redux/Models/SystemConfig/AllCurrencies/AllCurrencies.model';
 import { PageTypePrefixUrls } from '../redux/Models/SystemConfig/PageTypePrefixUrls/PageTypePrefixUrls.model';
@@ -146,23 +147,19 @@ export const prepUrlFromConfigSlug: prepUrlFromConfigSlugArgs = (language, pageT
 interface getPriceByCurrencyArgs {
     (
         productPrices: {
-            [key: string]: string
+            [key: string]: number
         },
         userCurrency: string,
         allCurrencies: AllCurrencies,
-        returnFloat?: boolean
-    ): string | number
+    ): number
 }
 
-export const getPriceByCurrency: getPriceByCurrencyArgs = (productPrices, userCurrency, allCurrencies, returnFloat) => {
+export const getPriceByCurrency: getPriceByCurrencyArgs = (productPrices, userCurrency, allCurrencies) => {
     const price = productPrices &&
         userCurrency &&
         allCurrencies &&
         allCurrencies[userCurrency] &&
         productPrices[userCurrency] ? productPrices[userCurrency] : null;
-    if (returnFloat) {
-        return parseFloat(price);
-    }
     return price;
 }
 /**
@@ -170,15 +167,13 @@ export const getPriceByCurrency: getPriceByCurrencyArgs = (productPrices, userCu
  */
 interface formatPriceArgs {
     (
-        price: string | number,
+        price: number | string,
         userCurrency: string,
         allCurrencies: AllCurrencies,
     ): string
 }
 export const formatPrice: formatPriceArgs = (price, userCurrency, allCurrencies) => {
     if (allCurrencies && allCurrencies[userCurrency] && price) {
-        // return allCurrencies[userCurrency].sign;
-        // console.log(price);
         if (allCurrencies[userCurrency].isDisplayLeft) {
             return allCurrencies[userCurrency].sign + ' ' + price;
         } else {
@@ -190,32 +185,52 @@ export const formatPrice: formatPriceArgs = (price, userCurrency, allCurrencies)
 
 interface getPromoPriceArgs {
     (
-        price: string | number,
+        price: number,
         sale: Sale,
-        returnFloat?: boolean,
+        finalQuantity?: number,
         cutDecimal?: boolean,
-        finalQuantity? : number
-    ): string | number
+    ): number
 }
 
-export const getPromoPrice: getPromoPriceArgs = (price, sale, returnFloat, cutDecimal, finalQuantity) => {
+export const getPromoPrice: getPromoPriceArgs = (price, sale, finalQuantity, cutDecimal = true) => {
     const { enable, percent } = sale;
     if (!enable || percent <= 0) return price;
 
-    let floatPrice = typeof price === "string" ? parseFloat(price) : price;
-    floatPrice = floatPrice - (floatPrice * percent / 100);
-    
-    floatPrice = cutDecimal ? +floatPrice.toFixed(0) : +floatPrice.toFixed(2);
+    let newPrice = price;
+    newPrice = newPrice - (newPrice * percent / 100);
 
-    if(finalQuantity && finalQuantity > 1) {
-        floatPrice *= finalQuantity;
-    }
+    newPrice = cutDecimal ? +newPrice.toFixed(0) : +newPrice.toFixed(2);
 
-    // floatPrice =  Math.round(floatPrice);
-    if (returnFloat) {
-        return floatPrice;
+    if (finalQuantity && finalQuantity > 1) {
+        newPrice *= finalQuantity;
     }
-    return floatPrice.toString();
+    return newPrice;
+}
+/**
+ * calculate total price from products in cart
+ */
+interface calulateTotalProductPriceArgs {
+    (
+        products: CartProducts,
+        userCurrency: string,
+        allCurrencies: AllCurrencies,
+        now: number
+    ): number
+}
+
+export const calulateTotalProductPrice: calulateTotalProductPriceArgs = (products, currency, allCurrencies, now) => {
+
+    let total = 0;
+
+    Object.entries(products).forEach(([_key, product]) => {
+        const {minPrice, sale} = product.productData;
+        const price = getPriceByCurrency(minPrice, currency, allCurrencies);
+        const showPromo = checkTrueSale(sale, now);
+        const quantity = product.quantity;
+        const finalPrice = showPromo ? getPromoPrice(price, sale, quantity) : +price * quantity;
+        total += finalPrice;
+    })
+    return total;
 }
 
 /**
