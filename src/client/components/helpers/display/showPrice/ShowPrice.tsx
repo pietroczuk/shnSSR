@@ -2,54 +2,94 @@ import React from "react";
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './showPrice.scss';
 import { useSelector, shallowEqual } from "react-redux";
-import { checkTrueSale, formatPrice, getPriceByCurrency, getPromoPrice } from "../../../../utils/utilsFrondend";
+import { formatPrice, getPriceByCurrency } from "../../../../utils/utilsFrondend";
 import { RootState } from "../../../../client";
-import { Sale } from "../../../../redux/Models/Product/Sale/Sale.model";
+
 
 interface ShowPriceProps {
     allPrices: {
         [key: string]: number
-    }
-    quantity?: number;
-    finalQuantity?: number;
-    sale: Sale;
+    },
+    salePrice: {
+        [key: string]: number
+    },
+    showPromo: boolean,
+    quantity: number;
+    showQuantity?: boolean;
 }
 
 const ShowPrice: React.FC<ShowPriceProps> = (props) => {
-    const { allPrices, quantity, sale, finalQuantity } = props;
+    const { allPrices, salePrice, showPromo,
+        showQuantity,
+        quantity,
+        // showFinalPrice 
+    } = props;
 
     const { currency, allCurrencies } = useSelector((state: RootState) => ({
         currency: state.User.currency,
         allCurrencies: state.SystemConfig.allCurrencies,
     }), shallowEqual);
 
-    const showPromo = useSelector((state: RootState) => {
-        const now = state.User.today.date
-        return checkTrueSale(sale, now)
-    });
+    const regularPrice = getPriceByCurrency(allPrices, currency, allCurrencies);
+    const promoPrice = getPriceByCurrency(salePrice, currency, allCurrencies);
 
-    const price = getPriceByCurrency(allPrices, currency, allCurrencies);
+    const finalRegularPrice = regularPrice * quantity;
+    const finalPromoPrice = promoPrice * quantity;
+    // const finalOemPrice = finalQuantity ? price * finalQuantity : price;
+    // const formatedPrice = formatPrice(finalOemPrice, currency, allCurrencies);
 
-    const finalOemPrice = finalQuantity ? price * finalQuantity : price;
-    const formatedPrice = formatPrice(finalOemPrice, currency, allCurrencies);
+    // const promoPrice = showPromo ? getPromoPrice(price, sale, finalQuantity) : 0;
 
-    const promoPrice = showPromo ? getPromoPrice(price, sale, finalQuantity) : 0;
-
-    return <div className={`${styles.price} ${quantity ? styles.quantity : ''}`}>
-        {quantity ? quantity + ' x ' : ''}
-        {showPromo &&
-            <div className={quantity ? '' : styles.promo}>
-                {
-                    formatPrice(promoPrice, currency, allCurrencies)}
-            </div>
+    return <div className={`${styles.price}`}>
+        {showQuantity && quantity > 1 ? quantity + ' x ' : ''}
+        <div className={showPromo && !showQuantity ? styles.promo : ''}>
+            {showPromo ?
+                showQuantity ?
+                    formatPrice(promoPrice, currency, allCurrencies) :
+                    formatPrice(finalPromoPrice, currency, allCurrencies)
+                :
+                showQuantity ?
+                    formatPrice(regularPrice, currency, allCurrencies) :
+                    formatPrice(finalRegularPrice, currency, allCurrencies) 
+            }
+        </div>
+            {
+                showPromo && !showQuantity && <del>{formatPrice(finalRegularPrice.toFixed(2), currency, allCurrencies)}</del>
+            }
+        {/* {
+            !showQuantity ?
+                showPromo ?
+                    formatPrice(finalPromoPrice, currency, allCurrencies) : 
+                    formatPrice(finalRegularPrice, currency, allCurrencies) :
+                ''
+                // <del>{formatPrice(finalRegularPrice.toFixed(2), currency, allCurrencies)}</del>
         }
-        {!showPromo ?
-            formatedPrice :
-            quantity ?
-                '' :
-                <del>{formatPrice(finalOemPrice.toFixed(2), currency, allCurrencies)}</del>
-        }
+        {
+            !showQuantity && showPromo && <del>{formatPrice(finalRegularPrice.toFixed(2), currency, allCurrencies)}</del>
+        } */}
     </div>
+    // return <div className={`${styles.price} ${quantity > 1 ? styles.quantity : ''}`}>
+    //     {quantity > 1 ? quantity + ' x ' : ''}
+
+
+    //     {/* {showPromo ?
+    //         <div className={quantity > 1 ? '' : styles.promo}>
+    //             {
+    //                 formatPrice(promoPrice, currency, allCurrencies)}
+    //         </div>
+    //     }
+    //     {
+    //         formatPrice(finalRegularPrice, currency, allCurrencies)
+    //     }
+    //     {showFinalPrice} */}
+
+    //     {/* {showFinalPrice ? 
+    //         showPromo ?
+    //             <del>{formatPrice(finalRegularPrice.toFixed(2), currency, allCurrencies)}</del> :
+    //             formatPrice(finalRegularPrice, currency, allCurrencies) :
+    //     } */}
+
+    // </div>
 }
 
 export default withStyles(styles)(ShowPrice);

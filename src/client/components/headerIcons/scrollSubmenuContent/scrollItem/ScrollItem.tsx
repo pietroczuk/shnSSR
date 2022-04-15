@@ -12,6 +12,7 @@ import ShowSelectedAttributes from "../../../helpers/product/productItem/showSel
 import ShowPrice from "../../../helpers/display/showPrice/ShowPrice";
 import SaleBadge from "../../../helpers/product/productItem/saleBadge/SaleBadge";
 import { updateStoreCartPromoPrice } from "../../../../redux/actionCreators/cart/cart.ac";
+import { updateStoreWishlistPromoPrice } from "../../../../redux/actionCreators/wishlist/wishlist.ac";
 // import ShowSelectedAttributes from "../../../helpers/product/productItem/showSelectedAttributes/ShowSelectedAttributes";
 
 interface ScrollItemProps {
@@ -38,20 +39,22 @@ const ScrollItem: React.FC<ScrollItemProps> = (props) => {
     const productUrl = prepUrlFromConfigSlug(language, pageTypePrefixUrls, pageTypes.productPage, null, rawProductUrl, isMultilanguage, variantId);
 
     const variations = product.productData.variations;
-    const minPrice = { ...product.productData.minPrice };
-    const singlePrice = product.productData.minPrice;
+    const { minPrice, salePrice, sale } = product.productData;
+    // const minPrice = { ...product.productData.minPrice };
+    // const singlePrice = product.productData.minPrice;
     const quantity = product.quantity > 0 ? product.quantity : 1;
-    const sale = product.productData.sale; 
-    
+    // const sale = product.productData.sale; 
+
     const showPromo = useSelector((state: RootState) => {
         const now = state.User.today.date
         return checkTrueSale(sale, now)
     });
     const dispatch = useDispatch();
-    useEffect(()=> {
+    useEffect(() => {
         !isWishlist && sale.enable && dispatch(updateStoreCartPromoPrice(variantId, showPromo));
+        isWishlist && sale.enable && dispatch(updateStoreWishlistPromoPrice(variantId, showPromo));
     }, [showPromo])
-    
+
     // quantity > 1 && Object.entries(minPrice).forEach(([key, price]) => minPrice[key] = (+price * quantity).toString());
     return (
         <DivNavLink to={productUrl} className={styles.item} onClick={clickHandler}>
@@ -78,10 +81,12 @@ const ScrollItem: React.FC<ScrollItemProps> = (props) => {
                     }
                     {!isWishlist && quantity > 1 &&
                         <div className={styles.priceLabel}>
-                            <ShowPrice allPrices={singlePrice} quantity={quantity} sale={sale} />
+
+                            <ShowPrice allPrices={minPrice} salePrice={salePrice} quantity={quantity} showPromo={showPromo} showQuantity={true} />
                         </div>
                     }
-                    <ShowPrice allPrices={minPrice} sale={sale} finalQuantity={quantity}/>
+                    <ShowPrice allPrices={minPrice} salePrice={salePrice} quantity={quantity} showPromo={showPromo} />
+                    {/* <ShowPrice allPrices={minPrice} sale={sale} finalQuantity={quantity}/> */}
                 </div>
             </div>
         </DivNavLink>

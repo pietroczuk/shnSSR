@@ -13,17 +13,17 @@ import HoverPopupContainer from "../hoverPopupContainer/HoverPopupContainer";
 import { RootState } from "../../../../../client";
 import { Variations } from "../../../../../redux/Models/Product/Variations/Variations.model";
 import { addToStoreCart } from "../../../../../redux/actionCreators/cart/cart.ac";
-import { Sale } from "../../../../../redux/Models/Product/Sale/Sale.model";
+// import { Sale } from "../../../../../redux/Models/Product/Sale/Sale.model";
 
 interface ShowAddToCartVariantsProps {
     active: boolean;
     avaibleVariations: Variations;
     productId: string;
-    sale: Sale;
+    // sale: Sale;
 }
 
 const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
-    const { active, avaibleVariations, productId, sale } = props;
+    const { active, avaibleVariations, productId } = props;
     const [showSubmenu, setShowSubmenu] = useState(false);
 
     const onClickHandler = () => {
@@ -78,7 +78,7 @@ const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
                         return (
                             <div className={styles.selectOption} onClick={addToCartClickHandler.bind(this,variantId)} key={variantId}>
                                 <ShowSizesText text={attribTitle} minitext={attribTooltip} />
-                                <ShowPrice allPrices={variant.variationPrice} sale={sale}/>
+                                <ShowPrice allPrices={variant.variationPrice} salePrice={variant.salePrice} quantity={1} showPromo={false}/>
                             </div>
                         )
                     })}

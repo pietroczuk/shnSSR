@@ -8,13 +8,14 @@ const wishlistSlice = createSlice({
     name: 'Wishlist',
     initialState: WishlistInitialState,
     reducers: {
+
         updateWishlist(state: Wishlist, action) {
             const productsData = action.payload;
             state.products = productsData;
             state.length = getObjectLength(productsData);
             return state;
         },
-        addToWishlist(state, action) {
+        addToWishlist(state: Wishlist, action) {
             /** 
              * model products => variantId = {
              *  p: productId,
@@ -51,7 +52,29 @@ const wishlistSlice = createSlice({
                 setLocalStorage(localStorageWishlist, localstorageWishlistKey);
             }
             return state;
-        }
+        },
+        updateWishlistPromoPrice(state: Wishlist, action) {
+            const { variantId, saleEnable } = action.payload;
+            const { saveMoney, salePrice, minPrice, sale } = state.products[variantId].productData;
+            // const productData = state.products[variantId].productData;
+            const { percent } = sale;
+            if (!saleEnable) {
+                Object.entries(salePrice).forEach(([key, _value]) => {
+                    salePrice[key] = 0;
+                });
+                Object.entries(saveMoney).forEach(([key, _value]) => {
+                    saveMoney[key] = 0;
+                });
+            } else {
+                Object.entries(salePrice).forEach(([key, _value]) => {
+                    salePrice[key] = Math.round(minPrice[key] * ((100 - percent) / 100));
+                });
+                Object.entries(saveMoney).forEach(([key, _value]) => {
+                    saveMoney[key] = minPrice[key] - salePrice[key];
+                });
+            }
+            return state;
+        },
     }
 });
 export const wishlistActions = wishlistSlice.actions;

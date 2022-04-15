@@ -6,6 +6,12 @@ export interface Variation {
     variationPrice: {
         [key: string]: number
     },
+    salePrice: {
+        [key: string]: number;
+    }
+    saveMoney :{
+        [key: string]: number;
+    }
     variationImage: VariationImage,
     name: string,
     color: string,

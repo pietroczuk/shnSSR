@@ -5,6 +5,11 @@ import { Api } from "../../Models/SystemConfig/Api/Api.model";
 import { Wishlist } from "../../Models/Wishlist/Wishlist.model";
 import { WishlistProducts } from "../../Models/Wishlist/WishlistProducts/WishlistProducts.model";
 import { wishlistActions } from "../../slices/wishlistSlice/wishlistSlice";
+ 
+export const updateStoreWishlistPromoPrice = (variantId: string, saleEnable: boolean) => (dispatch: Dispatch) => {
+  const actionPayload = { variantId, saleEnable };
+  return dispatch(wishlistActions.updateWishlistPromoPrice(actionPayload));
+}
 
 /**
  * Add to wishlist

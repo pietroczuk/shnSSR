@@ -41,6 +41,7 @@ const ProductItem: FC<ProductItemProps> = props => {
     const titlekey = product ? product.titlekey : wishlistProduct ? wishlistProduct.productData.titlekey : null;
     const productId = product ? product.id : wishlistProduct ? wishlistProduct.p : null;
     const minPrice = product ? product.minPrice : wishlistProduct ? wishlistProduct.productData.minPrice : null;
+    const salePrice = product ? product.salePrice : wishlistProduct ? wishlistProduct.productData.salePrice : null;
     const sale = product ? product.sale : wishlistProduct ? wishlistProduct.productData.sale : null ;
     const showSaleBadge = sale.enable;
     const variations = product ? product.variations : wishlistProduct ? wishlistProduct.productData.variations : null;
@@ -189,7 +190,7 @@ const ProductItem: FC<ProductItemProps> = props => {
             avaibleVariations={variations}
             active={onHover}
             productId={productId}
-            sale={sale}
+            // sale={sale}
         />}
         {!wishlistPage && !showPlaceholder && <ShowAvaibleFeatures
             active={onHover}
@@ -214,7 +215,7 @@ const ProductItem: FC<ProductItemProps> = props => {
                     <div className={styles.label}>
                         {!showPlaceholder && translations && translations.priceFrom ? translations.priceFrom : ''}
                     </div>
-                    <ShowPrice allPrices={minPrice} sale={sale}/>
+                    <ShowPrice allPrices={minPrice} salePrice={salePrice} quantity={1} showPromo={false}/>
                 </div>
             </div>
         </DivNavLink>

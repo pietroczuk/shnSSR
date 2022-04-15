@@ -11,6 +11,12 @@ export interface WishlistProductData {
     minPrice: {
         [key: string]: number;
     };
+    salePrice: {
+        [key: string]: number;
+    }
+    saveMoney :{
+        [key: string]: number;
+    }
     variations: Variations;
     titlekey: string;
     title: string;

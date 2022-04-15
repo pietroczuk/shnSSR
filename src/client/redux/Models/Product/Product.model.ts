@@ -11,6 +11,12 @@ export interface Product {
     minPrice: {
         [key: string]: number;
     }
+    salePrice: {
+        [key: string]: number;
+    }
+    saveMoney :{
+        [key: string]: number;
+    }
     hashmap: {
         [key: string]: {
             [key: string]: string[];
