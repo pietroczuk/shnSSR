@@ -8,6 +8,7 @@ import ScrollSubmenuContent from "../scrollSubmenuContent/ScrollSubmenuContent";
 import styles from './cartSubmenu.scss';
 import withStyles from "isomorphic-style-loader/withStyles";
 import { calulateTotalProductPrice, calulateTotalSaveMoney, formatPrice } from "../../../utils/utilsFrondend";
+import Cut from "../../svg/icons/Cut";
 
 interface CartSubmenuProps {
     parrentWidth?: number,
@@ -19,7 +20,7 @@ const CartSubmenu: React.FC<CartSubmenuProps> = props => {
     const { parrentWidth, linkUrl, clickHandler } = props;
 
     const {
-        products, 
+        products,
         cartLenght,
         currency, allCurrencies,
         // now,
@@ -45,7 +46,7 @@ const CartSubmenu: React.FC<CartSubmenuProps> = props => {
     }), shallowEqual)
 
     const total = cartLenght ? formatPrice(calulateTotalProductPrice(products, currency, allCurrencies), currency, allCurrencies) : '';
-    const totalSaveMoney = cartLenght ? formatPrice(calulateTotalSaveMoney(products, currency, allCurrencies), currency, allCurrencies) : ''; 
+    const totalSaveMoney = cartLenght ? formatPrice(calulateTotalSaveMoney(products, currency, allCurrencies), currency, allCurrencies) : '';
     // const wishlist = rawSlug ? prepUrlFromConfigSlug(language, null, null, null, rawSlug, isMultilanguage)
 
     return <HeaderIconSubmenu parrentWidth={parrentWidth} align="right" title={cartLabel}>
@@ -59,7 +60,14 @@ const CartSubmenu: React.FC<CartSubmenuProps> = props => {
                 <div className={styles.label}>
                     {saveMoney}
                 </div>
-                <div>-{totalSaveMoney}</div>
+                <div className={styles.saveCont}>
+                    <div className={styles.icon}>
+                        <Cut />
+                    </div>
+                    <div className={styles.price}>
+                        {totalSaveMoney}
+                    </div>
+                </div>
             </div>
         }
         {cartLenght &&
