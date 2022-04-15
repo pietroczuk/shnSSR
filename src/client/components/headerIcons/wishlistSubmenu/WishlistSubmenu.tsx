@@ -30,7 +30,7 @@ const WishlistSubmenu: React.FC<WishlistSubmenuProps> = props => {
             <p>Twoja lista jest niestety pusta :(</p>
         }
         <Link to={linkUrl}>
-            <BlackButton sizeEm={0.9} clickHandler={clickHandler} label={gotoWishlist} />
+            <BlackButton fontSize="0.9em" clickHandler={clickHandler} label={gotoWishlist} uppercase={true} />
         </Link>
     </HeaderIconSubmenu>
 }

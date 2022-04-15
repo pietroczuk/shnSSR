@@ -22,4 +22,9 @@ export interface Translations {
     total: string;
 
     saveMoney: string;
+
+    delivery: string;
+    change: string;
+    freeDelivery: string;
+    to: string;
 }

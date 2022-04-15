@@ -92,6 +92,7 @@ const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
         <BlackButton
             label={addToCart}
             clickHandler={onClickHandler}
+            uppercase={true}
         />
     </HoverPopupContainer>
 }

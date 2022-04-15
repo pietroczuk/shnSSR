@@ -26,6 +26,11 @@ export const PublicConfigInitialState: PublicConfig = {
         total: '',
 
         saveMoney: '',
+
+        delivery: '',
+        change: '',
+        freeDelivery: '',
+        to: '',
     },
     config: {
         seo: {

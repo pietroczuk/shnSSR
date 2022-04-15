@@ -27,6 +27,10 @@ const CartSubmenu: React.FC<CartSubmenuProps> = props => {
         cartLabel, gotoCart,
         totalLabel, taxInclude, tax, taxPercent, saveMoney,
 
+        delivery,
+        to,
+        change,
+
     } = useSelector((state: RootState) => ({
         products: state.Cart.products,
         cartLenght: state.Cart.length,
@@ -42,6 +46,11 @@ const CartSubmenu: React.FC<CartSubmenuProps> = props => {
         taxInclude: state.PublicConfig.translations.taxInclude,
         tax: state.PublicConfig.translations.tax,
         saveMoney: state.PublicConfig.translations.saveMoney,
+        delivery: state.PublicConfig.translations.delivery,
+        to: state.PublicConfig.translations.to,
+        change: state.PublicConfig.translations.change,
+
+
         taxPercent: state.PublicConfig.config.taxPercent,
     }), shallowEqual)
 
@@ -79,8 +88,36 @@ const CartSubmenu: React.FC<CartSubmenuProps> = props => {
                 <div className={styles.price}>{total}</div>
             </div>
         }
+        {cartLenght &&
+            <div className={styles.deliveryContener}>
+                <div className={styles.labelContener}>
+                    <div className={styles.label}>
+                        {delivery} {to}:
+                    </div>
+                    <div className={styles.country}>
+                        Polska
+                    </div>
+                    <div className={styles.change}>
+                        <BlackButton
+                            clickHandler={() => { }}
+                            label={change}
+                            fontSize="0.8em"
+                            backgroundColor="#eee"
+                            hoverBackgroundColor="#f5f5f5"
+                            color="#000"
+                            uppercase={true}
+                            fontWeight={600}
+                            padding="0.4em 1.2em"
+                        />
+                    </div>
+                </div>
+                <div className={styles.price}>
+                    + 12.99zł
+                </div>
+            </div>
+        }
         <Link to={linkUrl}>
-            <BlackButton sizeEm={0.9} clickHandler={clickHandler} label={gotoCart} />
+            <BlackButton fontSize="0.9em" clickHandler={clickHandler} label={gotoCart} uppercase={true} />
         </Link>
     </HeaderIconSubmenu>
 }

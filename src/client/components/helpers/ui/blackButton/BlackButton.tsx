@@ -8,25 +8,33 @@ import { isObjectEmpty } from "../../../../utils/utilsFrondend";
 
 interface BlackButtonProps {
     label: string;
-    customBgColor?: string;
-    customHoverBgColor?: string;
+    backgroundColor?: string;
+    hoverBackgroundColor?: string;
     color?: string;
-    colorHover?: string;
+    hoverColor?: string;
+    fontSize?: string;
+    uppercase?: boolean;
+    fontWeight?: number;
+    padding?: string,
+    hoverPadding?: string;
     clickHandler: VoidFunction;
-    showHoverUnderline?: boolean
-    sizeEm?: number
+    showHoverUnderline?: boolean;
 }
 
 const BlackButton: React.FC<BlackButtonProps> = props => {
     const {
         label,
-        customBgColor,
-        customHoverBgColor,
+        backgroundColor,
+        hoverBackgroundColor,
         color,
-        colorHover,
+        hoverColor,
+        fontSize,
+        uppercase,
+        fontWeight,
+        padding,
+        hoverPadding,
         clickHandler,
-        showHoverUnderline,
-        sizeEm
+        showHoverUnderline
     } = props;
 
     const [customSyle, setCustomStyle] = useState({});
@@ -34,9 +42,10 @@ const BlackButton: React.FC<BlackButtonProps> = props => {
     const [showUnderline, setShowUnderLine] = useState(false);
 
     const onHoverHandler = () => {
-        const hoverStyle: CSSProperties = {};
-        customHoverBgColor ? hoverStyle.backgroundColor = customHoverBgColor : null;
-        colorHover ? hoverStyle.color = colorHover : null;
+        const hoverStyle: CSSProperties = { ...customSyle };
+        hoverBackgroundColor ? hoverStyle.backgroundColor = hoverBackgroundColor : null;
+        hoverColor ? hoverStyle.color = hoverColor : null;
+        hoverPadding ? hoverStyle.padding = hoverPadding : "1.5em 0 1.5em 0";
         !isObjectEmpty(hoverStyle) && setCustomHoverStyle(hoverStyle);
         showHoverUnderline && setShowUnderLine(true);
     }
@@ -47,14 +56,17 @@ const BlackButton: React.FC<BlackButtonProps> = props => {
 
     useEffect(() => {
         const customStyle: CSSProperties = {};
-        customBgColor ? customStyle.backgroundColor = customBgColor : null;
+        backgroundColor ? customStyle.backgroundColor = backgroundColor : null;
         color ? customStyle.color = color : null;
-        sizeEm ? customStyle.fontSize = sizeEm + 'em' : null;
+        fontSize ? customStyle.fontSize = fontSize : null;
+        uppercase ? customStyle.textTransform = 'uppercase' : null;
+        fontWeight ? customStyle.fontWeight = fontWeight : 500;
+        padding ? customStyle.padding = padding : "1.5em 0 1.5em 0";
         setCustomStyle(customStyle);
-    }, [customBgColor, color, sizeEm])
+    }, [backgroundColor, color, fontSize, uppercase, fontWeight])
 
     const customUnderlineStyle: CSSProperties = {};
-    colorHover ? customUnderlineStyle.backgroundColor = colorHover : '#fff';
+    hoverColor ? customUnderlineStyle.backgroundColor = hoverColor : '#fff';
 
     return <div className={`${styles.btnContener} ${showUnderline ? styles.showUnderline : ''}`}
         style={isObjectEmpty(customHoverStyle) ? customSyle : customHoverStyle}
