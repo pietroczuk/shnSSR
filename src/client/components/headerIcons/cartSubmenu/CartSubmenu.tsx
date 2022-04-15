@@ -7,7 +7,7 @@ import HeaderIconSubmenu from "../headerIconSubmenu/HeaderIconSubmenu";
 import ScrollSubmenuContent from "../scrollSubmenuContent/ScrollSubmenuContent";
 import styles from './cartSubmenu.scss';
 import withStyles from "isomorphic-style-loader/withStyles";
-// import { calulateTotalProductPrice, formatPrice } from "../../../utils/utilsFrondend";
+import { calulateTotalProductPrice, calulateTotalSaveMoney, formatPrice } from "../../../utils/utilsFrondend";
 
 interface CartSubmenuProps {
     parrentWidth?: number,
@@ -19,9 +19,9 @@ const CartSubmenu: React.FC<CartSubmenuProps> = props => {
     const { parrentWidth, linkUrl, clickHandler } = props;
 
     const {
-        // products, 
+        products, 
         cartLenght,
-        // currency, allCurrencies,
+        currency, allCurrencies,
         // now,
         cartLabel, gotoCart,
         totalLabel, taxInclude, tax, taxPercent, saveMoney,
@@ -30,8 +30,8 @@ const CartSubmenu: React.FC<CartSubmenuProps> = props => {
         products: state.Cart.products,
         cartLenght: state.Cart.length,
 
-        // currency: state.User.currency,
-        // allCurrencies: state.SystemConfig.allCurrencies,
+        currency: state.User.currency,
+        allCurrencies: state.SystemConfig.allCurrencies,
 
         // now: state.User.today.date, 
 
@@ -44,8 +44,8 @@ const CartSubmenu: React.FC<CartSubmenuProps> = props => {
         taxPercent: state.PublicConfig.config.taxPercent,
     }), shallowEqual)
 
-    const total = 0; //cartLenght ? formatPrice(calulateTotalProductPrice(products, currency, allCurrencies, now), currency, allCurrencies) : '';
-
+    const total = cartLenght ? formatPrice(calulateTotalProductPrice(products, currency, allCurrencies), currency, allCurrencies) : '';
+    const totalSaveMoney = cartLenght ? formatPrice(calulateTotalSaveMoney(products, currency, allCurrencies), currency, allCurrencies) : ''; 
     // const wishlist = rawSlug ? prepUrlFromConfigSlug(language, null, null, null, rawSlug, isMultilanguage)
 
     return <HeaderIconSubmenu parrentWidth={parrentWidth} align="right" title={cartLabel}>
@@ -54,12 +54,14 @@ const CartSubmenu: React.FC<CartSubmenuProps> = props => {
             :
             <p>Twoj koszyk jest nieststy pusty :(</p>
         }
-        <div className={styles.saveMoneyCont}>
-            <div className={styles.label}>
-                {saveMoney}
+        {totalSaveMoney !== '' && cartLenght &&
+            <div className={styles.saveMoneyCont}>
+                <div className={styles.label}>
+                    {saveMoney}
+                </div>
+                <div>-{totalSaveMoney}</div>
             </div>
-            <div>-30 zł</div>
-        </div>
+        }
         {cartLenght &&
             <div className={styles.totalContener}>
                 <div className={styles.label}>

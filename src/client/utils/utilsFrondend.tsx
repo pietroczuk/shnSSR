@@ -214,21 +214,39 @@ interface calulateTotalProductPriceArgs {
         products: CartProducts,
         userCurrency: string,
         allCurrencies: AllCurrencies,
-        now: number
     ): number
 }
 
-export const calulateTotalProductPrice: calulateTotalProductPriceArgs = (products, currency, allCurrencies, now) => {
-
+export const calulateTotalProductPrice: calulateTotalProductPriceArgs = (products, currency, allCurrencies) => {
     let total = 0;
-
     Object.entries(products).forEach(([_key, product]) => {
-        const {minPrice, sale} = product.productData;
-        const price = getPriceByCurrency(minPrice, currency, allCurrencies);
-        const showPromo = checkTrueSale(sale, now);
+        const { minPrice, salePrice } = product.productData;
+        const salePriceProduct = getPriceByCurrency(salePrice, currency, allCurrencies);
+        const price = salePriceProduct ? salePriceProduct : getPriceByCurrency(minPrice, currency, allCurrencies)
         const quantity = product.quantity;
-        const finalPrice = showPromo ? getPromoPrice(price, sale, quantity) : +price * quantity;
-        total += finalPrice;
+        total += price * quantity;
+    })
+    return total;
+}
+
+/**
+ * calculate total save money from products in cart
+ */
+interface calulateTotalSaveMoneyArgs {
+    (
+        products: CartProducts,
+        userCurrency: string,
+        allCurrencies: AllCurrencies,
+    ): number
+}
+
+export const calulateTotalSaveMoney: calulateTotalSaveMoneyArgs = (products, currency, allCurrencies) => {
+    let total = 0;
+    Object.entries(products).forEach(([_key, product]) => {
+        const { saveMoney } = product.productData;
+        const savePriceProduct = getPriceByCurrency(saveMoney, currency, allCurrencies);
+        const quantity = product.quantity;
+        total += savePriceProduct * quantity;
     })
     return total;
 }
