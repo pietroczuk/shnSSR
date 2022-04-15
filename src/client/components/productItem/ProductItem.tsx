@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
-import { prepUrlFromConfigSlug, pageTypes, getObjectLength, cutText, intersectArray, isObjectEmpty } from '../../utils/utilsFrondend';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { prepUrlFromConfigSlug, pageTypes, getObjectLength, cutText, intersectArray, isObjectEmpty, checkTrueSale } from '../../utils/utilsFrondend';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './productItem.scss';
@@ -17,6 +17,7 @@ import { RootState } from '../../client';
 import { Product } from '../../redux/Models/Product/Product.model';
 import { WishlistProduct } from '../../redux/Models/Wishlist/WishlistProducts/WishlistProduct/WishlistProduct.model';
 import SaleBadge from '../helpers/product/productItem/saleBadge/SaleBadge';
+import { updateStoreWishlistPromoPrice } from '../../redux/actionCreators/wishlist/wishlist.ac';
 
 const ShowSelectedAttributes = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showSelectedAttributes/ShowSelectedAttributes'), {});
 const ShowAddToCartVariants = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showAddToCartVariants/ShowAddToCartVariants'), {});
@@ -43,7 +44,7 @@ const ProductItem: FC<ProductItemProps> = props => {
     const minPrice = product ? product.minPrice : wishlistProduct ? wishlistProduct.productData.minPrice : null;
     const salePrice = product ? product.salePrice : wishlistProduct ? wishlistProduct.productData.salePrice : null;
     const sale = product ? product.sale : wishlistProduct ? wishlistProduct.productData.sale : null ;
-    const showSaleBadge = sale.enable;
+    // const showSaleBadge = sale.enable;
     const variations = product ? product.variations : wishlistProduct ? wishlistProduct.productData.variations : null;
 
     const {
@@ -63,6 +64,11 @@ const ProductItem: FC<ProductItemProps> = props => {
         defaultVariantCode: state.PublicConfig.defaultVariantCode,
         ssr: state.PublicConfig.ssr,
     }), shallowEqual);
+
+    const showPromo = useSelector((state: RootState) => {
+        const now = state.User.today.date
+        return checkTrueSale(sale, now)
+    });
 
     const [onHover, setOnHover] = useState(false);
 
@@ -157,8 +163,14 @@ const ProductItem: FC<ProductItemProps> = props => {
     }, [localVariantCode]);
 
     useEffect(() => {
-        wishlistProduct && wishlistProduct.v && setVariantIdHandler(wishlistProduct.v);
+        wishlistProduct && wishlistProduct.v && setVariantIdHandler(wishlistProduct.v);      
     }, [wishlistPage, wishlistProduct])
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        // !wishlistPage && sale.enable && dispatch(updateStoreCartPromoPrice(variantId, showPromo));
+        wishlistPage && sale.enable && wishlistProduct.v && dispatch(updateStoreWishlistPromoPrice(wishlistProduct.v, showPromo));
+    }, [showPromo])
 
     ssr && !wishlistPage && showRandom && changeLocalVariantOnRandom();
     ssr && !wishlistPage && setupVariantIdOnHashmap();
@@ -183,14 +195,14 @@ const ProductItem: FC<ProductItemProps> = props => {
         />
         }
         <DivNavLink to={productUrl}>
-            {showSaleBadge && <SaleBadge sale={sale}/>}
+            {showPromo && <SaleBadge sale={sale}/>}
             <ImageDisplay title={title} imagesHolderUrl={imagesHolderUrl} forceVisual={forceVisual} onHover={onHover} showPlaceholder={showPlaceholder} />
         </DivNavLink>
         {wishlistPage && <ShowAddToCartVariants
             avaibleVariations={variations}
             active={onHover}
             productId={productId}
-            // sale={sale}
+            showPromo = {showPromo}
         />}
         {!wishlistPage && !showPlaceholder && <ShowAvaibleFeatures
             active={onHover}
@@ -215,7 +227,7 @@ const ProductItem: FC<ProductItemProps> = props => {
                     <div className={styles.label}>
                         {!showPlaceholder && translations && translations.priceFrom ? translations.priceFrom : ''}
                     </div>
-                    <ShowPrice allPrices={minPrice} salePrice={salePrice} quantity={1} showPromo={false}/>
+                    <ShowPrice allPrices={minPrice} salePrice={salePrice} quantity={1} showPromo={showPromo}/>
                 </div>
             </div>
         </DivNavLink>

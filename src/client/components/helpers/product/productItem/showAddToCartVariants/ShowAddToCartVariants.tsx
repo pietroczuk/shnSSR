@@ -19,11 +19,11 @@ interface ShowAddToCartVariantsProps {
     active: boolean;
     avaibleVariations: Variations;
     productId: string;
-    // sale: Sale;
+    showPromo: boolean;
 }
 
 const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
-    const { active, avaibleVariations, productId } = props;
+    const { active, avaibleVariations, productId, showPromo } = props;
     const [showSubmenu, setShowSubmenu] = useState(false);
 
     const onClickHandler = () => {
@@ -76,9 +76,9 @@ const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
                         const attribTooltip = featureIdForSelect ? features[featureIdForSelect].atributes[attribId].attribTooltip : null;
 
                         return (
-                            <div className={styles.selectOption} onClick={addToCartClickHandler.bind(this,variantId)} key={variantId}>
+                            <div className={styles.selectOption} onClick={addToCartClickHandler.bind(this, variantId)} key={variantId}>
                                 <ShowSizesText text={attribTitle} minitext={attribTooltip} />
-                                <ShowPrice allPrices={variant.variationPrice} salePrice={variant.salePrice} quantity={1} showPromo={false}/>
+                                <ShowPrice allPrices={variant.variationPrice} salePrice={variant.salePrice} quantity={1} showPromo={showPromo} />
                             </div>
                         )
                     })}
