@@ -14,7 +14,8 @@ export const pageInitialState: Page = {
     },
     data: {
         categoryPage: {
-            products: []
+            products: {},
+            length: 0
         },
         productPage: {
             colection: '',

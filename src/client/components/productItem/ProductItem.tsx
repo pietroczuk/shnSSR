@@ -18,6 +18,7 @@ import { Product } from '../../redux/Models/Product/Product.model';
 import { WishlistProduct } from '../../redux/Models/Wishlist/WishlistProducts/WishlistProduct/WishlistProduct.model';
 import SaleBadge from '../helpers/product/productItem/saleBadge/SaleBadge';
 import { updateStoreWishlistPromoPrice } from '../../redux/actionCreators/wishlist/wishlist.ac';
+import { updateStorePageProductslistPromoPrice } from '../../redux/actionCreators/page/page.ac';
 
 const ShowSelectedAttributes = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showSelectedAttributes/ShowSelectedAttributes'), {});
 const ShowAddToCartVariants = loadable(() => import(/* webpackPrefetch: true */ '../helpers/product/productItem/showAddToCartVariants/ShowAddToCartVariants'), {});
@@ -43,7 +44,7 @@ const ProductItem: FC<ProductItemProps> = props => {
     const productId = product ? product.id : wishlistProduct ? wishlistProduct.p : null;
     const minPrice = product ? product.minPrice : wishlistProduct ? wishlistProduct.productData.minPrice : null;
     const salePrice = product ? product.salePrice : wishlistProduct ? wishlistProduct.productData.salePrice : null;
-    const sale = product ? product.sale : wishlistProduct ? wishlistProduct.productData.sale : null ;
+    const sale = product ? product.sale : wishlistProduct ? wishlistProduct.productData.sale : { enable: false, startSale: null, stopSale: null, percent: 0} ;
     // const showSaleBadge = sale.enable;
     const variations = product ? product.variations : wishlistProduct ? wishlistProduct.productData.variations : null;
 
@@ -67,6 +68,7 @@ const ProductItem: FC<ProductItemProps> = props => {
 
     const showPromo = useSelector((state: RootState) => {
         const now = state.User.today.date
+        // if(sale === null) return false;
         return checkTrueSale(sale, now)
     });
 
@@ -168,7 +170,7 @@ const ProductItem: FC<ProductItemProps> = props => {
 
     const dispatch = useDispatch();
     useEffect(() => {
-        // !wishlistPage && sale.enable && dispatch(updateStoreCartPromoPrice(variantId, showPromo));
+        !wishlistPage && sale.enable && dispatch(updateStorePageProductslistPromoPrice(variantId, showPromo));
         wishlistPage && sale.enable && wishlistProduct.v && dispatch(updateStoreWishlistPromoPrice(wishlistProduct.v, showPromo));
     }, [showPromo])
 

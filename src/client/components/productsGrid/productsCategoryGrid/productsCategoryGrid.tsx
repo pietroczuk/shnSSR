@@ -6,14 +6,23 @@ import { shallowEqual, useSelector } from "react-redux";
 import { RootState } from "../../../client";
 
 const ProductsCategoryGrid: React.FC = () => {
-    const { products, placeholderNumber } = useSelector((state: RootState) => ({
+    const { products, placeholderNumber, productsLength } = useSelector((state: RootState) => ({
         products: state.Page.data.categoryPage.products,
+        productsLength: state.Page.data.categoryPage.length,
         placeholderNumber: state.SystemConfig.placeholders.categoryProducts,
     }), shallowEqual)
 
     return <div className={styles.productsGrid}>
-        {Array.isArray(products) ?
-            products.map((p, index) => <ProductItem product={p} key={p.id} index={index} />)
+        {productsLength ? 
+            Object.entries(products).map(
+                ([_key, val], index) => {
+                return <ProductItem
+                    product={val}
+                    key={val.id}
+                    index={index}
+                />
+                }
+            )
             :
             [...Array(placeholderNumber)].map((_el, index) => <ProductItem key={index} />)
         }

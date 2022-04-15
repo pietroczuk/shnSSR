@@ -37,6 +37,10 @@ const pageSlice = createSlice({
         setProductCurrentVariantId(state: Page, action) {
             state.data.productPage.currentVariationId = action.payload;
             return state;
+        },
+        updatePageProductsPromoPrice(state: Page, action) {
+            console.log('product update',action.payload);
+            return state;
         }
     }
 });

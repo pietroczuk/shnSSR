@@ -7,21 +7,21 @@ import { pageActions } from "../../slices/pageSlice/pageSlice";
 
 export const getPage = (api: Api, type: string, lang: string, url: string, query: string, axiosAbortController?: AbortController) => async (dispatch: Dispatch) => {
   const page_url = '?url=' + url + '&lang=' + lang;
-  let axios_endpoint = null;
+  let axiosEndpoint = null;
   switch (type) {
     case pageTypes.productPage:
-      axios_endpoint = api.product + page_url;
+      axiosEndpoint = api.product + page_url;
       break;
     case pageTypes.staticPage:
-      axios_endpoint = api.page + page_url;
+      axiosEndpoint = api.page + page_url;
       break;
     case pageTypes.categoryPage:
-      axios_endpoint = api.category + page_url;
+      axiosEndpoint = api.category + page_url;
       break;
   }
   // console.log(axios_endpoint);
-  if (axios_endpoint) {
-    return axios.get(api.url + '/' + axios_endpoint,
+  if (axiosEndpoint) {
+    return axios.get(api.url + '/' + axiosEndpoint,
       { signal: axiosAbortController ? axiosAbortController.signal : undefined })
       .then(res =>
         dispatch(pageActions.setPageData({ data: res.data, query: query, pageType: type }))
@@ -33,8 +33,13 @@ export const getPage = (api: Api, type: string, lang: string, url: string, query
   return undefined;
 }
 
-export const setProductCurrVarId = (product_variant_id: string, variations: Variations) => (dispatch: Dispatch) => {
-  if (product_variant_id && variations[product_variant_id]) {
-    dispatch(pageActions.setProductCurrentVariantId(product_variant_id))
+export const setProductCurrVarId = (productVariantId: string, variations: Variations) => (dispatch: Dispatch) => {
+  if (productVariantId && variations[productVariantId]) {
+    dispatch(pageActions.setProductCurrentVariantId(productVariantId))
   }
+}
+
+export const updateStorePageProductslistPromoPrice = (variantId: string, saleEnable: boolean) => (dispatch: Dispatch) => {
+  const actionPayload = { variantId, saleEnable };
+  return dispatch(pageActions.updatePageProductsPromoPrice(actionPayload));
 }
