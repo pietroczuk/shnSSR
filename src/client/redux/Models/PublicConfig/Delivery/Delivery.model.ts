@@ -1,10 +1,10 @@
 export interface Delivery {
     globalMinPrice: {
-        [key: string]: string
+        [key: string]: number
     };
     countryMinPrice: {
         [key: string]: {
-            [key: string]: string
+            [key: string]: number
         }
     }
 }

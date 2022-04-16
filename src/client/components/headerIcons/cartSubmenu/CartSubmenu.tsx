@@ -7,7 +7,7 @@ import HeaderIconSubmenu from "../headerIconSubmenu/HeaderIconSubmenu";
 import ScrollSubmenuContent from "../scrollSubmenuContent/ScrollSubmenuContent";
 import styles from './cartSubmenu.scss';
 import withStyles from "isomorphic-style-loader/withStyles";
-import { calulateTotalProductPrice, calulateTotalSaveMoney, formatPrice } from "../../../utils/utilsFrondend";
+import { calulateTotalProductPrice, calulateTotalSaveMoney, formatPrice, getPriceByCurrency } from "../../../utils/utilsFrondend";
 import Cut from "../../svg/icons/Cut";
 
 interface CartSubmenuProps {
@@ -31,6 +31,8 @@ const CartSubmenu: React.FC<CartSubmenuProps> = props => {
         to,
         change,
 
+        deliveries,
+
     } = useSelector((state: RootState) => ({
         products: state.Cart.products,
         cartLenght: state.Cart.length,
@@ -50,14 +52,16 @@ const CartSubmenu: React.FC<CartSubmenuProps> = props => {
         to: state.PublicConfig.translations.to,
         change: state.PublicConfig.translations.change,
 
-
         taxPercent: state.PublicConfig.config.taxPercent,
+
+        deliveries: state.PublicConfig.delivery
+
     }), shallowEqual)
 
     const total = cartLenght ? formatPrice(calulateTotalProductPrice(products, currency, allCurrencies), currency, allCurrencies) : '';
     const totalSaveMoney = cartLenght ? formatPrice(calulateTotalSaveMoney(products, currency, allCurrencies), currency, allCurrencies) : '';
     // const wishlist = rawSlug ? prepUrlFromConfigSlug(language, null, null, null, rawSlug, isMultilanguage)
-
+    const deliveryPrice = formatPrice(getPriceByCurrency(deliveries.globalMinPrice, currency, allCurrencies), currency, allCurrencies);
     return <HeaderIconSubmenu parrentWidth={parrentWidth} align="right" title={cartLabel}>
         {cartLenght ?
             <ScrollSubmenuContent listType="cart" clickHandler={clickHandler} />
@@ -112,7 +116,7 @@ const CartSubmenu: React.FC<CartSubmenuProps> = props => {
                     </div>
                 </div>
                 <div className={styles.price}>
-                    + 12.99zł
+                    + {deliveryPrice}
                 </div>
             </div>
         }

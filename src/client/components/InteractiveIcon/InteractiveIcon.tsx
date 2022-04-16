@@ -119,7 +119,7 @@ const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
         <div className={styles.iconHolder}
             // onClick={enableHoverHandlers ? toogleShowMenu : onClick}
             onMouseEnter={enableHoverHandlers ? setShowSubmenuOpen : onMouseEnter}
-            // onMouseLeave={enableHoverHandlers ? setShowSubmenuClose : onMouseLeave}
+            onMouseLeave={enableHoverHandlers ? setShowSubmenuClose : onMouseLeave}
         >
             <DivNavLink to={linkUrl}
                 className={`
