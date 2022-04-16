@@ -39,5 +39,9 @@ export const PublicConfigInitialState: PublicConfig = {
         },
         taxPercent: 0
     },
-    features: {}
+    features: {},
+    delivery: {
+        globalMinPrice: {},
+        countryMinPrice: {},
+    }
 }
