@@ -43,5 +43,6 @@ export const PublicConfigInitialState: PublicConfig = {
     delivery: {
         globalMinPrice: {},
         countryMinPrice: {},
+        countries: null
     }
 }

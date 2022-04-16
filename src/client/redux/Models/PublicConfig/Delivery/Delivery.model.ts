@@ -6,5 +6,12 @@ export interface Delivery {
         [key: string]: {
             [key: string]: number
         }
+    },
+    countries: {
+        [key: string]: {
+            code: string,
+            days: number,
+            title: string
+        } | null;
     }
 }
