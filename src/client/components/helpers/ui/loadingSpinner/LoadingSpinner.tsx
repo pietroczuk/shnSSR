@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './loadingSpinner.scss';
 
@@ -11,7 +11,7 @@ interface LoadingSpinnerProps {
     customBorderHeight?: number
 }
 
-const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ customContenerWidth, customContenerHeight, customSpinerSizeEm, customBorderColor, customBorderTopColor, customBorderHeight }) => {
+const LoadingSpinner: FC<LoadingSpinnerProps> = ({ customContenerWidth, customContenerHeight, customSpinerSizeEm, customBorderColor, customBorderTopColor, customBorderHeight }) => {
     const contenerWidth = customContenerWidth ? customContenerWidth : '100%';
     const contenerHeight = customContenerHeight ? customContenerHeight : 'auto';
     const spinerWidth = customSpinerSizeEm ? customSpinerSizeEm : 1;

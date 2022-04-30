@@ -1,23 +1,20 @@
-import React, { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './staticpage.scss';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
-import { pageTypes, prepareSearchCode, renderHtmlFromJson, scrollToTop } from '../../utils/utilsFrondend';
+import { pageTypes, ParamsModel, prepareSearchCode, renderHtmlFromJson, scrollToTop } from '../../utils/utilsFrondend';
 
 import { RootState } from '../../client';
-import { RouteComponentProps } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import Placeholder from '../../components/placeholder/Placeholder';
 import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
 import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
 import { getPage } from '../../redux/actionCreators/page/page.ac';
 
-interface StaticPageProps {
-    url: string;
-}
 
-const StaticPage: React.FC<RouteComponentProps<StaticPageProps>> = props => {
+const StaticPage: FC = () => {
 
     const { body, api, language, ssr, title } = useSelector(
         (state: RootState) => ({
@@ -30,20 +27,20 @@ const StaticPage: React.FC<RouteComponentProps<StaticPageProps>> = props => {
     );
     const dispatch = useDispatch();
 
-    const { url } = props.match.params;
-    const { location } = props;
+    const { url } = useParams<ParamsModel>();
+    const { pathname, search } = useLocation();
 
     const pageType = pageTypes.staticPage;
 
     useEffect(() => {
         const axiosAbortController = new AbortController();
-        !ssr && dispatch(getPage(api, pageType, language, url, prepareSearchCode(location.search), axiosAbortController));
+        !ssr && dispatch(getPage(api, pageType, language, url, prepareSearchCode(search), axiosAbortController));
         scrollToTop(window);
         return () => {
             axiosAbortController.abort();
             dispatch(pageActions.clearPageData());
         }
-    }, [location.pathname]);
+    }, [pathname]);
 
     useEffect(() => {
         ssr && dispatch(publicConfigActions.disableSrr());
@@ -52,7 +49,7 @@ const StaticPage: React.FC<RouteComponentProps<StaticPageProps>> = props => {
     const showPageBody = !!body;
     return (
         <div>
-            {<SeoMetaTags url={url} language={language} pageType={pageType}/>}
+            {<SeoMetaTags url={url} language={language} pageType={pageType} />}
             <h1>{title ? title : <Placeholder />}</h1>
             <div>
                 {showPageBody && renderHtmlFromJson(body)}

@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "../../../client";
@@ -16,7 +16,7 @@ interface CartSubmenuProps {
     clickHandler?: VoidFunction
 }
 
-const CartSubmenu: React.FC<CartSubmenuProps> = props => {
+const CartSubmenu: FC<CartSubmenuProps> = props => {
     const { parrentWidth, linkUrl, clickHandler } = props;
 
     const {

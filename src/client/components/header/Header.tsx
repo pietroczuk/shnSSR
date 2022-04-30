@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
 import styles from './header.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
@@ -22,7 +22,7 @@ interface HeaderProps {
     isWhiteTopbar: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ isDarkBackground, isWhiteTopbar }) => {
+const Header: FC<HeaderProps> = ({ isDarkBackground, isWhiteTopbar }) => {
     const [isTopbarOpen, setIsTopbarOpen] = useState(true);
 
     const { allLanguages, allCurrencies } = useSelector((state: RootState) => ({

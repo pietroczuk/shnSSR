@@ -3,7 +3,7 @@
 // import async await - babel-polyfil
 // import 'babel-polyfill';
 
-import React from 'react';
+import { Fragment } from 'react';
 import { hydrate } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { prepareRoutesConfig } from './utils/config';
@@ -81,9 +81,9 @@ loadableReady(() => {
         <Provider store={store_client}>
             <StyleContext.Provider value={{ insertCss }}>
                 <BrowserRouter>
-                    <React.Fragment>
+                    <Fragment>
                         {renderRoutes(prepareRoutesConfig(new_routes_config, userLanguage, isMultilanguage))}
-                    </React.Fragment>
+                    </Fragment>
                 </BrowserRouter>
             </StyleContext.Provider>
         </Provider>

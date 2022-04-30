@@ -1,11 +1,11 @@
-import React from "react";
+import { FC } from "react";
 import styles from '../productsGrid.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import ProductItem from "../../productItem/ProductItem";
 import { shallowEqual, useSelector } from "react-redux";
 import { RootState } from "../../../client";
 
-const ProductsCategoryGrid: React.FC = () => {
+const ProductsCategoryGrid: FC = () => {
     const { products, placeholderNumber, productsLength } = useSelector((state: RootState) => ({
         products: state.Page.data.categoryPage.products,
         productsLength: state.Page.data.categoryPage.length,
@@ -13,14 +13,14 @@ const ProductsCategoryGrid: React.FC = () => {
     }), shallowEqual)
 
     return <div className={styles.productsGrid}>
-        {productsLength ? 
+        {productsLength ?
             Object.entries(products).map(
                 ([_key, val], index) => {
-                return <ProductItem
-                    product={val}
-                    key={val.id}
-                    index={index}
-                />
+                    return <ProductItem
+                        product={val}
+                        key={val.id}
+                        index={index}
+                    />
                 }
             )
             :

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { FC, useEffect, useState, MouseEventHandler } from 'react';
 import DivNavLink from '../divNavLink/DivNavLink';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './interactiveIcon.scss';
@@ -22,13 +22,13 @@ interface InteractiveIconProps {
     isHoverOpacity?: boolean
     customWidth?: number
     customSvgSize?: number
-    onMouseEnter?: React.MouseEventHandler<HTMLAnchorElement | HTMLDivElement>,
-    onMouseLeave?: React.MouseEventHandler<HTMLAnchorElement | HTMLDivElement>,
-    onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLDivElement>,
+    onMouseEnter?: MouseEventHandler<HTMLAnchorElement | HTMLDivElement>,
+    onMouseLeave?: MouseEventHandler<HTMLAnchorElement | HTMLDivElement>,
+    onClick?: MouseEventHandler<HTMLAnchorElement | HTMLDivElement>,
     linkPageType?: string
 }
 
-const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
+const InteractiveIcon: FC<InteractiveIconProps> = (props) => {
     const { language, isMultilanguage, specialPagesUrlsArray, translations, isMobile } =
         useSelector((state: RootState) => ({
             language: state.User.language,
@@ -147,7 +147,7 @@ const InteractiveIcon: React.FC<InteractiveIconProps> = (props) => {
                 </div>
             </DivNavLink>
             {isWishlistSubmenuVisible && <WishlistSubmenu parrentWidth={width} linkUrl={linkUrl} clickHandler={setShowSubmenuClose} />}
-            {isCartSubmenuVisible && <CartSubmenu parrentWidth={width} linkUrl={linkUrl}/>}
+            {isCartSubmenuVisible && <CartSubmenu parrentWidth={width} linkUrl={linkUrl} />}
         </div>
     )
 }

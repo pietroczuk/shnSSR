@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './wishlist.scss';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
-import { pageTypes } from '../../utils/utilsFrondend';
+import { pageTypes, ParamsModel } from '../../utils/utilsFrondend';
 
 import ContentCointainer from '../../components/contentCointainer/ContentCointainer';
 import StickySidebar from '../../components/contentCointainer/stickySidebar/StickySidebar';
@@ -15,16 +15,13 @@ import ImageSwicher from '../../components/helpers/ui/imageSwicher/ImageSwicher'
 
 import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/ShowTitleWithBadge';
 import { RootState } from '../../client';
-import { RouteComponentProps } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
 import ProductsWishlistGrid from '../../components/productsGrid/productsWishlistGrid/productsWishlistGrid';
 import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
 
-interface WishlistProps {
-    url: string;
-}
 
-const Wishlist: React.FC<RouteComponentProps<WishlistProps>> = props => {
+const Wishlist: FC = () => {
     const pageType = pageTypes.wishlist;
 
     const { wishlistLabel, wishlist, language, wishlistMultilanguageUrls, ssr } = useSelector((state: RootState) => ({
@@ -35,8 +32,9 @@ const Wishlist: React.FC<RouteComponentProps<WishlistProps>> = props => {
         ssr: state.PublicConfig.ssr,
     }), shallowEqual
     );
-    const { location } = props;
-    const { url } = props.match.params;
+
+    const { url } = useParams<ParamsModel>();
+
     const isMultirow = true;
     const badgeNumber = wishlist.length;
 
@@ -60,11 +58,11 @@ const Wishlist: React.FC<RouteComponentProps<WishlistProps>> = props => {
 
     return (
         <ContentCointainer isMultirow={isMultirow}>
-            {<SeoMetaTags url={url} language={language} pageType={pageType}/>}
+            {<SeoMetaTags url={url} language={language} pageType={pageType} />}
 
             {isMultirow &&
-                <StickySidebar location={location}>
-                    <LeftMenuLinks location={location} />
+                <StickySidebar>
+                    <LeftMenuLinks />
                 </StickySidebar>
             }
 
@@ -74,8 +72,8 @@ const Wishlist: React.FC<RouteComponentProps<WishlistProps>> = props => {
                     <FixedBar>
                         <ImageSwicher />
                     </FixedBar>
-                    <ProductsWishlistGrid/>
-                    
+                    <ProductsWishlistGrid />
+
                     <div><h2>Ostatnio ogladane</h2></div>
                 </div>
             </MainContent>

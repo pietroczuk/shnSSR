@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import styles from './text.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import { Link } from 'react-router-dom';
@@ -10,7 +10,7 @@ import { setProductCurrVarId } from '../../../../../../redux/actionCreators/page
 // import base64 from 'base-64';
 // import { prepareAttribLink } from '../../../../utils/utilsFrondend';
 
-interface Props {
+interface TextProps {
     attrib: SingleAtribute,
     link: string,
     width?: number,
@@ -18,7 +18,7 @@ interface Props {
     onClickFunction: Function
 }
 
-const Text: React.FC<Props> = props => {
+const Text: FC<TextProps> = props => {
     const { attrib, width, active, link, onClickFunction } = props;
     const { attribTitle } = attrib;
     const textWidth = width ? (100 / width) - 2 + '%' : 'auto';

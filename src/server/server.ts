@@ -119,6 +119,9 @@ if (!process.env.API_URL) {
                         specialPagesUrlsArray: api_config.specialPagesUrlsArray
                     }
                     const new_Routes = prepareRoutesConfig(new_routes_config, language, isMultilanguage);
+
+                    // console.log(new_Routes);
+
                     const load_data_promises = matchRoutes(new_Routes, req.path).map(({ route }) => {
                         const i = req.url.indexOf('?');
                         const q = req.url.indexOf('&');

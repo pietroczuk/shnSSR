@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "../../../client";
@@ -12,7 +12,7 @@ interface WishlistSubmenuProps {
     clickHandler?: VoidFunction
 }
 
-const WishlistSubmenu: React.FC<WishlistSubmenuProps> = props => {
+const WishlistSubmenu: FC<WishlistSubmenuProps> = props => {
     const { parrentWidth, linkUrl, clickHandler } = props;
 
     const { wishlistLenght, wishlistLabel, gotoWishlist } = useSelector((state: RootState) => ({
@@ -25,7 +25,7 @@ const WishlistSubmenu: React.FC<WishlistSubmenuProps> = props => {
 
     return <HeaderIconSubmenu parrentWidth={parrentWidth} align="right" title={wishlistLabel}>
         {wishlistLenght ?
-            <ScrollSubmenuContent listType="wishlist" clickHandler={clickHandler}/>
+            <ScrollSubmenuContent listType="wishlist" clickHandler={clickHandler} />
             :
             <p>Twoja lista jest niestety pusta :(</p>
         }

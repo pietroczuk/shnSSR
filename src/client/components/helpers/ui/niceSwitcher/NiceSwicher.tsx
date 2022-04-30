@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { FC, Fragment, useState, useEffect } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './niceSwicher.scss';
 
@@ -13,11 +13,11 @@ interface NiceSwicherProps {
     size?: number
 }
 
-const NiceSwicher: React.FC<NiceSwicherProps> = props => {
+const NiceSwicher: FC<NiceSwicherProps> = props => {
     const { options, size } = props;
-    const width =  100 / options.length;
+    const width = 100 / options.length;
     const sizeSwicher = size ? size : 1;
-    
+
     const [postion, setPosition] = useState(-1);
 
     useEffect(() => {
@@ -70,6 +70,6 @@ const NiceSwicher: React.FC<NiceSwicherProps> = props => {
                 <div className={styles.selectedBg} style={{ borderRadius: sizeSwicher * 3 + 'em' }}></div>
             </div>
             }
-        </div> : <React.Fragment />;
+        </div> : <Fragment />;
 }
 export default withStyles(styles)(NiceSwicher);

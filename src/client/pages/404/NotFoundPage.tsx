@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import styles from './notFoundPage.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
@@ -10,7 +10,7 @@ interface NotFoundPageProps {
     staticContext: any;
 }
 
-const NotFoundPage: React.FC<NotFoundPageProps> = ({ staticContext = {} }) => {
+const NotFoundPage: FC<NotFoundPageProps> = ({ staticContext = {} }) => {
     const ssr = useSelector((state: RootState) => state.PublicConfig.ssr, shallowEqual);
 
     const dispatch = useDispatch();

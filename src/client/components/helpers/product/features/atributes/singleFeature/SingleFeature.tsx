@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { FC, Fragment, useState } from 'react';
 import styles from './singleFeature.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
@@ -10,7 +10,7 @@ import { getObjectLength } from '../../../../../../utils/utilsFrondend';
 import { Atributes } from '../../../../../../redux/Models/PublicConfig/Features/SingleFeature/Atributes/Atributes.model';
 import { DefaultVariantCode } from '../../../../../../redux/Models/PublicConfig/DefaultVariantCode/DefaultVariantCode.model';
 
-interface Props {
+interface SingleFeatureProps {
     title: string,
     atributes: Atributes,
     displayType: string,
@@ -21,7 +21,7 @@ interface Props {
     onClickFunction: Function
 }
 
-const SingleFeature: React.FC<Props> = props => {
+const SingleFeature: FC<SingleFeatureProps> = props => {
     const {
         title,
         atributes,
@@ -99,7 +99,7 @@ const SingleFeature: React.FC<Props> = props => {
     }
 
     return (
-        <React.Fragment>
+        <Fragment>
             {/* {console.log('render', activeCodeValue)} */}
             <div className={styles.featureTitle}>
                 <span className={styles.label}>{title}</span>
@@ -113,7 +113,7 @@ const SingleFeature: React.FC<Props> = props => {
                 {displaySingleFeature()}
                 {displayType == 'text' && <SelectedBg width={width} position={bgPossition}></SelectedBg>}
             </div>
-        </React.Fragment>
+        </Fragment>
     )
 }
 export default withStyles(styles)(SingleFeature)

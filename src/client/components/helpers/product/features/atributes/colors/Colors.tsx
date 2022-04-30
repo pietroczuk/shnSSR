@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
@@ -12,8 +12,9 @@ import { SingleAtribute } from '../../../../../../redux/Models/PublicConfig/Feat
 import { setGlobalDefaultVariantcode } from '../../../../../../redux/actionCreators/publicConfig/publicConfig.ac';
 import { setProductRandomColors } from '../../../../../../redux/actionCreators/display/display.ac';
 import { setProductCurrVarId } from '../../../../../../redux/actionCreators/page/page.ac';
+import { useLocation } from 'react-router-dom';
 
-interface Props {
+interface ColorsProps {
     attrib: SingleAtribute,
     active: boolean,
     link: string,
@@ -22,7 +23,7 @@ interface Props {
     onClickFunction: Function
 }
 
-const Colors: React.FC<Props> = props => {
+const Colors: FC<ColorsProps> = props => {
 
     const { attrib, active, link, isGlobalChange, featureKey, onClickFunction } = props;
     const { glowColor, attribTitle, code, id } = attrib;
@@ -50,8 +51,11 @@ const Colors: React.FC<Props> = props => {
         }
     }
 
+    const { pathname } = useLocation();
+    const realLink = link ? pathname + "?" + link : '';
+
     return (
-        <DivNavLink to={"?" + link}
+        <DivNavLink to={realLink}
             onClick={clickMe}
             aria-label={attribTitle}
             className={styles.color}

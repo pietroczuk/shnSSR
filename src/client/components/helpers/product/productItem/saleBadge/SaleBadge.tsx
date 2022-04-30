@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import styles from './saleBadge.scss';
 import withStyles from "isomorphic-style-loader/withStyles";
 // import { useSelector } from "react-redux";
@@ -10,7 +10,7 @@ interface SaleBadgeProps {
     sale: Sale
 }
 
-const SaleBadge: React.FC<SaleBadgeProps> = props => {
+const SaleBadge: FC<SaleBadgeProps> = props => {
     const { sale } = props;
 
     // const showBadge = useSelector((state: RootState) => {
@@ -19,11 +19,11 @@ const SaleBadge: React.FC<SaleBadgeProps> = props => {
     // });
 
     // if (showBadge) {
-        return (
-            <div className={styles.badge}>
-                -{sale.percent}%
-            </div>
-        );
+    return (
+        <div className={styles.badge}>
+            -{sale.percent}%
+        </div>
+    );
     // }
     // return <React.Fragment />
 

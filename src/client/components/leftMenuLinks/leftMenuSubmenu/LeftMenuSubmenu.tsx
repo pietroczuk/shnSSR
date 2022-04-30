@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { FC, useState, useEffect } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from '../leftMenuLinks.scss';
 
@@ -7,19 +7,22 @@ import { prepUrlFromConfigSlug } from '../../../utils/utilsFrondend';
 import ArrowDown from '../../svg/icons/ArrowDown';
 import { PageTypePrefixUrls } from '../../../redux/Models/SystemConfig/PageTypePrefixUrls/PageTypePrefixUrls.model';
 import { MenuItem } from '../../../redux/Models/PublicConfig/Menu/MenuItem/MenuItem.model';
+import { useLocation } from 'react-router-dom';
 
 interface LeftMenuSubmenuProps {
     menuItem: MenuItem;
     prepareLabelMenu: (label: string, color?: string, expand?: boolean, bolder?: boolean) => JSX.Element;
     prepareMenuLink: (menuItem: MenuItem) => JSX.Element;
-    pathname: string;
+    // pathname: string;
     language: string;
     pageTypePrefixUrls: PageTypePrefixUrls;
     isMultilanguage: boolean;
 }
 
-const LeftMenuSubmenu: React.FC<LeftMenuSubmenuProps> = props => {
-    const { menuItem, prepareLabelMenu, prepareMenuLink, pathname, language, pageTypePrefixUrls, isMultilanguage } = props;
+const LeftMenuSubmenu: FC<LeftMenuSubmenuProps> = props => {
+    const { menuItem, prepareLabelMenu, prepareMenuLink,
+        // pathname, 
+        language, pageTypePrefixUrls, isMultilanguage } = props;
     const { items, label, color } = menuItem;
 
     const [openSubmenu, setOpenSubmenu] = useState(false);
@@ -30,6 +33,8 @@ const LeftMenuSubmenu: React.FC<LeftMenuSubmenuProps> = props => {
     const openSubmenuHandler = (open: boolean) => {
         setOpenSubmenu(open);
     }
+    const { pathname } = useLocation();
+
     useEffect(() => {
         const foudmatch = Array.isArray(items) ? items.some(item => {
             if (item.url && pathname === prepUrlFromConfigSlug(language, pageTypePrefixUrls, item.type, null, item.url, isMultilanguage)) {

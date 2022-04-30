@@ -4,12 +4,15 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 
 import { useSelector, shallowEqual } from 'react-redux';
 
-import { NavLink } from 'react-router-dom';
+// import { NavLink, 
+//     // useLocation 
+// } from 'react-router-dom';
 import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 
 import SubMenu from './submenu/SubMenu';
 import { RootState } from '../../client';
 import { MenuItem } from '../../redux/Models/PublicConfig/Menu/MenuItem/MenuItem.model';
+import MenuLink from './menuLink/MenuLink';
 
 const MenuTop: FC = () => {
     const { menu_items, slug_urls, isMultilanguage, language } = useSelector((state: RootState) => ({
@@ -19,6 +22,7 @@ const MenuTop: FC = () => {
         language: state.User.language,
     }), shallowEqual)
 
+    
     const prepareSubmenu = (menuItem: MenuItem) => {
         return <SubMenu menuItem={menuItem} prepareLabelMenu={prepareLabelMenu} prepareMenuLink={prepareMenuLink} />
     }
@@ -27,9 +31,9 @@ const MenuTop: FC = () => {
 
         if (url) {
             const new_url = prepUrlFromConfigSlug(language, slug_urls, type, null, url, isMultilanguage);
-            return <NavLink to={new_url} activeClassName={styles.active} className={styles.link_container}>
-                {items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color)}
-            </NavLink>
+            return <MenuLink new_url={new_url}>{
+                items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color)
+                }</MenuLink>
         } else {
             return items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color);
         }

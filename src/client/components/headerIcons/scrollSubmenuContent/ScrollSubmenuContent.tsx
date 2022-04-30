@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './scrollSubmenuContent.scss';
 import { RootState } from "../../../client";
@@ -9,10 +9,10 @@ import { WishlistProducts } from "../../../redux/Models/Wishlist/WishlistProduct
 
 interface ScrollSubmenuContentProps {
     listType: 'wishlist' | 'cart';
-    clickHandler? : VoidFunction;
+    clickHandler?: VoidFunction;
 }
 
-const ScrollSubmenuContent: React.FC<ScrollSubmenuContentProps> = props => {
+const ScrollSubmenuContent: FC<ScrollSubmenuContentProps> = props => {
     const { listType, clickHandler } = props;
     let products: CartProducts | WishlistProducts;
 
@@ -24,7 +24,7 @@ const ScrollSubmenuContent: React.FC<ScrollSubmenuContentProps> = props => {
     }
 
     return <div className={styles.scrollContent}>
-        {Object.entries(products).reverse().map(([_key, product]) => <ScrollItem product={product} key={product.v} clickHandler={clickHandler} listType={listType}/>)}
+        {Object.entries(products).reverse().map(([_key, product]) => <ScrollItem product={product} key={product.v} clickHandler={clickHandler} listType={listType} />)}
     </div>
 }
 

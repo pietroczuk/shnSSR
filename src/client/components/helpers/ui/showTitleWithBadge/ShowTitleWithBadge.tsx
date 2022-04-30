@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './showTitleWithBadge.scss';
 
@@ -10,7 +10,7 @@ interface ShowTitleWithBadgeProps {
     customWidth?: number;
 }
 
-const ShowTitleWithBadge: React.FC<ShowTitleWithBadgeProps> = props => {
+const ShowTitleWithBadge: FC<ShowTitleWithBadgeProps> = props => {
     const { title, badgeNumber, customWidth } = props;
 
     const showTitle = !!title;

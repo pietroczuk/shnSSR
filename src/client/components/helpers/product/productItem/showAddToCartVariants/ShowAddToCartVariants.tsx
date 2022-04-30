@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './showAddToCartVariants.scss';
@@ -22,7 +22,7 @@ interface ShowAddToCartVariantsProps {
     showPromo: boolean;
 }
 
-const ShowAddToCartVariants: React.FC<ShowAddToCartVariantsProps> = props => {
+const ShowAddToCartVariants: FC<ShowAddToCartVariantsProps> = props => {
     const { active, avaibleVariations, productId, showPromo } = props;
     const [showSubmenu, setShowSubmenu] = useState(false);
 

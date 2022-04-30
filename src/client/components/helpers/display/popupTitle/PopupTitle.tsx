@@ -1,13 +1,13 @@
-import React from "react";
+import { FC } from "react";
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './popupTitle.scss'
 
-interface Props {
+interface PopupTitleProps {
     text: string,
     underline: boolean
 }
 
-const PopupTitle: React.FC<Props> = props => {
+const PopupTitle: FC<PopupTitleProps> = props => {
     const { text, underline } = props;
     return (
         <div className={`${styles.label} ${underline && styles.underline}`}>

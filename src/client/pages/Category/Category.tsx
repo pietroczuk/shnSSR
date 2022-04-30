@@ -5,7 +5,7 @@ import styles from './category.scss';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
 import {
-    pageTypes, prepareSearchCode,
+    pageTypes, ParamsModel, prepareSearchCode,
     renderHtmlFromJson,
     scrollToTop
 } from '../../utils/utilsFrondend';
@@ -24,20 +24,16 @@ import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/S
 
 import AllFeaturesDisplay from '../../components/helpers/product/features/AllFeaturesDisplay';
 import { RootState } from '../../client';
-import { RouteComponentProps } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import ProductsCategoryGridProps from '../../components/productsGrid/productsCategoryGrid/productsCategoryGrid';
 import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
 import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
 import { getPage } from '../../redux/actionCreators/page/page.ac';
 
-interface CategoryProps {
-    url: string;
-    lang: string;
-}
 
-const Category: FC<RouteComponentProps<CategoryProps>> = props => {
+const Category: FC = () => {
     const pageType = pageTypes.categoryPage;
-    const { ssr, category, api, language, title, description} = useSelector(
+    const { ssr, category, api, language, title, description } = useSelector(
         (state: RootState) => ({
             ssr: state.PublicConfig.ssr,
             category: state.Page.data.categoryPage,
@@ -47,23 +43,23 @@ const Category: FC<RouteComponentProps<CategoryProps>> = props => {
             language: state.User.language,
         }), shallowEqual)
 
-    const dispatch = useDispatch();
-    // from props
-    const { url } = props.match.params;
-    const { location } = props;
+    const { url } = useParams<ParamsModel>();
+    const { pathname, search } = useLocation();
 
     const isMultirow = true;
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         const axiosAbortController = new AbortController();
-        console.log('category ssr:', ssr);
-        !ssr && dispatch(getPage(api, pageType, language, url, prepareSearchCode(location.search), axiosAbortController));
+        // console.log('category ssr:', ssr);
+        !ssr && dispatch(getPage(api, pageType, language, url, prepareSearchCode(search), axiosAbortController));
         scrollToTop(window);
         return () => {
             axiosAbortController.abort();
             dispatch(pageActions.clearPageData());
         }
-    }, [location.pathname]);
+    }, [pathname]);
 
     useEffect(() => {
         ssr && dispatch(publicConfigActions.disableSrr());
@@ -73,8 +69,8 @@ const Category: FC<RouteComponentProps<CategoryProps>> = props => {
         <ContentCointainer isMultirow={isMultirow} >
             {<SeoMetaTags language={language} pageType={pageType} url={url} />}
             {
-                isMultirow && <StickySidebar location={location}>
-                    <LeftMenuLinks location={location} />
+                isMultirow && <StickySidebar>
+                    <LeftMenuLinks />
                 </StickySidebar>
             }
             <MainContent>

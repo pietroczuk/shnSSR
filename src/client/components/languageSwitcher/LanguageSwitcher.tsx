@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styles from './languageSwitcher.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
@@ -32,7 +32,7 @@ const JA = loadable(() => import(/* webpackPrefetch: true */ '../svg/flags/JA'),
 
 import { RootState } from '../../client';
 
-const LanguageSwitcher: React.FC = () => {
+const LanguageSwitcher: FC = () => {
     const [searchParams, setSearchParams] = useState('');
     const { search } = useLocation();
 

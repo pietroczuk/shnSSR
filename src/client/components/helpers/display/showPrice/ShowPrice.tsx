@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './showPrice.scss';
 import { useSelector, shallowEqual } from "react-redux";
@@ -18,7 +18,7 @@ interface ShowPriceProps {
     showQuantity?: boolean;
 }
 
-const ShowPrice: React.FC<ShowPriceProps> = (props) => {
+const ShowPrice: FC<ShowPriceProps> = (props) => {
     const { allPrices, salePrice, showPromo,
         showQuantity,
         quantity,
@@ -50,12 +50,12 @@ const ShowPrice: React.FC<ShowPriceProps> = (props) => {
                 :
                 showQuantity ?
                     formatPrice(regularPrice, currency, allCurrencies) :
-                    formatPrice(finalRegularPrice, currency, allCurrencies) 
+                    formatPrice(finalRegularPrice, currency, allCurrencies)
             }
         </div>
-            {
-                showPromo && !showQuantity && <del>{formatPrice(finalRegularPrice.toFixed(2), currency, allCurrencies)}</del>
-            }
+        {
+            showPromo && !showQuantity && <del>{formatPrice(finalRegularPrice.toFixed(2), currency, allCurrencies)}</del>
+        }
         {/* {
             !showQuantity ?
                 showPromo ?

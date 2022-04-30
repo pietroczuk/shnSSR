@@ -1,4 +1,4 @@
-import React, { useState, useEffect, CSSProperties } from "react";
+import { FC, useState, useEffect, CSSProperties } from "react";
 
 import withStyles from "isomorphic-style-loader/withStyles";
 
@@ -21,7 +21,7 @@ interface BlackButtonProps {
     showHoverUnderline?: boolean;
 }
 
-const BlackButton: React.FC<BlackButtonProps> = props => {
+const BlackButton: FC<BlackButtonProps> = props => {
     const {
         label,
         backgroundColor,

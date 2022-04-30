@@ -1,11 +1,11 @@
-import React from "react";
+import { FC } from "react";
 import styles from '../productsGrid.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import ProductItem from "../../productItem/ProductItem";
 import { shallowEqual, useSelector } from "react-redux";
 import { RootState } from "../../../client";
 
-const ProductsWishlistGrid: React.FC = () => {
+const ProductsWishlistGrid: FC = () => {
     const { products } = useSelector((state: RootState) => ({
         products: state.Wishlist.products
     }), shallowEqual)

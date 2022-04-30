@@ -16,6 +16,7 @@ const NotFoundPage = loadable(() => import(/* webpackPrefetch: true */ './pages/
 // do SSR, aby mozna bylo pobierac dane przez serwer
 
 export const getRoutes = () => {
+    // console.log('get routes');
     return (
         [
             {

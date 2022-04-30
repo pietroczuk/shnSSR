@@ -1,21 +1,18 @@
-import React from 'react';
+import { FC } from 'react';
 import styles from './leftMenuLinks.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
 import { useSelector, shallowEqual } from 'react-redux';
 
-import { NavLink } from 'react-router-dom';
 import { prepUrlFromConfigSlug } from '../../utils/utilsFrondend';
 
 import LeftMenuSubmenu from './leftMenuSubmenu/LeftMenuSubmenu';
 import { RootState } from '../../client';
 import { MenuItem } from '../../redux/Models/PublicConfig/Menu/MenuItem/MenuItem.model';
+import LeftMenuSingleLink from './leftMenuSingleLink/LeftMenuSingleLink';
 
-interface LeftMenuLinksProps {
-    location: Location | any;
-}
 
-const LeftMenuLinks: React.FC<LeftMenuLinksProps> = props => {
+const LeftMenuLinks: FC = () => {
 
     const { menu_items, language, pageTypePrefixUrls, isMultilanguage } = useSelector((state: RootState) => ({
         menu_items: state.PublicConfig.menu!.side === 'top' ? state.PublicConfig.menu!.top : state.PublicConfig.menu!.side,
@@ -24,14 +21,9 @@ const LeftMenuLinks: React.FC<LeftMenuLinksProps> = props => {
         isMultilanguage: state.SystemConfig.isMultilanguage
     }), shallowEqual)
 
-    const { location } = props;
-    const pathname = location ? location.pathname : '';
-
-
     const prepareSubmenu = (menuItem: MenuItem) => {
         return <LeftMenuSubmenu
             menuItem={menuItem}
-            pathname={pathname}
             pageTypePrefixUrls={pageTypePrefixUrls}
             language={language}
             prepareLabelMenu={prepareLabelMenu}
@@ -44,11 +36,11 @@ const LeftMenuLinks: React.FC<LeftMenuLinksProps> = props => {
 
         if (url) {
             const new_url = prepUrlFromConfigSlug(language, pageTypePrefixUrls, type, null, url, isMultilanguage);
-            return (
-                <NavLink to={new_url} activeClassName={styles.active} className={styles.side_link_container}>
-                    {items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color)}
-                </NavLink>
-            )
+            return <LeftMenuSingleLink new_url={new_url}>
+                {
+                    items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color)
+                }
+            </LeftMenuSingleLink>
         } else {
             return items && items.length ? prepareSubmenu(elem) : prepareLabelMenu(label, color);
         }

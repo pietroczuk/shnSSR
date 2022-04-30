@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import styles from './showAvaibleFeatures.scss';
 import withStyles from "isomorphic-style-loader/withStyles";
 import HoverPopupContainer from "../hoverPopupContainer/HoverPopupContainer";
@@ -11,7 +11,7 @@ interface ShowAvaibleFeaturesProps {
     onClickFunction: (featureId: any, obj: any) => void;
 }
 
-const ShowAvaibleFeatures: React.FC<ShowAvaibleFeaturesProps> = props => {
+const ShowAvaibleFeatures: FC<ShowAvaibleFeaturesProps> = props => {
     const { active, currentVariationCode, onClickFunction } = props;
     return <HoverPopupContainer active={active}>
         <AllFeaturesDisplay
@@ -22,7 +22,7 @@ const ShowAvaibleFeatures: React.FC<ShowAvaibleFeaturesProps> = props => {
             isGlobalChange={true}
             onClickFunction={onClickFunction}
             disableOpacity={true}
-            
+
         />
     </HoverPopupContainer>;
 }

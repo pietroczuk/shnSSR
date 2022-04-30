@@ -1,0 +1,14 @@
+.topSection {
+    display: flex;
+
+    .imageSlider {
+        width: 65%;
+    }
+    .productMainData {
+        width: 35%;
+        padding: 2em;
+    }
+}
+.dividerSection {
+    background-color: red;
+}

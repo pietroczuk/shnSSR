@@ -2,6 +2,7 @@ import { FC, useEffect, useState, useRef, useContext } from 'react';
 import styles from '../contentCointainer.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import ContenerContext from '../contenerContext/contenerContext';
+import { useLocation } from 'react-router-dom';
 
 type Styles = {
     position: string,
@@ -9,11 +10,11 @@ type Styles = {
     bottom: string
 }
 
-interface StickySidebarProps {
-    location : Location | any;
-}
+// interface StickySidebarProps {
+//     location : Location | any;
+// }
 
-const StickySidebar: FC<StickySidebarProps> = props => {
+const StickySidebar: FC = (props) => {
 
     const [forcePosition, setForcePosition] = useState(true);
     const setForcePositionHandler = (force: boolean) => {
@@ -24,8 +25,11 @@ const StickySidebar: FC<StickySidebarProps> = props => {
     const main_ref = contenerContext.mainContentRef;
     const sidebar_ref = useRef<HTMLDivElement>(null);
 
-    const { location } = props;
-    const pathname = location ? location.pathname : null;
+    // const { location } = props;
+
+    const { pathname } = useLocation();
+
+    // const pathname = location ? location.pathname : null;
     // variables for prevent rendering when change position
     let isUserScrolling = false;
     let prev_window_scroll = 0;
@@ -176,7 +180,7 @@ const StickySidebar: FC<StickySidebarProps> = props => {
                 window.removeEventListener('scroll', handleScroll)
             }
         } else {
-            return () => {};
+            return () => { };
         }
 
     }, [main_ref]);

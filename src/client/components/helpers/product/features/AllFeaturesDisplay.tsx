@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import styles from './allFeaturesDisplay.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
@@ -18,7 +18,7 @@ interface AllFeaturesDisplayProps {
     onClickFunction?: (featureId: string, obj: object) => void;
 }
 
-const AllFeaturesDisplay: React.FC<AllFeaturesDisplayProps> = props => {
+const AllFeaturesDisplay: FC<AllFeaturesDisplayProps> = props => {
     const {
         currentVariationCode,
         allProductVariation,

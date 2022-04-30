@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import styles from './colorCircle.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
@@ -8,7 +8,7 @@ interface ColorCircleProps {
     mini?: boolean
 }
 
-const ColorCircle: React.FC<ColorCircleProps> = props => {
+const ColorCircle: FC<ColorCircleProps> = props => {
     const { active, glowColor, mini } = props;
     return (
         <div className={`${styles.contener} ${active || mini ? styles.active : ''} ${mini ? styles.mini : ''}`} >

@@ -3,6 +3,12 @@ import { CartProducts } from '../redux/Models/Cart/CartProducts/CartProducts.mod
 import { Sale } from '../redux/Models/Product/Sale/Sale.model';
 import { AllCurrencies } from '../redux/Models/SystemConfig/AllCurrencies/AllCurrencies.model';
 import { PageTypePrefixUrls } from '../redux/Models/SystemConfig/PageTypePrefixUrls/PageTypePrefixUrls.model';
+
+export interface ParamsModel {
+    url: string;
+    lang: string;
+}
+
 // ---------- get page
 
 export const pageTypes = {

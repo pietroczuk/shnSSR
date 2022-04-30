@@ -1,5 +1,8 @@
-import React, { useEffect } from 'react';
-import { renderRoutes, RouteConfig } from 'react-router-config';
+import { FC, Fragment, useEffect } from 'react';
+import {
+    renderRoutes,
+    RouteConfig
+} from 'react-router-config';
 import { useSelector, shallowEqual } from 'react-redux';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
@@ -22,7 +25,8 @@ interface RootAppProps {
     route: { routes: RouteConfig[] }
 }
 
-const RootApp: React.FC<RootAppProps> = ({ route }) => {
+const RootApp: FC<RootAppProps> = (props) => {
+    const { route } = props;
     const { language, cookieLanguageKey } = useSelector((state: RootState) => ({
         language: state.User.language,
         cookieLanguageKey: state.SystemConfig.cookiesKeys.userLanguage,
@@ -35,12 +39,13 @@ const RootApp: React.FC<RootAppProps> = ({ route }) => {
     }, []);
 
     return (
-        <React.Fragment>
+        <Fragment>
+            {/* {console.log('root app render', route, props)} */}
             <Timer />
             <Header isWhiteTopbar={true} isDarkBackground={false} />
             {renderRoutes(route.routes)}
             <Footer />
-        </React.Fragment>
+        </Fragment>
     );
 };
 export default withStyles(styles)(RootApp);

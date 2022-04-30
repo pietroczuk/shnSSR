@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import { useSelector, shallowEqual } from "react-redux";
 
 import { isObjectEmpty } from "../../../../../utils/utilsFrondend";
@@ -17,14 +17,14 @@ interface ShowSelectedAttributesProps {
     customFontSize?: number;
 }
 
-const ShowSelectedAttributes: React.FC<ShowSelectedAttributesProps> = props => {
+const ShowSelectedAttributes: FC<ShowSelectedAttributesProps> = props => {
     const { selectedVariantId, avaibleVariations, customFontSize, isWishlist } = props;
     const features = useSelector((state: RootState) => state.PublicConfig.features, shallowEqual);
     const productFeatData = avaibleVariations && avaibleVariations[selectedVariantId] && avaibleVariations[selectedVariantId].variationCode ? avaibleVariations[selectedVariantId].variationCode : null;
     if ((productFeatData && isObjectEmpty(productFeatData)) || isObjectEmpty(features)) {
         return null;
     }
-    return <div className={styles.featDataCont} style={customFontSize ? {fontSize: customFontSize+'em'} : {}}>{
+    return <div className={styles.featDataCont} style={customFontSize ? { fontSize: customFontSize + 'em' } : {}}>{
         productFeatData && Object.keys(productFeatData).map(attribId => {
             const variantFeature = productFeatData[attribId];
             const foundFeature = features[variantFeature.feature] && features[variantFeature.feature] ? features[variantFeature.feature] : null;

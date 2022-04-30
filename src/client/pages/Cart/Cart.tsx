@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './cart.scss';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
-import { pageTypes } from '../../utils/utilsFrondend';
+import { pageTypes, ParamsModel } from '../../utils/utilsFrondend';
 
 import ContentCointainer from '../../components/contentCointainer/ContentCointainer';
 import StickySidebar from '../../components/contentCointainer/stickySidebar/StickySidebar';
@@ -15,16 +15,13 @@ import MainContent from '../../components/contentCointainer/mainContent/MainCont
 
 import ShowTitleWithBadge from '../../components/helpers/ui/showTitleWithBadge/ShowTitleWithBadge';
 import { RootState } from '../../client';
-import { RouteComponentProps } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
 // import ProductsWishlistGrid from '../../components/productsGrid/productsWishlistGrid/productsWishlistGrid';
 import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
 
-interface CartProps {
-    url: string;
-}
 
-const Cart: React.FC<RouteComponentProps<CartProps>> = props => {
+const Cart: FC = () => {
     const pageType = pageTypes.cart;
 
     const { cartLabel, cart, language, cartMultilanguageUrls, ssr } = useSelector((state: RootState) => ({
@@ -35,8 +32,10 @@ const Cart: React.FC<RouteComponentProps<CartProps>> = props => {
         ssr: state.PublicConfig.ssr,
     }), shallowEqual
     );
-    const { location } = props;
-    const { url } = props.match.params;
+
+    const { url } = useParams<ParamsModel>();
+
+
     const isMultirow = true;
     const badgeNumber = cart.length;
 
@@ -60,7 +59,7 @@ const Cart: React.FC<RouteComponentProps<CartProps>> = props => {
 
     return (
         <ContentCointainer isMultirow={isMultirow}>
-            {<SeoMetaTags url={url} language={language} pageType={pageType}/>}
+            {<SeoMetaTags url={url} language={language} pageType={pageType} />}
 
             <MainContent>
                 <ShowTitleWithBadge title={cartLabel} badgeNumber={badgeNumber} customWidth={20} />
@@ -69,22 +68,22 @@ const Cart: React.FC<RouteComponentProps<CartProps>> = props => {
                         <ImageSwicher />
                     </FixedBar> */}
                     {/* <ProductsWishlistGrid/> */}
-                    
+
                     {/* <div><h2>Ostatnio ogladane</h2></div> */}
                     <p>tutaj koszyk</p>
-                    <br/>
+                    <br />
                     ------------------
-                    <br/>
+                    <br />
                     jesli lista zyczen nie jest pusta
-                    <br/>
-                    wywietlamy info:<br/>
-                    --------- nie zapomnij o produktach z twojej listy zyczen<br/>
-                    - jak produkt jest w koszyku, dajemy info ze jest w koszyku<br/>
-                    - moze dac ktory rozmiar jest w koszyku<br/>
+                    <br />
+                    wywietlamy info:<br />
+                    --------- nie zapomnij o produktach z twojej listy zyczen<br />
+                    - jak produkt jest w koszyku, dajemy info ze jest w koszyku<br />
+                    - moze dac ktory rozmiar jest w koszyku<br />
                 </div>
             </MainContent>
             {isMultirow &&
-                <StickySidebar location={location} >
+                <StickySidebar>
                     {/* <LeftMenuLinks location={location} /> */}
                     info o dostawie
                 </StickySidebar>

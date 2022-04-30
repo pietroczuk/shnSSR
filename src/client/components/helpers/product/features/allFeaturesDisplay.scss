@@ -1,8 +1,8 @@
 .featureRootContainer {
     display           : block;
-    float             : right;
-    margin            : 20px;
-    width             : 400px;
+    // float             : right;
+    // margin            : 20px;
+    // width             : 400px;
     opacity           : 1;
     -webkit-transition: opacity 0.2s;
     -moz-transition   : opacity 0.2s;
@@ -33,7 +33,7 @@
 
     .featureContainer {
         display: flex;
-        margin : 20px;
+        margin : 20px 0;
 
         // &.featureColor {
         //     color: inherit

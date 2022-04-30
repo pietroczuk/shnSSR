@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { FC, useState, RefObject, createContext } from 'react';
 
-type RefState = React.RefObject<HTMLElement> | null;
+type RefState = RefObject<HTMLElement> | null;
 
-const ContenerContext = React.createContext<{
+const ContenerContext = createContext<{
     mainContentRef : RefState,
     setMainContentRef : (reference: RefState) => void
 }>(
@@ -13,7 +13,7 @@ const ContenerContext = React.createContext<{
 );
 export default ContenerContext;
 
-export const ContenerContextProvider: React.FC = (props) => {
+export const ContenerContextProvider: FC = (props) => {
     const [mainRef, setMainRef] = useState<RefState>(null);
     const setMainRefHandler = (reference : RefState) => {
         setMainRef(reference);

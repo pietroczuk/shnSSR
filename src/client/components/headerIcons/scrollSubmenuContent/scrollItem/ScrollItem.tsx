@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, FC } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../client";
 import withStyles from "isomorphic-style-loader/withStyles";
@@ -21,7 +21,7 @@ interface ScrollItemProps {
     clickHandler?: VoidFunction
 }
 
-const ScrollItem: React.FC<ScrollItemProps> = (props) => {
+const ScrollItem: FC<ScrollItemProps> = (props) => {
     const { product, clickHandler, listType } = props;
     const { imagesBase, imagesSize, language, pageTypePrefixUrls, isMultilanguage, priceFrom } = useSelector((state: RootState) => ({
         imagesBase: state.SystemConfig.images.url,

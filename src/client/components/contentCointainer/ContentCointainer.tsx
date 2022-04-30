@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import styles from './contentCointainer.scss';
 import withStyles from 'isomorphic-style-loader/withStyles';
 
@@ -8,7 +8,7 @@ interface ContentCointainerProps {
     isMultirow: boolean
 }
 
-const ContentCointainer: React.FC<ContentCointainerProps> = props => {
+const ContentCointainer: FC<ContentCointainerProps> = props => {
     const { isMultirow } = props;
     return (
         <ContenerContextProvider>

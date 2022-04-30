@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 
@@ -47,16 +47,16 @@ export const rednderHtml: renderHtml = (req, server_store, context, new_routes_c
 
   const css = new Set(); // CSS for all rendered React components
   // console.log(...styles);
-  const insertCss = (...styles:any[]) => styles.forEach(style => css.add(style._getCss()));
+  const insertCss = (...styles: any[]) => styles.forEach(style => css.add(style._getCss()));
 
   const content = renderToString(
     webExtractor.collectChunks(
       <Provider store={server_store}>
         <StyleContext.Provider value={{ insertCss }}>
           <StaticRouter location={req.path} context={context}>
-            <React.Fragment>
+            <Fragment>
               {renderRoutes(prepareRoutesConfig(new_routes_config, language, isMultilanguage))}
-            </React.Fragment>
+            </Fragment>
           </StaticRouter>
         </StyleContext.Provider>
       </Provider>

@@ -1,13 +1,13 @@
-import React from "react";
+import { FC } from "react";
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './showSizesText.scss'
 
 interface ShowSizesTextProps {
-    text: string, 
+    text: string,
     minitext: string | null
 }
 
-const ShowSizesText: React.FC<ShowSizesTextProps> = props => {
+const ShowSizesText: FC<ShowSizesTextProps> = props => {
     const { text, minitext } = props;
     return (
         <span className={styles.label}>

@@ -22,6 +22,7 @@ export const prepareRoutesConfig: prepareRoutesConfigArgs = (api_config, lang, i
                 route_item.server_change = true;
             }
         }
+        // console.log(route_item);
     });
     return new_Routes;
 }

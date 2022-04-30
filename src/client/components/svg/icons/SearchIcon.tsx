@@ -1,5 +1,5 @@
-import React from 'react';
-const SearchIcon: React.FC = () => {
+import { FC } from 'react';
+const SearchIcon: FC = () => {
     return (
         <svg viewBox="0 0 451 451">
             <path d="M447.05,428l-109.6-109.6c29.4-33.8,47.2-77.9,47.2-126.1C384.65,86.2,298.35,0,192.35,0C86.25,0,0.05,86.3,0.05,192.3

@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react';
+import { FC, Fragment, useEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
 import { RootState } from '../../client';
 
-const HomePage: React.FC = () => {
+const HomePage: FC = () => {
     const { ssr } = useSelector((state: RootState) => ({
         ssr: state.PublicConfig.ssr,
     }), shallowEqual);
-    
+
     const dispatch = useDispatch();
     useEffect(() => {
         ssr && dispatch(publicConfigActions.disableSrr());
     }, [])
     return (
-        <React.Fragment>
+        <Fragment>
             <div>home component</div>
             <button onClick={() => { console.log('cklik me') }}>kliknij</button>
             <Link to='/gowno'>gowno</Link><br />
@@ -24,7 +24,7 @@ const HomePage: React.FC = () => {
             <Link to='/pl/s/regulamin-sklepu'>regulamin</Link><br />
             <Link to='/pl/p/plakat-when-something-is-important-enought-elon-musk?5c7f93ea80acee0ad6dffa48'>produkt</Link>
 
-        </React.Fragment>
+        </Fragment>
     )
 };
 

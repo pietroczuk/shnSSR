@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './randomColorSwicher.scss';
 
@@ -7,7 +7,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { RootState } from '../../../../client';
 import { setProductRandomColors } from '../../../../redux/actionCreators/display/display.ac';
 
-const RandomColorSwicher: React.FC = () => {
+const RandomColorSwicher: FC = () => {
 
     const { showRandom, randomVariant, translations } = useSelector((state: RootState) => ({
         showRandom: state.Display.showRandom,
