@@ -50,8 +50,12 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
     }
     const gotoNextSlide = () => {
         console.log('next')
-        imageScrollRef.current.scrollBy({
-            left: 1,
+        // imageScrollRef.current.scrollBy({
+        //     left: 3000,
+        //     behavior: 'smooth'
+        // });
+        imageScrollRef.current.scrollTo({
+            left: 2,
             behavior: 'smooth'
         });
     }
