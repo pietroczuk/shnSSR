@@ -14,10 +14,11 @@ interface Props {
     variantId: string,
     productId: string,
     forceVisual? : boolean,
+    cssClass? : string,
 }
 
 const AddToWishlistSticker: FC<Props> = props => {
-    const { showLikes, likes, variantId, productId, forceVisual } = props;
+    const { showLikes, likes, variantId, productId, forceVisual, cssClass } = props;
     const dispatch = useDispatch();
     const { api, lang, localstorageWishlistKey, wishlistProducts, showVisual } = useSelector((state: RootState) => ({
         api: state.SystemConfig.api,
@@ -34,7 +35,11 @@ const AddToWishlistSticker: FC<Props> = props => {
 
     const showVisualMode = forceVisual !== undefined ? forceVisual : showVisual;
 
-    return <div className={`${styles.addToWishContainer} ${showVisualMode ? styles.visualMode : ''}`} onClick={clickHandler}>
+    return <div className={
+        `${styles.addToWishContainer} 
+        ${showVisualMode ? styles.visualMode : ''}
+        ${cssClass ? cssClass : ''}
+        `} onClick={clickHandler}>
         <div className={`${styles.iconContainer} ${alreadyInWishlist ? styles.fullOpacity : ''}`}>
             {alreadyInWishlist ? <HeartFull /> : <WishlistIcon />}
             {showVisual && <div className={styles.iconBg}></div>}

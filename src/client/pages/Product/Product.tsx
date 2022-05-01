@@ -113,13 +113,12 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             {<SeoMetaTags language={language} pageType={pageType} url={url} script={script} />}
             <div className={styles.topSection}>
                 <div className={styles.mainImageSection}>
-                    <div className={styles.wishlistStickerContainer}>
-                        <AddToWishlistSticker
-                            variantId={variantId}
-                            productId={productId}
-                            forceVisual={false}
-                        />
-                    </div>
+                    <AddToWishlistSticker
+                        variantId={variantId}
+                        productId={productId}
+                        forceVisual={false}
+                        cssClass={styles.wishlistStickerContainer}
+                    />
                     <ImageSlider variations={variations} />
                 </div>
                 {/* {currentVariationId && product && product.variations && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[currentVariationId].variationImage.wall + images_url.medium} />} */}

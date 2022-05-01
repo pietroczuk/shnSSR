@@ -1,11 +1,12 @@
 .imageSlider {
-    width: 100%;
-    height: 100%;
+    width   : 100%;
+    height  : 100%;
     position: relative;
 
     .sliderContainer {
         white-space               : nowrap;
         overflow-x                : scroll;
+        overflow-y                : hidden;
         width                     : 100%;
         height                    : 100%;
         -webkit-overflow-scrolling: touch;
@@ -14,23 +15,41 @@
             width  : 50%;
             display: inline-block;
             height : 100%;
+            position: relative;
+
 
             &.slideStart {
                 scroll-snap-align: start;
             }
 
             .imageContainer {
-                display        : flex;
-                justify-content: center;
-                height         : 100%;
+                // display        : flex;
+                // justify-content: center;
+                // height: 100%;
+                // float : left;
+                // width : 100%;
+                text-align: center;
+                height : 100%;
+                float  : left;
+                width: 100%;
+
+                &.addSpace {
+                    padding: 0 10%;
+                    
+                    // height : 100%;
+                }
 
                 .productImage {
                     display        : flex;
                     flex-direction : column;
                     justify-content: center;
+                    height         : 100%;
+
+
 
                     img {
-                        height: 100%;
+                        // height: 100%;
+                        // float: left;
                     }
                 }
             }

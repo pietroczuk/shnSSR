@@ -50,14 +50,14 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
     }
     const gotoNextSlide = () => {
         console.log('next')
-        // imageScrollRef.current.scrollBy({
-        //     left: 3000,
-        //     behavior: 'smooth'
-        // });
-        imageScrollRef.current.scrollTo({
-            left: 2,
+        imageScrollRef.current.scrollBy({
+            left: 1,
             behavior: 'smooth'
         });
+        // imageScrollRef.current.scrollTo({
+        //     left: 2,
+        //     behavior: 'smooth'
+        // });
     }
     const gotoPrevSlide = () => {
         console.log('prev')
@@ -68,7 +68,7 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
     }
 
     return <div className={styles.imageSlider}>
-        
+
         {console.log('redner')}
         <button style={{ position: 'absolute', left: '50px' }} onClick={gotoNextSlide}>next</button>
         <button style={{ position: 'absolute' }} onClick={gotoPrevSlide}>prev</button>
@@ -77,12 +77,15 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
                 // console.log(index);
                 // const imageType = index % 2 !== 0 ? variant.variationImage.poster : variant.variationImage.wall;
                 const addStartStyle = isMobile ? true : index % 2 == 0 ? true : false;
+                const addPadding = index % 2 == 0 ? false : true;
                 return (
-                    <div key={index} className={`${styles.slide} ${addStartStyle ? styles.slideStart : ''}`}
+                    <div key={index} className={`${styles.slide} ${addStartStyle ? styles.slideStart : ''} 
+                    
+                    `}
                         style={{ backgroundColor: imageData.bgColor }}
                     >
-                        <div className={styles.imageContainer}>
-                            <div className={styles.productImage}>
+                        <div className={`${styles.imageContainer} ${addPadding ? styles.addSpace : ''}`}>
+                            <div className={styles.productImage} >
                                 <img src={images_url.url + '/' + imageData.url + images_url.medium} />
                             </div>
                         </div>
@@ -91,7 +94,7 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
             }
             )}
         </div>
-    </div>
+    </div >
 }
 
 export default withStyles(styles)(ImageSlider);
