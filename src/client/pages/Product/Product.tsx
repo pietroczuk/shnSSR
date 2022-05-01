@@ -18,6 +18,7 @@ import { helmetJsonLdProp } from "react-schemaorg";
 import { Product as HelmetProduct } from "schema-dts";
 import BlackButton from '../../components/helpers/ui/blackButton/BlackButton';
 import ImageSlider from '../../components/imageSlider/ImageSlider';
+import { addToStoreCart } from '../../redux/actionCreators/cart/cart.ac';
 
 interface ProductProps {
     url: string;
@@ -28,7 +29,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
     const pageType = pageTypes.productPage;
     const { product, api,
         // images_url, 
-        allCurrencies, currency, language, ssr, title, addToCart } = useSelector(
+        allCurrencies, currency, language, ssr, title, addToCart, cartProducts, productId, lang, localstorageCartKey } = useSelector(
             (state: RootState) => ({
                 product: state.Page.data.productPage,
                 api: state.SystemConfig.api,
@@ -38,7 +39,11 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                 language: state.User.language,
                 ssr: state.PublicConfig.ssr,
                 title: state.Page.info.title,
-                addToCart: state.PublicConfig.translations.addToCart
+                addToCart: state.PublicConfig.translations.addToCart,
+                cartProducts: state.Cart.products,
+                productId: state.Page.info.id,
+                lang: state.User.language,
+                localstorageCartKey: state.SystemConfig.localstorageKeys.cart,
             }), shallowEqual
         )
     const dispatch = useDispatch();
@@ -66,7 +71,11 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
         ssr && dispatch(publicConfigActions.disableSrr());
     }, [])
 
-    const addToCardHandler = () => { }
+    const addToCardHandler = () => {
+        const alreadyInCart = cartProducts[currentVariationId] ? true : false;
+        dispatch(addToStoreCart(api, lang, productId, currentVariationId, localstorageCartKey, alreadyInCart));
+        console.log('[Product page]','add to cart product id:', productId);
+     }
 
     const script = [
         helmetJsonLdProp<HelmetProduct>({
