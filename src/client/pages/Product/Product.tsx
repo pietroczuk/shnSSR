@@ -19,6 +19,7 @@ import { Product as HelmetProduct } from "schema-dts";
 import BlackButton from '../../components/helpers/ui/blackButton/BlackButton';
 import ImageSlider from '../../components/imageSlider/ImageSlider';
 import { addToStoreCart } from '../../redux/actionCreators/cart/cart.ac';
+import AddToWishlistSticker from '../../components/helpers/ui/addToWishlistSticker/AddToWishlistSticker';
 
 interface ProductProps {
     url: string;
@@ -48,8 +49,9 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
         )
     const dispatch = useDispatch();
 
-    const currentVariationId = product ? product.currentVariationId : null;
+    const variantId = product ? product.currentVariationId : null;
     const variations = product ? product.variations : null;
+    // const likes = product ? product.likes : null;
     // from props
     const { url,
         // lang 
@@ -72,10 +74,10 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
     }, [])
 
     const addToCardHandler = () => {
-        const alreadyInCart = cartProducts[currentVariationId] ? true : false;
-        dispatch(addToStoreCart(api, lang, productId, currentVariationId, localstorageCartKey, alreadyInCart));
-        console.log('[Product page]','add to cart product id:', productId);
-     }
+        const alreadyInCart = cartProducts[variantId] ? true : false;
+        dispatch(addToStoreCart(api, lang, productId, variantId, localstorageCartKey, alreadyInCart));
+        console.log('[Product page]', 'add to cart product id:', productId);
+    }
 
     const script = [
         helmetJsonLdProp<HelmetProduct>({
@@ -110,27 +112,35 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             {/* {console.log('render product page')} */}
             {<SeoMetaTags language={language} pageType={pageType} url={url} script={script} />}
             <div className={styles.topSection}>
-                <div className={styles.imageSlider}>
+                <div className={styles.mainImageSection}>
+                    <div className={styles.wishlistStickerContainer}>
+                        <AddToWishlistSticker
+                            variantId={variantId}
+                            productId={productId}
+                            forceVisual={false}
+                        />
+                    </div>
                     <ImageSlider variations={variations} />
-                    {/* {currentVariationId && product && product.variations && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[currentVariationId].variationImage.wall + images_url.medium} />} */}
-                    {/* {currentVariationId && product && product.variations && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[currentVariationId].variationImage.poster + images_url.medium} />} */}
                 </div>
+                {/* {currentVariationId && product && product.variations && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[currentVariationId].variationImage.wall + images_url.medium} />} */}
+                {/* {currentVariationId && product && product.variations && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[currentVariationId].variationImage.poster + images_url.medium} />} */}
+
                 <div className={styles.productMainData}>
                     {title ? <h1>{title}</h1> : <h1><Placeholder /></h1>}
 
-                    {currentVariationId && product && variations && <p>
-                        {variations[currentVariationId].variationPrice[currency]} {allCurrencies[currency].sign}
+                    {variantId && product && variations && <p>
+                        {variations[variantId].variationPrice[currency]} {allCurrencies[currency].sign}
                     </p>}
 
-                    {product && currentVariationId && variations &&
+                    {product && variantId && variations &&
                         <AllFeaturesDisplay
-                            currentVariationCode={variations[currentVariationId].variationCode}
+                            currentVariationCode={variations[variantId].variationCode}
                             allProductVariation={variations}
                             displayOnProductPage={true}
                         />
                     }
 
-                    
+
                     <BlackButton
                         label={addToCart}
                         clickHandler={addToCardHandler}
@@ -146,11 +156,11 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             </div>
             {/* <FixedBar /> */}
 
-            {currentVariationId && product && product.variations && product.variations[currentVariationId].name}
+            {variantId && product && product.variations && product.variations[variantId].name}
             <br />
 
             <br />
-            {currentVariationId}
+            {variantId}
             <br />
 
 

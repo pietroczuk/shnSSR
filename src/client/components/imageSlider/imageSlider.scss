@@ -1,26 +1,38 @@
-.sliderContainer {
-    white-space: nowrap;
-    overflow-x : scroll;
-    width      : 100%;
-    height     : 100%;
-    -webkit-overflow-scrolling: touch;
+.imageSlider {
+    width: 100%;
+    height: 100%;
+    position: relative;
 
-    .slide {
-        width  : 50%;
-        display: inline-block;
+    .sliderContainer {
+        white-space               : nowrap;
+        overflow-x                : scroll;
+        width                     : 100%;
+        height                    : 100%;
+        -webkit-overflow-scrolling: touch;
 
-        &.slideStart {
-            scroll-snap-align: start;
-        }
+        .slide {
+            width  : 50%;
+            display: inline-block;
+            height : 100%;
 
-        .imageContainer {
-            display        : flex;
-            justify-content: center;
+            &.slideStart {
+                scroll-snap-align: start;
+            }
 
-            .productImage {
+            .imageContainer {
                 display        : flex;
-                flex-direction : column;
                 justify-content: center;
+                height         : 100%;
+
+                .productImage {
+                    display        : flex;
+                    flex-direction : column;
+                    justify-content: center;
+
+                    img {
+                        height: 100%;
+                    }
+                }
             }
         }
     }

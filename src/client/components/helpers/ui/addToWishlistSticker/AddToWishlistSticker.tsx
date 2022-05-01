@@ -9,14 +9,15 @@ import { RootState } from '../../../../client';
 import { addToStoreWishlist } from '../../../../redux/actionCreators/wishlist/wishlist.ac';
 
 interface Props {
-    showLikes: boolean,
-    likes: number,
+    showLikes?: boolean,
+    likes?: number,
     variantId: string,
-    productId: string
+    productId: string,
+    forceVisual? : boolean,
 }
 
 const AddToWishlistSticker: FC<Props> = props => {
-    const { showLikes = false, likes, variantId, productId } = props;
+    const { showLikes, likes, variantId, productId, forceVisual } = props;
     const dispatch = useDispatch();
     const { api, lang, localstorageWishlistKey, wishlistProducts, showVisual } = useSelector((state: RootState) => ({
         api: state.SystemConfig.api,
@@ -30,7 +31,10 @@ const AddToWishlistSticker: FC<Props> = props => {
         // console.log('click', productId, variantId, alreadyInWishlist);
         variantId && productId && dispatch(addToStoreWishlist(api, lang, productId, variantId, localstorageWishlistKey, alreadyInWishlist));
     }
-    return <div className={`${styles.addToWishContainer} ${showVisual ? styles.visualMode : ''}`} onClick={clickHandler}>
+
+    const showVisualMode = forceVisual !== undefined ? forceVisual : showVisual;
+
+    return <div className={`${styles.addToWishContainer} ${showVisualMode ? styles.visualMode : ''}`} onClick={clickHandler}>
         <div className={`${styles.iconContainer} ${alreadyInWishlist ? styles.fullOpacity : ''}`}>
             {alreadyInWishlist ? <HeartFull /> : <WishlistIcon />}
             {showVisual && <div className={styles.iconBg}></div>}

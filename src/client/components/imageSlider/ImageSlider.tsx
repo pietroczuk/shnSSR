@@ -1,5 +1,5 @@
 import {
-    FC, 
+    FC,
     // useEffect, 
     useRef,
     // useState 
@@ -42,7 +42,7 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
         images.find(img => img.url === variantImagePoster) ? null : images.push({ url: variantImagePoster, bgColor: bgColor });
     });
 
-    const handleScroll = (event: UIEvent <HTMLDivElement>) => {
+    const handleScroll = (event: UIEvent<HTMLDivElement>) => {
         const target = event.currentTarget;
         if (target.scrollLeft % target.offsetWidth === 0) {
             console.log('Scrolling is done!');
@@ -67,27 +67,30 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
         });
     }
 
-    return <div className={styles.sliderContainer} ref={imageScrollRef} onScroll={handleScroll}>
+    return <div className={styles.imageSlider}>
+        
         {console.log('redner')}
-        <button style={{position: 'absolute', left: '50px'}} onClick={gotoNextSlide}>next</button>
-        <button style={{position: 'absolute'}} onClick={gotoPrevSlide}>prev</button>
-        {images.map((imageData, index) => {
-            // console.log(index);
-            // const imageType = index % 2 !== 0 ? variant.variationImage.poster : variant.variationImage.wall;
-            const addStartStyle = isMobile ? true : index % 2 == 0 ? true : false;
-            return (
-                <div key={index} className={`${styles.slide} ${addStartStyle ? styles.slideStart : ''}`}
-                    style={{ backgroundColor: imageData.bgColor }}
-                >
-                    <div className={styles.imageContainer}>
-                        <div className={styles.productImage}>
-                            <img src={images_url.url + '/' + imageData.url + images_url.medium} />
+        <button style={{ position: 'absolute', left: '50px' }} onClick={gotoNextSlide}>next</button>
+        <button style={{ position: 'absolute' }} onClick={gotoPrevSlide}>prev</button>
+        <div className={styles.sliderContainer} ref={imageScrollRef} onScroll={handleScroll}>
+            {images.map((imageData, index) => {
+                // console.log(index);
+                // const imageType = index % 2 !== 0 ? variant.variationImage.poster : variant.variationImage.wall;
+                const addStartStyle = isMobile ? true : index % 2 == 0 ? true : false;
+                return (
+                    <div key={index} className={`${styles.slide} ${addStartStyle ? styles.slideStart : ''}`}
+                        style={{ backgroundColor: imageData.bgColor }}
+                    >
+                        <div className={styles.imageContainer}>
+                            <div className={styles.productImage}>
+                                <img src={images_url.url + '/' + imageData.url + images_url.medium} />
+                            </div>
                         </div>
                     </div>
-                </div>
-            )
-        }
-        )}
+                )
+            }
+            )}
+        </div>
     </div>
 }
 

@@ -1,9 +1,15 @@
 .topSection {
     display: flex;
 
-    .imageSlider {
-        width   : 65%;
+    .mainImageSection {
         position: relative;
+        width   : 65%;
+
+        .wishlistStickerContainer {
+            font-size: 1.2em;
+            top      : .2em;
+            right    : .2em;
+        }
     }
 
     .productMainData {
