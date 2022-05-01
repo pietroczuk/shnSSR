@@ -13,6 +13,7 @@ interface AllFeaturesDisplayProps {
     allProductVariation?: any;
     onlyWishlistFeatures?: boolean;
     displayInline?: boolean;
+    displayOnProductPage?: boolean;
     isGlobalChange?: boolean;
     disableOpacity?: boolean;
     onClickFunction?: (featureId: string, obj: object) => void;
@@ -24,6 +25,7 @@ const AllFeaturesDisplay: FC<AllFeaturesDisplayProps> = props => {
         allProductVariation,
         onlyWishlistFeatures,
         displayInline,
+        displayOnProductPage,
         isGlobalChange,
         disableOpacity,
         onClickFunction
@@ -38,14 +40,22 @@ const AllFeaturesDisplay: FC<AllFeaturesDisplayProps> = props => {
     // If we dont pass local variantcodes, we still operate on global like local
     const localCurrentVariationCode = currentVariationCode ? currentVariationCode : defaultVariantCode
     return (
-        <div className={`${styles.featureRootContainer} ${displayInline ? styles.inline : ''} ${showRandom && displayInline && !disableOpacity ? styles.halfvisible : ''}`}>
+        <div className={`
+            ${styles.featureRootContainer} 
+            ${displayInline ? styles.inline : ''}
+            ${displayOnProductPage ? styles.productInline : ''}
+            ${showRandom && displayInline && !disableOpacity ? styles.halfvisible : ''}
+            `}>
             {Object.entries(features).map(([featureKey, feature]) => {
                 if (onlyWishlistFeatures) {
                     if (!feature.wishlist) {
                         return null;
                     }
                 }
-                return <div key={featureKey} className={styles.featureContainer}>
+                return <div key={featureKey}
+                    className={`${styles.featureContainer} 
+                ${feature.featureDisplay !== 'color' ? styles.fullWidth : ''}
+                `}>
                     <SingleFeature
                         title={feature.featureTitle}
                         atributes={feature.atributes}

@@ -1,13 +1,13 @@
 .featureRootContainer {
-    display           : block;
+    display              : block;
     // float             : right;
     // margin            : 20px;
     // width             : 400px;
-    opacity           : 1;
-    -webkit-transition: opacity 0.2s;
-    -moz-transition   : opacity 0.2s;
-    -o-transition     : opacity 0.2s;
-    transition        : opacity 0.2s;
+    opacity              : 1;
+    -webkit-transition   : opacity 0.2s;
+    -moz-transition      : opacity 0.2s;
+    -o-transition        : opacity 0.2s;
+    transition           : opacity 0.2s;
 
     &.inline {
         float          : none;
@@ -20,6 +20,20 @@
 
         .featureContainer {
             margin: 0;
+        }
+    }
+
+    &.productInline {
+        display        : flex;
+        flex-wrap      : wrap;
+        justify-content: space-between;
+
+        .featureContainer {
+            min-height: 3em;
+
+            &.fullWidth {
+                width: 100%;
+            }
         }
     }
 

@@ -11,6 +11,11 @@ interface ImageSliderProps {
     };
 }
 
+interface imageArray {
+    url: string,
+    bgColor: string
+}
+
 const ImageSlider: FC<ImageSliderProps> = (props) => {
     const { variations } = props;
     const { images_url } = useSelector((state: RootState) => ({
@@ -18,20 +23,31 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
     }), shallowEqual);
 
     const isMobile = false;
+    const images: Array<imageArray> = [];
+    // const imagesBackGround = [];
+    Object.entries(variations).forEach(([_key, variant]) => {
+        const variantImageWall = variant.variationImage.wall;
+        const variantImagePoster = variant.variationImage.poster;
+        const bgColor = variant.color;
+
+        images.find(img => img.url === variantImageWall) ? null : images.push({ url: variantImageWall, bgColor: bgColor });
+        images.find(img => img.url === variantImagePoster) ? null : images.push({ url: variantImagePoster, bgColor: bgColor });
+    });
 
     return <div className={styles.sliderContainer}>
-        {variations && Object.entries(variations).map(([key, variant], index) => {
+        {images.map((imageData, index) => {
             // console.log(index);
-            const imageType = index % 2 !== 0 ? variant.variationImage.poster : variant.variationImage.wall;
+            // const imageType = index % 2 !== 0 ? variant.variationImage.poster : variant.variationImage.wall;
             const addStartStyle = isMobile ? true : index % 2 == 0 ? true : false;
             return (
-                <div key={key} className={`${styles.slide} ${addStartStyle ? styles.slideStart : ''}`}>
-                    <img
-                        width="300px"
-                        height="400px"
-                        alt="aaa"
-                        src={images_url.url + '/' + imageType + images_url.medium}
-                    />
+                <div key={index} className={`${styles.slide} ${addStartStyle ? styles.slideStart : ''}`}
+                    style={{ backgroundColor: imageData.bgColor }}
+                >
+                    <div className={styles.imageContainer}>
+                        <div className={styles.productImage}>
+                            <img src={images_url.url + '/' + imageData.url + images_url.medium} />
+                        </div>
+                    </div>
                 </div>
             )
         }

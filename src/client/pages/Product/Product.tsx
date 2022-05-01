@@ -55,7 +55,6 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
         const axiosAbortController = new AbortController();
         !ssr && dispatch(getPage(api, pageType, language, url, prepareSearchCode(location.search), axiosAbortController));
         scrollToTop(window);
-        // console.log('location changed');
         return () => {
             axiosAbortController.abort();
             dispatch(pageActions.clearPageData());
@@ -99,7 +98,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
     ];
     return (
         <main>
-            {console.log('render product page')}
+            {/* {console.log('render product page')} */}
             {<SeoMetaTags language={language} pageType={pageType} url={url} script={script} />}
             <div className={styles.topSection}>
                 <div className={styles.imageSlider}>
@@ -110,18 +109,19 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                 <div className={styles.productMainData}>
                     {title ? <h1>{title}</h1> : <h1><Placeholder /></h1>}
 
-                    {product && currentVariationId && product.variations &&
+                    {currentVariationId && product && variations && <p>
+                        {variations[currentVariationId].variationPrice[currency]} {allCurrencies[currency].sign}
+                    </p>}
+
+                    {product && currentVariationId && variations &&
                         <AllFeaturesDisplay
-                            currentVariationCode={product.variations[currentVariationId].variationCode}
-                            allProductVariation={product.variations}
+                            currentVariationCode={variations[currentVariationId].variationCode}
+                            allProductVariation={variations}
+                            displayOnProductPage={true}
                         />
                     }
 
-                    {currentVariationId && product && product.variations && <p>
-                        {product.variations[currentVariationId].variationPrice[currency]} {allCurrencies[currency].sign}
-                    </p>}
-
-
+                    
                     <BlackButton
                         label={addToCart}
                         clickHandler={addToCardHandler}

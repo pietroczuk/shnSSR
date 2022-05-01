@@ -11,6 +11,16 @@
         &.slideStart {
             scroll-snap-align: start;
         }
+        .imageContainer {
+            display: flex;
+            justify-content: center;
+
+            .productImage {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
     }
 }
 
