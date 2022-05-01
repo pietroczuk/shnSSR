@@ -2,13 +2,16 @@
     display: flex;
 
     .imageSlider {
-        width: 65%;
+        width   : 65%;
+        position: relative;
     }
+
     .productMainData {
-        width: 35%;
+        width  : 35%;
         padding: 2em;
     }
 }
+
 .dividerSection {
     background-color: red;
 }

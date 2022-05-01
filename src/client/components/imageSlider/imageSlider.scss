@@ -11,13 +11,14 @@
         &.slideStart {
             scroll-snap-align: start;
         }
+
         .imageContainer {
-            display: flex;
+            display        : flex;
             justify-content: center;
 
             .productImage {
-                display: flex;
-                flex-direction: column;
+                display        : flex;
+                flex-direction : column;
                 justify-content: center;
             }
         }

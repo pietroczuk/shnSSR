@@ -1,4 +1,10 @@
-import { FC } from "react";
+import {
+    FC, 
+    // useEffect, 
+    useRef,
+    // useState 
+    UIEvent
+} from "react";
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './imageSlider.scss';
 import { shallowEqual, useSelector } from "react-redux";
@@ -22,19 +28,45 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
         images_url: state.SystemConfig.images
     }), shallowEqual);
 
+    const imageScrollRef = useRef<HTMLDivElement>(null);
+    // const [isScrolling, setIsScrolling] = useState(false);
+
     const isMobile = false;
     const images: Array<imageArray> = [];
-    // const imagesBackGround = [];
+
     Object.entries(variations).forEach(([_key, variant]) => {
         const variantImageWall = variant.variationImage.wall;
         const variantImagePoster = variant.variationImage.poster;
         const bgColor = variant.color;
-
         images.find(img => img.url === variantImageWall) ? null : images.push({ url: variantImageWall, bgColor: bgColor });
         images.find(img => img.url === variantImagePoster) ? null : images.push({ url: variantImagePoster, bgColor: bgColor });
     });
 
-    return <div className={styles.sliderContainer}>
+    const handleScroll = (event: UIEvent <HTMLDivElement>) => {
+        const target = event.currentTarget;
+        if (target.scrollLeft % target.offsetWidth === 0) {
+            console.log('Scrolling is done!');
+        }
+    }
+    const gotoNextSlide = () => {
+        console.log('next')
+        imageScrollRef.current.scrollBy({
+            left: 1,
+            behavior: 'smooth'
+        });
+    }
+    const gotoPrevSlide = () => {
+        console.log('prev')
+        imageScrollRef.current.scrollBy({
+            left: -1,
+            behavior: 'smooth'
+        });
+    }
+
+    return <div className={styles.sliderContainer} ref={imageScrollRef} onScroll={handleScroll}>
+        {console.log('redner')}
+        <button style={{position: 'absolute', left: '50px'}} onClick={gotoNextSlide}>next</button>
+        <button style={{position: 'absolute'}} onClick={gotoPrevSlide}>prev</button>
         {images.map((imageData, index) => {
             // console.log(index);
             // const imageType = index % 2 !== 0 ? variant.variationImage.poster : variant.variationImage.wall;
