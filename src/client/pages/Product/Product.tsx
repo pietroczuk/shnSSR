@@ -20,6 +20,7 @@ import BlackButton from '../../components/helpers/ui/blackButton/BlackButton';
 import ImageSlider from '../../components/imageSlider/ImageSlider';
 import { addToStoreCart } from '../../redux/actionCreators/cart/cart.ac';
 import AddToWishlistSticker from '../../components/helpers/ui/addToWishlistSticker/AddToWishlistSticker';
+import { setGlobalDefaultVariantcode } from '../../redux/actionCreators/publicConfig/publicConfig.ac';
 
 interface ProductProps {
     url: string;
@@ -30,7 +31,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
     const pageType = pageTypes.productPage;
     const { product, api,
         // images_url, 
-        allCurrencies, currency, language, ssr, title, addToCart, cartProducts, productId, lang, localstorageCartKey } = useSelector(
+        allCurrencies, currency, language, ssr, title, addToCart, cartProducts, productId, lang, localstorageCartKey, defaultVariantCode } = useSelector(
             (state: RootState) => ({
                 product: state.Page.data.productPage,
                 api: state.SystemConfig.api,
@@ -45,12 +46,18 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                 productId: state.Page.info.id,
                 lang: state.User.language,
                 localstorageCartKey: state.SystemConfig.localstorageKeys.cart,
+                defaultVariantCode: state.PublicConfig.defaultVariantCode,
             }), shallowEqual
         )
     const dispatch = useDispatch();
 
-    const variantId = product ? product.currentVariationId : null;
+    const currentVariationId = product ? product.currentVariationId : null;
     const variations = product ? product.variations : null;
+    const variationHashmap = product ? product.hashmap : null;
+    const currentVariationCode = variations && variations[currentVariationId] ? variations[currentVariationId].variationCode : null;
+
+    // console.log('v', variations[currentVariationId]);
+
     // const likes = product ? product.likes : null;
     // from props
     const { url,
@@ -61,6 +68,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
     useEffect(() => {
         const axiosAbortController = new AbortController();
         !ssr && dispatch(getPage(api, pageType, language, url, prepareSearchCode(location.search), axiosAbortController));
+
         scrollToTop(window);
         return () => {
             axiosAbortController.abort();
@@ -71,11 +79,30 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
 
     useEffect(() => {
         ssr && dispatch(publicConfigActions.disableSrr());
-    }, [])
+    }, []);
+
+
+    useEffect(() => {
+        productId && currentVariationCode && Object.entries(currentVariationCode).forEach(([key, varianCode]) => {
+            const codeObj = {
+                code: varianCode.code,
+                atribId: varianCode.atribId
+            }
+            if(defaultVariantCode[key].code !== codeObj.code && defaultVariantCode[key].atribId !== codeObj.atribId) {
+                dispatch(setGlobalDefaultVariantcode(key, codeObj));
+            }
+            // console.log('dispaczuje');
+        })
+        
+    }, [productId])
+
+    /**
+     * on init change default variant code
+     */
 
     const addToCardHandler = () => {
-        const alreadyInCart = cartProducts[variantId] ? true : false;
-        dispatch(addToStoreCart(api, lang, productId, variantId, localstorageCartKey, alreadyInCart));
+        const alreadyInCart = cartProducts[currentVariationId] ? true : false;
+        dispatch(addToStoreCart(api, lang, productId, currentVariationId, localstorageCartKey, alreadyInCart));
         console.log('[Product page]', 'add to cart product id:', productId);
     }
 
@@ -114,7 +141,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             <div className={styles.topSection}>
                 <div className={styles.mainImageSection}>
                     <AddToWishlistSticker
-                        variantId={variantId}
+                        variantId={currentVariationId}
                         productId={productId}
                         forceVisual={false}
                         cssClass={styles.wishlistStickerContainer}
@@ -127,18 +154,19 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                 <div className={styles.productMainData}>
                     {title ? <h1>{title}</h1> : <h1><Placeholder /></h1>}
 
-                    {variantId && product && variations && <p>
-                        {variations[variantId].variationPrice[currency]} {allCurrencies[currency].sign}
+                    {currentVariationId && product && variations && <p>
+                        {variations[currentVariationId].variationPrice[currency]} {allCurrencies[currency].sign}
                     </p>}
 
-                    {product && variantId && variations &&
+                    {product && currentVariationId && variations &&
                         <AllFeaturesDisplay
-                            currentVariationCode={variations[variantId].variationCode}
-                            allProductVariation={variations}
+                            currentVariationCode={currentVariationCode}
+                            variationHashmap={variationHashmap}
+                            // allProductVariation={variations}
                             displayOnProductPage={true}
+                            isGlobalChange={true}
                         />
                     }
-
 
                     <BlackButton
                         label={addToCart}
@@ -155,11 +183,11 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             </div>
             {/* <FixedBar /> */}
 
-            {variantId && product && product.variations && product.variations[variantId].name}
+            {currentVariationId && product && variations && variations[currentVariationId].name}
             <br />
 
             <br />
-            {variantId}
+            {currentVariationId}
             <br />
 
 

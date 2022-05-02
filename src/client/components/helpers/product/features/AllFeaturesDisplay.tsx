@@ -7,10 +7,12 @@ import { RootState } from '../../../../client';
 
 import SingleFeature from './atributes/singleFeature/SingleFeature';
 import { DefaultVariantCode } from '../../../../redux/Models/PublicConfig/DefaultVariantCode/DefaultVariantCode.model';
+import { VariationHashmap } from '../../../../redux/Models/Product/VariationHashmap/VariationHashmap.model';
 
 interface AllFeaturesDisplayProps {
     currentVariationCode?: DefaultVariantCode;
-    allProductVariation?: any;
+    // allProductVariation?: any;
+    variationHashmap?: VariationHashmap;
     onlyWishlistFeatures?: boolean;
     displayInline?: boolean;
     displayOnProductPage?: boolean;
@@ -22,7 +24,8 @@ interface AllFeaturesDisplayProps {
 const AllFeaturesDisplay: FC<AllFeaturesDisplayProps> = props => {
     const {
         currentVariationCode,
-        allProductVariation,
+        // allProductVariation,
+        variationHashmap,
         onlyWishlistFeatures,
         displayInline,
         displayOnProductPage,
@@ -39,6 +42,7 @@ const AllFeaturesDisplay: FC<AllFeaturesDisplayProps> = props => {
 
     // If we dont pass local variantcodes, we still operate on global like local
     const localCurrentVariationCode = currentVariationCode ? currentVariationCode : defaultVariantCode
+    // console.log('localCurrentVariationCode', localCurrentVariationCode, currentVariationCode);
     return (
         <div className={`
             ${styles.featureRootContainer} 
@@ -52,6 +56,8 @@ const AllFeaturesDisplay: FC<AllFeaturesDisplayProps> = props => {
                         return null;
                     }
                 }
+                // const isGlobalChangePermission = isGlobalChange ? feature.wishlist ? true : false : false;
+
                 return <div key={featureKey}
                     className={`${styles.featureContainer} 
                 ${feature.featureDisplay !== 'color' ? styles.fullWidth : ''}
@@ -62,9 +68,12 @@ const AllFeaturesDisplay: FC<AllFeaturesDisplayProps> = props => {
                         displayType={feature.featureDisplay}
                         featureKey={featureKey}
                         currentVariationCode={localCurrentVariationCode}
-                        allProductVariation={allProductVariation}
+                        variationHashmap={variationHashmap}
+                        // allProductVariation={allProductVariation}
+                        // isGlobalChange={isGlobalChangePermission}
                         isGlobalChange={isGlobalChange}
                         onClickFunction={onClickFunction}
+                        
                     />
                 </div>
             }

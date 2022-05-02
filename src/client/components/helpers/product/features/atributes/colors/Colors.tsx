@@ -28,9 +28,10 @@ const Colors: FC<ColorsProps> = props => {
     const { attrib, active, link, isGlobalChange, featureKey, onClickFunction } = props;
     const { glowColor, attribTitle, code, id } = attrib;
 
-    const { variations, randomVariant } = useSelector((state: RootState) => ({
+    const { variations, randomVariant, showRandom } = useSelector((state: RootState) => ({
         variations: state.Page.data ? state.Page.data.productPage.variations : null,
-        randomVariant: state.SystemConfig.cookiesKeys.displayKeys.randomVariant
+        randomVariant: state.SystemConfig.cookiesKeys.displayKeys.randomVariant,
+        showRandom: state.Display.showRandom
     }), shallowEqual);
     const dispatch = useDispatch();
 
@@ -44,9 +45,14 @@ const Colors: FC<ColorsProps> = props => {
             return;
         }
 
-        dispatch(setGlobalDefaultVariantcode(featureKey, codeObj));
-        dispatch(setProductRandomColors(randomVariant, false));
-        if (!isGlobalChange && variations) {
+        if(isGlobalChange) {
+            dispatch(setGlobalDefaultVariantcode(featureKey, codeObj));
+        }
+        if(showRandom) {
+            dispatch(setProductRandomColors(randomVariant, false)); 
+        }
+        if (variations) {
+            // console.log(link);
             dispatch(setProductCurrVarId(link, variations));
         }
     }

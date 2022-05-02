@@ -6,9 +6,10 @@ import Colors from '../colors/Colors';
 import Text from '../text/Text';
 import SelectedBg from '../text/selectedBg/SelectedBg';
 
-import { getObjectLength } from '../../../../../../utils/utilsFrondend';
+import { getObjectLength, intersectArray } from '../../../../../../utils/utilsFrondend';
 import { Atributes } from '../../../../../../redux/Models/PublicConfig/Features/SingleFeature/Atributes/Atributes.model';
 import { DefaultVariantCode } from '../../../../../../redux/Models/PublicConfig/DefaultVariantCode/DefaultVariantCode.model';
+import { VariationHashmap } from '../../../../../../redux/Models/Product/VariationHashmap/VariationHashmap.model';
 
 interface SingleFeatureProps {
     title: string,
@@ -16,7 +17,8 @@ interface SingleFeatureProps {
     displayType: string,
     currentVariationCode: DefaultVariantCode,
     featureKey: string,
-    allProductVariation: any,
+    // allProductVariation: any,
+    variationHashmap: VariationHashmap,
     isGlobalChange: boolean,
     onClickFunction: Function
 }
@@ -28,7 +30,8 @@ const SingleFeature: FC<SingleFeatureProps> = props => {
         displayType,
         currentVariationCode,
         featureKey,
-        allProductVariation,
+        // allProductVariation,
+        variationHashmap,
         isGlobalChange,
         onClickFunction
     } = props;
@@ -45,33 +48,45 @@ const SingleFeature: FC<SingleFeatureProps> = props => {
         return currentVariationCode && Object.entries(atributes).map(([att_key, att_val], index) => {
             const active = currentVariationCode[featureKey] && currentVariationCode[featureKey].atribId == att_key ? true : false;
             // const att_val = atributes[att_key];
-
-            let matchCode = '';
-            const new_variant = { ...currentVariationCode };
+          
+            const newVariant = { ...currentVariationCode };
 
             if (!active) {
-                new_variant[featureKey] = { ...new_variant[featureKey], code: att_val.code, atribId: att_val.id }
+                newVariant[featureKey] = { ...newVariant[featureKey], code: att_val.code, atribId: att_val.id }
             } else {
                 bgPossition = index;
                 setActiveCodeValueHandler(att_val.attribTitle);
             }
+            let link = '';
+            if(variationHashmap) {
+                const varationFilter = [];
 
-            if (allProductVariation) {
-                for (const variant in allProductVariation) {
-                    let match = true;
-                    for (const searchVariant in new_variant) {
-                        const variant_code = allProductVariation[variant].variationCode;
-                        if (variant_code[searchVariant].atribId !== new_variant[searchVariant].atribId) {
-                            match = false;
-                            break;
-                        }
-                    }
-                    if (match) {
-                        matchCode = variant;
-                        break;
-                    }
-                }
+                Object.entries(newVariant).forEach(([key, { atribId }]) => {
+                    varationFilter.push(
+                        variationHashmap[key][atribId]
+                    )
+                })
+                link = intersectArray(varationFilter);
+                link = link ? link[0] : '';
+                // console.log(link);
+                // console.log('currentVariationCode', currentVariationCode, 'variationHashmap', variationHashmap);
             }
+            // if (allProductVariation) {
+            //     for (const variant in allProductVariation) {
+            //         let match = true;
+            //         for (const searchVariant in newVariant) {
+            //             const variant_code = allProductVariation[variant].variationCode;
+            //             if (variant_code[searchVariant].atribId !== newVariant[searchVariant].atribId) {
+            //                 match = false;
+            //                 break;
+            //             }
+            //         }
+            //         if (match) {
+            //             matchCode = variant;
+            //             break;
+            //         }
+            //     }
+            // }
 
             switch (displayType) {
                 case 'color':
@@ -79,7 +94,7 @@ const SingleFeature: FC<SingleFeatureProps> = props => {
                         key={att_key}
                         attrib={att_val}
                         active={active}
-                        link={matchCode}
+                        link={link}
                         isGlobalChange={isGlobalChange}
                         featureKey={featureKey}
                         onClickFunction={onClickFunction}
@@ -90,7 +105,9 @@ const SingleFeature: FC<SingleFeatureProps> = props => {
                         attrib={att_val}
                         active={active}
                         width={width}
-                        link={matchCode}
+                        link={link}
+                        isGlobalChange={isGlobalChange}
+                        featureKey={featureKey}
                         onClickFunction={onClickFunction}
                     />
                 default: return null;

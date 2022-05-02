@@ -1,4 +1,5 @@
 import { Sale } from "./Sale/Sale.model";
+import { VariationHashmap } from "./VariationHashmap/VariationHashmap.model";
 import { Variations } from "./Variations/Variations.model";
 
 export interface Product {
@@ -17,10 +18,6 @@ export interface Product {
     saveMoney :{
         [key: string]: number;
     }
-    hashmap: {
-        [key: string]: {
-            [key: string]: string[];
-        }
-    }
-    sale: Sale;
+    hashmap: VariationHashmap;
+    sale: Sale; 
 }

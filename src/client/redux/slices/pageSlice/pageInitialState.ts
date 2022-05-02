@@ -22,7 +22,15 @@ export const pageInitialState: Page = {
             currentVariationId: '',
             likes: 0,
             sku: '',
-            variations: {}
+            variations: {},
+            hashmap: {},
+            sale: {
+                enable: false,
+                percent: 0,
+                startSale: 0,
+                stopSale: 0
+            }
+
         },
         staticPage: {
             body: ''

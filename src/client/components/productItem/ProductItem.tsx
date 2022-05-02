@@ -209,7 +209,7 @@ const ProductItem: FC<ProductItemProps> = props => {
         {!wishlistPage && !showPlaceholder && <ShowAvaibleFeatures
             active={onHover}
             currentVariationCode={localVariantCode}
-            onClickFunction={changeLocalVariantCode}
+            onClickFunction={changeLocalVariantCode} 
 
         />}
         <DivNavLink to={productUrl}>

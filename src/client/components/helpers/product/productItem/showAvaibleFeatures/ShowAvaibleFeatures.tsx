@@ -16,7 +16,7 @@ const ShowAvaibleFeatures: FC<ShowAvaibleFeaturesProps> = props => {
     return <HoverPopupContainer active={active}>
         <AllFeaturesDisplay
             currentVariationCode={currentVariationCode}
-            allProductVariation={null}
+            // allProductVariation={null}
             onlyWishlistFeatures={true}
             displayInline={true}
             isGlobalChange={true}
