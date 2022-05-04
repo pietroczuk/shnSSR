@@ -11,7 +11,6 @@ import { RootState } from '../../../../../../client';
 import { SingleAtribute } from '../../../../../../redux/Models/PublicConfig/Features/SingleFeature/Atributes/SingleAtribute/SingleAtribute.model';
 import { setGlobalDefaultVariantcode } from '../../../../../../redux/actionCreators/publicConfig/publicConfig.ac';
 import { setProductRandomColors } from '../../../../../../redux/actionCreators/display/display.ac';
-import { setProductCurrVarId } from '../../../../../../redux/actionCreators/page/page.ac';
 import { useLocation } from 'react-router-dom';
 
 interface ColorsProps {
@@ -28,8 +27,7 @@ const Colors: FC<ColorsProps> = props => {
     const { attrib, active, link, isGlobalChange, featureKey, onClickFunction } = props;
     const { glowColor, attribTitle, code, id } = attrib;
 
-    const { variations, randomVariant, showRandom } = useSelector((state: RootState) => ({
-        variations: state.Page.data ? state.Page.data.productPage.variations : null,
+    const { randomVariant, showRandom } = useSelector((state: RootState) => ({
         randomVariant: state.SystemConfig.cookiesKeys.displayKeys.randomVariant,
         showRandom: state.Display.showRandom
     }), shallowEqual);
@@ -45,15 +43,11 @@ const Colors: FC<ColorsProps> = props => {
             return;
         }
 
-        if(isGlobalChange) {
+        if (isGlobalChange) {
             dispatch(setGlobalDefaultVariantcode(featureKey, codeObj));
         }
-        if(showRandom) {
-            dispatch(setProductRandomColors(randomVariant, false)); 
-        }
-        if (variations) {
-            // console.log(link);
-            dispatch(setProductCurrVarId(link, variations));
+        if (showRandom) {
+            dispatch(setProductRandomColors(randomVariant, false));
         }
     }
 

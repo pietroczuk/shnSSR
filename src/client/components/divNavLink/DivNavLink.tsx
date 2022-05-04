@@ -26,7 +26,7 @@ const DivNavLink: FC<DivNavLinkProps> = props => {
             e.preventDefault();
             console.log('no redirect')
         }
-        console.log(realLocation, to);
+        // console.log(realLocation, to, key);
         onClick && onClick(e);
     }
 

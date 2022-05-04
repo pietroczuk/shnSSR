@@ -11,7 +11,7 @@ import AllFeaturesDisplay from '../../components/helpers/product/features/AllFea
 import { RootState } from '../../client';
 import { RouteComponentProps } from 'react-router-dom';
 import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
-import { getPage } from '../../redux/actionCreators/page/page.ac';
+import { getPage, setProductCurrVarId } from '../../redux/actionCreators/page/page.ac';
 // SEO
 import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
 import { helmetJsonLdProp } from "react-schemaorg";
@@ -31,24 +31,26 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
     const pageType = pageTypes.productPage;
     const { product, api,
         // images_url, 
-        allCurrencies, currency, language, ssr, title, addToCart, cartProducts, productId, lang, localstorageCartKey, defaultVariantCode } = useSelector(
-            (state: RootState) => ({
-                product: state.Page.data.productPage,
-                api: state.SystemConfig.api,
-                // images_url: state.SystemConfig.images,
-                allCurrencies: state.SystemConfig.allCurrencies,
-                currency: state.User.currency,
-                language: state.User.language,
-                ssr: state.PublicConfig.ssr,
-                title: state.Page.info.title,
-                addToCart: state.PublicConfig.translations.addToCart,
-                cartProducts: state.Cart.products,
-                productId: state.Page.info.id,
-                lang: state.User.language,
-                localstorageCartKey: state.SystemConfig.localstorageKeys.cart,
-                defaultVariantCode: state.PublicConfig.defaultVariantCode,
-            }), shallowEqual
-        )
+        allCurrencies, currency, language, ssr, title, addToCart, cartProducts, productId, lang, localstorageCartKey,
+        defaultVariantCode
+    } = useSelector(
+        (state: RootState) => ({
+            product: state.Page.data.productPage,
+            api: state.SystemConfig.api,
+            // images_url: state.SystemConfig.images,
+            allCurrencies: state.SystemConfig.allCurrencies,
+            currency: state.User.currency,
+            language: state.User.language,
+            ssr: state.PublicConfig.ssr,
+            title: state.Page.info.title,
+            addToCart: state.PublicConfig.translations.addToCart,
+            cartProducts: state.Cart.products,
+            productId: state.Page.info.id,
+            lang: state.User.language,
+            localstorageCartKey: state.SystemConfig.localstorageKeys.cart,
+            defaultVariantCode: state.PublicConfig.defaultVariantCode,
+        }), shallowEqual
+    )
     const dispatch = useDispatch();
 
     const currentVariationId = product ? product.currentVariationId : null;
@@ -64,10 +66,13 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
         // lang 
     } = props.match.params;
     const { location } = props;
+    const { search } = location;
+
+
 
     useEffect(() => {
         const axiosAbortController = new AbortController();
-        !ssr && dispatch(getPage(api, pageType, language, url, prepareSearchCode(location.search), axiosAbortController));
+        !ssr && dispatch(getPage(api, pageType, language, url, prepareSearchCode(search), axiosAbortController));
 
         scrollToTop(window);
         return () => {
@@ -81,29 +86,36 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
         ssr && dispatch(publicConfigActions.disableSrr());
     }, []);
 
-
     useEffect(() => {
-        productId && currentVariationCode && Object.entries(currentVariationCode).forEach(([key, varianCode]) => {
+        /**
+         * on init change default variant code
+         */
+        const variantId = prepareSearchCode(search);
+        if (variantId !== currentVariationId && variantId && currentVariationId && variations) {
+            dispatch(setProductCurrVarId(variantId, variations));
+        }
+
+        /**
+        * set global variant code based on current variant code
+        */
+        const currentGlobalVariationCode = variations[variantId] ? variations[variantId].variationCode : null;
+        currentGlobalVariationCode && Object.entries(currentGlobalVariationCode).forEach(([key, varianCode]) => {
             const codeObj = {
                 code: varianCode.code,
                 atribId: varianCode.atribId
             }
-            if(defaultVariantCode[key].code !== codeObj.code && defaultVariantCode[key].atribId !== codeObj.atribId) {
+            if (defaultVariantCode[key].code !== codeObj.code && defaultVariantCode[key].atribId !== codeObj.atribId) {
                 dispatch(setGlobalDefaultVariantcode(key, codeObj));
+                // console.log('change default global variant code');
             }
-            // console.log('dispaczuje');
-        })
-        
-    }, [productId])
+        });
+    }, [search, productId])
 
-    /**
-     * on init change default variant code
-     */
 
     const addToCardHandler = () => {
         const alreadyInCart = cartProducts[currentVariationId] ? true : false;
         dispatch(addToStoreCart(api, lang, productId, currentVariationId, localstorageCartKey, alreadyInCart));
-        console.log('[Product page]', 'add to cart product id:', productId);
+        // console.log('[Product page]', 'add to cart product id:', productId);
     }
 
     const script = [
@@ -164,7 +176,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                             variationHashmap={variationHashmap}
                             // allProductVariation={variations}
                             displayOnProductPage={true}
-                            isGlobalChange={true}
+                        // isGlobalChange={true}
                         />
                     }
 
