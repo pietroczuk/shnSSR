@@ -6,4 +6,5 @@ export interface VariationImage {
     view360?: string;
     allegro_clean?: string;
     tesa?: string;
+    sliderPosition?: number;
 }

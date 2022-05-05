@@ -4,7 +4,9 @@ import { StaticRouter } from 'react-router-dom';
 
 import { prepareRoutesConfig } from '../../client/utils/config';
 
-import { Provider } from 'react-redux';
+import { Provider, 
+  // useDispatch 
+} from 'react-redux';
 // <Routes/> teraz są jako array []
 // aby mozna bylo pobierac dane
 // musimy inaczej zrenderowac
@@ -24,6 +26,7 @@ import { ChunkExtractor } from '@loadable/server';
 import path from 'path';
 import { EnhancedStore } from '@reduxjs/toolkit';
 import { NewRoutesConfig } from '../types/newRoutesConfig.types';
+// import { publicConfigActions } from '../../client/redux/slices/publicConfigSlice/publicConfigSlice';
 
 interface renderHtml {
   (
@@ -81,6 +84,19 @@ export const rednderHtml: renderHtml = (req, server_store, context, new_routes_c
 
 
   const server_helmet = Helmet.renderStatic();
+  
+  // if (serverStoreFrontend &&
+  //   serverStoreFrontend.PublicConfig &&
+  //   serverStoreFrontend.PublicConfig.ssr) {
+  //   serverStoreFrontend.PublicConfig.ssr = false;
+  // }
+  // const dispatch = useDispatch();
+  // dispatch(publicConfigActions.disableSrr());
+
+  // server_store.dispatch(publicConfigActions.disableSrr());
+
+  // const serverStoreFrontend = server_store.getState();
+
   const html = `
   <!DOCTYPE html>
         <html lang="${language}">

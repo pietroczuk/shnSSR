@@ -10,7 +10,9 @@ const publicConfigSlice = createSlice({
         setPublicConfig(_state: PublicConfig, action) {
             const data =  action.payload;
             data.ssr = true;
+            // console.log('set public config');
             return data;
+            // return _state;
         },
         disableSrr(state: PublicConfig) {
             state.ssr = state.ssr ? false : state.ssr;

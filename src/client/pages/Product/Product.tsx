@@ -31,7 +31,9 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
     const pageType = pageTypes.productPage;
     const { product, api,
         // images_url, 
-        allCurrencies, currency, language, ssr, title, addToCart, cartProducts, productId, lang, localstorageCartKey,
+        allCurrencies, currency, language, 
+        ssr, 
+        title, addToCart, cartProducts, productId, lang, localstorageCartKey,
         defaultVariantCode
     } = useSelector(
         (state: RootState) => ({
@@ -51,6 +53,9 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             defaultVariantCode: state.PublicConfig.defaultVariantCode,
         }), shallowEqual
     )
+    // const ssr = useSelector((state: RootState) => {
+    //     return state.PublicConfig.ssr
+    // });
     const dispatch = useDispatch();
 
     const currentVariationId = product ? product.currentVariationId : null;
@@ -83,7 +88,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
     }, [location.pathname])
 
     useEffect(() => {
-        ssr && dispatch(publicConfigActions.disableSrr());
+        ssr && dispatch(publicConfigActions.disableSrr()) && console.log('disable ssr');
     }, []);
 
     useEffect(() => {
@@ -106,7 +111,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             }
             if (defaultVariantCode[key].code !== codeObj.code && defaultVariantCode[key].atribId !== codeObj.atribId) {
                 dispatch(setGlobalDefaultVariantcode(key, codeObj));
-                // console.log('change default global variant code');
+                console.log('change default global variant code');
             }
         });
     }, [search, productId])
@@ -148,7 +153,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
     ];
     return (
         <main>
-            {/* {console.log('render product page')} */}
+            {console.log('render product page')}
             {<SeoMetaTags language={language} pageType={pageType} url={url} script={script} />}
             <div className={styles.topSection}>
                 <div className={styles.mainImageSection}>

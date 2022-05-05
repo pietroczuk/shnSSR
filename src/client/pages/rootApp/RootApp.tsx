@@ -3,7 +3,9 @@ import {
     renderRoutes,
     RouteConfig
 } from 'react-router-config';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual, 
+    // useDispatch 
+} from 'react-redux';
 
 import withStyles from 'isomorphic-style-loader/withStyles';
 import styles from './rootapp.scss';
@@ -13,6 +15,7 @@ import { setCookie, getCookie } from '../../utils/utilsFrondend';
 import loadable from '@loadable/component';
 import { RootState } from '../../client';
 import Timer from '../../components/timer/Timer';
+// import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
 
 const Header = loadable(() => import(/* webpackPrefetch: true */ '../../components/header/Header'),
     {
@@ -27,15 +30,21 @@ interface RootAppProps {
 
 const RootApp: FC<RootAppProps> = (props) => {
     const { route } = props;
-    const { language, cookieLanguageKey } = useSelector((state: RootState) => ({
+    const { language, cookieLanguageKey, 
+        // ssr 
+    } = useSelector((state: RootState) => ({
         language: state.User.language,
         cookieLanguageKey: state.SystemConfig.cookiesKeys.userLanguage,
+        // ssr: state.PublicConfig.ssr
     }), shallowEqual);
 
+    // const dispatch = useDispatch();
+    
     useEffect(() => {
         const cookieUserLanguage = getCookie(cookieLanguageKey);
         const coockieLanguageNeedChange = language && (language !== cookieUserLanguage);
         coockieLanguageNeedChange && setCookie(cookieLanguageKey, language);
+        // ssr && dispatch(publicConfigActions.disableSrr());
     }, []);
 
     return (
