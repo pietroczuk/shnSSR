@@ -65,17 +65,12 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
 
     const isDarkVariantBgColor = currentVariationId ? isColorDark(variations[currentVariationId].color) : true;
 
-
-    console.log(isDarkVariantBgColor, variations[currentVariationId].color);
-
     // from props
     const { url,
         // lang 
     } = props.match.params;
     const { location } = props;
     const { search } = location;
-
-
 
     useEffect(() => {
         const axiosAbortController = new AbortController();
