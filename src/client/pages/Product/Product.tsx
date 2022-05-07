@@ -4,7 +4,7 @@ import styles from './product.scss';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
-import { pageTypes, prepareSearchCode, scrollToTop } from '../../utils/utilsFrondend';
+import { isColorDark, pageTypes, prepareSearchCode, scrollToTop } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
 import AllFeaturesDisplay from '../../components/helpers/product/features/AllFeaturesDisplay';
@@ -31,8 +31,8 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
     const pageType = pageTypes.productPage;
     const { product, api,
         // images_url, 
-        allCurrencies, currency, language, 
-        ssr, 
+        allCurrencies, currency, language,
+        ssr,
         title, addToCart, cartProducts, productId, lang, localstorageCartKey,
         defaultVariantCode
     } = useSelector(
@@ -63,9 +63,11 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
     const variationHashmap = product ? product.hashmap : null;
     const currentVariationCode = variations && variations[currentVariationId] ? variations[currentVariationId].variationCode : null;
 
-    // console.log('v', variations[currentVariationId]);
+    const isDarkVariantBgColor = currentVariationId ? isColorDark(variations[currentVariationId].color) : true;
 
-    // const likes = product ? product.likes : null;
+
+    console.log(isDarkVariantBgColor, variations[currentVariationId].color);
+
     // from props
     const { url,
         // lang 
@@ -162,6 +164,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                         productId={productId}
                         forceVisual={false}
                         cssClass={styles.wishlistStickerContainer}
+                        whiteIcon={isDarkVariantBgColor}
                     />
                     <ImageSlider variations={variations} />
                 </div>
