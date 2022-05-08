@@ -1,7 +1,7 @@
 import { FC } from "react";
 import styles from './sliderNavButton.scss';
 import withStyles from "isomorphic-style-loader/withStyles";
-import ArrowDown from '../../svg/icons/ArrowDown';
+import ArrowDown from '../../../svg/icons/ArrowDown';
 
 interface NavButtonProps {
     onClickHandler: VoidFunction;
@@ -10,7 +10,6 @@ interface NavButtonProps {
 
 const SliderNavButton: FC<NavButtonProps> = props => {
     const { onClickHandler, leftDirection } = props;
-    console.log(leftDirection);
     return <div onClick={onClickHandler} className={`${styles.sliderNavBtn} ${leftDirection ? styles.leftBtn : styles.rightBtn}`}>
             <ArrowDown />
     </div>

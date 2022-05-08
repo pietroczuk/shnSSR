@@ -17,10 +17,11 @@ import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
 import { helmetJsonLdProp } from "react-schemaorg";
 import { Product as HelmetProduct } from "schema-dts";
 import BlackButton from '../../components/helpers/ui/blackButton/BlackButton';
-import ImageSlider from '../../components/imageSlider/ImageSlider';
+import ImageSlider from '../../components/product/imageSlider/ImageSlider';
 import { addToStoreCart } from '../../redux/actionCreators/cart/cart.ac';
 import AddToWishlistSticker from '../../components/helpers/ui/addToWishlistSticker/AddToWishlistSticker';
 import { setGlobalDefaultVariantcode } from '../../redux/actionCreators/publicConfig/publicConfig.ac';
+import View360 from '../../components/product/view360/View360';
 
 interface ProductProps {
     url: string;
@@ -30,7 +31,7 @@ interface ProductProps {
 const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
     const pageType = pageTypes.productPage;
     const { product, api,
-        // images_url, 
+        images_url,
         allCurrencies, currency, language,
         ssr,
         title, addToCart, cartProducts, productId, lang, localstorageCartKey,
@@ -39,7 +40,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
         (state: RootState) => ({
             product: state.Page.data.productPage,
             api: state.SystemConfig.api,
-            // images_url: state.SystemConfig.images,
+            images_url: state.SystemConfig.images,
             allCurrencies: state.SystemConfig.allCurrencies,
             currency: state.User.currency,
             language: state.User.language,
@@ -65,6 +66,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
 
     const isDarkVariantBgColor = currentVariationId ? isColorDark(variations[currentVariationId].color) : true;
 
+    const productIsLoaded = variations && variations[currentVariationId] ? true : false;
     // from props
     const { url,
         // lang 
@@ -93,7 +95,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
          * on init change default variant code
          */
         const variantId = prepareSearchCode(search);
-        if (variantId !== currentVariationId && variantId && currentVariationId && variations) {
+        if (variantId !== currentVariationId && productIsLoaded) {
             dispatch(setProductCurrVarId(variantId, variations));
         }
 
@@ -169,17 +171,15 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                 <div className={styles.productMainData}>
                     {title ? <h1>{title}</h1> : <h1><Placeholder /></h1>}
 
-                    {currentVariationId && product && variations && <p>
+                    {productIsLoaded && <p>
                         {variations[currentVariationId].variationPrice[currency]} {allCurrencies[currency].sign}
                     </p>}
 
-                    {product && currentVariationId && variations &&
+                    {productIsLoaded &&
                         <AllFeaturesDisplay
                             currentVariationCode={currentVariationCode}
                             variationHashmap={variationHashmap}
-                            // allProductVariation={variations}
                             displayOnProductPage={true}
-                        // isGlobalChange={true}
                         />
                     }
 
@@ -193,12 +193,36 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             <div className={styles.dividerSection}>
                 wysylka itd ikonki jakies
             </div>
-            <div>
-                rest product info
+            <div className={styles.detailsSection}>
+                <div className={styles.detailRow}>
+                    <div className={`${styles.dataCointaner} ${styles.detailColumn}`}>
+                        info o papierz etc
+                        {productIsLoaded && variations[currentVariationId].name}
+                    </div>
+                    <div className={`${styles.imageContainer} ${styles.detailColumn}`}>
+                        {productIsLoaded &&
+                            <img src={images_url.url + '/' + variations[currentVariationId].variationImage.detail + images_url.large} />
+                        }
+                    </div>
+                </div>
+                <div className={`${styles.detailRow} ${styles.reverse}`}>
+                    <div className={`${styles.dataCointaner} ${styles.detailColumn}`}>
+                        opis 360 daj sie oczarowac etc
+                        {productIsLoaded && variations[currentVariationId].name}
+                    </div>
+                    <div className={`${styles.imageContainer} ${styles.detailColumn}`}>
+                        {productIsLoaded &&
+                            <View360
+                                imgSrc={images_url.url + '/' + variations[currentVariationId].variationImage.view360}
+                                // imgSrc={images_url.url + '/' + variations[currentVariationId].variationImage.view360 + images_url.big}
+                            />
+                        }
+                    </div>
+                </div>
             </div>
             {/* <FixedBar /> */}
 
-            {currentVariationId && product && variations && variations[currentVariationId].name}
+
             <br />
 
             <br />

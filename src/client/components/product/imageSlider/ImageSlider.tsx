@@ -7,10 +7,10 @@ import {
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './imageSlider.scss';
 import { shallowEqual, useSelector } from "react-redux";
-import { RootState } from "../../client";
-import { Variation } from "../../redux/Models/Product/Variations/Variation/Variation.model";
-import { VariationCode } from "../../redux/Models/Product/Variations/Variation/VariationCode/VariationCode.model";
-import { intersectArray } from "../../utils/utilsFrondend";
+import { RootState } from "../../../client";
+import { Variation } from "../../../redux/Models/Product/Variations/Variation/Variation.model";
+import { VariationCode } from "../../../redux/Models/Product/Variations/Variation/VariationCode/VariationCode.model";
+import { intersectArray } from "../../../utils/utilsFrondend";
 import { useHistory, useLocation } from "react-router-dom";
 import SliderNavButton from "./sliderNavButton/SliderNavButton";
 
