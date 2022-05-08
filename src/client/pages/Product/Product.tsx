@@ -213,7 +213,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                     <div className={`${styles.imageContainer} ${styles.detailColumn}`}>
                         {productIsLoaded &&
                             <View360
-                                imgSrc={images_url.url + '/' + variations[currentVariationId].variationImage.view360}
+                                imgSrc={images_url.url + '/' + variations[currentVariationId].variationImage.view360 + images_url.small}
                                 // imgSrc={images_url.url + '/' + variations[currentVariationId].variationImage.view360 + images_url.big}
                             />
                         }

@@ -21,9 +21,12 @@ const View360: FC<View360Props> = props => {
         perRow: 4,
         speed: 50,
         dragTolerance: 10,
+        scrollingTimeoutId: null,
     });
 
     const [intervalId, setIntervalId] = useState(null);
+
+    const [scrollingTimeoutIdWindow, setScrollingTimeoutId] = useState(null);
 
     useEffect(() => {
         if (panoramaCointaner) {
@@ -33,11 +36,31 @@ const View360: FC<View360Props> = props => {
     }, [panoramaCointaner]);
 
     useEffect(() => {
+        const handleWindowScroll = () => {
+            stopAnimation();
+            // console.log('start window scroll', scrollingTimeoutIdWindow);
+            const timeoutMiliseconds = 100;
+            scrollingTimeoutIdWindow && window.clearTimeout(scrollingTimeoutIdWindow);
+            const newscrollingTimeoutId = setTimeout(() => {
+                setScrollingTimeoutId(null);
+                // console.log('stop window scroll', newscrollingTimeoutId);
+                playAnimation();
+            }, timeoutMiliseconds);
+            setScrollingTimeoutId(newscrollingTimeoutId);
+        }
+        window.addEventListener('scroll', handleWindowScroll);
+        return () => {
+            window.removeEventListener('scroll', handleWindowScroll)
+        }
+    }, [scrollingTimeoutIdWindow]);
+
+    useEffect(() => {
         playAnimation();
         return () => {
             stopAnimation();
         }
     }, []);
+
     const animate360View = () => {
         setSliderConfig(prevState => {
             if (!prevState.countDown) {
@@ -62,11 +85,15 @@ const View360: FC<View360Props> = props => {
                 sliderConfig.speed
             );
             setIntervalId(localIntervalId);
+            // console.log('start');
         }
     }
     const stopAnimation = () => {
-        clearInterval(intervalId);
-        setIntervalId(null);
+        if(intervalId) {
+            clearInterval(intervalId);
+            setIntervalId(null);
+            // console.log('stop');
+        }
     }
 
     const gotoAndPlayFrame = (nextFrame: number) => {

@@ -13,7 +13,7 @@ import { Variation } from "../../../redux/Models/Product/Variations/Variation/Va
 import { VariationCode } from "../../../redux/Models/Product/Variations/Variation/VariationCode/VariationCode.model";
 import { intersectArray } from "../../../utils/utilsFrondend";
 import {
-    useHistory, 
+    useHistory,
     useLocation
 } from "react-router-dom";
 import SliderNavButton from "./sliderNavButton/SliderNavButton";
@@ -126,28 +126,28 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
         }
         return 0;
     }
-    
+
     const handleScroll = (event: UIEvent<HTMLDivElement>) => {
         const target = event.currentTarget;
         const timeoutMiliseconds = 100;
-        window.clearTimeout( scrollingTimeoutId );
+        scrollingTimeoutId && clearTimeout(scrollingTimeoutId);
 
         const newscrollingTimeoutId = setTimeout(() => {
             if (target.scrollLeft % target.offsetWidth === 0) {
                 const userScrollPossition = calculateUserScrollPossition(target);
                 // console.log(userScrollPossition, sliderIndex, userScrollPossition * imagePerProductDesktop);
                 if (userScrollPossition !== sliderIndex) {
-    
+
                     const singleSlideFeatures = sliderImages[userScrollPossition * imagePerProductDesktop].variantCode;
                     const redirectVariantCode = { ...singleSlideFeatures, ...doNotChangeWithSliderFeature };
                     const varationFilter = [];
-    
+
                     variationHashmap && Object.entries(redirectVariantCode).forEach(([key, { atribId }]) => {
                         varationFilter.push(
                             variationHashmap[key][atribId]
                         )
                     })
-    
+
                     const redirectVariantId = intersectArray(varationFilter);
                     if (redirectVariantId !== currentVariationId) {
                         const realLink = redirectVariantId ? pathname + "?" + redirectVariantId : '';
@@ -155,7 +155,7 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
                         history.push(realLink);
                     }
                 }
-                console.log('Scrolling is done!');
+                // console.log('Scrolling is done!', newscrollingTimeoutId);
             }
         }, timeoutMiliseconds);
         setScrollingTimeoutId(newscrollingTimeoutId);
