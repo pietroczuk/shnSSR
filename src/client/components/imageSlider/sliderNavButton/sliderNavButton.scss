@@ -1,0 +1,61 @@
+$transitionTime : 0.2s;
+
+.sliderNavBtn {
+    background-color: #fff;
+    cursor          : pointer;
+    width           : 2.4em;
+    height          : 2.4em;
+    padding         : 0.6em;
+    position        : absolute;
+    z-index         : 1;
+    top             : 50%;
+    transform       : translateY(-50%);
+    border-radius   : 2em;
+    box-shadow      : 1px 1px 5px -1px rgb(0 0 0 / 10%);
+    margin          : 0.4em;
+
+    &.leftBtn {
+        left: 0;
+
+        svg {
+            transform: rotate(90deg);
+            left     : -1px;
+        }
+    }
+
+    &.rightBtn {
+        right: 0;
+
+        svg {
+            transform: rotate(-90deg);
+            left     : 1px;
+        }
+    }
+
+    svg {
+        opacity           : 0.5;
+        -webkit-transition: opacity $transitionTime, left $transitionTime;
+        -moz-transition   : opacity $transitionTime, left $transitionTime;
+        -o-transition     : opacity $transitionTime, left $transitionTime;
+        transition        : opacity $transitionTime, left $transitionTime;
+        position          : relative;
+    }
+
+    &:hover {
+        svg {
+            opacity: 1;
+        }
+
+        &.leftBtn {
+            svg {
+                left: -2px;
+            }
+        }
+
+        &.rightBtn {
+            svg {
+                left: 2px;
+            }
+        }
+    }
+}

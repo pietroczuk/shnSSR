@@ -1,11 +1,8 @@
 import {
     FC,
-    // useEffect, 
     useRef,
-    // useState 
     UIEvent,
     useEffect,
-    // useState
 } from "react";
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './imageSlider.scss';
@@ -15,6 +12,7 @@ import { Variation } from "../../redux/Models/Product/Variations/Variation/Varia
 import { VariationCode } from "../../redux/Models/Product/Variations/Variation/VariationCode/VariationCode.model";
 import { intersectArray } from "../../utils/utilsFrondend";
 import { useHistory, useLocation } from "react-router-dom";
+import SliderNavButton from "./sliderNavButton/SliderNavButton";
 
 interface ImageSliderProps {
     variations: {
@@ -40,12 +38,10 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
         ssr,
         isMobile,
         features
-        //  productId 
     } = useSelector((state: RootState) => ({
         images_url: state.SystemConfig.images,
         features: state.PublicConfig.features,
         product: state.Page.data.productPage,
-        // productId: state.Page.info.id,
         ssr: state.PublicConfig.ssr,
         isMobile: state.Display.isMobile
     }), shallowEqual);
@@ -132,11 +128,12 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
             initialImagePoster && fakeImages.push(initialImagePoster);
         }
 
-        console.log('ssrSliderIndex', ssrSliderIndex);
+        // console.log('ssrSliderIndex', ssrSliderIndex);
     }
 
 
     const sliderImages = ssr ? fakeImages : images;
+    const sliderMaxIndex = (sliderImages.length / imagePerProductDesktop) - 1
 
     const calculateUserScrollPossition = (slider: EventTarget & HTMLDivElement): number => {
         if (slider.offsetWidth > 0) {
@@ -202,8 +199,9 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
     return <div className={styles.imageSlider}>
 
         {/* {console.log('[Image slider] redner')} */}
-        <button style={{ position: 'absolute', left: '50px', zIndex: 1 }} onClick={gotoNextSlide}>next</button>
-        <button style={{ position: 'absolute', zIndex: 1 }} onClick={gotoPrevSlide}>prev</button>
+        {!isMobile && sliderIndex > 0 && <SliderNavButton onClickHandler={gotoPrevSlide} leftDirection={true} />}
+        {!isMobile && sliderMaxIndex > sliderIndex && <SliderNavButton onClickHandler={gotoNextSlide} leftDirection={false} />}
+
         <div className={styles.sliderContainer} ref={imageScrollRef} onScroll={handleScroll} id="imageSlider">
             {sliderImages.map((imageData, index) => {
                 // console.log(index);
