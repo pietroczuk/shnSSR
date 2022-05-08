@@ -152,7 +152,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
     ];
     return (
         <main>
-            {console.log('render product page')}
+            {/* {console.log('render product page')} */}
             {<SeoMetaTags language={language} pageType={pageType} url={url} script={script} />}
             <div className={styles.topSection}>
                 <div className={styles.mainImageSection}>

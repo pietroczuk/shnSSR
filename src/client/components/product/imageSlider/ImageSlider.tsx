@@ -3,6 +3,7 @@ import {
     useRef,
     UIEvent,
     useEffect,
+    useState,
 } from "react";
 import withStyles from "isomorphic-style-loader/withStyles";
 import styles from './imageSlider.scss';
@@ -11,7 +12,10 @@ import { RootState } from "../../../client";
 import { Variation } from "../../../redux/Models/Product/Variations/Variation/Variation.model";
 import { VariationCode } from "../../../redux/Models/Product/Variations/Variation/VariationCode/VariationCode.model";
 import { intersectArray } from "../../../utils/utilsFrondend";
-import { useHistory, useLocation } from "react-router-dom";
+import {
+    useHistory, 
+    useLocation
+} from "react-router-dom";
 import SliderNavButton from "./sliderNavButton/SliderNavButton";
 
 interface ImageSliderProps {
@@ -19,8 +23,6 @@ interface ImageSliderProps {
         [key: string]: Variation;
     };
 }
-
-
 interface imageArray {
     url: string,
     bgColor: string,
@@ -53,7 +55,6 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
     const currentVariationId = product ? product.currentVariationId : null;
     const sliderPosition = currentVariationId && product.variations ? product.variations[currentVariationId].variationImage.sliderPosition : null;
     const variationHashmap = product ? product.hashmap : null
-    // console.log('sliderPosition', sliderPosition, currentVariationId, product.variations[currentVariationId]);
 
     const sliderIndex = sliderPosition ? sliderPosition : 0;
 
@@ -61,20 +62,13 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
     const imagePerProductDesktop = 2;
 
     useEffect(() => {
-        console.log('imageScrollRef ssr');
+        // console.log('imageScrollRef ssr');
         gotoSlide(sliderIndex, ssr);
-    }, [product.currentVariationId])
+    }, [product.currentVariationId]);
+
+    const [scrollingTimeoutId, setScrollingTimeoutId] = useState(null);
 
     const images: Array<imageArray> = [];
-
-    // const [images, setImages] = useState<Array<imageArray>>([]);
-
-    // useEffect(() => {
-    //     setImages([]);
-    // }, [productId]);
-
-    // const initialStateImages: Array<imageArray> = [];
-    // let doNotChangeWithSliderFeatureId = null;
     const doNotChangeWithSliderFeature: FeatureObject = {};
 
     Object.entries(variations).forEach(([_key, variant]) => {
@@ -82,8 +76,6 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
         const variantImagePoster = variant.variationImage.poster;
         const variantCode = variant.variationCode;
         const bgColor = variant.color;
-        // images.find(img => img.url === variantImageWall) ? null : images.push({ url: variantImageWall, bgColor: bgColor });
-        // images.find(img => img.url === variantImagePoster) ? null : images.push({ url: variantImagePoster, bgColor: bgColor });
 
         const newVariantCode = {};
         Object.entries(variantCode).forEach(([featureId, val]) => {
@@ -93,25 +85,20 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
                 doNotChangeWithSliderFeature[featureId] = variations[currentVariationId].variationCode[featureId];
             }
         });
-        // console.log()
 
         if (isMobile) {
             if (!images.find(img => img.url === variantImagePoster)) {
                 images.push({ url: variantImagePoster, bgColor: bgColor, variantCode: newVariantCode });
-                // setImages(prevState => [...prevState, { url: variantImagePoster, bgColor: bgColor }]);
             }
             if (!images.find(img => img.url === variantImageWall)) {
                 images.push({ url: variantImageWall, bgColor: bgColor, variantCode: newVariantCode });
-                // setImages(prevState => [...prevState, { url: variantImageWall, bgColor: bgColor }]);
             }
         } else {
             if (!images.find(img => img.url === variantImageWall)) {
                 images.push({ url: variantImageWall, bgColor: bgColor, variantCode: newVariantCode });
-                // setImages(prevState => [...prevState, { url: variantImageWall, bgColor: bgColor }]);
             }
             if (!images.find(img => img.url === variantImagePoster)) {
                 images.push({ url: variantImagePoster, bgColor: bgColor, variantCode: newVariantCode });
-                // setImages(prevState => [...prevState, { url: variantImagePoster, bgColor: bgColor }]);
             }
         }
     });
@@ -127,8 +114,6 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
             initialImageWall && fakeImages.push(initialImageWall);
             initialImagePoster && fakeImages.push(initialImagePoster);
         }
-
-        // console.log('ssrSliderIndex', ssrSliderIndex);
     }
 
 
@@ -141,30 +126,39 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
         }
         return 0;
     }
+    
     const handleScroll = (event: UIEvent<HTMLDivElement>) => {
         const target = event.currentTarget;
-        if (target.scrollLeft % target.offsetWidth === 0) {
-            const userScrollPossition = calculateUserScrollPossition(target);
-            if (userScrollPossition !== sliderIndex) {
+        const timeoutMiliseconds = 100;
+        window.clearTimeout( scrollingTimeoutId );
 
-                const singleSlideFeatures = sliderImages[userScrollPossition * imagePerProductDesktop].variantCode;
-                const redirectVariantCode = { ...singleSlideFeatures, ...doNotChangeWithSliderFeature };
-                const varationFilter = [];
-
-                variationHashmap && Object.entries(redirectVariantCode).forEach(([key, { atribId }]) => {
-                    varationFilter.push(
-                        variationHashmap[key][atribId]
-                    )
-                })
-
-                const redirectVariantId = intersectArray(varationFilter);
-                if (redirectVariantId !== currentVariationId) {
-                    const realLink = redirectVariantId ? pathname + "?" + redirectVariantId : '';
-                    history.push(realLink);
+        const newscrollingTimeoutId = setTimeout(() => {
+            if (target.scrollLeft % target.offsetWidth === 0) {
+                const userScrollPossition = calculateUserScrollPossition(target);
+                // console.log(userScrollPossition, sliderIndex, userScrollPossition * imagePerProductDesktop);
+                if (userScrollPossition !== sliderIndex) {
+    
+                    const singleSlideFeatures = sliderImages[userScrollPossition * imagePerProductDesktop].variantCode;
+                    const redirectVariantCode = { ...singleSlideFeatures, ...doNotChangeWithSliderFeature };
+                    const varationFilter = [];
+    
+                    variationHashmap && Object.entries(redirectVariantCode).forEach(([key, { atribId }]) => {
+                        varationFilter.push(
+                            variationHashmap[key][atribId]
+                        )
+                    })
+    
+                    const redirectVariantId = intersectArray(varationFilter);
+                    if (redirectVariantId !== currentVariationId) {
+                        const realLink = redirectVariantId ? pathname + "?" + redirectVariantId : '';
+                        // console.log('pathname', realLink);
+                        history.push(realLink);
+                    }
                 }
+                console.log('Scrolling is done!');
             }
-            console.log('Scrolling is done!');
-        }
+        }, timeoutMiliseconds);
+        setScrollingTimeoutId(newscrollingTimeoutId);
     }
     const gotoSlide = (slideIndex: number, forcePossition: boolean = false) => {
         const scrollWith = imageScrollRef.current.scrollWidth;
@@ -180,7 +174,7 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
                 behavior: forcePossition ? 'auto' : 'smooth'
             });
         }
-        console.log('gotoslide', forcePossition);
+        // console.log('gotoslide', forcePossition);
     }
 
     const gotoNextSlide = () => {
