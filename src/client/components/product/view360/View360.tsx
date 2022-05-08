@@ -1,6 +1,7 @@
 import { FC, MouseEvent, TouchEvent, useEffect, useRef, useState } from "react";
 import styles from './view360.scss';
 import withStyles from "isomorphic-style-loader/withStyles";
+import { isScrolledIntoView } from "../../../utils/utilsFrondend";
 
 interface View360Props {
     imgSrc: string;
@@ -35,31 +36,41 @@ const View360: FC<View360Props> = props => {
         }
     }, [panoramaCointaner]);
 
+    // useEffect(() => {
+    //     // playAnimation();
+    //     return () => {
+    //         stopAnimation();
+    //     }
+    // }, []);
+    // let scrollingTimeoutIdWindow = null;
     useEffect(() => {
+        // playAnimation();
         const handleWindowScroll = () => {
+            // console.log('scroll');
             stopAnimation();
-            // console.log('start window scroll', scrollingTimeoutIdWindow);
-            const timeoutMiliseconds = 100;
+            // var browserZoomLevel = Math.round(window.devicePixelRatio * 100);
+            // console.log('browserZoomLevel', browserZoomLevel);
+            // console.log('start window scroll', panoramaCointaner.current.getBoundingClientRect());
+            const isVisible = isScrolledIntoView(panoramaCointaner);
+
+            const timeoutMiliseconds = 200;
+
             scrollingTimeoutIdWindow && window.clearTimeout(scrollingTimeoutIdWindow);
-            const newscrollingTimeoutId = setTimeout(() => {
-                setScrollingTimeoutId(null);
-                // console.log('stop window scroll', newscrollingTimeoutId);
-                playAnimation();
-            }, timeoutMiliseconds);
-            setScrollingTimeoutId(newscrollingTimeoutId);
+            if (isVisible) {
+                const newscrollingTimeoutId = setTimeout(() => {
+                    console.log('stop window scroll', newscrollingTimeoutId);
+                    playAnimation();
+                }, timeoutMiliseconds);
+                setScrollingTimeoutId(newscrollingTimeoutId);
+            }
         }
-        window.addEventListener('scroll', handleWindowScroll);
+        window.addEventListener('scroll', handleWindowScroll, { passive: true });
         return () => {
+            stopAnimation();
             window.removeEventListener('scroll', handleWindowScroll)
         }
     }, [scrollingTimeoutIdWindow]);
 
-    useEffect(() => {
-        playAnimation();
-        return () => {
-            stopAnimation();
-        }
-    }, []);
 
     const animate360View = () => {
         setSliderConfig(prevState => {
@@ -85,14 +96,12 @@ const View360: FC<View360Props> = props => {
                 sliderConfig.speed
             );
             setIntervalId(localIntervalId);
-            // console.log('start');
         }
     }
     const stopAnimation = () => {
-        if(intervalId) {
+        if (intervalId) {
             clearInterval(intervalId);
             setIntervalId(null);
-            // console.log('stop');
         }
     }
 

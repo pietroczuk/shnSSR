@@ -90,6 +90,16 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
         ssr && dispatch(publicConfigActions.disableSrr()) && console.log('disable ssr');
     }, []);
 
+    // const [isResize, setIsResize] = useState(false);
+    // useEffect(() => {
+    //     const handleWindowResize = () => {
+    //         setIsResize(true);
+    //         setIsResize(false);
+    //         console.log('resize');
+    //     }
+    //     window.addEventListener('resize', handleWindowResize, { passive: true });
+    // })
+
     useEffect(() => {
         /**
          * on init change default variant code
@@ -211,9 +221,9 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                         {productIsLoaded && variations[currentVariationId].name}
                     </div>
                     <div className={`${styles.imageContainer} ${styles.detailColumn}`}>
-                        {productIsLoaded &&
+                        {productIsLoaded && 
                             <View360
-                                imgSrc={images_url.url + '/' + variations[currentVariationId].variationImage.view360 + images_url.small}
+                                imgSrc={images_url.url + '/' + variations[currentVariationId].variationImage.view360}
                                 // imgSrc={images_url.url + '/' + variations[currentVariationId].variationImage.view360 + images_url.big}
                             />
                         }

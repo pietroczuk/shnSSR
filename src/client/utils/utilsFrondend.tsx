@@ -382,3 +382,20 @@ export const isColorDark = (color: string): boolean => {
     }
     return false;
 }
+
+/**
+ * check if div is on the viewport after Y scroll
+ * 
+ */
+
+ export const isScrolledIntoView = (element : React.MutableRefObject<HTMLDivElement>) => {
+    const rect = element.current.getBoundingClientRect();
+    const elemTop = rect.top;
+    const elemBottom = rect.bottom;
+
+    // Only completely visible elements return true:
+    // const isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
+    // Partially visible elements return true:
+    const isVisible = elemTop < window.innerHeight && elemBottom >= 0;
+    return isVisible;
+}
