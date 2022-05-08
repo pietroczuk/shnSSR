@@ -24,8 +24,12 @@ const View360: FC<View360Props> = props => {
         dragTolerance: 10,
         scrollingTimeoutId: null,
     });
-
-    const [intervalId, setIntervalId] = useState(null);
+    /**
+     * use array for capture zoom in and out in browser
+     * overtise we will have random intervals played
+     * this becomes from deley on update state and naure od eventlisteners scroll
+     */
+    const [intervalId, setIntervalId] = useState([]);
 
     const [scrollingTimeoutIdWindow, setScrollingTimeoutId] = useState(null);
 
@@ -33,45 +37,67 @@ const View360: FC<View360Props> = props => {
         if (panoramaCointaner) {
             const contenerSize = panoramaCointaner.current.getBoundingClientRect();
             setSliderConfig(prevState => ({ ...prevState, size: contenerSize.width, offsetX: contenerSize.x }));
+            const isVisible = isScrolledIntoView(panoramaCointaner);
+            isVisible && playAnimation();
         }
     }, [panoramaCointaner]);
 
-    // useEffect(() => {
-    //     // playAnimation();
-    //     return () => {
-    //         stopAnimation();
-    //     }
-    // }, []);
-    // let scrollingTimeoutIdWindow = null;
     useEffect(() => {
-        // playAnimation();
         const handleWindowScroll = () => {
-            // console.log('scroll');
             stopAnimation();
-            // var browserZoomLevel = Math.round(window.devicePixelRatio * 100);
-            // console.log('browserZoomLevel', browserZoomLevel);
-            // console.log('start window scroll', panoramaCointaner.current.getBoundingClientRect());
             const isVisible = isScrolledIntoView(panoramaCointaner);
-
             const timeoutMiliseconds = 200;
-
             scrollingTimeoutIdWindow && window.clearTimeout(scrollingTimeoutIdWindow);
+
+            // if (isVisible) {
+            //     // stopAnimation();
+            //     playAnimation();
+            // }else{
+            //     stopAnimation();
+            // }
+            // playAnimation();
+
+            // if (isVisible) {
+            //     //     // stopAnimation();
+            //         playAnimation();
+            //     }else{
+            //         stopAnimation();
+            //     }
+
             if (isVisible) {
                 const newscrollingTimeoutId = setTimeout(() => {
-                    console.log('stop window scroll', newscrollingTimeoutId);
                     playAnimation();
+                    // stopAnimation();
+                    // if (isVisible) {
+                    //     //     // stopAnimation();
+                    //     playAnimation();
+                    // } 
+                    // else {
+                    //     stopAnimation();
+                    // }
+
+
+                    console.log('stop window scroll', newscrollingTimeoutId, intervalId, isVisible);
                 }, timeoutMiliseconds);
                 setScrollingTimeoutId(newscrollingTimeoutId);
             }
+            // else{
+            //     // stopAnimation();
+            //     playAnimation();
+            // }
         }
         window.addEventListener('scroll', handleWindowScroll, { passive: true });
         return () => {
             stopAnimation();
             window.removeEventListener('scroll', handleWindowScroll)
         }
-    }, [scrollingTimeoutIdWindow]);
+    }, [scrollingTimeoutIdWindow, intervalId]);
 
-
+    const stopAllAnimationIntervals = () => {
+        if (intervalId.length) {
+            intervalId.forEach(elem => clearInterval(elem));
+        }
+    }
     const animate360View = () => {
         setSliderConfig(prevState => {
             if (!prevState.countDown) {
@@ -90,19 +116,16 @@ const View360: FC<View360Props> = props => {
         });
     }
     const playAnimation = () => {
-        if (!intervalId) {
-            const localIntervalId = setInterval(
-                () => animate360View(),
-                sliderConfig.speed
-            );
-            setIntervalId(localIntervalId);
-        }
+        stopAllAnimationIntervals();
+        const localIntervalId = setInterval(
+            () => animate360View(),
+            sliderConfig.speed
+        );
+        setIntervalId([localIntervalId]);
     }
     const stopAnimation = () => {
-        if (intervalId) {
-            clearInterval(intervalId);
-            setIntervalId(null);
-        }
+        stopAllAnimationIntervals();
+        intervalId.length && setIntervalId([]);
     }
 
     const gotoAndPlayFrame = (nextFrame: number) => {
@@ -119,14 +142,10 @@ const View360: FC<View360Props> = props => {
     }
 
     const mouseOverHandler = () => {
-        if (intervalId) {
-            stopAnimation();
-        }
+        stopAnimation();
     }
     const mauseOutHandler = () => {
-        if (!intervalId) {
-            playAnimation();
-        }
+        playAnimation();
     }
 
     const mouseMoveHandler = (event: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) => {
