@@ -30,69 +30,30 @@ const View360: FC<View360Props> = props => {
      * this becomes from deley on update state and naure od eventlisteners scroll
      */
     const [intervalId, setIntervalId] = useState([]);
-
-    const [scrollingTimeoutIdWindow, setScrollingTimeoutId] = useState(null);
+    const [isAnimate, setIsAnimate] = useState(false);
 
     useEffect(() => {
-        if (panoramaCointaner) {
-            const contenerSize = panoramaCointaner.current.getBoundingClientRect();
-            setSliderConfig(prevState => ({ ...prevState, size: contenerSize.width, offsetX: contenerSize.x }));
-            const isVisible = isScrolledIntoView(panoramaCointaner);
-            isVisible && playAnimation();
-        }
+        panoramaCointaner && isViewportInStageVisible();
+        panoramaCointaner && window.addEventListener('scroll', handleWindowScroll, { passive: true });
+        return (() => {
+            window.removeEventListener('scroll', handleWindowScroll);
+        })
     }, [panoramaCointaner]);
 
     useEffect(() => {
-        const handleWindowScroll = () => {
-            stopAnimation();
-            const isVisible = isScrolledIntoView(panoramaCointaner);
-            const timeoutMiliseconds = 200;
-            scrollingTimeoutIdWindow && window.clearTimeout(scrollingTimeoutIdWindow);
+        isAnimate ? playAnimation() : stopAnimation();
+    },[isAnimate]);
 
-            // if (isVisible) {
-            //     // stopAnimation();
-            //     playAnimation();
-            // }else{
-            //     stopAnimation();
-            // }
-            // playAnimation();
-
-            // if (isVisible) {
-            //     //     // stopAnimation();
-            //         playAnimation();
-            //     }else{
-            //         stopAnimation();
-            //     }
-
-            if (isVisible) {
-                const newscrollingTimeoutId = setTimeout(() => {
-                    playAnimation();
-                    // stopAnimation();
-                    // if (isVisible) {
-                    //     //     // stopAnimation();
-                    //     playAnimation();
-                    // } 
-                    // else {
-                    //     stopAnimation();
-                    // }
-
-
-                    console.log('stop window scroll', newscrollingTimeoutId, intervalId, isVisible);
-                }, timeoutMiliseconds);
-                setScrollingTimeoutId(newscrollingTimeoutId);
-            }
-            // else{
-            //     // stopAnimation();
-            //     playAnimation();
-            // }
-        }
-        window.addEventListener('scroll', handleWindowScroll, { passive: true });
-        return () => {
-            stopAnimation();
-            window.removeEventListener('scroll', handleWindowScroll)
-        }
-    }, [scrollingTimeoutIdWindow, intervalId]);
-
+    const handleWindowScroll = () => {
+        isViewportInStageVisible();
+    }
+    const isViewportInStageVisible = () => {
+        const contenerSize = panoramaCointaner.current.getBoundingClientRect();
+        setSliderConfig(prevState => ({ ...prevState, size: contenerSize.width, offsetX: contenerSize.x }));
+        const isVisible = isScrolledIntoView(panoramaCointaner);
+        setIsAnimate(isVisible);
+    }
+   
     const stopAllAnimationIntervals = () => {
         if (intervalId.length) {
             intervalId.forEach(elem => clearInterval(elem));
