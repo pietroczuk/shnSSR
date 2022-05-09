@@ -2,6 +2,8 @@ import { FC, MouseEvent, TouchEvent, useEffect, useRef, useState } from "react";
 import styles from './view360.scss';
 import withStyles from "isomorphic-style-loader/withStyles";
 import { isScrolledIntoView } from "../../../utils/utilsFrondend";
+import { shallowEqual, useSelector } from "react-redux";
+import { RootState } from "../../../client";
 
 interface View360Props {
     imgSrc: string;
@@ -11,19 +13,20 @@ const View360: FC<View360Props> = props => {
     const { imgSrc } = props;
     const panoramaCointaner = useRef<HTMLDivElement>(null);
 
+    const panormaConfig = useSelector((state: RootState)=> state.PublicConfig.config.panoramaConfig, shallowEqual);
     const [sliderConfig, setSliderConfig] = useState({
         index: 0,
-        maxWidth: 600,
-        maxHeight: 600,
+        maxWidth: panormaConfig.maxWidth,
+        maxHeight: panormaConfig.maxHeight,
         size: 0,
         offsetX: 0,
-        count: 24,
+        count: panormaConfig.count,
         countDown: false,
-        perRow: 4,
-        speed: 50,
-        dragTolerance: 10,
+        perRow: panormaConfig.perRow,
+        speed: panormaConfig.speed,
+        dragTolerance: panormaConfig.dragTolerance,
         scrollingTimeoutId: null,
-        offsetTopToTriggerAnimation: 100,
+        offsetTopToTriggerAnimation: panormaConfig.offsetTopToTriggerAnimation,
     });
     /**
      * use array for capture zoom in and out in browser

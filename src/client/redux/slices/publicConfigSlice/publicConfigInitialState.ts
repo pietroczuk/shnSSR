@@ -12,7 +12,7 @@ export const PublicConfigInitialState: PublicConfig = {
         wishlistLabel: '',
         wishlistStrictLabel: '',
         gotoWishlist: '',
-        
+
         priceFrom: '',
         choiseLabel: '',
         homepage: '',
@@ -37,7 +37,16 @@ export const PublicConfigInitialState: PublicConfig = {
             title: '',
             description: ''
         },
-        taxPercent: 0
+        taxPercent: 0,
+        panoramaConfig: {
+            maxWidth: 0,
+            maxHeight: 0,
+            count: 0,
+            perRow: 0,
+            speed: 0,
+            dragTolerance: 0,
+            offsetTopToTriggerAnimation: 0
+        },
     },
     features: {},
     delivery: {
