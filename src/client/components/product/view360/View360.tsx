@@ -23,6 +23,7 @@ const View360: FC<View360Props> = props => {
         speed: 50,
         dragTolerance: 10,
         scrollingTimeoutId: null,
+        offsetTopToTriggerAnimation: 100,
     });
     /**
      * use array for capture zoom in and out in browser
@@ -50,7 +51,7 @@ const View360: FC<View360Props> = props => {
     const isViewportInStageVisible = () => {
         const contenerSize = panoramaCointaner.current.getBoundingClientRect();
         setSliderConfig(prevState => ({ ...prevState, size: contenerSize.width, offsetX: contenerSize.x }));
-        const isVisible = isScrolledIntoView(panoramaCointaner);
+        const isVisible = isScrolledIntoView(panoramaCointaner, sliderConfig.offsetTopToTriggerAnimation);
         setIsAnimate(isVisible);
     }
    

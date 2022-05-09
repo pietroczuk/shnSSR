@@ -388,14 +388,14 @@ export const isColorDark = (color: string): boolean => {
  * 
  */
 
- export const isScrolledIntoView = (element : React.MutableRefObject<HTMLDivElement>) => {
+export const isScrolledIntoView = (element: React.MutableRefObject<HTMLDivElement>, offsetTop: number = 0) => {
     const rect = element.current.getBoundingClientRect();
-    const elemTop = rect.top;
+    const elemTop = rect.top + offsetTop;
     const elemBottom = rect.bottom;
 
     // Only completely visible elements return true:
-    const isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
+    // const isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
     // Partially visible elements return true:
-    // const isVisible = elemTop < window.innerHeight && elemBottom >= 0;
+    const isVisible = elemTop < window.innerHeight && elemBottom >= 0;
     return isVisible;
 }
