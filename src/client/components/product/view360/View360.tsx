@@ -13,7 +13,7 @@ const View360: FC<View360Props> = props => {
     const { imgSrc } = props;
     const panoramaCointaner = useRef<HTMLDivElement>(null);
 
-    const panormaConfig = useSelector((state: RootState)=> state.PublicConfig.config.panoramaConfig, shallowEqual);
+    const panormaConfig = useSelector((state: RootState)=> state.PublicConfig.config.panorama, shallowEqual);
     const [sliderConfig, setSliderConfig] = useState({
         index: 0,
         maxWidth: panormaConfig.maxWidth,

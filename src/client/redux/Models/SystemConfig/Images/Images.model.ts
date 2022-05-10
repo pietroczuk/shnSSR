@@ -7,8 +7,4 @@ export interface Images {
     smallLess: string;
     medium: string;
     large: string;
-    aspectRatioConfig: {
-        width: number;
-        height: number;
-    };
 }

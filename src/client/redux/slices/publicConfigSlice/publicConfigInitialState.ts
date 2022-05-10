@@ -38,7 +38,7 @@ export const PublicConfigInitialState: PublicConfig = {
             description: ''
         },
         taxPercent: 0,
-        panoramaConfig: {
+        panorama: {
             maxWidth: 0,
             maxHeight: 0,
             count: 0,
@@ -47,7 +47,34 @@ export const PublicConfigInitialState: PublicConfig = {
             dragTolerance: 0,
             offsetTopToTriggerAnimation: 0
         },
+        imagesAspectRatio: {
+            catalog: {
+                width: 0,
+                height: 0
+            },
+            productPage: {
+                detail: {
+                    width: 0,
+                    height: 0
+                },
+                review: {
+                    width: 0,
+                    height: 0
+                },
+                pack: {
+                    width: 0,
+                    height: 0
+                }
+            }
+        },
+        placeholders: {
+            categoryProducts: 0
+        },
+        productSlidersConfig: {
+            visitedCount: 0
+        }
     },
+
     features: {},
     delivery: {
         globalMinPrice: {},

@@ -36,7 +36,10 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
         allCurrencies, currency, language,
         ssr,
         title, addToCart, cartProducts, productId, lang, localstorageCartKey,
-        defaultVariantCode
+        defaultVariantCode,
+        panoramaWidth,
+        panoramaHeight
+
     } = useSelector(
         (state: RootState) => ({
             product: state.Page.data.productPage,
@@ -53,6 +56,8 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             lang: state.User.language,
             localstorageCartKey: state.SystemConfig.localstorageKeys.cart,
             defaultVariantCode: state.PublicConfig.defaultVariantCode,
+            panoramaWidth: state.PublicConfig.config.panorama.maxWidth,
+            panoramaHeight: state.PublicConfig.config.panorama.maxHeight,
         }), shallowEqual
     )
 
@@ -223,8 +228,24 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                                 />
                             </div>
                         }
-                        <div className={styles.imagePlaceholder} style={{ maxWidth: '600px', height: 'auto' }} >
-                            <Blank width={600} height={600} />
+                        <div className={styles.imagePlaceholder} style={{ maxWidth: panoramaWidth + 'px', height: 'auto' }} >
+                            <Blank width={panoramaWidth} height={panoramaHeight} />
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.detailRow}>
+                    <div className={`${styles.dataCointaner} ${styles.detailColumn}`}>
+                        opinie itd
+                        {/* {productIsLoaded && variations[currentVariationId].name} */}
+                    </div>
+                    <div className={`${styles.imageContainer} ${styles.detailColumn}`}>
+                        {productIsLoaded &&
+                            <div className={styles.imagePicture}>
+                                <img src={images_url.url + '/' + variations[currentVariationId].variationImage.review + images_url.large} />
+                            </div>
+                        }
+                        <div className={styles.imagePlaceholder} >
+                            <Blank width={700} height={518} />
                         </div>
                     </div>
                 </div>

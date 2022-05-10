@@ -9,7 +9,7 @@ const ProductsCategoryGrid: FC = () => {
     const { products, placeholderNumber, productsLength } = useSelector((state: RootState) => ({
         products: state.Page.data.categoryPage.products,
         productsLength: state.Page.data.categoryPage.length,
-        placeholderNumber: state.SystemConfig.placeholders.categoryProducts,
+        placeholderNumber: state.PublicConfig.config.placeholders.categoryProducts,
     }), shallowEqual)
 
     return <div className={styles.productsGrid}>

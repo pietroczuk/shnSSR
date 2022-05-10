@@ -1,9 +1,6 @@
 import { SystemConfig } from "../../Models/SystemConfig/SystemConfig.type";
 
 export const SystemConfigInitialState: SystemConfig = {
-    productSlidersConfig: {
-        visitedCount: 0
-    },
     localstorageKeys: {
         wishlist: '',
         cart: '',
@@ -23,9 +20,6 @@ export const SystemConfigInitialState: SystemConfig = {
     isMulticurrency: false,
     allCurrencies: {},
     isMultilanguage: false,
-    placeholders: {
-        categoryProducts: 0
-    },
     images: {
         big: '',
         small: '',
@@ -34,11 +28,7 @@ export const SystemConfigInitialState: SystemConfig = {
         url: '',
         smallLess: '',
         medium: '',
-        large: '',
-        aspectRatioConfig: {
-            width: 0,
-            height: 0,
-        },
+        large: ''
     },
     allLanguages: {},
     api: {
