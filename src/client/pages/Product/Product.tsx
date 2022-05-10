@@ -38,8 +38,8 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
         title, addToCart, cartProducts, productId, lang, localstorageCartKey,
         defaultVariantCode,
         panoramaWidth,
-        panoramaHeight
-
+        panoramaHeight,
+        imagesAspectRatio
     } = useSelector(
         (state: RootState) => ({
             product: state.Page.data.productPage,
@@ -58,6 +58,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             defaultVariantCode: state.PublicConfig.defaultVariantCode,
             panoramaWidth: state.PublicConfig.config.panorama.maxWidth,
             panoramaHeight: state.PublicConfig.config.panorama.maxHeight,
+            imagesAspectRatio: state.PublicConfig.config.imagesAspectRatio.productPage
         }), shallowEqual
     )
 
@@ -210,7 +211,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                             </div>
                         }
                         <div className={styles.imagePlaceholder} >
-                            <Blank width={1000} height={1000} />
+                            <Blank width={imagesAspectRatio.detail.width} height={imagesAspectRatio.detail.height} />
                         </div>
                     </div>
                 </div>
@@ -245,7 +246,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                             </div>
                         }
                         <div className={styles.imagePlaceholder} >
-                            <Blank width={700} height={518} />
+                            <Blank width={imagesAspectRatio.review.width} height={imagesAspectRatio.review.height} />
                         </div>
                     </div>
                 </div>

@@ -18,13 +18,12 @@ interface Props {
 }
 
 const ImageDisplay: FC<Props> = props => {
-    const multiplyMesurment = 100;
     const { title, imagesHolderUrl, forceVisual, onHover, showPlaceholder } = props;
     const { showVisual, imagesConfig, image_width, image_height } = useSelector((state: RootState) => ({
         showVisual: !forceVisual ? state.Display.showVisual : forceVisual,
         imagesConfig: state.SystemConfig.images,
-        image_width: state.PublicConfig.config.imagesAspectRatio.catalog.width * multiplyMesurment,
-        image_height: state.PublicConfig.config.imagesAspectRatio.catalog.height * multiplyMesurment,
+        image_width: state.PublicConfig.config.imagesAspectRatio.catalog.width,
+        image_height: state.PublicConfig.config.imagesAspectRatio.catalog.height,
     }), shallowEqual);
 
     const img_base = imagesConfig.url + '/';
