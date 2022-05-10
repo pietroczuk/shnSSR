@@ -22,7 +22,7 @@ import { addToStoreCart } from '../../redux/actionCreators/cart/cart.ac';
 import AddToWishlistSticker from '../../components/helpers/ui/addToWishlistSticker/AddToWishlistSticker';
 import { setGlobalDefaultVariantcode } from '../../redux/actionCreators/publicConfig/publicConfig.ac';
 import View360 from '../../components/product/view360/View360';
-import Blank from '../../components/svg/blank/Blank';
+import ImageInViewLoader from '../../components/helpers/ui/imageInViewLoader/ImageInViewLoader';
 
 interface ProductProps {
     url: string;
@@ -72,6 +72,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
     const isDarkVariantBgColor = currentVariationId ? isColorDark(variations[currentVariationId].color) : true;
 
     const productIsLoaded = variations && variations[currentVariationId] ? true : false;
+    const variantImages = productIsLoaded ? variations[currentVariationId].variationImage : null;
     // from props
     const { url,
         // lang 
@@ -168,11 +169,8 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                         cssClass={styles.wishlistStickerContainer}
                         whiteIcon={isDarkVariantBgColor}
                     />
-                    <ImageSlider variations={variations} />
+                    <ImageSlider variations={variations} alt={title ? title : 'ShinePosters'} />
                 </div>
-                {/* {currentVariationId && product && product.variations && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[currentVariationId].variationImage.wall + images_url.medium} />} */}
-                {/* {currentVariationId && product && product.variations && <img width="300px" height="400px" alt="aaa" src={images_url.url + '/' + product.variations[currentVariationId].variationImage.poster + images_url.medium} />} */}
-
                 <div className={styles.productMainData}>
                     {title ? <h1>{title}</h1> : <h1><Placeholder /></h1>}
 
@@ -204,51 +202,53 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                         info o papierz etc
                         {productIsLoaded && variations[currentVariationId].name}
                     </div>
-                    <div className={`${styles.imageContainer} ${styles.detailColumn}`}>
-                        {productIsLoaded &&
-                            <div className={styles.imagePicture}>
-                                <img src={images_url.url + '/' + variations[currentVariationId].variationImage.detail + images_url.large} />
-                            </div>
-                        }
-                        <div className={styles.imagePlaceholder} >
-                            <Blank width={imagesAspectRatio.detail.width} height={imagesAspectRatio.detail.height} />
-                        </div>
-                    </div>
+                    <ImageInViewLoader
+                        title={title}
+                        cssClass={styles.detailColumn}
+                        aspectRatioWidth={imagesAspectRatio.detail.width}
+                        aspectRatioHeight={imagesAspectRatio.detail.height}
+                        imgSrc={variantImages ? images_url.url + '/' + variantImages.detail + images_url.large : ''}
+                       
+                    />
                 </div>
                 <div className={`${styles.detailRow} ${styles.reverse}`}>
                     <div className={`${styles.dataCointaner} ${styles.detailColumn}`}>
                         opis 360 daj sie oczarowac etc
                         {productIsLoaded && variations[currentVariationId].name}
                     </div>
-                    <div className={`${styles.imageContainer} ${styles.detailColumn}`}>
-                        {productIsLoaded &&
-                            <div className={styles.imagePicture}>
-                                <View360
-                                    imgSrc={images_url.url + '/' + variations[currentVariationId].variationImage.view360}
-                                // imgSrc={images_url.url + '/' + variations[currentVariationId].variationImage.view360 + images_url.big}
-                                />
-                            </div>
-                        }
-                        <div className={styles.imagePlaceholder} style={{ maxWidth: panoramaWidth + 'px', height: 'auto' }} >
-                            <Blank width={panoramaWidth} height={panoramaHeight} />
-                        </div>
-                    </div>
+                    <ImageInViewLoader
+                        title={title}
+                        cssClass={styles.detailColumn}
+                        aspectRatioWidth={panoramaWidth}
+                        aspectRatioHeight={panoramaHeight}
+                        placeholderStyle={{ maxWidth: panoramaWidth + 'px', height: 'auto' }}
+                    >
+                        {variantImages && <View360 imgSrc={images_url.url + '/' + variantImages.view360} />}
+                    </ImageInViewLoader>
                 </div>
                 <div className={styles.detailRow}>
                     <div className={`${styles.dataCointaner} ${styles.detailColumn}`}>
                         opinie itd
-                        {/* {productIsLoaded && variations[currentVariationId].name} */}
                     </div>
-                    <div className={`${styles.imageContainer} ${styles.detailColumn}`}>
-                        {productIsLoaded &&
-                            <div className={styles.imagePicture}>
-                                <img src={images_url.url + '/' + variations[currentVariationId].variationImage.review + images_url.large} />
-                            </div>
-                        }
-                        <div className={styles.imagePlaceholder} >
-                            <Blank width={imagesAspectRatio.review.width} height={imagesAspectRatio.review.height} />
-                        </div>
+                    <ImageInViewLoader
+                        title={title}
+                        cssClass={styles.detailColumn}
+                        aspectRatioWidth={imagesAspectRatio.review.width}
+                        aspectRatioHeight={imagesAspectRatio.review.height}
+                        imgSrc={variantImages ? images_url.url + '/' + variantImages.review + images_url.large : ''}
+                    />
+                </div>
+                <div className={`${styles.detailRow} ${styles.reverse}`}>
+                    <div className={`${styles.dataCointaner} ${styles.detailColumn}`}>
+                        wysylka
                     </div>
+                    <ImageInViewLoader
+                        title={title}
+                        cssClass={styles.detailColumn}
+                        aspectRatioWidth={imagesAspectRatio.pack.width}
+                        aspectRatioHeight={imagesAspectRatio.pack.height}
+                        imgSrc={images_url.url + '/' + images_url.packFilename + images_url.large}
+                    />
                 </div>
             </div>
             {/* <FixedBar /> */}

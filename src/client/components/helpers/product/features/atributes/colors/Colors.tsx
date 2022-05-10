@@ -12,6 +12,7 @@ import { SingleAtribute } from '../../../../../../redux/Models/PublicConfig/Feat
 import { setGlobalDefaultVariantcode } from '../../../../../../redux/actionCreators/publicConfig/publicConfig.ac';
 import { setProductRandomColors } from '../../../../../../redux/actionCreators/display/display.ac';
 import { useLocation } from 'react-router-dom';
+import AssitiveText from '../../../../display/assitiveText/AssitiveText';
 
 interface ColorsProps {
     attrib: SingleAtribute,
@@ -61,6 +62,7 @@ const Colors: FC<ColorsProps> = props => {
             className={styles.color}
         >
             <ColorCircle active={active} glowColor={glowColor} />
+            <AssitiveText>{attribTitle}</AssitiveText>
         </DivNavLink>
     )
 }

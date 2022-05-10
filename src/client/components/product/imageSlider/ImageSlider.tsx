@@ -22,6 +22,7 @@ interface ImageSliderProps {
     variations: {
         [key: string]: Variation;
     };
+    alt: string
 }
 interface imageArray {
     url: string,
@@ -35,7 +36,7 @@ interface FeatureObject {
 }
 
 const ImageSlider: FC<ImageSliderProps> = (props) => {
-    const { variations } = props;
+    const { variations, alt } = props;
     const { images_url, product,
         ssr,
         isMobile,
@@ -210,7 +211,7 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
                     >
                         <div className={`${styles.imageContainer} ${addPadding ? styles.addSpace : ''}`}>
                             <div className={styles.productImage} >
-                                <img src={images_url.url + '/' + imageData.url + images_url.medium} />
+                                <img alt={alt} src={images_url.url + '/' + imageData.url + images_url.medium} />
                             </div>
                         </div>
                     </div>

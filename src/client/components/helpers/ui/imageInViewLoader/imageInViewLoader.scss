@@ -1,0 +1,34 @@
+.imageContainer {
+    padding         : 0;
+    position        : relative;
+    width           : 100%;
+    height          : 100%;
+    background-color: #efefef;
+
+    .imagePicture {
+        position: absolute;
+        left    : 0;
+        top     : 0;
+        width   : 100%;
+        height  : 100%;
+        z-index : 1;
+    }
+
+    .imagePlaceholder {
+        width   : 100%;
+        display : flex;
+        margin  : auto;
+        position: relative;
+
+        .spinner {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    img {
+        width  : 100%;
+        display: block;
+    }
+}

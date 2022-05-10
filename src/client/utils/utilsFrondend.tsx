@@ -388,14 +388,31 @@ export const isColorDark = (color: string): boolean => {
  * 
  */
 
-export const isScrolledIntoView = (element: React.MutableRefObject<HTMLDivElement>, offsetTop: number = 0) => {
+interface isScrolledIntoViewArgs {
+    (
+        element: React.MutableRefObject<HTMLDivElement>,
+        parrent: React.MutableRefObject<HTMLDivElement> | null,
+        offsetTop?: number,
+        offsetBottom?: number,
+        offsetLeft?: number,
+        offsetRight?: number
+    ): boolean;
+}
+export const isScrolledIntoView: isScrolledIntoViewArgs = (element, parrent = null, offsetTop = 0, offsetBottom = 0, offsetLeft = 0, offsetRight = 0) => {
+    if (!element || !element.current) return false;
     const rect = element.current.getBoundingClientRect();
     const elemTop = rect.top + offsetTop;
-    const elemBottom = rect.bottom;
+    const elemBottom = rect.bottom - offsetBottom;
+    const elemLeft = rect.left + offsetLeft;
+    const elemRight = rect.right - offsetRight;
+    const trueParrent = parrent && parrent.current ? parrent.current.getBoundingClientRect() : null;
+    const trueParrentWidth = trueParrent ? trueParrent.width : window.innerWidth;
+    const trueParrentHeight = trueParrent ? trueParrent.height : window.innerHeight;
 
     // Only completely visible elements return true:
     // const isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
     // Partially visible elements return true:
-    const isVisible = elemTop < window.innerHeight && elemBottom >= 0;
-    return isVisible;
+    const isVisibleLeftRight = elemLeft < trueParrentWidth && elemRight >= 0;
+    const isVisibleTopBottom = elemTop < trueParrentHeight && elemBottom >= 0;
+    return isVisibleTopBottom && isVisibleLeftRight;
 }
