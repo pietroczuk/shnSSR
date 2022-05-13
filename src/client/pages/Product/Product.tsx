@@ -4,7 +4,7 @@ import styles from './product.scss';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
-import { isColorDark, pageTypes, prepareSearchCode, scrollToTop } from '../../utils/utilsFrondend';
+import { checkTrueSale, isColorDark, pageTypes, prepareSearchCode, scrollToTop } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
 import AllFeaturesDisplay from '../../components/helpers/product/features/AllFeaturesDisplay';
@@ -23,6 +23,8 @@ import AddToWishlistSticker from '../../components/helpers/ui/addToWishlistStick
 import { setGlobalDefaultVariantcode } from '../../redux/actionCreators/publicConfig/publicConfig.ac';
 import View360 from '../../components/product/view360/View360';
 import ImageInViewLoader from '../../components/helpers/ui/imageInViewLoader/ImageInViewLoader';
+import SaleBadge from '../../components/helpers/product/productItem/saleBadge/SaleBadge';
+import ArrowDown from '../../components/svg/icons/ArrowDown';
 
 interface ProductProps {
     url: string;
@@ -60,7 +62,8 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             panoramaHeight: state.PublicConfig.config.panorama.maxHeight,
             imagesAspectRatio: state.PublicConfig.config.imagesAspectRatio.productPage
         }), shallowEqual
-    )
+    );
+
 
     const dispatch = useDispatch();
 
@@ -73,12 +76,26 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
 
     const productIsLoaded = variations && variations[currentVariationId] ? true : false;
     const variantImages = productIsLoaded ? variations[currentVariationId].variationImage : null;
+
+    const sale = product ? product.sale : { enable: false, startSale: null, stopSale: null, percent: 0 };
+
+    const showPromo = useSelector((state: RootState) => {
+        const now = state.User.today.date
+        return checkTrueSale(sale, now);
+    });
+
+    // useEffect(() => {
+    //     sale.enable && dispatch(updateStorePageProductslistPromoPrice(productId, showPromo));
+    // }, [showPromo])
+
     // from props
     const { url,
         // lang 
     } = props.match.params;
     const { location } = props;
     const { search } = location;
+
+
 
     useEffect(() => {
         const axiosAbortController = new AbortController();
@@ -162,6 +179,22 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             {<SeoMetaTags language={language} pageType={pageType} url={url} script={script} />}
             <div className={styles.topSection}>
                 <div className={styles.mainImageSection}>
+                    <div className={styles.leftNavigationWithSale}>
+                        <div className={styles.backButton}>
+                            <div className={styles.arrow}>
+                                <ArrowDown />
+                            </div>
+                            <div className={styles.textContener}>
+                                <div className={styles.label}>
+                                    Wróć do
+                                </div>
+                                <div className={styles.category}>
+                                    Bestsellery
+                                </div>
+                            </div>
+                        </div>
+                        {showPromo && <SaleBadge sale={sale} cssClass={styles.saleBadge} />}
+                    </div>
                     <AddToWishlistSticker
                         variantId={currentVariationId}
                         productId={productId}
@@ -208,7 +241,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                         aspectRatioWidth={imagesAspectRatio.detail.width}
                         aspectRatioHeight={imagesAspectRatio.detail.height}
                         imgSrc={variantImages ? images_url.url + '/' + variantImages.detail + images_url.large : ''}
-                       
+
                     />
                 </div>
                 <div className={`${styles.detailRow} ${styles.reverse}`}>

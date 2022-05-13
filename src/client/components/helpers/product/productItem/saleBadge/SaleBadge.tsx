@@ -7,11 +7,12 @@ import withStyles from "isomorphic-style-loader/withStyles";
 import { Sale } from "../../../../../redux/Models/Product/Sale/Sale.model";
 
 interface SaleBadgeProps {
-    sale: Sale
+    sale: Sale,
+    cssClass?: string
 }
 
 const SaleBadge: FC<SaleBadgeProps> = props => {
-    const { sale } = props;
+    const { sale, cssClass } = props;
 
     // const showBadge = useSelector((state: RootState) => {
     //     const now = state.User.today.date
@@ -20,7 +21,7 @@ const SaleBadge: FC<SaleBadgeProps> = props => {
 
     // if (showBadge) {
     return (
-        <div className={styles.badge}>
+        <div className={`${styles.badge} ${cssClass ? cssClass : ''}`}>
             -{sale.percent}%
         </div>
     );
