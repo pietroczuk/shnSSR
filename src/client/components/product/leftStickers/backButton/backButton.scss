@@ -1,0 +1,53 @@
+$transitionTime : 0.2s;
+
+.backButton {
+    background-color: #fff;
+    display         : flex;
+    box-shadow      : 1px 1px 5px -1px rgb(0 0 0 / 10%);
+    padding         : 0.7em 0.9em;
+    border-radius   : 0.4em;
+    cursor          : pointer;
+
+    .arrow {
+        width          : 1em;
+        display        : flex;
+        flex-direction : column;
+        flex-wrap      : nowrap;
+        justify-content: center;
+        align-items    : center;
+
+        svg {
+            transform         : rotate(90deg);
+            position          : relative;
+            left              : 0;
+            opacity           : 0.5;
+            -webkit-transition: opacity $transitionTime, left $transitionTime;
+            -moz-transition   : opacity $transitionTime, left $transitionTime;
+            -o-transition     : opacity $transitionTime, left $transitionTime;
+            transition        : opacity $transitionTime, left $transitionTime;
+        }
+    }
+
+    &:hover .arrow svg {
+        left   : -0.2em;
+        opacity: 1;
+    }
+
+    .textContener {
+        margin-left: 0.5em;
+
+        .label {
+            text-transform: uppercase;
+            font-size     : 0.5em;
+            letter-spacing: 0.1em;
+            font-weight   : 500;
+            color         : #848484;
+            margin-left   : 0.1em;
+        }
+
+        .category {
+            font-size  : 0.9em;
+            font-weight: 500;
+        }
+    }
+}

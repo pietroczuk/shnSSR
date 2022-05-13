@@ -43,3 +43,8 @@ export const updateStorePageProductslistPromoPrice = (productId: string, saleEna
   const actionPayload = { productId, saleEnable };
   return dispatch(pageActions.updateCategoryProductsPromoPrice(actionPayload));
 }
+
+export const updateStorePageSingleProductPromoPrice = (saleEnable: boolean) => (dispatch: Dispatch) => {
+  const actionPayload = { saleEnable };
+  return dispatch(pageActions.updateSingleProductPromoPrice(actionPayload));
+}

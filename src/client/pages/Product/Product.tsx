@@ -11,7 +11,7 @@ import AllFeaturesDisplay from '../../components/helpers/product/features/AllFea
 import { RootState } from '../../client';
 import { RouteComponentProps } from 'react-router-dom';
 import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
-import { getPage, setProductCurrVarId } from '../../redux/actionCreators/page/page.ac';
+import { getPage, setProductCurrVarId, updateStorePageSingleProductPromoPrice } from '../../redux/actionCreators/page/page.ac';
 // SEO
 import SeoMetaTags from '../../components/seoMetaTags/seoMetaTags';
 import { helmetJsonLdProp } from "react-schemaorg";
@@ -23,8 +23,8 @@ import AddToWishlistSticker from '../../components/helpers/ui/addToWishlistStick
 import { setGlobalDefaultVariantcode } from '../../redux/actionCreators/publicConfig/publicConfig.ac';
 import View360 from '../../components/product/view360/View360';
 import ImageInViewLoader from '../../components/helpers/ui/imageInViewLoader/ImageInViewLoader';
-import SaleBadge from '../../components/helpers/product/productItem/saleBadge/SaleBadge';
-import ArrowDown from '../../components/svg/icons/ArrowDown';
+import LeftStickers from '../../components/product/leftStickers/LeftStickers';
+import ShowPrice from '../../components/helpers/display/showPrice/ShowPrice';
 
 interface ProductProps {
     url: string;
@@ -35,7 +35,8 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
     const pageType = pageTypes.productPage;
     const { product, api,
         images_url,
-        allCurrencies, currency, language,
+        // allCurrencies, 
+        currency, language,
         ssr,
         title, addToCart, cartProducts, productId, lang, localstorageCartKey,
         defaultVariantCode,
@@ -60,7 +61,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             defaultVariantCode: state.PublicConfig.defaultVariantCode,
             panoramaWidth: state.PublicConfig.config.panorama.maxWidth,
             panoramaHeight: state.PublicConfig.config.panorama.maxHeight,
-            imagesAspectRatio: state.PublicConfig.config.imagesAspectRatio.productPage
+            imagesAspectRatio: state.PublicConfig.config.imagesAspectRatio.productPage,
         }), shallowEqual
     );
 
@@ -84,9 +85,13 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
         return checkTrueSale(sale, now);
     });
 
-    // useEffect(() => {
-    //     sale.enable && dispatch(updateStorePageProductslistPromoPrice(productId, showPromo));
-    // }, [showPromo])
+    const allPrices = variations && variations[currentVariationId] ? variations[currentVariationId].variationPrice : null;
+    const salePrice = allPrices && showPromo && sale.enable ? variations[currentVariationId].salePrice : null;
+    const saveMoney = allPrices && showPromo && sale.enable ? variations[currentVariationId].saveMoney : null;
+
+    useEffect(() => {
+        sale.enable && dispatch(updateStorePageSingleProductPromoPrice(showPromo));
+    }, [showPromo])
 
     // from props
     const { url,
@@ -179,22 +184,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             {<SeoMetaTags language={language} pageType={pageType} url={url} script={script} />}
             <div className={styles.topSection}>
                 <div className={styles.mainImageSection}>
-                    <div className={styles.leftNavigationWithSale}>
-                        <div className={styles.backButton}>
-                            <div className={styles.arrow}>
-                                <ArrowDown />
-                            </div>
-                            <div className={styles.textContener}>
-                                <div className={styles.label}>
-                                    Wróć do
-                                </div>
-                                <div className={styles.category}>
-                                    Bestsellery
-                                </div>
-                            </div>
-                        </div>
-                        {showPromo && <SaleBadge sale={sale} cssClass={styles.saleBadge} />}
-                    </div>
+                    <LeftStickers sale={sale} showPromo={showPromo} />
                     <AddToWishlistSticker
                         variantId={currentVariationId}
                         productId={productId}
@@ -207,9 +197,12 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                 <div className={styles.productMainData}>
                     {title ? <h1>{title}</h1> : <h1><Placeholder /></h1>}
 
-                    {productIsLoaded && <p>
-                        {variations[currentVariationId].variationPrice[currency]} {allCurrencies[currency].sign}
-                    </p>}
+                    <div className={styles.priceContener}>
+                        {productIsLoaded && allPrices &&
+                            <ShowPrice allPrices={allPrices} salePrice={salePrice} quantity={1} showPromo={showPromo} />
+                        }
+                        {showPromo && <p>-{sale.percent} % | Oszczedzasz {saveMoney[currency]} {currency}</p>}
+                    </div>
 
                     {productIsLoaded &&
                         <AllFeaturesDisplay

@@ -1,0 +1,13 @@
+.leftNavigationWithSale {
+    position: absolute;
+    left    : 1em;
+    top     : 1em;
+    z-index : 1;
+
+    .saleBadge {
+        position : relative;
+        left     : auto;
+        top      : 1em;
+        font-size: 1.1em;
+    }
+}
