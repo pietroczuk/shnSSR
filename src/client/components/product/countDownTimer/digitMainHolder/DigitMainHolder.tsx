@@ -27,7 +27,8 @@ const DigitMainHolder: FC<DigitMainHolderProps> = props => {
         const hours = 60 * 60;
         const minutes = 60;
         const date = state.User.today.date;
-        let left = Math.floor((stopSale - date) / 1000);
+
+        let left = Math.floor((stopSale - date));
         if (left > 0) {
             const d = Math.floor(left / days);
             left -= d * days;
