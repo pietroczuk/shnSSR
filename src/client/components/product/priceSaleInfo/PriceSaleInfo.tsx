@@ -14,12 +14,13 @@ interface PriceSaleInfoProps {
 
 const PriceSaleInfo: FC<PriceSaleInfoProps> = props => {
     const { percent, saveMoney } = props;
-    const { allCurrencies, currency } = useSelector((state: RootState) => ({
+    const { allCurrencies, currency, youSave } = useSelector((state: RootState) => ({
         allCurrencies: state.SystemConfig.allCurrencies,
-        currency: state.User.currency
+        currency: state.User.currency,
+        youSave: state.PublicConfig.translations.youSave
     }))
     return <div className={styles.contener}>
-        -{percent} % | Oszczedzasz {formatPrice(getPriceByCurrency(saveMoney, currency, allCurrencies), currency, allCurrencies)}
+        -{percent} % | {youSave} {formatPrice(getPriceByCurrency(saveMoney, currency, allCurrencies), currency, allCurrencies)}
     </div>
 }
 export default withStyles(styles)(PriceSaleInfo);

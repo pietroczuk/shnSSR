@@ -21,7 +21,7 @@ export interface Translations {
     tax: string;
     total: string;
 
-    saveMoney: string;
+    youSave: string;
 
     delivery: string;
     change: string;

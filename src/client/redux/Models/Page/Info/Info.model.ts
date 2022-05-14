@@ -6,6 +6,7 @@ export interface Info {
         seoDescription: string;
     }
     title: string;
+    titlekey? : string;
     description: string;
     url: {
         [key: string]: string;

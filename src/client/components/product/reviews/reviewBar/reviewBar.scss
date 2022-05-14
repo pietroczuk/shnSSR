@@ -1,0 +1,34 @@
+.container {
+    display       : flex;
+    gap           : 0.5em;
+    flex-direction: row;
+    flex-wrap     : nowrap;
+    align-items   : center;
+
+    .star {
+        width          : 1em;
+        display        : flex;
+        flex-direction : row;
+        flex-wrap      : nowrap;
+        align-content  : center;
+        align-items    : center;
+        justify-content: center;
+        font-size      : 0.7em;
+    }
+
+    .count {
+        width     : 1em;
+        text-align: center;
+        font-size : 0.8em;
+        color     : #414143;
+    }
+
+    .barCointaner {
+        width           : 100%;
+        background-color: #efefef;
+
+        .bar {
+            height: 0.2em;
+        }
+    }
+}

@@ -25,7 +25,7 @@ const CartSubmenu: FC<CartSubmenuProps> = props => {
         currency, allCurrencies,
         // now,
         cartLabel, gotoCart,
-        totalLabel, taxInclude, tax, taxPercent, saveMoney,
+        totalLabel, taxInclude, tax, taxPercent, youSave,
 
         delivery,
         to,
@@ -47,7 +47,7 @@ const CartSubmenu: FC<CartSubmenuProps> = props => {
         totalLabel: state.PublicConfig.translations.total,
         taxInclude: state.PublicConfig.translations.taxInclude,
         tax: state.PublicConfig.translations.tax,
-        saveMoney: state.PublicConfig.translations.saveMoney,
+        youSave: state.PublicConfig.translations.youSave,
         delivery: state.PublicConfig.translations.delivery,
         to: state.PublicConfig.translations.to,
         change: state.PublicConfig.translations.change,
@@ -71,7 +71,7 @@ const CartSubmenu: FC<CartSubmenuProps> = props => {
         {totalSaveMoney !== '' && cartLenght &&
             <div className={styles.saveMoneyCont}>
                 <div className={styles.label}>
-                    {saveMoney}
+                    {youSave}
                 </div>
                 <div className={styles.saveCont}>
                     <div className={styles.icon}>

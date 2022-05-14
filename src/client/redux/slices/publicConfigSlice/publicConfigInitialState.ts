@@ -25,7 +25,7 @@ export const PublicConfigInitialState: PublicConfig = {
         tax: '',
         total: '',
 
-        saveMoney: '',
+        youSave: '',
 
         delivery: '',
         change: '',

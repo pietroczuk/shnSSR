@@ -27,6 +27,7 @@ import LeftStickers from '../../components/product/leftStickers/LeftStickers';
 import ShowPrice from '../../components/helpers/display/showPrice/ShowPrice';
 import CountDownTimer from '../../components/product/countDownTimer/CountDownTimer';
 import PriceSaleInfo from '../../components/product/priceSaleInfo/PriceSaleInfo';
+import Reviews from '../../components/product/reviews/Reviews';
 
 interface ProductProps {
     url: string;
@@ -40,7 +41,9 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
         // allCurrencies, 
         currency, language,
         ssr,
-        title, addToCart, cartProducts, productId, lang, localstorageCartKey,
+        title, 
+        titlekey,
+        addToCart, cartProducts, productId, lang, localstorageCartKey,
         defaultVariantCode,
         panoramaWidth,
         panoramaHeight,
@@ -55,6 +58,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             language: state.User.language,
             ssr: state.PublicConfig.ssr,
             title: state.Page.info.title,
+            titlekey: state.Page.info.titlekey,
             addToCart: state.PublicConfig.translations.addToCart,
             cartProducts: state.Cart.products,
             productId: state.Page.info.id,
@@ -197,8 +201,10 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                     <ImageSlider variations={variations} alt={title ? title : 'ShinePosters'} />
                 </div>
                 <div className={styles.productMainData}>
-                    {title ? <h1>{title}</h1> : <h1><Placeholder /></h1>}
-                    <p>promocja wazna przez</p>
+                    {titlekey ? <h1>{titlekey}</h1> : <h1><Placeholder /></h1>}
+                    {title ? <div>{title}</div> : <div><Placeholder /></div>}
+                    {/* {title ? <h1>{title}</h1> : <h1><Placeholder /></h1>} */}
+                    {/* <p>promocja wazna przez</p> */}
                     {productIsLoaded && showPromo && <CountDownTimer stopSale={sale.stopSale} showContainer={true} />}
                     <div className={styles.priceContener}>
 
@@ -238,7 +244,6 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                         aspectRatioWidth={imagesAspectRatio.detail.width}
                         aspectRatioHeight={imagesAspectRatio.detail.height}
                         imgSrc={variantImages ? images_url.url + '/' + variantImages.detail + images_url.large : ''}
-
                     />
                 </div>
                 <div className={`${styles.detailRow} ${styles.reverse}`}>
@@ -258,7 +263,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                 </div>
                 <div className={styles.detailRow}>
                     <div className={`${styles.dataCointaner} ${styles.detailColumn}`}>
-                        opinie itd
+                        <Reviews />
                     </div>
                     <ImageInViewLoader
                         title={title}
