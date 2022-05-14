@@ -5,7 +5,7 @@
         justify-content: center;
 
         .digit {
-            font-size  : 2.5em;
+            font-size  : 1.8em;
             font-weight: 300;
             text-align : center;
             width      : 0.6em;
@@ -15,6 +15,6 @@
     .label {
         font-size : 0.7em;
         text-align: center;
-        color     : #7a7a7a;
+        opacity   : 0.5;
     }
 }

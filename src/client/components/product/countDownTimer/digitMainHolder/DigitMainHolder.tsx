@@ -10,10 +10,12 @@ interface DigitMainHolderProps {
     isMinutes?: Boolean;
     isSeconds?: Boolean;
     stopSale: number;
+    customOpacity?: number;
+    customColor?: string;
 }
 
 const DigitMainHolder: FC<DigitMainHolderProps> = props => {
-    const { isDays, isHours, isMinutes, isSeconds, stopSale } = props;
+    const { isDays, isHours, isMinutes, isSeconds, stopSale, customOpacity, customColor } = props;
 
     const label = useSelector((state: RootState) =>
         isDays ? state.PublicConfig.translations.days :
@@ -47,10 +49,15 @@ const DigitMainHolder: FC<DigitMainHolderProps> = props => {
             return 0;
         }
     });
+    const opacity = customOpacity ? customOpacity : 1;
+    const color = customColor ? customColor : '#000';
 
     return <div className={styles.mainHolder}>
         <div className={styles.digits}>
-            <div className={styles.digit}>{Math.floor(date / 10) % 10}</div>
+            <div className={styles.digit} style={{
+                opacity: opacity,
+                color: color
+            }}>{Math.floor(date / 10) % 10}</div>
             <div className={styles.digit}>{date % 10}</div>
         </div>
         <div className={styles.label}>{label}</div>

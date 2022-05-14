@@ -26,6 +26,7 @@ import ImageInViewLoader from '../../components/helpers/ui/imageInViewLoader/Ima
 import LeftStickers from '../../components/product/leftStickers/LeftStickers';
 import ShowPrice from '../../components/helpers/display/showPrice/ShowPrice';
 import CountDownTimer from '../../components/product/countDownTimer/CountDownTimer';
+import PriceSaleInfo from '../../components/product/priceSaleInfo/PriceSaleInfo';
 
 interface ProductProps {
     url: string;
@@ -198,13 +199,13 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                 <div className={styles.productMainData}>
                     {title ? <h1>{title}</h1> : <h1><Placeholder /></h1>}
                     <p>promocja wazna przez</p>
-                    {productIsLoaded && showPromo && <CountDownTimer stopSale={sale.stopSale} />}
+                    {productIsLoaded && showPromo && <CountDownTimer stopSale={sale.stopSale} showContainer={true} />}
                     <div className={styles.priceContener}>
 
                         {productIsLoaded && allPrices &&
                             <ShowPrice allPrices={allPrices} salePrice={salePrice} quantity={1} showPromo={showPromo} />
                         }
-                        {showPromo && <p>-{sale.percent} % | Oszczedzasz {saveMoney[currency]} {currency}</p>}
+                        {showPromo && <PriceSaleInfo percent={sale.percent} saveMoney={saveMoney} />}
                     </div>
 
                     {productIsLoaded &&
