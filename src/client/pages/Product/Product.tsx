@@ -25,6 +25,7 @@ import View360 from '../../components/product/view360/View360';
 import ImageInViewLoader from '../../components/helpers/ui/imageInViewLoader/ImageInViewLoader';
 import LeftStickers from '../../components/product/leftStickers/LeftStickers';
 import ShowPrice from '../../components/helpers/display/showPrice/ShowPrice';
+import CountDownTimer from '../../components/product/countDownTimer/CountDownTimer';
 
 interface ProductProps {
     url: string;
@@ -196,8 +197,9 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                 </div>
                 <div className={styles.productMainData}>
                     {title ? <h1>{title}</h1> : <h1><Placeholder /></h1>}
-
+                    {productIsLoaded && showPromo && <CountDownTimer stopSale={sale.stopSale} />}
                     <div className={styles.priceContener}>
+
                         {productIsLoaded && allPrices &&
                             <ShowPrice allPrices={allPrices} salePrice={salePrice} quantity={1} showPromo={showPromo} />
                         }

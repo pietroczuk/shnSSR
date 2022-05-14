@@ -27,4 +27,9 @@ export interface Translations {
     change: string;
     freeDelivery: string;
     to: string;
+
+    days: string;
+    hours: string;
+    minutes: string;
+    seconds: string;
 }

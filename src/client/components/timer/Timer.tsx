@@ -6,9 +6,13 @@ import {
 import { RootState } from "../../client";
 import { userActions } from "../../redux/slices/userSlice/userSlice";
 
-const Timer: FC = () => {
+interface TimerProps {
+    showMe?: boolean
+}
+
+const Timer: FC<TimerProps> = props => {
+    const { showMe } = props;
     const date = useSelector((state: RootState) => state.User.today.date);
-    const showMe = false;
     const dispatch = useDispatch();
     useEffect(() => {
         /** Increase date */

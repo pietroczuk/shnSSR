@@ -31,6 +31,12 @@ export const PublicConfigInitialState: PublicConfig = {
         change: '',
         freeDelivery: '',
         to: '',
+
+        days: '',
+        hours: '',
+        minutes: '',
+        seconds: '',
+
     },
     config: {
         seo: {

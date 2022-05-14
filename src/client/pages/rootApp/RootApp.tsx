@@ -50,7 +50,7 @@ const RootApp: FC<RootAppProps> = (props) => {
     return (
         <Fragment>
             {/* {console.log('root app render', route, props)} */}
-            <Timer />
+            <Timer showMe={true} />
             <Header isWhiteTopbar={true} isDarkBackground={false} />
             {renderRoutes(route.routes)}
             <Footer />
