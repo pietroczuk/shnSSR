@@ -23,7 +23,7 @@ const Timer: FC<TimerProps> = props => {
             clearInterval(timerID);
         }
     }, [])
-    const normal_date = new Date(date).toLocaleString("pl-PL", { timeZone: 'Europe/Warsaw' })
+    const normal_date = new Date(date*1000).toLocaleString("pl-PL", { timeZone: 'Europe/Warsaw' })
     if (showMe) {
         return <Fragment>
             {date} {normal_date}

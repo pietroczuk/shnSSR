@@ -31,7 +31,8 @@ const userSlice = createSlice({
             // const newStateDate =  new Date(stateDate.getTime() + 1000);
             // const newStateDateString = newStateDate.toString();
             // state.today.date = newStateDateString;
-            state.today.date += 1000;
+            // state.today.date += 1000;
+            state.today.date++;
             return state;
         }
     }

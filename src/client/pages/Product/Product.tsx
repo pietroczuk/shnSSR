@@ -82,7 +82,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
     const sale = product ? product.sale : { enable: false, startSale: null, stopSale: null, percent: 0 };
 
     const showPromo = useSelector((state: RootState) => {
-        const now = state.User.today.date
+        const now = state.User.today.date;
         return checkTrueSale(sale, now);
     });
 
@@ -197,6 +197,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                 </div>
                 <div className={styles.productMainData}>
                     {title ? <h1>{title}</h1> : <h1><Placeholder /></h1>}
+                    <p>promocja wazna przez</p>
                     {productIsLoaded && showPromo && <CountDownTimer stopSale={sale.stopSale} />}
                     <div className={styles.priceContener}>
 
