@@ -10,11 +10,13 @@
         width                     : 100%;
         height                    : 100%;
         -webkit-overflow-scrolling: touch;
+        position                  : relative;
+        z-index                   : 0;
 
         .slide {
-            width  : 50%;
-            display: inline-block;
-            height : 100%;
+            width   : 50%;
+            display : inline-block;
+            height  : 100%;
             position: relative;
 
 
@@ -29,13 +31,13 @@
                 // float : left;
                 // width : 100%;
                 text-align: center;
-                height : 100%;
-                float  : left;
-                width: 100%;
+                height    : 100%;
+                float     : left;
+                width     : 100%;
 
                 &.addSpace {
                     padding: 0 15%;
-                    
+
                     // height : 100%;
                 }
 
@@ -48,7 +50,7 @@
 
 
                     img {
-                        width: 100%;
+                        width    : 100%;
                         // height: 100%;
                         // float: left;
                     }
@@ -64,8 +66,8 @@
     }
 
     .slideStart {
-        scroll-snap-align: center;
-        scroll-snap-stop : always;
+        scroll-snap-align   : center;
+        // scroll-snap-stop : always;
     }
 }
 

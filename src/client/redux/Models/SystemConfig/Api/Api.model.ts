@@ -1,11 +1,11 @@
 export interface Api {
-    similarvisit: string;
     global: string;
     wishlist: string;
     cart: string;
     search: string;
-    similarcat: string;
     product: string;
+    similarCategoryProducts: string;
+    similarCollectionProducts: string;
     url: string;
     page: string;
     colection: string;
@@ -13,7 +13,6 @@ export interface Api {
     countries: string;
     delivery: string;
     getlocalcart: string;
-    similarcol: string;
     reviews: string;
     addtocart: string;
     category: string;

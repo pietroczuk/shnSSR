@@ -4,7 +4,7 @@ import styles from './product.scss';
 
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
-import { checkTrueSale, isColorDark, pageTypes, prepareSearchCode, scrollToTop } from '../../utils/utilsFrondend';
+import { checkTrueSale, isColorDark, pageTypes, prepareSearchCode, scrollToTop, similarProductTypes } from '../../utils/utilsFrondend';
 
 import Placeholder from '../../components/placeholder/Placeholder';
 import AllFeaturesDisplay from '../../components/helpers/product/features/AllFeaturesDisplay';
@@ -28,6 +28,7 @@ import ShowPrice from '../../components/helpers/display/showPrice/ShowPrice';
 import CountDownTimer from '../../components/product/countDownTimer/CountDownTimer';
 import PriceSaleInfo from '../../components/product/priceSaleInfo/PriceSaleInfo';
 import Reviews from '../../components/product/reviews/Reviews';
+import SimilarSlider from '../../components/product/similarSlider/SimilarSlider';
 
 interface ProductProps {
     url: string;
@@ -41,7 +42,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
         // allCurrencies, 
         currency, language,
         ssr,
-        title, 
+        title,
         titlekey,
         addToCart, cartProducts, productId, lang, localstorageCartKey,
         defaultVariantCode,
@@ -68,6 +69,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             panoramaWidth: state.PublicConfig.config.panorama.maxWidth,
             panoramaHeight: state.PublicConfig.config.panorama.maxHeight,
             imagesAspectRatio: state.PublicConfig.config.imagesAspectRatio.productPage,
+
         }), shallowEqual
     );
 
@@ -118,7 +120,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             dispatch(pageActions.clearPageData());
         }
 
-    }, [location.pathname])
+    }, [location.pathname]);
 
     useEffect(() => {
         ssr && dispatch(publicConfigActions.disableSrr()) && console.log('disable ssr');
@@ -294,6 +296,14 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             <br />
             {currentVariationId}
             <br />
+            <div>
+                ta sama kolekcja
+            </div>
+            <div>
+                <SimilarSlider type={similarProductTypes.category} />
+            </div>
+            <div>ostatnio ogladane
+            </div>
 
 
 

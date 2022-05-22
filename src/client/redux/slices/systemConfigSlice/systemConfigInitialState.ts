@@ -32,12 +32,12 @@ export const SystemConfigInitialState: SystemConfig = {
     },
     allLanguages: {},
     api: {
-        similarvisit: '',
+        similarCategoryProducts: '',
+        similarCollectionProducts: '',
         global: '',
         wishlist: '',
         cart: '',
         search: '',
-        similarcat: '',
         product: '',
         url: '',
         page: '',
@@ -46,7 +46,6 @@ export const SystemConfigInitialState: SystemConfig = {
         countries: '',
         delivery: '',
         getlocalcart: '',
-        similarcol: '',
         reviews: '',
         addtocart: '',
         category: ''

@@ -29,10 +29,11 @@ interface ProductItemProps {
     forceVisual?: boolean;
     index?: number;
     wishlistPage?: boolean;
+    customWidth?: number;
 }
 
 const ProductItem: FC<ProductItemProps> = props => {
-    const { product, wishlistProduct, forceVisual, index = 0, wishlistPage} = props;
+    const { product, wishlistProduct, forceVisual, index = 0, wishlistPage, customWidth } = props;
 
     const showPlaceholder = !product && !wishlistProduct ? true : false;
 
@@ -44,7 +45,7 @@ const ProductItem: FC<ProductItemProps> = props => {
     const productId = product ? product.id : wishlistProduct ? wishlistProduct.p : null;
     const minPrice = product ? product.minPrice : wishlistProduct ? wishlistProduct.productData.minPrice : null;
     const salePrice = product ? product.salePrice : wishlistProduct ? wishlistProduct.productData.salePrice : null;
-    const sale = product ? product.sale : wishlistProduct ? wishlistProduct.productData.sale : { enable: false, startSale: null, stopSale: null, percent: 0} ;
+    const sale = product ? product.sale : wishlistProduct ? wishlistProduct.productData.sale : { enable: false, startSale: null, stopSale: null, percent: 0 };
     // const showSaleBadge = sale.enable;
     const variations = product ? product.variations : wishlistProduct ? wishlistProduct.productData.variations : null;
 
@@ -165,7 +166,7 @@ const ProductItem: FC<ProductItemProps> = props => {
     }, [localVariantCode]);
 
     useEffect(() => {
-        wishlistProduct && wishlistProduct.v && setVariantIdHandler(wishlistProduct.v);      
+        wishlistProduct && wishlistProduct.v && setVariantIdHandler(wishlistProduct.v);
     }, [wishlistPage, wishlistProduct])
 
     const dispatch = useDispatch();
@@ -187,7 +188,11 @@ const ProductItem: FC<ProductItemProps> = props => {
 
 
     return <div className={`${styles.productItemContainer} ${showPlaceholder ? styles.disable : ''}`}
-        onMouseEnter={onHoverHandler} onMouseLeave={onLeaveHandler}>
+        onMouseEnter={onHoverHandler} onMouseLeave={onLeaveHandler}
+        style={{
+            maxWidth: customWidth ? customWidth + '%' : '32.666666666666667%'
+        }}
+    >
 
         {!showPlaceholder && <AddToWishlistSticker
             showLikes={true}
@@ -197,19 +202,19 @@ const ProductItem: FC<ProductItemProps> = props => {
         />
         }
         <DivNavLink to={productUrl}>
-            {showPromo && <SaleBadge sale={sale}/>}
+            {showPromo && <SaleBadge sale={sale} />}
             <ImageDisplay title={title} imagesHolderUrl={imagesHolderUrl} forceVisual={forceVisual} onHover={onHover} showPlaceholder={showPlaceholder} />
         </DivNavLink>
         {wishlistPage && <ShowAddToCartVariants
             avaibleVariations={variations}
             active={onHover}
             productId={productId}
-            showPromo = {showPromo}
+            showPromo={showPromo}
         />}
         {!wishlistPage && !showPlaceholder && <ShowAvaibleFeatures
             active={onHover}
             currentVariationCode={localVariantCode}
-            onClickFunction={changeLocalVariantCode} 
+            onClickFunction={changeLocalVariantCode}
 
         />}
         <DivNavLink to={productUrl}>
@@ -223,13 +228,13 @@ const ProductItem: FC<ProductItemProps> = props => {
                         {showPlaceholder && <Placeholder customWidth={'50%'} />}
                         {!showPlaceholder && title && cutText(title)}
                     </div>
-                    {wishlistPage && <ShowSelectedAttributes selectedVariantId={variantId} avaibleVariations={variations} isWishlist={true}/>}
+                    {wishlistPage && <ShowSelectedAttributes selectedVariantId={variantId} avaibleVariations={variations} isWishlist={true} />}
                 </div>
                 <div className={styles.priceContainer}>
                     <div className={styles.label}>
                         {!showPlaceholder && translations && translations.priceFrom ? translations.priceFrom : ''}
                     </div>
-                    <ShowPrice allPrices={minPrice} salePrice={salePrice} quantity={1} showPromo={showPromo}/>
+                    <ShowPrice allPrices={minPrice} salePrice={salePrice} quantity={1} showPromo={showPromo} />
                 </div>
             </div>
         </DivNavLink>

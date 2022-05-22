@@ -1,6 +1,6 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import axios from "axios";
-import { pageTypes } from "../../../utils/utilsFrondend";
+import { pageTypes, similarProductTypes } from "../../../utils/utilsFrondend";
 import { Variations } from "../../Models/Product/Variations/Variations.model";
 import { Api } from "../../Models/SystemConfig/Api/Api.model";
 import { pageActions } from "../../slices/pageSlice/pageSlice";
@@ -47,4 +47,31 @@ export const updateStorePageProductslistPromoPrice = (productId: string, saleEna
 export const updateStorePageSingleProductPromoPrice = (saleEnable: boolean) => (dispatch: Dispatch) => {
   const actionPayload = { saleEnable };
   return dispatch(pageActions.updateSingleProductPromoPrice(actionPayload));
+}
+/**
+ * get similar products
+ */
+
+export const getSimilarProducts = (api: Api, type: string, lang: string, product: string, limit: number, axiosAbortController?: AbortController) => async (dispatch: Dispatch) => {
+  const page_url = '?lang=' + lang + '&product=' + product + '&limit=' + limit;
+  let axiosEndpoint = null;
+  switch (type) {
+    case similarProductTypes.category:
+      axiosEndpoint = api.similarCategoryProducts + page_url;
+      break;
+    case similarProductTypes.collection:
+      axiosEndpoint = api.similarCollectionProducts + page_url;
+      break;
+  }
+  if (axiosEndpoint) {
+    return axios.get(api.url + '/' + axiosEndpoint,
+      { signal: axiosAbortController ? axiosAbortController.signal : undefined })
+      .then(res =>
+        dispatch(pageActions.setSimilarProduct({ data: res.data.data, type: type }))
+      )
+      .catch(err => {
+        console.error('❌ Error get data from DB', err);
+      });
+  }
+  return undefined;
 }

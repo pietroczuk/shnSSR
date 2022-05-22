@@ -1,3 +1,5 @@
 export interface ProductSlidersConfig {
-    visitedCount: number
+    visitedLimit: number;
+    collectionLimit: number;
+    categoryLimit: number;
 }

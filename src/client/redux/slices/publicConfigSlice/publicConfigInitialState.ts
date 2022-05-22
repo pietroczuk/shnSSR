@@ -77,7 +77,9 @@ export const PublicConfigInitialState: PublicConfig = {
             categoryProducts: 0
         },
         productSlidersConfig: {
-            visitedCount: 0
+            visitedLimit: 0,
+            collectionLimit: 0,
+            categoryLimit: 0
         }
     },
 

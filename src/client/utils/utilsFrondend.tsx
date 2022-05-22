@@ -19,7 +19,12 @@ export const pageTypes = {
     wishlist: 'wishlist',
     cart: 'cart',
     specialPage: 'special',
-}
+} as const;
+export const similarProductTypes = {
+    category: 'category',
+    collection: 'collection'
+} as const;
+
 export const getPageTypeAsString = (pageType: string) => {
     return pageTypes[pageType];
 }

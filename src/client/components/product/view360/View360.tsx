@@ -52,6 +52,9 @@ const View360: FC<View360Props> = props => {
         isViewportInStageVisible();
     }
     const isViewportInStageVisible = () => {
+        if(!panoramaCointaner || !panoramaCointaner.current) {
+            return;
+        }
         const contenerSize = panoramaCointaner.current.getBoundingClientRect();
         setSliderConfig(prevState => ({ ...prevState, size: contenerSize.width, offsetX: contenerSize.x }));
         const isVisible = isScrolledIntoView(panoramaCointaner, null, sliderConfig.offsetTopToTriggerAnimation, sliderConfig.offsetTopToTriggerAnimation);

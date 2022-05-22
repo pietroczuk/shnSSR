@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { pageTypes } from '../../../utils/utilsFrondend';
+import { pageTypes, similarProductTypes } from '../../../utils/utilsFrondend';
 import { Page } from '../../Models/Page/Page.model';
 
 import { pageInitialState } from './pageInitialState';
@@ -58,7 +58,7 @@ const pageSlice = createSlice({
                         value.saveMoney[key] = 0;
                     });
                 });
-                
+
             } else {
                 Object.entries(salePrice).forEach(([key, _value]) => {
                     salePrice[key] = Math.round(minPrice[key] * ((100 - percent) / 100));
@@ -100,7 +100,7 @@ const pageSlice = createSlice({
                         value.saveMoney[key] = 0;
                     });
                 });
-                
+
             } else {
                 // Object.entries(salePrice).forEach(([key, _value]) => {
                 //     salePrice[key] = Math.round(minPrice[key] * ((100 - percent) / 100));
@@ -121,7 +121,19 @@ const pageSlice = createSlice({
 
             // console.log('product update',action.payload);
             return state;
-        }
+        },
+        setSimilarProduct(state: Page, action) {
+            const { data, type } = action.payload;
+            switch (type) {
+                case similarProductTypes.category:
+                    state.data.productPage.similarCategory = data;
+                    break;
+                case similarProductTypes.collection:
+                    state.data.productPage.similarCollection = data;
+                    break;
+            }
+            return state;
+        },
     }
 });
 export const pageActions = pageSlice.actions;

@@ -29,7 +29,13 @@ export const pageInitialState: Page = {
                 percent: 0,
                 startSale: 0,
                 stopSale: 0
-            }
+            },
+            similarCategory: {
+                products: {}
+            },
+            similarCollection: {
+                products: {}
+            },
 
         },
         staticPage: {
