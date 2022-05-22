@@ -406,7 +406,7 @@ interface isScrolledIntoViewArgs {
 export const isScrolledIntoView: isScrolledIntoViewArgs = (element, parrent = null, offsetTop = 0, offsetBottom = 0, offsetLeft = 0, offsetRight = 0) => {
     if (!element || !element.current) return false;
     const rect = element.current.getBoundingClientRect();
-    const elemTop = rect.top + offsetTop;
+    const elemTop = rect.top - offsetTop;
     const elemBottom = rect.bottom - offsetBottom;
     const elemLeft = rect.left + offsetLeft;
     const elemRight = rect.right - offsetRight;

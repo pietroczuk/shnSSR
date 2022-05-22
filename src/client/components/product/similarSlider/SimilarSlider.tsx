@@ -1,7 +1,7 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import styles from './similarSlider.scss';
 import withStyles from "isomorphic-style-loader/withStyles";
-import { pageTypes, similarProductTypes } from "../../../utils/utilsFrondend";
+import { isScrolledIntoView, pageTypes, similarProductTypes } from "../../../utils/utilsFrondend";
 import { getSimilarProducts } from "../../../redux/actionCreators/page/page.ac";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../client";
@@ -38,16 +38,30 @@ const SimilarSlider: FC<SimilarSliderProps> = props => {
         return { productId, limit, api, language, products, isMobile, collectionId }
     }, shallowEqual);
 
+    const [isVisible, setIsVisible] = useState(false);
     const dispatch = useDispatch();
     const imageScrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        isViewportInStageVisible();
+        !isVisible && window.addEventListener('scroll', handleWindowScroll, { passive: true });
         const axiosAbortController = new AbortController();
-        productId && dispatch(getSimilarProducts(api, type, language, productId, limit, collectionId, axiosAbortController));
+        productId && isVisible && dispatch(getSimilarProducts(api, type, language, productId, limit, collectionId, axiosAbortController));
         return () => {
+            window.removeEventListener('scroll', handleWindowScroll);
+            setIsVisible(false);
             axiosAbortController.abort();
         }
-    }, [productId])
+    }, [productId, isVisible]);
+
+    const handleWindowScroll = () => {
+        isViewportInStageVisible();
+    }
+
+    const isViewportInStageVisible = () => {
+        const isLocalVisible = isScrolledIntoView(imageScrollRef, null, 100, 100);
+        setIsVisible(isLocalVisible);
+    }
 
     const gotoNextSlide = () => {
         imageScrollRef.current.scrollBy({
