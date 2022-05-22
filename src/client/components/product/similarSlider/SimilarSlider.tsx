@@ -15,7 +15,7 @@ interface SimilarSliderProps {
 
 const SimilarSlider: FC<SimilarSliderProps> = props => {
     const { type } = props;
-    const { productId, limit, api, language, products, isMobile } = useSelector((state: RootState) => {
+    const { productId, limit, api, language, products, isMobile, collectionId } = useSelector((state: RootState) => {
         let limit = 0;
         let products: {
             [key: string]: Product;
@@ -34,15 +34,16 @@ const SimilarSlider: FC<SimilarSliderProps> = props => {
         const api = state.SystemConfig.api;
         const language = state.User.language;
         const isMobile = state.Display.isMobile;
-        return { productId, limit, api, language, products, isMobile }
+        const collectionId = productId ? state.Page.data.productPage.colection : null;
+        return { productId, limit, api, language, products, isMobile, collectionId }
     }, shallowEqual);
 
     const dispatch = useDispatch();
     const imageScrollRef = useRef<HTMLDivElement>(null);
-    
+
     useEffect(() => {
         const axiosAbortController = new AbortController();
-        productId && dispatch(getSimilarProducts(api, type, language, productId, limit, axiosAbortController));
+        productId && dispatch(getSimilarProducts(api, type, language, productId, limit, collectionId, axiosAbortController));
         return () => {
             axiosAbortController.abort();
         }
@@ -62,11 +63,11 @@ const SimilarSlider: FC<SimilarSliderProps> = props => {
     }
     const sliderIndex = 1;
     const sliderMaxIndex = 2;
-    
+
     return <div className={styles.sliderContainer}>
         {!isMobile && sliderIndex > 0 && <SliderNavButton onClickHandler={gotoPrevSlide} leftDirection={true} />}
         {!isMobile && sliderMaxIndex > sliderIndex && <SliderNavButton onClickHandler={gotoNextSlide} leftDirection={false} />}
-        
+
         <div className={styles.slider} ref={imageScrollRef}>
             {products ?
                 Object.entries(products).map(([_key, val], index) => {

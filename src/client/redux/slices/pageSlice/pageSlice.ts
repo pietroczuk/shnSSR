@@ -122,7 +122,7 @@ const pageSlice = createSlice({
             // console.log('product update',action.payload);
             return state;
         },
-        setSimilarProduct(state: Page, action) {
+        setSimilarProduct(state: Page, action: { payload: { type: keyof typeof similarProductTypes, data: any } }) {
             const { data, type } = action.payload;
             switch (type) {
                 case similarProductTypes.category:

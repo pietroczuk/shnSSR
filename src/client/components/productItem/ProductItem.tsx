@@ -57,6 +57,7 @@ const ProductItem: FC<ProductItemProps> = props => {
         isMultilanguage,
         defaultVariantCode,
         ssr,
+        pageType
     } = useSelector((state: RootState) => ({
         language: state.User.language,
         showRandom: state.Display.showRandom,
@@ -65,6 +66,7 @@ const ProductItem: FC<ProductItemProps> = props => {
         isMultilanguage: state.SystemConfig.isMultilanguage,
         defaultVariantCode: state.PublicConfig.defaultVariantCode,
         ssr: state.PublicConfig.ssr,
+        pageType: state.Page.info.type
     }), shallowEqual);
 
     const showPromo = useSelector((state: RootState) => {
@@ -171,7 +173,7 @@ const ProductItem: FC<ProductItemProps> = props => {
 
     const dispatch = useDispatch();
     useEffect(() => {
-        !wishlistPage && sale.enable && dispatch(updateStorePageProductslistPromoPrice(productId, showPromo));
+        !wishlistPage && sale.enable && pageType == pageTypes.categoryPage && dispatch(updateStorePageProductslistPromoPrice(productId, showPromo));
         wishlistPage && sale.enable && wishlistProduct.v && dispatch(updateStoreWishlistPromoPrice(wishlistProduct.v, showPromo));
     }, [showPromo])
 

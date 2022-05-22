@@ -52,15 +52,17 @@ export const updateStorePageSingleProductPromoPrice = (saleEnable: boolean) => (
  * get similar products
  */
 
-export const getSimilarProducts = (api: Api, type: string, lang: string, product: string, limit: number, axiosAbortController?: AbortController) => async (dispatch: Dispatch) => {
-  const page_url = '?lang=' + lang + '&product=' + product + '&limit=' + limit;
+export const getSimilarProducts = (api: Api, type: keyof typeof similarProductTypes, lang: string, product: string, limit: number, collectionId: string | null,  axiosAbortController?: AbortController) => async (dispatch: Dispatch) => {
+  let page_url = '';
   let axiosEndpoint = null;
   switch (type) {
     case similarProductTypes.category:
+      page_url = '?lang=' + lang + '&product=' + product + '&limit=' + limit;
       axiosEndpoint = api.similarCategoryProducts + page_url;
       break;
     case similarProductTypes.collection:
-      axiosEndpoint = api.similarCollectionProducts + page_url;
+      page_url = '?lang=' + lang + '&product=' + product + '&collection=' + collectionId + '&limit=' + limit;
+      axiosEndpoint = api.similarCollectionProducts + page_url;     
       break;
   }
   if (axiosEndpoint) {

@@ -297,12 +297,15 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             {currentVariationId}
             <br />
             <div>
-                ta sama kolekcja
+                <h1>Kolekcja</h1>
+                <SimilarSlider type={similarProductTypes.collection} />
             </div>
             <div>
+                <h1>Kategoria</h1>
                 <SimilarSlider type={similarProductTypes.category} />
             </div>
-            <div>ostatnio ogladane
+            <div>
+                <h1>Ostatnio ogladane</h1>
             </div>
 
 
