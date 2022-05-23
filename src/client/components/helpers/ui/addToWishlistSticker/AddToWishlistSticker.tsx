@@ -13,13 +13,13 @@ interface Props {
     likes?: number,
     variantId: string,
     productId: string,
-    forceVisual? : boolean,
-    cssClass? : string,
-    whiteIcon? : boolean
+    forceVisualMode?: boolean,
+    cssClass?: string,
+    whiteIcon?: boolean
 }
 
 const AddToWishlistSticker: FC<Props> = props => {
-    const { showLikes, likes, variantId, productId, forceVisual, cssClass, whiteIcon } = props;
+    const { showLikes, likes, variantId, productId, forceVisualMode, cssClass, whiteIcon } = props;
     const dispatch = useDispatch();
     const { api, lang, localstorageWishlistKey, wishlistProducts, showVisual } = useSelector((state: RootState) => ({
         api: state.SystemConfig.api,
@@ -34,7 +34,7 @@ const AddToWishlistSticker: FC<Props> = props => {
         variantId && productId && dispatch(addToStoreWishlist(api, lang, productId, variantId, localstorageWishlistKey, alreadyInWishlist));
     }
 
-    const showVisualMode = forceVisual !== undefined ? forceVisual : showVisual;
+    const showVisualMode = forceVisualMode !== undefined ? forceVisualMode : showVisual;
 
     return <div className={
         `${styles.addToWishContainer} 

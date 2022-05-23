@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState, UIEvent } from "react";
 import styles from './similarSlider.scss';
 import withStyles from "isomorphic-style-loader/withStyles";
 import { isScrolledIntoView, pageTypes, similarProductTypes } from "../../../utils/utilsFrondend";
@@ -39,11 +39,16 @@ const SimilarSlider: FC<SimilarSliderProps> = props => {
     }, shallowEqual);
 
     const [isVisible, setIsVisible] = useState(false);
+    const [showLeftArrow, setShowLeftArrow] = useState(false);
+    const [showRightArrow, setShowRightArrow] = useState(true);
+
     const dispatch = useDispatch();
     const imageScrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         isViewportInStageVisible();
+        showLeftArrow && setShowLeftArrow(false);
+        !showRightArrow && setShowRightArrow(true);
         !isVisible && window.addEventListener('scroll', handleWindowScroll, { passive: true });
         const axiosAbortController = new AbortController();
         productId && isVisible && dispatch(getSimilarProducts(api, type, language, productId, limit, collectionId, axiosAbortController));
@@ -75,21 +80,39 @@ const SimilarSlider: FC<SimilarSliderProps> = props => {
             behavior: 'smooth'
         });
     }
-    const sliderIndex = 1;
-    const sliderMaxIndex = 2;
+    const handleScroll = (event: UIEvent<HTMLDivElement>) => {
+        const target = event.currentTarget;
+        if (target.scrollLeft <= 0 && showLeftArrow) {
+            setShowLeftArrow(false);
+        }
+        if (!showLeftArrow && target.scrollLeft > 100) {
+            setShowLeftArrow(true);
+        }
+        if (target.scrollWidth - target.scrollLeft <= target.offsetWidth + 100) {
+            if (showRightArrow) {
+                setShowRightArrow(false);
+            }
+        } else {
+            if (!showRightArrow) {
+                setShowRightArrow(true);
+            }
+        }
+        // console.log(target.scrollWidth - target.scrollLeft , target.offsetWidth);
+    }
 
     return <div className={styles.sliderContainer}>
-        {!isMobile && sliderIndex > 0 && <SliderNavButton onClickHandler={gotoPrevSlide} leftDirection={true} />}
-        {!isMobile && sliderMaxIndex > sliderIndex && <SliderNavButton onClickHandler={gotoNextSlide} leftDirection={false} />}
+        {!isMobile && showLeftArrow && <SliderNavButton onClickHandler={gotoPrevSlide} leftDirection={true} />}
+        {!isMobile && showRightArrow && <SliderNavButton onClickHandler={gotoNextSlide} leftDirection={false} />}
 
-        <div className={styles.slider} ref={imageScrollRef}>
+        <div className={styles.slider} ref={imageScrollRef} onScroll={handleScroll}>
             {products ?
-                Object.entries(products).map(([_key, val], index) => {
+                Object.entries(products).map(([_key, val]) => {
                     return <div className={styles.slide} key={val.id}>
                         <ProductItem
                             product={val}
-                            index={index}
                             customWidth={100}
+                            forceVisualMode={false}
+                            forceRandomMode={false}
                         />
                     </div>
                 })

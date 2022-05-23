@@ -196,7 +196,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
                     <AddToWishlistSticker
                         variantId={currentVariationId}
                         productId={productId}
-                        forceVisual={false}
+                        forceVisualMode={false}
                         cssClass={styles.wishlistStickerContainer}
                         whiteIcon={isDarkVariantBgColor}
                     />

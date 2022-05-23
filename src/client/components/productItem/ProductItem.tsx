@@ -26,15 +26,17 @@ const ShowAddToCartVariants = loadable(() => import(/* webpackPrefetch: true */ 
 interface ProductItemProps {
     product?: Product;
     wishlistProduct?: WishlistProduct;
-    forceVisual?: boolean;
     index?: number;
     wishlistPage?: boolean;
     customWidth?: number;
+    forceRandomMode?: boolean;
+    forceVisualMode?: boolean;
 }
 
 const ProductItem: FC<ProductItemProps> = props => {
-    const { product, wishlistProduct, forceVisual, index = 0, wishlistPage, customWidth } = props;
+    const { product, wishlistProduct, forceRandomMode, forceVisualMode, index = 0, wishlistPage, customWidth } = props;
 
+    // console.log('forceRandomMode', forceRandomMode,forceVisualMode )
     const showPlaceholder = !product && !wishlistProduct ? true : false;
 
     const title = product ? product.title : wishlistProduct ? wishlistProduct.productData.title : null;
@@ -60,7 +62,7 @@ const ProductItem: FC<ProductItemProps> = props => {
         pageType
     } = useSelector((state: RootState) => ({
         language: state.User.language,
-        showRandom: state.Display.showRandom,
+        showRandom: forceRandomMode !== undefined ? forceRandomMode: state.Display.showRandom,
         pageTypePrefixUrls: state.SystemConfig.pageTypePrefixUrls,
         translations: state.PublicConfig.translations,
         isMultilanguage: state.SystemConfig.isMultilanguage,
@@ -71,7 +73,6 @@ const ProductItem: FC<ProductItemProps> = props => {
 
     const showPromo = useSelector((state: RootState) => {
         const now = state.User.today.date
-        // if(sale === null) return false;
         return checkTrueSale(sale, now)
     });
 
@@ -201,11 +202,15 @@ const ProductItem: FC<ProductItemProps> = props => {
             likes={likes}
             variantId={variantId}
             productId={productId}
+            forceVisualMode={forceVisualMode}
         />
         }
         <DivNavLink to={productUrl}>
             {showPromo && <SaleBadge sale={sale} />}
-            <ImageDisplay title={title} imagesHolderUrl={imagesHolderUrl} forceVisual={forceVisual} onHover={onHover} showPlaceholder={showPlaceholder} />
+            <ImageDisplay title={title} imagesHolderUrl={imagesHolderUrl}
+                // forceVisual={forceVisual} forceSimple={forceSimple} 
+                forceVisualMode={forceVisualMode}
+                onHover={onHover} showPlaceholder={showPlaceholder} />
         </DivNavLink>
         {wishlistPage && <ShowAddToCartVariants
             avaibleVariations={variations}

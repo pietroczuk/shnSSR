@@ -12,15 +12,15 @@ import { VariationImage } from "../../../redux/Models/Product/Variations/Variati
 interface Props {
     title: string,
     imagesHolderUrl: VariationImage,
-    forceVisual: boolean
+    forceVisualMode?: boolean,
     onHover: boolean
     showPlaceholder: boolean
 }
 
 const ImageDisplay: FC<Props> = props => {
-    const { title, imagesHolderUrl, forceVisual, onHover, showPlaceholder } = props;
+    const { title, imagesHolderUrl, forceVisualMode, onHover, showPlaceholder } = props;
     const { showVisual, imagesConfig, image_width, image_height } = useSelector((state: RootState) => ({
-        showVisual: !forceVisual ? state.Display.showVisual : forceVisual,
+        showVisual: forceVisualMode !== undefined ? forceVisualMode : state.Display.showVisual,
         imagesConfig: state.SystemConfig.images,
         image_width: state.PublicConfig.config.imagesAspectRatio.catalog.width,
         image_height: state.PublicConfig.config.imagesAspectRatio.catalog.height,
@@ -46,9 +46,6 @@ const ImageDisplay: FC<Props> = props => {
             </div>
         </div>
     )
-
-
-
 }
 
 export default withStyles(styles)(ImageDisplay)
