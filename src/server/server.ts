@@ -70,6 +70,7 @@ if (!process.env.API_URL) {
                 const urlData = urlDataFromPath(req.path, allLanguages, isMultilanguage);
                 const languageFromUrl = urlData.languageCode;
                 const real_path = urlData.realPath;
+                
                 const blankUrl = req.path === '/' || urlData.blankPath ? true : false;
                 const language =
                     isMultilanguage ?
@@ -79,14 +80,15 @@ if (!process.env.API_URL) {
                             languageFromUrl
                         :
                         Object.values(allLanguages)[0]['code'];
-                if (blankUrl && language) {
-                    const homepageUrl =
-                        api_config.specialPagesUrlsArray &&
-                            api_config.specialPagesUrlsArray.homepage ?
-                            isMultilanguage ?
-                                language + '/' + api_config.specialPagesUrlsArray.homepage[language]
-                                : api_config.specialPagesUrlsArray.homepage[language]
-                            : language;
+                const homepageUrl =
+                    api_config.specialPagesUrlsArray &&
+                        api_config.specialPagesUrlsArray.homepage ?
+                        isMultilanguage ?
+                            language + '/' + api_config.specialPagesUrlsArray.homepage[language]
+                            : api_config.specialPagesUrlsArray.homepage[language]
+                        : language;
+                // console.log('req.path', req.path, 'urlData.blankPath', urlData.blankPath, 'homepageUrl', homepageUrl);
+                if (blankUrl && language && '/' + homepageUrl !== req.path) {
                     res.redirect('/' + homepageUrl);
                 } else {
                     const mobileDetect = new MobileDetect(req.headers['user-agent']);
@@ -106,7 +108,7 @@ if (!process.env.API_URL) {
                     // get display cookies
                     const display_options = getDisplayCookies(req.headers.cookie, api_config.cookiesKeys.displayKeys);
                     display_options.isMobile = isMobile;
-                    
+
                     const server_store = createServerInitStore(language, userCurrency, display_options);
 
                     // preapre system pages uls
