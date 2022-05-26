@@ -26,7 +26,8 @@ const Logo: FC<Props> = props => {
     const svgWidth = customWidth ? customWidth : 220;
     const logoWidth = isMiniLogo ? 54 : svgWidth;
     const rawSlug = specialPagesUrlsArray[pageTypes.homePage][language];
-    const linkUrl = rawSlug ? prepUrlFromConfigSlug(language, null, null, null, rawSlug, isMultilanguage) : undefined;
+    const linkUrl = rawSlug !== undefined ? prepUrlFromConfigSlug(language, null, null, null, rawSlug, isMultilanguage) : undefined;
+
     return (
         <div className={styles.logoContener} style={{ width: logoWidth + 'px', minWidth: (logoWidth + 50) + 'px' }}>
             <DivNavLink to={linkUrl}>
