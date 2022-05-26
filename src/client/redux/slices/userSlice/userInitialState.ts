@@ -6,5 +6,8 @@ export const UserInitialState: User = {
     today: { 
         date: new Date().setMilliseconds(0)
     },
-    visitedProducts: {}
+    visited: {
+        products: {},
+        isLoaded: false,
+    }
 }

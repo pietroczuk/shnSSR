@@ -1,4 +1,4 @@
-import { Product } from "../Product/Product.model";
+import { ProductKeyVal } from "../Product/Product.model";
 
 export interface User {
     language: string;
@@ -6,7 +6,8 @@ export interface User {
     today: {
         date: number;
     },
-    visitedProducts: {
-        [key: string]: Product;
+    visited: {
+        products: ProductKeyVal,
+        isLoaded: boolean;
     };
 }

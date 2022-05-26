@@ -1,8 +1,6 @@
-import { Product } from "../../../Product/Product.model";
+import { ProductKeyVal } from "../../../Product/Product.model";
 
 export interface CategoryPageData {
-    products: {
-        [key: string]: Product;
-    };
-    length: number
+    products: ProductKeyVal;
+    length: number;
 }

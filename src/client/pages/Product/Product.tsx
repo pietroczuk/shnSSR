@@ -29,6 +29,9 @@ import CountDownTimer from '../../components/product/countDownTimer/CountDownTim
 import PriceSaleInfo from '../../components/product/priceSaleInfo/PriceSaleInfo';
 import Reviews from '../../components/product/reviews/Reviews';
 import SimilarSlider from '../../components/product/similarSlider/SimilarSlider';
+// import { addToVisitedProduct } from '../../redux/actionCreators/user/user.ac';
+// import { Product } from '../../redux/Models/Product/Product.model';
+import { addToStoreVisited } from '../../redux/actionCreators/user/user.ac';
 
 interface ProductProps {
     url: string;
@@ -44,7 +47,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
         ssr,
         title,
         titlekey,
-        addToCart, cartProducts, productId, lang, localstorageCartKey,
+        addToCart, cartProducts, productId, lang, localstorageCartKey, localstorageVisistedKey,
         defaultVariantCode,
         panoramaWidth,
         panoramaHeight,
@@ -65,6 +68,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             productId: state.Page.info.id,
             lang: state.User.language,
             localstorageCartKey: state.SystemConfig.localstorageKeys.cart,
+            localstorageVisistedKey: state.SystemConfig.localstorageKeys.visited,
             defaultVariantCode: state.PublicConfig.defaultVariantCode,
             panoramaWidth: state.PublicConfig.config.panorama.maxWidth,
             panoramaHeight: state.PublicConfig.config.panorama.maxHeight,
@@ -121,6 +125,10 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
         }
 
     }, [location.pathname]);
+
+    useEffect(() => {
+        productId && dispatch(addToStoreVisited(api, lang, productId, localstorageVisistedKey));
+    }, [productId])
 
     useEffect(() => {
         ssr && dispatch(publicConfigActions.disableSrr()) && console.log('disable ssr');
@@ -306,6 +314,7 @@ const Product: FC<RouteComponentProps<ProductProps>> = (props) => {
             </div>
             <div>
                 <h1>Ostatnio ogladane</h1>
+                <SimilarSlider type={similarProductTypes.visited} />
             </div>
 
 

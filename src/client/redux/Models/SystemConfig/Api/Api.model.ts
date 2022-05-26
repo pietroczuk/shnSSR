@@ -1,6 +1,7 @@
 export interface Api {
     global: string;
     wishlist: string;
+    visited: string;
     cart: string;
     search: string;
     product: string;

@@ -22,7 +22,8 @@ export const pageTypes = {
 } as const;
 export const similarProductTypes = {
     category: 'category',
-    collection: 'collection'
+    collection: 'collection',
+    visited: 'visited',
 } as const;
 
 export const getPageTypeAsString = (pageType: string) => {

@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState, UIEvent } from "react";
+import { FC, useEffect, useRef, useState, UIEvent, Fragment } from "react";
 import styles from './similarSlider.scss';
 import withStyles from "isomorphic-style-loader/withStyles";
 import { isScrolledIntoView, pageTypes, similarProductTypes } from "../../../utils/utilsFrondend";
@@ -6,8 +6,9 @@ import { getSimilarProducts } from "../../../redux/actionCreators/page/page.ac";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../client";
 import ProductItem from "../../productItem/ProductItem";
-import { Product } from "../../../redux/Models/Product/Product.model";
+import { ProductKeyVal } from "../../../redux/Models/Product/Product.model";
 import SliderNavButton from "../imageSlider/sliderNavButton/SliderNavButton";
+import { checkVisitedProducts } from "../../../redux/actionCreators/user/user.ac";
 
 interface SimilarSliderProps {
     type: keyof typeof similarProductTypes
@@ -15,11 +16,10 @@ interface SimilarSliderProps {
 
 const SimilarSlider: FC<SimilarSliderProps> = props => {
     const { type } = props;
-    const { productId, limit, api, language, products, isMobile, collectionId } = useSelector((state: RootState) => {
+    const isVisitedSlider = type === similarProductTypes.visited ? true : false;
+    const { productId, limit, api, language, products, isMobile, collectionId, isVisitedLoaded, localstorageVisistedKey } = useSelector((state: RootState) => {
         let limit = 0;
-        let products: {
-            [key: string]: Product;
-        } = {};
+        let products: ProductKeyVal = {};
         switch (type) {
             case similarProductTypes.category:
                 limit = state.PublicConfig.config.productSlidersConfig.categoryLimit;
@@ -29,13 +29,24 @@ const SimilarSlider: FC<SimilarSliderProps> = props => {
                 limit = state.PublicConfig.config.productSlidersConfig.collectionLimit;
                 products = state.Page.data.productPage.similarCollection.products;
                 break;
+            case similarProductTypes.visited:
+                limit = state.PublicConfig.config.productSlidersConfig.visitedLimit;
+                products = state.User.visited.products;
+                // isVisitedLoaded = state.User.visited.isLoaded;
+                break;
         }
         const productId = state.Page.info.id && state.Page.info.type == pageTypes.productPage ? state.Page.info.id : null;
         const api = state.SystemConfig.api;
         const language = state.User.language;
         const isMobile = state.Display.isMobile;
         const collectionId = productId ? state.Page.data.productPage.colection : null;
-        return { productId, limit, api, language, products, isMobile, collectionId }
+        const isLoaded = isVisitedSlider ? state.User.visited.isLoaded : false;
+        const visitedLocalstorageKey = isVisitedSlider ? state.SystemConfig.localstorageKeys.visited : null;
+        return {
+            productId, limit, api, language, products,
+            isMobile, collectionId, isVisitedLoaded: isLoaded,
+            localstorageVisistedKey: visitedLocalstorageKey
+        }
     }, shallowEqual);
 
     const [isVisible, setIsVisible] = useState(false);
@@ -51,7 +62,9 @@ const SimilarSlider: FC<SimilarSliderProps> = props => {
         !showRightArrow && setShowRightArrow(true);
         !isVisible && window.addEventListener('scroll', handleWindowScroll, { passive: true });
         const axiosAbortController = new AbortController();
-        productId && isVisible && dispatch(getSimilarProducts(api, type, language, productId, limit, collectionId, axiosAbortController));
+        productId && isVisible && !isVisitedSlider && dispatch(getSimilarProducts(api, type, language, productId, limit, collectionId, axiosAbortController));
+        // load visited from localsorage
+        isVisitedSlider && !isVisitedLoaded && isVisible && dispatch(checkVisitedProducts(localstorageVisistedKey, api, language));
         return () => {
             window.removeEventListener('scroll', handleWindowScroll);
             setIsVisible(false);
@@ -106,8 +119,11 @@ const SimilarSlider: FC<SimilarSliderProps> = props => {
 
         <div className={styles.slider} ref={imageScrollRef} onScroll={handleScroll}>
             {products ?
-                Object.entries(products).map(([_key, val]) => {
-                    return <div className={styles.slide} key={val.id}>
+                Object.entries(products).map(([key, val]) => {
+                    if (key === productId) {
+                        return <Fragment key={key} />
+                    }
+                    return <div className={styles.slide} key={key}>
                         <ProductItem
                             product={val}
                             customWidth={100}
@@ -117,7 +133,7 @@ const SimilarSlider: FC<SimilarSliderProps> = props => {
                     </div>
                 })
                 :
-                [...Array(limit)].map((_el, index) => {
+                !isVisitedSlider && [...Array(limit)].map((_el, index) => {
                     return <div className={styles.slide} key={index}>
                         <ProductItem customWidth={100} />
                     </div>

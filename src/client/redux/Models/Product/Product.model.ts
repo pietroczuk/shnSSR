@@ -15,9 +15,14 @@ export interface Product {
     salePrice: {
         [key: string]: number;
     }
-    saveMoney :{
+    saveMoney: {
         [key: string]: number;
     }
     hashmap: VariationHashmap;
-    sale: Sale; 
+    sale: Sale;
+}
+
+
+export interface ProductKeyVal {
+    [key: string]: Product;
 }
