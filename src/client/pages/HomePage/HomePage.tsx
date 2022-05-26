@@ -19,7 +19,7 @@ const HomePage: FC = () => {
         <Fragment>
             <div>home component</div>
             <button onClick={() => { console.log('cklik me') }}>kliknij</button>
-            <Link to='/gowno'>gowno</Link><br />
+            <Link to='/'>glowna etc</Link><br />
             <Link to='/pl/about'>about</Link><br />
             <Link to='/fr/about'>about2</Link><br />
             <Link to='/de/about2'>about3</Link><br />
