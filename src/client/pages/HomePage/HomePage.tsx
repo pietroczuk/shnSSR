@@ -5,13 +5,33 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { publicConfigActions } from '../../redux/slices/publicConfigSlice/publicConfigSlice';
 import { RootState } from '../../client';
+import { pageActions } from '../../redux/slices/pageSlice/pageSlice';
+import { pageTypes } from '../../utils/utilsFrondend';
 
 const HomePage: FC = () => {
-    const { ssr } = useSelector((state: RootState) => ({
+    const pageType = pageTypes.homePage;
+
+    const { ssr, homepageMultilanguageUrls } = useSelector((state: RootState) => ({
         ssr: state.PublicConfig.ssr,
+        homepageMultilanguageUrls: state.SystemConfig.specialPagesUrlsArray[pageType],
     }), shallowEqual);
 
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        const homePageObj = {
+            info: {
+                url: homepageMultilanguageUrls,
+                type: pageTypes.specialPage
+            }
+        }
+        !ssr && dispatch(pageActions.setPageData({ data: homePageObj }));
+        return () => {
+            dispatch(pageActions.clearPageData());
+        }
+    }, [ssr]);
+
+
     useEffect(() => {
         ssr && dispatch(publicConfigActions.disableSrr());
     }, [])

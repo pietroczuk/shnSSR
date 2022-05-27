@@ -51,7 +51,7 @@ const Cart: FC = () => {
         return () => {
             dispatch(pageActions.clearPageData());
         }
-    }, []);
+    }, [ssr]);
 
     useEffect(() => {
         ssr && dispatch(publicConfigActions.disableSrr());

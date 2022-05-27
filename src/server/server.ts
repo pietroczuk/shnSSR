@@ -70,8 +70,8 @@ if (!process.env.API_URL) {
                 const urlData = urlDataFromPath(req.path, allLanguages, isMultilanguage);
                 const languageFromUrl = urlData.languageCode;
                 const real_path = urlData.realPath;
-                
-                const blankUrl = req.path === '/' || urlData.blankPath ? true : false;
+
+                const blankUrl = req.path === '/' && urlData.blankPath ? true : false;
                 const language =
                     isMultilanguage ?
                         blankUrl ?
@@ -87,8 +87,9 @@ if (!process.env.API_URL) {
                             language + '/' + api_config.specialPagesUrlsArray.homepage[language]
                             : api_config.specialPagesUrlsArray.homepage[language]
                         : language;
-                // console.log('req.path', req.path, 'urlData.blankPath', urlData.blankPath, 'homepageUrl', homepageUrl);
-                if (blankUrl && language && '/' + homepageUrl !== req.path) {
+                const homepageUrlAsRequest = '/' + homepageUrl === req.path ? true : false;
+                // console.log('isMultilanguage', isMultilanguage, 'blankUrl', blankUrl, 'homepageUrl', homepageUrl, 'req.path', req.path, 'language', language, 'homepageUrlAsRequest', homepageUrlAsRequest)
+                if (homepageUrl && (blankUrl || !isMultilanguage) && !homepageUrlAsRequest) {
                     res.redirect('/' + homepageUrl);
                 } else {
                     const mobileDetect = new MobileDetect(req.headers['user-agent']);
