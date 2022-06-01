@@ -179,16 +179,18 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
     }
 
     const gotoNextSlide = () => {
-        imageScrollRef.current.scrollBy({
-            left: 1,
-            behavior: 'smooth'
-        });
+        gotoSlide(sliderIndex+1);
+        // imageScrollRef.current.scrollBy({
+        //     left: 300,
+        //     behavior: 'smooth'
+        // });
     }
     const gotoPrevSlide = () => {
-        imageScrollRef.current.scrollBy({
-            left: -1,
-            behavior: 'smooth'
-        });
+        gotoSlide(sliderIndex-1);
+        // imageScrollRef.current.scrollBy({
+        //     left: -300,
+        //     behavior: 'smooth'
+        // });
     }
 
     return <div className={styles.imageSlider}>
