@@ -10,6 +10,8 @@ import { ProductKeyVal } from "../../../redux/Models/Product/Product.model";
 import SliderNavButton from "../imageSlider/sliderNavButton/SliderNavButton";
 import { checkVisitedProducts } from "../../../redux/actionCreators/user/user.ac";
 
+import smoothscroll from 'smoothscroll-polyfill';
+
 interface SimilarSliderProps {
     type: keyof typeof similarProductTypes
 }
@@ -57,6 +59,10 @@ const SimilarSlider: FC<SimilarSliderProps> = props => {
     const imageScrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        smoothscroll.polyfill();
+    }, []);
+
+    useEffect(() => {
         isViewportInStageVisible();
         showLeftArrow && setShowLeftArrow(false);
         !showRightArrow && setShowRightArrow(true);
@@ -81,17 +87,29 @@ const SimilarSlider: FC<SimilarSliderProps> = props => {
         setIsVisible(isLocalVisible);
     }
 
-    const gotoNextSlide = () => {
-        imageScrollRef.current.scrollBy({
-            left: 1,
-            behavior: 'smooth'
+    const gotoSlide = (direcionNumber: number, forcePossition: boolean = false) => {
+
+        const scrollWith = imageScrollRef.current.scrollWidth;
+        const scrollPosition = imageScrollRef.current.scrollLeft;
+        const countSlides = limit;
+
+        const slideWidth = scrollWith / countSlides;
+
+        const direction = direcionNumber > 0 ? 1 : -1;
+
+        const scrollToPossition = direction * slideWidth + scrollPosition;
+
+        imageScrollRef.current.scrollTo({
+            left: scrollToPossition,
+            behavior: forcePossition ? 'auto' : 'smooth'
         });
     }
+
+    const gotoNextSlide = () => {
+        gotoSlide(1);
+    }
     const gotoPrevSlide = () => {
-        imageScrollRef.current.scrollBy({
-            left: -1,
-            behavior: 'smooth'
-        });
+        gotoSlide(-1);
     }
     const handleScroll = (event: UIEvent<HTMLDivElement>) => {
         const target = event.currentTarget;

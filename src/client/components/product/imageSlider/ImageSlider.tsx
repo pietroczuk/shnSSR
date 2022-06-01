@@ -18,6 +18,8 @@ import {
 } from "react-router-dom";
 import SliderNavButton from "./sliderNavButton/SliderNavButton";
 
+import smoothscroll from 'smoothscroll-polyfill';
+
 interface ImageSliderProps {
     variations: {
         [key: string]: Variation;
@@ -62,6 +64,10 @@ const ImageSlider: FC<ImageSliderProps> = (props) => {
     const fakeImages: Array<imageArray> = [];
     const imagePerProductDesktop = 2;
 
+    useEffect(()=> {
+        smoothscroll.polyfill();
+    },[]);
+    
     useEffect(() => {
         // console.log('imageScrollRef ssr');
         gotoSlide(sliderIndex, ssr);
