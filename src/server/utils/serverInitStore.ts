@@ -28,8 +28,7 @@ export const createServerInitStore = (language: string, currency: string, displa
     };
     const server_store = configureStore({
         reducer: allReducers,
-        preloadedState: store_init_data
+        preloadedState: store_init_data,
     });
-    // const server_store = createStore(all_reducers, store_init_data, applyMiddleware(thunk));
     return server_store;
 }

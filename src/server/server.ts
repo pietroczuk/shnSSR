@@ -27,6 +27,7 @@ import { SystemConfig } from '../client/redux/Models/SystemConfig/SystemConfig.t
 import { NewRoutesConfig } from './types/newRoutesConfig.types';
 
 import MobileDetect from 'mobile-detect';
+// import { useDispatch } from 'react-redux';
 
 /** CACHE */
 // const cache = require('node-file-cache').create();
@@ -112,6 +113,8 @@ if (!process.env.API_URL) {
 
                     const server_store = createServerInitStore(language, userCurrency, display_options);
 
+                    const useAppDispatch = server_store.dispatch;
+
                     // preapre system pages uls
                     // api_config.pageTypePrefixUrls.wishlist = api_config.specialPagesUrlsArray.wishlist[language];
                     // api_config.pageTypePrefixUrls.homepage = api_config.specialPagesUrlsArray.homepage[language];
@@ -125,6 +128,8 @@ if (!process.env.API_URL) {
 
                     // console.log(new_Routes);
 
+                    
+
                     const load_data_promises = matchRoutes(new_Routes, req.path).map(({ route }) => {
                         const i = req.url.indexOf('?');
                         const q = req.url.indexOf('&');
@@ -136,7 +141,8 @@ if (!process.env.API_URL) {
                                 query = req.url.substring(i + 1);
                             }
                         }
-                        return route.loadDataOnInit ? route.loadDataOnInit(route.type, server_store, api_config, language, real_path, query) : null;
+                        return route.loadDataOnInit ? route.loadDataOnInit(route.type, useAppDispatch, api_config, language, real_path, query) : null;
+                        // return route.loadDataOnInit ? route.loadDataOnInit(route.type, server_store, api_config, language, real_path, query) : null;
                     }).map(promise => {
                         // for fail promises, continue fetch data and resolve promises
                         // double primise (outer)
