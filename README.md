@@ -1,7 +1,9 @@
 # shnSSR - starting again with online shop
-Redesing SPA SSR online shop - still develop
+Redesing SPA SSR online shop - still develop (without homepage etc.)
 
-[Online demo](http://beta3.shineposters.com)
+[Online demo](http://beta3.shineposters.com/pl/c/bestsellery/)
+
+[Previous almost complete version](https://github.com/pietroczuk/shn)
 
 ## Table of contents
 * [General info](#general-info)
