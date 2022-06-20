@@ -5,7 +5,7 @@
   "description": "New engine with actual react hooks etc",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
     "analyze": "source-map-explorer 'public_html/public/*.js'",
     "dev-win": "npm run clean-win && npm-run-all --parallel dev:*",
     "clean-win": "del /s /q public_html\\public\\*client*.js public_html\\public\\*client*.js.map public_html\\server\\*server*.js*",
@@ -84,6 +84,7 @@
     "style-loader": "^2.0.0",
     "typescript": "^4.5.4",
     "typescript-plugin-css-modules": "^3.4.0",
+    "vitest": "^0.15.1",
     "webpack": "^5.72.1",
     "webpack-cli": "^4.5.0",
     "webpack-manifest-plugin": "^5.0.0",
