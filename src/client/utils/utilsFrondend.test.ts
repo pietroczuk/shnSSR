@@ -1,7 +1,7 @@
 import { it, expect } from 'vitest';
 import { getPageTypeAsString } from './utilsFrondend';
 
-it('it should return pageType as string', () => {
+it('it should return correct pageType as string', () => {
     const inputString = 'productPage';
     const expectedResult = 'product';
 
@@ -13,4 +13,16 @@ it('it should return wrong pageType as undefined', () => {
 
     const result = getPageTypeAsString(inputString);
     expect(result).toBeUndefined;
+});
+it('it should return empty pageType as undefined', () => {
+    const inputString = '';
+
+    const result = getPageTypeAsString(inputString);
+    expect(result).toBeUndefined;
+});
+it('it should throw a error if no value is passed into the function', () => {
+    const resultFn = () => {
+        getPageTypeAsString();
+    }
+    expect(resultFn).toThrow;
 });
