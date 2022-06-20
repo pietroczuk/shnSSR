@@ -9,7 +9,7 @@ Redesing SPA SSR online shop - still develop
 * [Setup](#setup)
 
 ## General info
-Completly redesing architecure. First MVP created with js, react incl. hooks and split chunks. Meantime it was time to learn typescript, so i decided to again go all the way and transform all to typescript incl. redux. From that point i was happy to continue develop. For future it will be great SPA shop for personal commercial use. It's full customisable via api (multicurrency, multilanguage, paths, images etc). Dosn't need to hardcoded parameters. Just deploy once and forget. All minor changes, configuration, disable elements are on outside via fetching json API. My custom php api allows to reaorganize returning structure data for great performace and PageSpeed. I try to minimalize re-renders as far as possible.
+Completly redesing architecture. First MVP created with js, react incl. hooks and split chunks. Meantime it was time to learn typescript, so i decided to again go all the way and transform all to typescript incl. redux. From that point i was happy to continue develop. For future it will be great SPA shop for personal commercial use. It's full customisable via api (multicurrency, multilanguage, paths, images etc). Dosn't need to hardcoded parameters. Just deploy once and forget. All minor changes, configuration, disable elements are on outside via fetching json API. My custom php api allows to reaorganize returning structure data for great performace and PageSpeed. I try to minimalize re-renders as far as possible.
 
 Most performance expensive functionality and pages are ready for use:
 * Category pages
