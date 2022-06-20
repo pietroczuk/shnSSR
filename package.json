@@ -5,7 +5,9 @@
   "description": "New engine with actual react hooks etc",
   "main": "index.js",
   "scripts": {
-    "test": "vitest",
+    "test": "vitest --run --reporter verbose",
+    "test:watch": "vitest --reporter verbose",
+    "test:coverage": "vitest run --coverage",
     "analyze": "source-map-explorer 'public_html/public/*.js'",
     "dev-win": "npm run clean-win && npm-run-all --parallel dev:*",
     "clean-win": "del /s /q public_html\\public\\*client*.js public_html\\public\\*client*.js.map public_html\\server\\*server*.js*",
@@ -63,6 +65,7 @@
     "@types/serialize-javascript": "^5.0.2",
     "babel-loader": "^8.2.2",
     "babel-polyfill": "^6.26.0",
+    "c8": "^7.11.3",
     "compression": "^1.7.4",
     "css-loader": "^5.0.2",
     "express": "^4.17.1",
