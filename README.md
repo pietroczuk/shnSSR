@@ -19,6 +19,10 @@ Most performance expensive functionality and pages are ready for use:
 	- 360 view
 	- slider responsive to set current product variant
 	- custom lazyload images
+	- sale countdown (no re-renders, time is initialize on server side to avoid users cheateing)
+* Menu (via API)
+	- main menu
+	- sidebar menu
 
 RWD and mobile design are avaible on previous version avaible here:
 * [online](http://beta2.shineposters.com)
@@ -31,6 +35,16 @@ Example desktop performance / current version links (mobile need to hide or reor
 Most time consuming part (data structure, and architecure states) are ready to go. Now is time to move my designs from previous version to this version. Home page i will do at the end. This is just presentation view so i no need to think about it now. Easy peasy.
 
 Btw. I never want to go back to Woo or others.
+
+All issues and tasks are available on Github Projects Section (frontend and backend):
+[Projects section](https://github.com/pietroczuk/shnSSR/projects?type=classic)
+
+###### Product Page
+![SHN Product page](https://raw.githubusercontent.com/pietroczuk/pietroczuk/main/images/shn-productpage.jpg)
+###### Category with visual images mode + random variants
+![SHN Category visual mode](https://raw.githubusercontent.com/pietroczuk/pietroczuk/main/images/shn-categorypage-visualmode.jpg)
+###### Category with sample images mode + multilanguages
+![SHN Category sample mode with multilanguage](https://raw.githubusercontent.com/pietroczuk/pietroczuk/main/images/shn-categorypage-multilanguage-simplemode.jpg)
 
 ## Technologies
 Project is created with:
