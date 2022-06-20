@@ -9,7 +9,7 @@ Redesing SPA SSR online shop - still develop
 * [Setup](#setup)
 
 ## General info
-Completly redesing architecture. First MVP created with js, react incl. hooks and split chunks. Meantime it was time to learn typescript, so i decided to again go all the way and transform all to typescript incl. redux. From that point i was happy to continue develop. For future it will be great SPA shop for personal commercial use. It's full customisable via api (multicurrency, multilanguage, paths, images etc). Dosn't need to hardcoded parameters. Just deploy once and forget. All minor changes, configuration, disable elements are on outside via fetching json API. My custom php api allows to reaorganize returning structure data for great performace and PageSpeed. I try to minimalize re-renders as far as possible.
+Completly redesing architecture. First MVP created with js, react incl. hooks and split chunks. Meantime it was time to learn typescript, so i decided to again go all the way and transform all to typescript incl. redux. From that point i was happy to continue develop. For future it will be great SPA shop for personal commercial use. It's full customisable via api (multicurrency, multilanguage, paths, images etc). Dosn't need to hardcoded parameters. Just deploy once and forget. All minor changes, configuration, disable elements are on outside via fetching json API. My custom php api allows to reorganize returning structure data for great performace and PageSpeed. I try to minimalize re-renders as far as possible.
 
 Most performance expensive functionality and pages are ready for use:
 * Category pages
@@ -32,7 +32,7 @@ Example desktop performance / current version links (mobile need to hide or reor
 * [category](https://pagespeed.web.dev/report?url=http%3A%2F%2Fbeta3.shineposters.com%2Fpl%2Fc%2Fdla-niej%2F&form_factor=desktop)
 * [product page](https://pagespeed.web.dev/report?url=http%3A%2F%2Fbeta3.shineposters.com%2Fpl%2Fp%2Fplakat-when-something-is-important-enought-elon-musk%2F%3F5c7e89a680acee0ad6dffa43&form_factor=desktop)
 
-Most time consuming part (data structure, and architecure states) are ready to go. Now is time to move my designs from previous version to this version. Home page i will do at the end. This is just presentation view so i no need to think about it now. Easy peasy.
+Most time consuming part (data structure, and architecure states) are ready to go. Now is time to move my designs from previous version to this. Home page i will do at the end. This is just presentation view so i no need to think about it now. Easy peasy.
 
 Btw. I never want to go back to Woo or others.
 
