@@ -213,3 +213,4 @@ Start development app server using npm:
 ```
 $ npm run dev
 ```
+![meme](https://github.com/pietroczuk/pietroczuk/blob/main/images/work.jpg)
